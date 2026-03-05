@@ -1,0 +1,433 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Requests - Campus Helper</title>
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap");
+
+        :root {
+            --bg-color: #d0dadb;
+            --text-main: #000000;
+            --btn-bg: #102b41;
+            --btn-text: #ffffff;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Inter", sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin-bottom: 3rem;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 3rem;
+        }
+
+        .brand {
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            font-size: 0.85rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .nav-links a.active {
+            text-decoration: underline;
+            text-underline-offset: 4px;
+            font-weight: 600;
+        }
+
+        .avatar {
+            background-color: var(--white);
+            color: var(--btn-bg);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.75rem;
+        }
+
+        header {
+            background-color: var(--white);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 3rem;
+            margin-bottom: 2rem;
+            height: 180px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        header h1 {
+            font-size: 1.5rem;
+            font-weight: 500;
+            margin-top: 0;
+        }
+
+        .header-illustration {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            margin-top: 0;
+        }
+
+        .header-illustration img {
+            max-height: 180px;
+            width: auto;
+            object-fit: cover;
+            margin-right: -3rem;
+            border-radius: 0 8px 8px 0;
+        }
+
+        main {
+            padding: 0 3rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .request-card {
+            background-color: var(--white);
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .request-left {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .datetime {
+            display: flex;
+            gap: 2rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+            width: 140px;
+        }
+
+        .time {
+            width: 60px;
+        }
+
+        .separator {
+            width: 3px;
+            height: 35px;
+            background-color: #e6e6e6;
+            border-radius: 2px;
+        }
+
+        .student-details {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+            width: 250px;
+        }
+
+        .student-avatar {
+            width: 40px;
+            height: 40px;
+            background-color: #d1d1d1;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .student-text h3 {
+            font-size: 1.05rem;
+            font-weight: 500;
+            margin-bottom: 0.1rem;
+        }
+
+        .student-text p {
+            font-size: 0.75rem;
+            color: var(--text-main);
+            font-weight: 500;
+        }
+
+        .actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        button {
+            background-color: var(--btn-bg);
+            color: var(--btn-text);
+            border: none;
+            padding: 0.5rem 2.5rem;
+            font-size: 0.95rem;
+            font-weight: 400;
+            cursor: pointer;
+            transition: opacity 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* --- Modernization & Animations --- */
+        @keyframes fadeSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        body {
+            overflow-x: hidden;
+        }
+
+        .request-card {
+            border-radius: 12px;
+            animation: fadeSlideIn 0.5s ease-out forwards;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .request-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            z-index: 10;
+            position: relative;
+        }
+
+        .request-card:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .request-card:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .request-card:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .request-card:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+
+        .request-card:nth-child(5) {
+            animation-delay: 0.5s;
+        }
+
+        .request-card:nth-child(6) {
+            animation-delay: 0.6s;
+        }
+
+        button {
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            background-color: #1a4263;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            opacity: 1;
+        }
+
+        .nav-links a {
+            transition: color 0.2s ease, transform 0.2s ease;
+            display: inline-block;
+        }
+
+        .nav-links a:hover {
+            color: var(--btn-bg);
+            transform: translateY(-2px);
+        }
+
+        .avatar {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .avatar:hover {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <div class="brand">Campus Helper</div>
+        <div class="nav-links">
+            <a href="consultant-dashboard.html">Dashboard</a>
+            <a href="student-requests.html" class="active">Student Requests</a>
+            <a href="sessions.html">Sessions</a>
+            <a href="#">Messages</a>
+            <a href="#">Settings</a>
+            <div class="avatar">ND</div>
+        </div>
+    </nav>
+
+    <header>
+        <h1>Student Requests</h1>
+        <div class="header-illustration">
+            <img src="SR.png" alt="Illustration Header" onerror="
+            this.src =
+              'https://placehold.co/600x250/fff/ccc?text=Illustration+Placeholder'
+          " />
+        </div>
+    </header>
+
+    <main>
+        <div class="request-card">
+            <div class="request-left">
+                <div class="datetime">
+                    <span>23/03/25</span>
+                    <span class="time">8:00am</span>
+                </div>
+                <div class="separator"></div>
+                <div class="student-details">
+                    <div class="student-avatar"></div>
+                    <div class="student-text">
+                        <h3>Kwabena Fosu</h3>
+                        <p>CSM 293</p>
+                    </div>
+                </div>
+            </div>
+            <div class="actions">
+                <button>Accept</button>
+                <button>Decline</button>
+            </div>
+        </div>
+
+        <div class="request-card">
+            <div class="request-left">
+                <div class="datetime">
+                    <span>20/03/25</span>
+                    <span class="time">2:45pm</span>
+                </div>
+                <div class="separator"></div>
+                <div class="student-details">
+                    <div class="student-avatar"></div>
+                    <div class="student-text">
+                        <h3>Mary Ansong</h3>
+                        <p>CSM 152</p>
+                    </div>
+                </div>
+            </div>
+            <div class="actions">
+                <button>Accept</button>
+                <button>Decline</button>
+            </div>
+        </div>
+
+        <div class="request-card">
+            <div class="request-left">
+                <div class="datetime">
+                    <span>20/03/25</span>
+                    <span class="time">5:30pm</span>
+                </div>
+                <div class="separator"></div>
+                <div class="student-details">
+                    <div class="student-avatar"></div>
+                    <div class="student-text">
+                        <h3>Anita Dadson</h3>
+                        <p>ACC 122</p>
+                    </div>
+                </div>
+            </div>
+            <div class="actions">
+                <button>Accept</button>
+                <button>Decline</button>
+            </div>
+        </div>
+
+        <div class="request-card">
+            <div class="request-left">
+                <div class="datetime">
+                    <span>18/03/25</span>
+                    <span class="time">12:15pm</span>
+                </div>
+                <div class="separator"></div>
+                <div class="student-details">
+                    <div class="student-avatar"></div>
+                    <div class="student-text">
+                        <h3>Kwaku Boateng</h3>
+                        <p>STATS 356</p>
+                    </div>
+                </div>
+            </div>
+            <div class="actions">
+                <button>Accept</button>
+                <button>Decline</button>
+            </div>
+        </div>
+
+        <div class="request-card">
+            <div class="request-left">
+                <div class="datetime">
+                    <span>18/03/25</span>
+                    <span class="time">6:17pm</span>
+                </div>
+                <div class="separator"></div>
+                <div class="student-details">
+                    <div class="student-avatar"></div>
+                    <div class="student-text">
+                        <h3>Amina Amuzu</h3>
+                        <p>CSM 156</p>
+                    </div>
+                </div>
+            </div>
+            <div class="actions">
+                <button>Accept</button>
+                <button>Decline</button>
+            </div>
+        </div>
+
+        <div class="request-card">
+            <div class="request-left">
+                <div class="datetime">
+                    <span>17/03/25</span>
+                    <span class="time">7:45am</span>
+                </div>
+                <div class="separator"></div>
+                <div class="student-details">
+                    <div class="student-avatar"></div>
+                    <div class="student-text">
+                        <h3>Kofi Boakye</h3>
+                        <p>CSM 134</p>
+                    </div>
+                </div>
+            </div>
+            <div class="actions">
+                <button>Accept</button>
+                <button>Decline</button>
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>

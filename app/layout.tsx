@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import {TRPCProvider} from '@/trpc/client'
+import { TRPCProvider } from '@/trpc/client'
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner"
 import BetterAuthUIProvider from "@/providers/better-auth-ui-provider"
@@ -27,14 +27,14 @@ export default function RootLayout({
 }>) {
   return (
     <TRPCProvider>
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-     <BetterAuthUIProvider>{children}</BetterAuthUIProvider>
-        <Toaster />
-      </body>
-    </html>
+      <html lang="en">
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        >
+          <BetterAuthUIProvider>{children}</BetterAuthUIProvider>
+          <Toaster />
+        </body>
+      </html>
     </TRPCProvider>
   );
 }

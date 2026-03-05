@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="Sign up for Campus Helper - Create your account and start connecting with academic support.">
+  <title>Sign Up - Campus Helper</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700;800;900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="logo" id="logo">
+        <span class="logo-campus">Campus</span> <span class="logo-helper">Helper</span>
+      </a>
+    </div>
+  </nav>
+
+  <main>
+    <section class="login-section" id="signup-section">
+      <div class="login-container">
+
+        <!-- Left: Sign Up Form -->
+        <div class="login-form-panel" id="signup-form-panel">
+          <form class="login-form" id="signup-form" onsubmit="return false;">
+            <!-- Full Name -->
+            <div class="form-group" id="form-group-fullname">
+              <label for="signup-fullname" class="form-label">Full name</label>
+              <input type="text" id="signup-fullname" class="form-input" placeholder="" autocomplete="name">
+            </div>
+
+            <!-- Email -->
+            <div class="form-group" id="form-group-signup-email">
+              <label for="signup-email" class="form-label">Email</label>
+              <input type="email" id="signup-email" class="form-input" placeholder="" autocomplete="email">
+            </div>
+
+            <!-- Password -->
+            <div class="form-group" id="form-group-signup-password">
+              <label for="signup-password" class="form-label">Password</label>
+              <div class="password-wrapper">
+                <input type="password" id="signup-password" class="form-input" placeholder=""
+                  autocomplete="new-password">
+                <button type="button" class="password-toggle" id="signup-password-toggle"
+                  aria-label="Toggle password visibility">
+                  <svg class="eye-icon" id="signup-eye-off" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"></path>
+                    <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"></path>
+                    <line x1="1" y1="1" x2="23" y2="23"></line>
+                  </svg>
+                  <svg class="eye-icon" id="signup-eye-on" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" style="display:none;">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Sign Up Button -->
+            <button type="submit" class="login-btn" id="signup-btn"
+              onclick="window.location.href='onboarding1.html'">Sign Up</button>
+
+            <!-- Login Prompt -->
+            <p class="signup-prompt" id="login-prompt">
+              Already have an account? <a href="login.html" class="signup-link" id="login-link">Login</a>
+            </p>
+          </form>
+        </div>
+
+        <!-- Right: Illustration -->
+        <div class="login-illustration signup-ellipse" id="signup-illustration">
+          <img src="Ellipse.svg" alt="" class="ellipse-bg" aria-hidden="true">
+          <img src="signup.svg" alt="Person creating a profile account illustration" class="signup-img">
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+  <script>
+    // Password toggle
+    const signupToggle = document.getElementById('signup-password-toggle');
+    const signupPasswordInput = document.getElementById('signup-password');
+    const signupEyeOff = document.getElementById('signup-eye-off');
+    const signupEyeOn = document.getElementById('signup-eye-on');
+
+    if (signupToggle) {
+      signupToggle.addEventListener('click', () => {
+        const isPassword = signupPasswordInput.type === 'password';
+        signupPasswordInput.type = isPassword ? 'text' : 'password';
+        signupEyeOff.style.display = isPassword ? 'none' : 'block';
+        signupEyeOn.style.display = isPassword ? 'block' : 'none';
+      });
+    }
+  </script>
+</body>
+
+</html>
