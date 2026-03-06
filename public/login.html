@@ -32,7 +32,10 @@
         <!-- Left: Login Form -->
         <div class="login-form-panel" id="login-form-panel">
           <h1 class="login-title" id="login-title">Login Now</h1>
-          <p class="login-welcome" id="login-welcome">Hi , Welcome Back</p>
+          <p class="login-welcome" id="login-welcome">Hi, Welcome Back</p>
+
+          <!-- Error message -->
+          <div id="login-error" style="display:none; color:#c0392b; background:#fdecea; border-radius:6px; padding:0.6rem 1rem; margin-bottom:1rem; font-size:0.9rem;"></div>
 
           <form class="login-form" id="login-form" onsubmit="return false;">
             <!-- Email -->
@@ -76,8 +79,7 @@
             </div>
 
             <!-- Login Button -->
-            <button type="submit" class="login-btn" id="login-btn"
-              onclick="window.location.href='consultant-dashboard.html'">Login</button>
+            <button type="submit" class="login-btn" id="login-btn">Login</button>
 
             <!-- Sign Up Link -->
             <p class="signup-prompt" id="signup-prompt">
@@ -95,22 +97,70 @@
     </section>
   </main>
 
-  <script src="script.js"></script>
+  <!-- Load shared API client first -->
+  <script src="api.js"></script>
   <script>
-    // Password toggle
+    // ── Password toggle ──────────────────────────────────────
     const passwordToggle = document.getElementById('password-toggle');
-    const passwordInput = document.getElementById('login-password');
+    const passwordInput  = document.getElementById('login-password');
     const eyeOff = document.getElementById('eye-icon-off');
-    const eyeOn = document.getElementById('eye-icon-on');
+    const eyeOn  = document.getElementById('eye-icon-on');
 
     if (passwordToggle) {
       passwordToggle.addEventListener('click', () => {
         const isPassword = passwordInput.type === 'password';
         passwordInput.type = isPassword ? 'text' : 'password';
-        eyeOff.style.display = isPassword ? 'none' : 'block';
-        eyeOn.style.display = isPassword ? 'block' : 'none';
+        eyeOff.style.display = isPassword ? 'none'  : 'block';
+        eyeOn.style.display  = isPassword ? 'block' : 'none';
       });
     }
+
+    // ── Login form submit ────────────────────────────────────
+    const loginForm  = document.getElementById('login-form');
+    const loginBtn   = document.getElementById('login-btn');
+    const errorBox   = document.getElementById('login-error');
+
+    function showError(msg) {
+      errorBox.textContent = msg;
+      errorBox.style.display = 'block';
+    }
+
+    function hideError() {
+      errorBox.style.display = 'none';
+    }
+
+    loginForm.addEventListener('submit', async () => {
+      hideError();
+
+      const email    = document.getElementById('login-email').value.trim();
+      const password = document.getElementById('login-password').value;
+
+      if (!email || !password) {
+        showError('Please enter your email and password.');
+        return;
+      }
+
+      loginBtn.textContent = 'Logging in…';
+      loginBtn.disabled = true;
+
+      try {
+        const { user } = await api.login(email, password);
+
+        // Redirect based on role
+        if (user.role === 'admin') {
+          window.location.href = 'consultant-dashboard.html';
+        } else if (user.role === 'helper' || user.role === 'both') {
+          window.location.href = 'consultant-dashboard.html';
+        } else {
+          // student
+          window.location.href = 'consultant-dashboard.html';
+        }
+      } catch (err) {
+        showError(err.message || 'Login failed. Please try again.');
+        loginBtn.textContent = 'Login';
+        loginBtn.disabled = false;
+      }
+    });
   </script>
 </body>
 

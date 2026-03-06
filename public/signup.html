@@ -32,6 +32,12 @@
 
         <!-- Left: Sign Up Form -->
         <div class="login-form-panel" id="signup-form-panel">
+
+          <!-- Error message -->
+          <div id="signup-error"
+            style="display:none; color:#c0392b; background:#fdecea; border-radius:6px; padding:0.6rem 1rem; margin-bottom:1rem; font-size:0.9rem;">
+          </div>
+
           <form class="login-form" id="signup-form" onsubmit="return false;">
             <!-- Full Name -->
             <div class="form-group" id="form-group-fullname">
@@ -70,9 +76,18 @@
               </div>
             </div>
 
+            <!-- Role -->
+            <div class="form-group" id="form-group-role">
+              <label for="signup-role" class="form-label">I am a…</label>
+              <select id="signup-role" class="form-input" style="cursor:pointer;">
+                <option value="student">Student – I need help</option>
+                <option value="helper">Helper / Consultant – I offer help</option>
+                <option value="both">Both – I need & offer help</option>
+              </select>
+            </div>
+
             <!-- Sign Up Button -->
-            <button type="submit" class="login-btn" id="signup-btn"
-              onclick="window.location.href='onboarding1.html'">Sign Up</button>
+            <button type="submit" class="login-btn" id="signup-btn">Sign Up</button>
 
             <!-- Login Prompt -->
             <p class="signup-prompt" id="login-prompt">
@@ -91,9 +106,10 @@
     </section>
   </main>
 
-  <script src="script.js"></script>
+  <!-- Load shared API client first -->
+  <script src="api.js"></script>
   <script>
-    // Password toggle
+    // ── Password toggle ──────────────────────────────────────
     const signupToggle = document.getElementById('signup-password-toggle');
     const signupPasswordInput = document.getElementById('signup-password');
     const signupEyeOff = document.getElementById('signup-eye-off');
@@ -107,6 +123,51 @@
         signupEyeOn.style.display = isPassword ? 'block' : 'none';
       });
     }
+
+    // ── Signup form submit ───────────────────────────────────
+    const signupForm = document.getElementById('signup-form');
+    const signupBtn = document.getElementById('signup-btn');
+    const errorBox = document.getElementById('signup-error');
+
+    function showError(msg) {
+      errorBox.textContent = msg;
+      errorBox.style.display = 'block';
+    }
+
+    function hideError() {
+      errorBox.style.display = 'none';
+    }
+
+    signupForm.addEventListener('submit', async () => {
+      hideError();
+
+      const full_name = document.getElementById('signup-fullname').value.trim();
+      const email = document.getElementById('signup-email').value.trim();
+      const password = document.getElementById('signup-password').value;
+      const role = document.getElementById('signup-role').value;
+
+      if (!full_name || !email || !password) {
+        showError('Please fill in all fields.');
+        return;
+      }
+
+      if (password.length < 8) {
+        showError('Password must be at least 8 characters.');
+        return;
+      }
+
+      signupBtn.textContent = 'Creating account…';
+      signupBtn.disabled = true;
+
+      try {
+        await api.register(full_name, email, password, role);
+        window.location.href = 'onboarding1.html';
+      } catch (err) {
+        showError(err.message || 'Sign up failed. Please try again.');
+        signupBtn.textContent = 'Sign Up';
+        signupBtn.disabled = false;
+      }
+    });
   </script>
 </body>
 

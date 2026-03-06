@@ -350,110 +350,121 @@
     <main>
         <section>
             <h2 class="section-heading">Upcoming Sessions</h2>
-            <div class="upcoming-list">
-                <div class="upcoming-card">
-                    <div class="upcoming-left">
-                        <div class="upcoming-date">Monday, March 15</div>
-                        <div class="upcoming-separator"></div>
-                        <div class="upcoming-details">
-                            <div class="upcoming-name">Kwabena Boakye</div>
-                            <div class="upcoming-course">CSM 293</div>
-                        </div>
-                    </div>
-                    <div class="upcoming-time">3:00pm</div>
-                </div>
-
-                <div class="upcoming-card">
-                    <div class="upcoming-left">
-                        <div class="upcoming-date">Friday, March 4</div>
-                        <div class="upcoming-separator active"></div>
-                        <div class="upcoming-details">
-                            <div class="upcoming-name">Ann Marie</div>
-                            <div class="upcoming-course">CSM 122</div>
-                        </div>
-                    </div>
-                    <div class="upcoming-time">5:00pm</div>
-                </div>
-
-                <div class="upcoming-card">
-                    <div class="upcoming-left">
-                        <div class="upcoming-date">Tuesday, March 1</div>
-                        <div class="upcoming-separator"></div>
-                        <div class="upcoming-details">
-                            <div class="upcoming-name">Blessing Konadu</div>
-                            <div class="upcoming-course">CSM 275</div>
-                        </div>
-                    </div>
-                    <div class="upcoming-time">6:00pm</div>
-                </div>
+            <div class="upcoming-list" id="upcoming-list">
+                <div style="padding:1rem;color:#555;font-size:0.9rem;">Loading…</div>
             </div>
         </section>
 
         <section>
             <h2 class="section-heading">Completed Sessions</h2>
-            <div class="completed-list">
-                <div class="completed-card">
-                    <div class="completed-left">
-                        <div class="check-icon">
-                            <svg viewBox="0 0 24 24">
-                                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
-                            </svg>
-                        </div>
-                        <div class="completed-details">
-                            <div class="completed-date">Thursday, February 28</div>
-                            <div class="completed-info">Amanda Tawong <span>|</span> CSM 293</div>
-                        </div>
-                    </div>
-                    <div class="completed-time">3:00pm</div>
-                </div>
-
-                <div class="completed-card">
-                    <div class="completed-left">
-                        <div class="check-icon">
-                            <svg viewBox="0 0 24 24">
-                                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
-                            </svg>
-                        </div>
-                        <div class="completed-details">
-                            <div class="completed-date">Tuesday, February 15</div>
-                            <div class="completed-info">Kwame Bansah <span>|</span> ACC 155</div>
-                        </div>
-                    </div>
-                    <div class="completed-time">12:30pm</div>
-                </div>
-
-                <div class="completed-card">
-                    <div class="completed-left">
-                        <div class="check-icon">
-                            <svg viewBox="0 0 24 24">
-                                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
-                            </svg>
-                        </div>
-                        <div class="completed-details">
-                            <div class="completed-date">Friday, February 20</div>
-                            <div class="completed-info">Kwaku Mensah <span>|</span> CSM 275</div>
-                        </div>
-                    </div>
-                    <div class="completed-time">5:00pm</div>
-                </div>
-
-                <div class="completed-card">
-                    <div class="completed-left">
-                        <div class="check-icon">
-                            <svg viewBox="0 0 24 24">
-                                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
-                            </svg>
-                        </div>
-                        <div class="completed-details">
-                            <div class="completed-date">Monday, February 10</div>
-                            <div class="completed-info">Anita Rockson <span>|</span> STATS 144</div>
-                        </div>
-                    </div>
-                    <div class="completed-time">10:00am</div>
-                </div>
+            <div class="completed-list" id="completed-list">
+                <div style="padding:1rem;color:#555;font-size:0.9rem;">Loading…</div>
             </div>
         </section>
     </main>
+
+    <!-- Shared API client -->
+    <script src="api.js"></script>
+    <script>
+        // ── Auth guard ─────────────────────────────────────────────
+        requireAuth();
+
+        // ── Avatar initials ────────────────────────────────────────
+        const cu = getUser();
+        if (cu) {
+            document.querySelectorAll('.avatar').forEach(el => {
+                const name = cu.full_name || cu.email || 'Me';
+                el.textContent = name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+            });
+        }
+
+        // ── Helpers ────────────────────────────────────────────────
+        function pad(n) { return String(n).padStart(2, '0'); }
+
+        function formatLongDate(isoStr) {
+            if (!isoStr) return '—';
+            const d = new Date(isoStr);
+            return d.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+        }
+
+        function formatTime(isoStr) {
+            if (!isoStr) return '';
+            const d = new Date(isoStr);
+            let h = d.getHours(), m = d.getMinutes();
+            const ampm = h >= 12 ? 'pm' : 'am';
+            h = h % 12 || 12;
+            return `${h}:${pad(m)}${ampm}`;
+        }
+
+        // ── Render upcoming sessions ───────────────────────────────
+        function renderUpcoming(sessions) {
+            const container = document.getElementById('upcoming-list');
+            if (!sessions || sessions.length === 0) {
+                container.innerHTML = '<p style="color:#555;font-size:0.9rem;">No upcoming sessions.</p>';
+                return;
+            }
+
+            container.innerHTML = sessions.map(s => `
+          <div class="upcoming-card">
+            <div class="upcoming-left">
+              <div class="upcoming-date">${formatLongDate(s.start_time)}</div>
+              <div class="upcoming-separator ${s.status === 'in_progress' ? 'active' : ''}"></div>
+              <div class="upcoming-details">
+                <div class="upcoming-name">${s.student_name || 'Student'}</div>
+                <div class="upcoming-course">${s.course_name || s.notes || '—'}</div>
+              </div>
+            </div>
+            <div class="upcoming-time">${formatTime(s.start_time)}</div>
+          </div>
+        `).join('');
+        }
+
+        // ── Render completed sessions ──────────────────────────────
+        function renderCompleted(sessions) {
+            const container = document.getElementById('completed-list');
+            if (!sessions || sessions.length === 0) {
+                container.innerHTML = '<p style="color:#555;font-size:0.9rem;">No completed sessions yet.</p>';
+                return;
+            }
+
+            container.innerHTML = sessions.map(s => `
+          <div class="completed-card">
+            <div class="completed-left">
+              <div class="check-icon">
+                <svg viewBox="0 0 24 24">
+                  <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+                </svg>
+              </div>
+              <div class="completed-details">
+                <div class="completed-date">${formatLongDate(s.end_time || s.start_time)}</div>
+                <div class="completed-info">${s.student_name || 'Student'} <span>|</span> ${s.course_name || '—'}</div>
+              </div>
+            </div>
+            <div class="completed-time">${formatTime(s.end_time || s.start_time)}</div>
+          </div>
+        `).join('');
+        }
+
+        // ── Load ───────────────────────────────────────────────────
+        async function loadSessions() {
+            try {
+                const all = await api.getSessions({});
+                const upcoming = all.filter(s => ['upcoming', 'in_progress'].includes(s.status));
+                const completed = all.filter(s => s.status === 'completed');
+                renderUpcoming(upcoming);
+                renderCompleted(completed);
+            } catch (err) {
+                console.error(err);
+                if (err.status === 401) { clearToken(); window.location.href = 'login.html'; }
+                else {
+                    document.getElementById('upcoming-list').innerHTML = `<p style="color:#c0392b;">Error: ${err.message}</p>`;
+                    document.getElementById('completed-list').innerHTML = `<p style="color:#c0392b;">Error: ${err.message}</p>`;
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadSessions);
+    </script>
 </body>
 
 </html>
