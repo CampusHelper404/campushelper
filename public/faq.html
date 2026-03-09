@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="Frequently Asked Questions about Campus Helper - find answers about registration, consulting, sessions, cancellations, and reporting issues.">
+  <title>FAQ - Campus Helper</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700;800;900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="logo" id="logo">
+        <span class="logo-campus">Campus</span> <span class="logo-helper">Helper</span>
+      </a>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="index.html" class="nav-link" id="nav-home">Home</a></li>
+        <li><a href="about.html" class="nav-link" id="nav-about">About Us</a></li>
+        <li><a href="faq.html" class="nav-link nav-link-active" id="nav-faq">FAQ</a></li>
+      </ul>
+      <button class="mobile-toggle" id="mobile-toggle" aria-label="Toggle navigation menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <main>
+    <!-- FAQ Hero Section -->
+    <section class="faq-hero" id="faq-hero">
+      <div class="faq-hero-container">
+        <div class="faq-search-area" id="faq-search-area">
+          <div class="faq-search-box" id="faq-search-box">
+            <svg class="faq-search-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+              fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" class="faq-search-input" id="faq-search-input" placeholder="Search FAQs"
+              aria-label="Search frequently asked questions">
+          </div>
+        </div>
+        <div class="faq-hero-image" id="faq-hero-image">
+          <img src="faq.svg" alt="FAQ illustration with magnifying glass and question marks">
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ Accordion Section -->
+    <section class="faq-section" id="faq-section">
+      <div class="faq-container">
+
+        <div class="faq-item" id="faq-item-1">
+          <button class="faq-question" id="faq-q1" aria-expanded="false" aria-controls="faq-a1">
+            <span class="faq-question-text">How do I register as a student?</span>
+            <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"
+              fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <div class="faq-answer" id="faq-a1" role="region" aria-labelledby="faq-q1">
+            <p>To register as a student, click the "Get Started" button on the homepage. Fill in your university email,
+              create a password, and complete your student profile. Verification is done through your campus email
+              address.</p>
+          </div>
+        </div>
+
+        <div class="faq-item" id="faq-item-2">
+          <button class="faq-question" id="faq-q2" aria-expanded="false" aria-controls="faq-a2">
+            <span class="faq-question-text">How do I become a consultant?</span>
+            <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"
+              fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <div class="faq-answer" id="faq-a2" role="region" aria-labelledby="faq-q2">
+            <p>To become a consultant, register on the platform and select the "Become a Consultant" option. You'll need
+              to provide your academic credentials, areas of expertise, and available schedule. Once reviewed, you'll be
+              approved to start helping students.</p>
+          </div>
+        </div>
+
+        <div class="faq-item" id="faq-item-3">
+          <button class="faq-question" id="faq-q3" aria-expanded="false" aria-controls="faq-a3">
+            <span class="faq-question-text">How are the sessions conducted?</span>
+            <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"
+              fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <div class="faq-answer" id="faq-a3" role="region" aria-labelledby="faq-q3">
+            <p>Sessions can be conducted either in-person on campus or online through the platform's built-in video and
+              chat tools. Students and consultants agree on the format when scheduling. Each session typically lasts
+              between 30 to 60 minutes.</p>
+          </div>
+        </div>
+
+        <div class="faq-item" id="faq-item-4">
+          <button class="faq-question" id="faq-q4" aria-expanded="false" aria-controls="faq-a4">
+            <span class="faq-question-text">How do I cancel a Session?</span>
+            <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"
+              fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <div class="faq-answer" id="faq-a4" role="region" aria-labelledby="faq-q4">
+            <p>You can cancel a session from your dashboard by going to "My Sessions" and clicking "Cancel" on the
+              relevant session. Please cancel at least 2 hours before the scheduled time to avoid any penalties or
+              negative impact on your profile.</p>
+          </div>
+        </div>
+
+        <div class="faq-item" id="faq-item-5">
+          <button class="faq-question" id="faq-q5" aria-expanded="false" aria-controls="faq-a5">
+            <span class="faq-question-text">How do I report an issue with a Session?</span>
+            <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"
+              fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <div class="faq-answer" id="faq-a5" role="region" aria-labelledby="faq-q5">
+            <p>If you experience any problems during a session, go to "My Sessions," select the session in question, and
+              click "Report Issue." Describe the problem and our support team will review it within 24 hours and take
+              appropriate action.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="about-footer" id="faq-footer">
+    <div class="about-footer-container">
+      <p class="about-footer-message" id="faq-footer-message">
+        Built for students, Campus Helper supports better organization, easier access to learning materials and
+        meaningful collaboration on campus
+      </p>
+      <div class="about-footer-copyright" id="faq-footer-copyright">
+        <span class="copyright-icon">&copy;</span> 2026 Campus Helper. All rights Reserved
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+
+</html>

@@ -145,3 +145,49 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 });
+// ---- FAQ Accordion ----
+const faqItems = document.querySelectorAll('.faq-item');
+
+if (faqItems.length > 0) {
+    faqItems.forEach(item => {
+        const question = item.querySelector('.faq-question');
+        question.addEventListener('click', () => {
+            const isActive = item.classList.contains('active');
+
+            // Close all other FAQ items
+            faqItems.forEach(other => {
+                other.classList.remove('active');
+                const btn = other.querySelector('.faq-question');
+                if (btn) btn.setAttribute('aria-expanded', 'false');
+            });
+
+            // Toggle current item
+            if (!isActive) {
+                item.classList.add('active');
+                question.setAttribute('aria-expanded', 'true');
+            }
+        });
+    });
+}
+
+// ---- FAQ Search Filtering ----
+const faqSearchInput = document.getElementById('faq-search-input');
+
+if (faqSearchInput && faqItems.length > 0) {
+    faqSearchInput.addEventListener('input', () => {
+        const query = faqSearchInput.value.toLowerCase().trim();
+
+        faqItems.forEach(item => {
+            const questionText = item.querySelector('.faq-question-text').textContent.toLowerCase();
+            const answerText = item.querySelector('.faq-answer').textContent.toLowerCase();
+
+            if (query === '' || questionText.includes(query) || answerText.includes(query)) {
+                item.classList.remove('faq-hidden');
+            } else {
+                item.classList.add('faq-hidden');
+            }
+        });
+    });
+}
+
+});
