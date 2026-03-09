@@ -189,5 +189,27 @@ if (faqSearchInput && faqItems.length > 0) {
         });
     });
 }
+// ---- Dashboard: View All Requests Toggle ----
+const viewAllBtn = document.getElementById('dash-view-all');
+const latestSection = document.getElementById('dash-latest');
 
-});
+if (viewAllBtn && latestSection) {
+    viewAllBtn.addEventListener('click', () => {
+        const isExpanded = latestSection.classList.contains('expanded');
+
+        if (isExpanded) {
+            // Collapse
+            latestSection.classList.remove('expanded');
+            viewAllBtn.setAttribute('aria-expanded', 'false');
+            viewAllBtn.innerHTML = 'View All Requests &rsaquo;';
+        } else {
+            // Expand
+            latestSection.classList.add('expanded');
+            viewAllBtn.setAttribute('aria-expanded', 'true');
+            viewAllBtn.innerHTML = 'Show Less &lsaquo;';
+        }
+    });
+}
+
+
+
