@@ -1,24 +1,31 @@
-import { initTRPC } from '@trpc/server';
-import { cache } from 'react';
+import { initTRPC, TRPCError } from '@trpc/server';
 import superjson from 'superjson';
 
-export const createTRPCContext = cache(async () => {
-  /**
-   * @see: https://trpc.io/docs/server/context
-   */
-  return { userId: 'user_123' };
+export interface TRPCContext {
+  token: string | null;
+}
+
+export async function createTRPCContext(opts?: { req?: Request }): Promise<TRPCContext> {
+  // Read JWT from Authorization header (sent by the tRPC client)
+  const authorization = opts?.req?.headers.get('authorization');
+  const token = authorization?.startsWith('Bearer ') ? authorization.slice(7) : null;
+  return { token };
+}
+
+const t = initTRPC.context<TRPCContext>().create({
+  transformer: superjson,
 });
-// Avoid exporting the entire t-object
-// since it's not very descriptive.
-// For instance, the use of a t variable
-// is common in i18n libraries.
-const t = initTRPC.create({
-  /**
-   * @see https://trpc.io/docs/server/data-transformers
-   */
-   transformer: superjson,
-});
-// Base router and procedure helpers
+
 export const createTRPCRouter = t.router;
 export const createCallerFactory = t.createCallerFactory;
+
+// Public procedure - no auth required
 export const baseProcedure = t.procedure;
+
+// Protected procedure - requires a valid JWT token in context
+export const protectedProcedure = t.procedure.use(({ ctx, next }) => {
+  if (!ctx.token) {
+    throw new TRPCError({ code: 'UNAUTHORIZED', message: 'Not authenticated' });
+  }
+  return next({ ctx: { ...ctx, token: ctx.token } });
+});
