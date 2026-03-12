@@ -9,16 +9,16 @@
     @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
 
     :root {
-      --bg-color: #f7f9fa;
-      --header-bg: #d0e0e3;
-      --card-bg: #d0e0e3;
-      --card-bg-light: #f0f5f5;
-      --text-main: #000000;
-      --btn-bg: #102b41;
+      --bg-color: #f0f4f5;
+      --header-bg: #ccdbdc;
+      --card-bg: #ccdbdc;
+      --card-bg-light: #ffffff;
+      --text-main: #003249;
+      --btn-bg: #007ea7;
       --btn-text: #ffffff;
       --white: #ffffff;
-      --accent-teal: #a2d2d6;
-      --border-color: #d1d1d1;
+      --accent-teal: #80ced7;
+      --border-color: #ccdbdc;
     }
 
     * {
@@ -43,8 +43,12 @@
       justify-content: space-between;
       align-items: center;
       padding: 1rem 3rem;
-      background-color: #e2ebeb;
-      border-bottom: 2px solid white;
+      background-color: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
 
     .brand {

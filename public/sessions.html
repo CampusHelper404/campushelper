@@ -9,10 +9,10 @@
         @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap");
 
         :root {
-            --bg-color: #d0dadb;
-            --text-main: #000000;
-            --text-muted: #555555;
-            --btn-bg: #102b41;
+            --bg-color: #f0f4f5;
+            --text-main: #003249;
+            --text-muted: #5271ff;
+            --btn-bg: #007ea7;
             --white: #ffffff;
         }
 
@@ -34,8 +34,9 @@
             justify-content: space-between;
             align-items: center;
             padding: 1rem 3rem;
-            background-color: #dcdcdc;
-            /* Light gray from image */
+            background-color: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #ccdbdc;
         }
 
         .brand {
@@ -127,10 +128,13 @@
 
         .upcoming-card {
             background-color: var(--white);
-            padding: 0.85rem 2rem;
+            padding: 1.25rem 2.5rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            border-radius: 16px;
+            border: 1px solid #ccdbdc;
+            box-shadow: 0 4px 6px -1px rgba(0, 50, 73, 0.05);
         }
 
         .upcoming-left {
@@ -186,10 +190,13 @@
 
         .completed-card {
             background-color: var(--white);
-            padding: 1rem 1.5rem;
+            padding: 1.25rem 2rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            border-radius: 16px;
+            border: 1px solid #ccdbdc;
+            box-shadow: 0 4px 6px -1px rgba(0, 50, 73, 0.05);
         }
 
         .completed-left {

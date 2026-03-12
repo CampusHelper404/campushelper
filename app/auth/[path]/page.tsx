@@ -1,11 +1,18 @@
-import { AuthView } from "@daveyplate/better-auth-ui"
-import { authViewPaths } from "@daveyplate/better-auth-ui/server"
 import Link from "next/link"
+import { LoginForm } from "@/components/auth/login-form"
+import { SignupForm } from "@/components/auth/signup-form"
+import "../auth.css"
 
 export const dynamicParams = false
 
 export function generateStaticParams() {
-    return Object.values(authViewPaths).map((path) => ({ path }))
+    return [
+        { path: "sign-in" },
+        { path: "sign-up" },
+        { path: "forgot-password" },
+        { path: "reset-password" },
+        { path: "callback" },
+    ]
 }
 
 export default async function AuthPage({
@@ -15,31 +22,37 @@ export default async function AuthPage({
 }) {
     const { path } = await params
 
-    return (
-        <main className="flex grow flex-col items-center justify-center gap-4 self-center p-4 md:p-6">
-            <AuthView path={path} />
+    const renderForm = () => {
+        switch (path) {
+            case "sign-in":
+                return <LoginForm />
+            case "sign-up":
+                return <SignupForm />
+            default:
+                return (
+                    <div className="flex flex-col items-center gap-4">
+                        <p className="text-muted-foreground">This page is under construction.</p>
+                        <Link href="/auth/sign-in" className="text-primary underline">Back to Login</Link>
+                    </div>
+                )
+        }
+    }
 
-            {!["callback", "sign-out"].includes(path) && (
-                <p className="w-3xs text-center text-muted-foreground text-xs">
-                    By continuing, you agree to our{" "}
-                    <Link
-                        className="text-warning underline"
-                        href="/terms"
-                        target="_blank"
-                    >
-                        Terms of Service
-                    </Link>{" "}
-                    and{" "}
-                    <Link
-                        className="text-warning underline"
-                        href="/privacy"
-                        target="_blank"
-                    >
-                        Privacy Policy
-                    </Link>
-                    .
-                </p>
-            )}
+    return (
+        <main className="flex grow flex-col items-center justify-center p-2 min-h-screen">
+            <div className="flex flex-col items-center w-full max-w-fit gap-2">
+                {renderForm()}
+                
+                {!["callback", "sign-out"].includes(path) && (
+                    <p className="w-full text-center text-muted-foreground text-[10px] leading-tight opacity-70">
+                        By continuing, you agree to our{" "}
+                        <Link className="text-warning underline decoration-warning/30" href="/terms" target="_blank">Terms of Service</Link>
+                        {" "}and{" "}
+                        <Link className="text-warning underline decoration-warning/30" href="/privacy" target="_blank">Privacy Policy</Link>
+                        .
+                    </p>
+                )}
+            </div>
         </main>
     )
 }

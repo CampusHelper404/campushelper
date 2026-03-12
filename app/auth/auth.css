@@ -1,0 +1,339 @@
+/* Extracted styles for Login and Signup from public/styles.css */
+
+:root {
+    --color-primary: #007ea7;
+    --color-primary-light: #80ced7;
+    --color-primary-dark: #003249;
+    --color-dark: #003249;
+    --color-dark-navy: #001a26;
+    --color-text: #003249;
+    --color-text-light: #5271ff;
+    --color-bg: #f0f4f5;
+    --color-bg-hero: #ccdbdc;
+    --color-white: #ffffff;
+    --color-border: #ccdbdc;
+    --color-badge-bg: #003249;
+    --color-badge-text: #ffffff;
+    --color-stat-number: #007ea7;
+    --color-btn-bg: #007ea7;
+    --color-btn-text: #ffffff;
+    --color-btn-hover: #005f7e;
+    --color-signup-border: #003249;
+
+    --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-display: 'Inter', sans-serif;
+
+    --radius-sm: 8px;
+    --radius-md: 14px;
+    --radius-lg: 24px;
+    --radius-xl: 36px;
+    --radius-pill: 9999px;
+
+    --shadow-sm: 0 1px 2px rgba(0, 50, 73, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 50, 73, 0.1), 0 2px 4px -1px rgba(0, 50, 73, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 50, 73, 0.1), 0 4px 6px -2px rgba(0, 50, 73, 0.05);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 50, 73, 0.1), 0 10px 10px -5px rgba(0, 50, 73, 0.04);
+    --shadow-card: 0 20px 40px -12px rgba(0, 50, 73, 0.2);
+
+    --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-normal: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+    --glass-bg: rgba(255, 255, 255, 0.7);
+    --glass-border: rgba(204, 219, 220, 0.5);
+    --glass-blur: 12px;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.login-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-bg);
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+}
+
+.login-container {
+    max-width: 940px;
+    width: 100%;
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    overflow: hidden;
+    box-shadow: var(--shadow-xl);
+    animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.login-form-panel {
+    padding: 32px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.login-title {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: var(--color-dark);
+    letter-spacing: -0.03em;
+}
+
+.login-welcome {
+    font-size: 0.95rem;
+    color: var(--color-text-light);
+    margin-top: -12px;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 12px;
+}
+
+.form-label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--color-dark);
+}
+
+.form-input {
+    padding: 12px 14px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    outline: none;
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.form-input:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(26, 138, 138, 0.1);
+}
+
+.password-wrapper {
+    position: relative;
+}
+
+.password-wrapper .form-input {
+    padding-right: 44px;
+    width: 100%;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-text-light);
+    padding: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color var(--transition-fast);
+}
+
+.password-toggle:hover {
+    color: var(--color-primary);
+}
+
+.form-options {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+}
+
+.remember-text {
+    font-size: 0.82rem;
+    color: var(--color-text);
+    font-weight: 500;
+}
+
+.forgot-password {
+    font-size: 0.82rem;
+    color: var(--color-text);
+    font-weight: 500;
+    transition: color var(--transition-fast);
+}
+
+.forgot-password:hover {
+    color: var(--color-primary);
+}
+
+.login-btn {
+    padding: 10px 32px;
+    background: var(--color-btn-bg);
+    color: var(--color-btn-text);
+    font-size: 0.9rem;
+    font-weight: 600;
+    border: none;
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    box-shadow: 0 4px 16px rgba(26, 35, 50, 0.25);
+    letter-spacing: 0.01em;
+    margin-top: 4px;
+}
+
+.login-btn:hover:not(:disabled) {
+    background: var(--color-btn-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(26, 35, 50, 0.3);
+}
+
+.login-btn:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+.login-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.social-login-separator {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 8px 0;
+    color: var(--color-text-light);
+    font-size: 0.75rem;
+}
+
+.social-login-separator::before,
+.social-login-separator::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--color-border);
+}
+
+.social-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 11px 24px;
+    background: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--color-dark);
+    cursor: pointer;
+    transition: all var(--transition-normal);
+}
+
+.social-btn:hover {
+    background: var(--color-bg-hero);
+    border-color: var(--color-primary-light);
+}
+
+.signup-prompt {
+    font-size: 0.85rem;
+    color: var(--color-text);
+    text-align: center;
+    font-weight: 500;
+}
+
+.signup-link {
+    color: var(--color-primary);
+    font-weight: 600;
+    text-decoration: underline;
+    transition: color var(--transition-fast);
+}
+
+.login-illustration {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeInRight 0.8s ease 0.2s forwards;
+    opacity: 1; /* Changed from 0 to ensure visibility without complex animation triggering */
+}
+
+.login-illustration img {
+    max-width: 100%;
+    height: auto;
+    max-height: 340px;
+    object-fit: contain;
+}
+
+.signup-ellipse {
+    position: relative;
+}
+
+.signup-ellipse .ellipse-bg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 320px;
+    height: auto;
+    z-index: 0;
+}
+
+.signup-ellipse .signup-img {
+    position: relative;
+    z-index: 1;
+    max-width: 100%;
+    max-height: 340px;
+    object-fit: contain;
+}
+
+@media (max-width: 768px) {
+    .login-container {
+        grid-template-columns: 1fr;
+        gap: 36px;
+    }
+
+    .login-form-panel {
+        padding: 32px 26px 36px;
+        max-width: 460px;
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    .login-illustration img {
+        max-height: 300px;
+    }
+}

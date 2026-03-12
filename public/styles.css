@@ -2,42 +2,49 @@
    CSS Variables & Design Tokens
    ======================================== */
 :root {
-    --color-primary: #1a8a8a;
-    --color-primary-light: #2ab5b5;
-    --color-primary-dark: #136b6b;
-    --color-dark: #1a2332;
-    --color-dark-navy: #0f1923;
-    --color-text: #2d3748;
-    --color-text-light: #64748b;
-    --color-bg: #dfe8ec;
-    --color-bg-hero: #e8eff3;
+    --color-primary: #007ea7;
+    --color-primary-light: #80ced7;
+    --color-primary-dark: #003249;
+    --color-dark: #003249;
+    --color-dark-navy: #001a26;
+    --color-text: #003249;
+    --color-text-light: #5271ff;
+    /* Adjusted for better contrast on light backgrounds */
+    --color-bg: #f0f4f5;
+    --color-bg-hero: #ccdbdc;
     --color-white: #ffffff;
-    --color-border: #c8d6df;
-    --color-badge-bg: #1a2332;
+    --color-border: #ccdbdc;
+    --color-badge-bg: #003249;
     --color-badge-text: #ffffff;
-    --color-stat-number: #1a8a8a;
-    --color-btn-bg: #1a2332;
+    --color-stat-number: #007ea7;
+    --color-btn-bg: #007ea7;
     --color-btn-text: #ffffff;
-    --color-btn-hover: #2d3f54;
-    --color-signup-border: #1a2332;
+    --color-btn-hover: #005f7e;
+    --color-signup-border: #003249;
 
     --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    --font-display: 'Playfair Display', Georgia, serif;
+    --font-display: 'Inter', sans-serif;
+    /* Modernized to Inter for a cleaner look */
 
-    --radius-sm: 6px;
-    --radius-md: 12px;
-    --radius-lg: 20px;
-    --radius-xl: 30px;
-    --radius-pill: 50px;
+    --radius-sm: 8px;
+    --radius-md: 14px;
+    --radius-lg: 24px;
+    --radius-xl: 36px;
+    --radius-pill: 9999px;
 
-    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
-    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
-    --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.12);
-    --shadow-card: 0 8px 32px rgba(26, 35, 50, 0.1);
+    --shadow-sm: 0 1px 2px rgba(0, 50, 73, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 50, 73, 0.1), 0 2px 4px -1px rgba(0, 50, 73, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 50, 73, 0.1), 0 4px 6px -2px rgba(0, 50, 73, 0.05);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 50, 73, 0.1), 0 10px 10px -5px rgba(0, 50, 73, 0.04);
+    --shadow-card: 0 20px 40px -12px rgba(0, 50, 73, 0.2);
 
-    --transition-fast: 0.2s ease;
-    --transition-normal: 0.3s ease;
-    --transition-slow: 0.5s ease;
+    --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-normal: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+    --glass-bg: rgba(255, 255, 255, 0.7);
+    --glass-border: rgba(204, 219, 220, 0.5);
+    --glass-blur: 12px;
 }
 
 /* ========================================
@@ -91,17 +98,18 @@ img {
     left: 0;
     right: 0;
     z-index: 1000;
-    background: var(--color-bg);
+    background: transparent;
     border-bottom: 1px solid transparent;
     transition: all var(--transition-normal);
     padding: 0 24px;
 }
 
 .navbar.scrolled {
-    background: rgba(223, 232, 236, 0.95);
-    backdrop-filter: blur(12px);
-    border-bottom-color: var(--color-border);
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    border-bottom-color: var(--glass-border);
     box-shadow: var(--shadow-sm);
+    padding: 4px 24px;
 }
 
 .nav-container {
@@ -221,9 +229,9 @@ img {
     left: 0;
     right: 0;
     bottom: 0;
-    background: 
-        radial-gradient(ellipse at 20% 50%, rgba(26, 138, 138, 0.03) 0%, transparent 60%),
-        radial-gradient(ellipse at 80% 30%, rgba(26, 35, 50, 0.02) 0%, transparent 50%);
+    background:
+        radial-gradient(circle at 10% 20%, rgba(128, 206, 215, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(0, 126, 167, 0.1) 0%, transparent 40%);
     pointer-events: none;
 }
 
@@ -250,17 +258,19 @@ img {
 .trust-badge {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    background: var(--color-badge-bg);
-    color: var(--color-badge-text);
-    padding: 8px 20px;
+    gap: 10px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(4px);
+    color: var(--color-dark);
+    padding: 10px 24px;
     border-radius: var(--radius-pill);
-    font-size: 0.82rem;
-    font-weight: 500;
+    font-size: 0.85rem;
+    font-weight: 600;
     letter-spacing: 0.01em;
     width: fit-content;
-    animation: fadeInUp 0.6s ease forwards;
-    box-shadow: 0 2px 8px rgba(26, 35, 50, 0.2);
+    animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--glass-border);
 }
 
 .badge-dot {
@@ -274,12 +284,12 @@ img {
 /* Hero Title */
 .hero-title {
     font-family: var(--font-display);
-    font-size: 3.2rem;
+    font-size: clamp(3rem, 8vw, 4.5rem);
     font-weight: 800;
     color: var(--color-dark);
-    line-height: 1.1;
-    letter-spacing: -0.03em;
-    animation: fadeInUp 0.6s ease 0.1s forwards;
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+    animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
     opacity: 0;
 }
 
@@ -326,24 +336,24 @@ img {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 14px 32px;
+    padding: 16px 40px;
     background: var(--color-btn-bg);
     color: var(--color-btn-text);
-    font-size: 0.95rem;
+    font-size: 1rem;
     font-weight: 600;
     border-radius: var(--radius-pill);
     width: fit-content;
     transition: all var(--transition-normal);
-    animation: fadeInUp 0.6s ease 0.4s forwards;
+    animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
     opacity: 0;
-    box-shadow: 0 4px 16px rgba(26, 35, 50, 0.25);
+    box-shadow: 0 10px 20px -5px rgba(0, 126, 167, 0.4);
     letter-spacing: 0.01em;
 }
 
 .cta-button:hover {
     background: var(--color-btn-hover);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(26, 35, 50, 0.3);
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 15px 30px -10px rgba(0, 126, 167, 0.5);
 }
 
 .cta-button:active {
@@ -366,45 +376,39 @@ img {
     border-radius: var(--radius-lg);
     overflow: hidden;
     box-shadow: var(--shadow-card);
-    transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+    transition: all var(--transition-normal);
     background: var(--color-white);
-    border: 3px solid rgba(26, 35, 50, 0.08);
+    border: 1px solid var(--glass-border);
 }
 
 .image-card:hover {
-    transform: translateY(-4px) scale(1.01);
-    box-shadow: 0 12px 40px rgba(26, 35, 50, 0.18);
+    transform: translateY(-8px) scale(1.02) rotate(1deg);
+    box-shadow: 0 30px 60px -15px rgba(0, 50, 73, 0.3);
 }
 
 .image-card img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    /* Preserve image quality on zoom */
-    image-rendering: -webkit-optimize-contrast;
-    image-rendering: crisp-edges;
+    image-rendering: auto;
 }
 
 .image-card-top {
     top: 0;
     right: 0;
-    width: 340px;
-    height: 240px;
+    width: 380px;
+    height: 260px;
     z-index: 2;
-    border: 3px solid var(--color-primary);
-}
-
-.image-card-top img {
-    object-position: center;
+    border: 4px solid var(--color-primary);
 }
 
 .image-card-bottom {
     bottom: 30px;
-    right: 40px;
-    width: 320px;
-    height: 230px;
+    right: 60px;
+    width: 360px;
+    height: 250px;
     z-index: 1;
-    border: 3px solid rgba(26, 138, 138, 0.3);
+    border: 4px solid var(--color-primary-light);
 }
 
 .image-card-bottom img {
@@ -419,6 +423,7 @@ img {
         opacity: 0;
         transform: translateY(20px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -430,6 +435,7 @@ img {
         opacity: 0;
         transform: translateX(30px);
     }
+
     to {
         opacity: 1;
         transform: translateX(0);
@@ -437,10 +443,13 @@ img {
 }
 
 @keyframes pulse {
-    0%, 100% {
+
+    0%,
+    100% {
         opacity: 1;
         transform: scale(1);
     }
+
     50% {
         opacity: 0.5;
         transform: scale(0.8);
@@ -582,6 +591,7 @@ img {
         opacity: 0;
         transform: translateY(-10px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -670,9 +680,17 @@ img {
     opacity: 0;
 }
 
-.feature-card:nth-child(1) { animation-delay: 0.1s; }
-.feature-card:nth-child(2) { animation-delay: 0.25s; }
-.feature-card:nth-child(3) { animation-delay: 0.4s; }
+.feature-card:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.feature-card:nth-child(2) {
+    animation-delay: 0.25s;
+}
+
+.feature-card:nth-child(3) {
+    animation-delay: 0.4s;
+}
 
 .feature-icon-wrapper {
     width: 110px;
@@ -989,9 +1007,17 @@ img {
     opacity: 0;
 }
 
-.step-card:nth-child(1) { animation-delay: 0.15s; }
-.step-card:nth-child(2) { animation-delay: 0.3s; }
-.step-card:nth-child(3) { animation-delay: 0.45s; }
+.step-card:nth-child(1) {
+    animation-delay: 0.15s;
+}
+
+.step-card:nth-child(2) {
+    animation-delay: 0.3s;
+}
+
+.step-card:nth-child(3) {
+    animation-delay: 0.45s;
+}
 
 .step-card:hover {
     transform: translateY(-4px);
@@ -1512,55 +1538,53 @@ img {
 }
 
 /* ========================================
-   Login Page
+   Login & Signup Pages
    ======================================== */
 .login-section {
-    padding-top: 64px;
     min-height: 100vh;
     display: flex;
     align-items: center;
+    justify-content: center;
     background: var(--color-bg);
+    padding: 80px 24px 40px;
+    position: relative;
+    overflow: hidden;
 }
 
 .login-container {
-    max-width: 1050px;
-    margin: 0 auto;
-    padding: 40px 24px 60px;
+    max-width: 1000px;
+    width: 100%;
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 50px;
-    align-items: center;
-    width: 100%;
+    overflow: hidden;
+    box-shadow: var(--shadow-xl);
+    animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Login Form Panel */
 .login-form-panel {
-    background: #b8ced6;
-    border-radius: var(--radius-lg);
-    padding: 40px 38px 44px;
+    padding: 60px;
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    animation: fadeInUp 0.6s ease forwards;
+    gap: 32px;
 }
 
 .login-title {
-    font-family: var(--font-display);
-    font-size: 1.5rem;
+    font-size: 2.2rem;
     font-weight: 800;
     color: var(--color-dark);
-    text-align: center;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.03em;
 }
 
 .login-welcome {
-    font-size: 0.9rem;
-    color: var(--color-text);
-    font-weight: 500;
-    margin-bottom: 8px;
+    font-size: 1rem;
+    color: var(--color-text-light);
+    margin-top: -24px;
 }
 
-/* Form */
 .login-form {
     display: flex;
     flex-direction: column;
@@ -1570,23 +1594,17 @@ img {
 .form-group {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 8px;
+    margin-bottom: 20px;
 }
 
 .form-label {
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     font-weight: 600;
     color: var(--color-dark);
 }
 
 .form-input {
-    width: 100%;
-    padding: 12px 14px;
-    font-size: 0.9rem;
-    font-family: var(--font-primary);
-    color: var(--color-text);
-    background: var(--color-white);
-    border: 1px solid rgba(200, 214, 223, 0.8);
     border-radius: var(--radius-sm);
     outline: none;
     transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
