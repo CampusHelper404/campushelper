@@ -162,72 +162,70 @@ document.addEventListener('DOMContentLoaded', () => {
         revealElements.forEach(el => revealObserver.observe(el));
     }
 
-});
-// ---- FAQ Accordion ----
-const faqItems = document.querySelectorAll('.faq-item');
+    // ---- FAQ Accordion ----
+    const faqItems = document.querySelectorAll('.faq-item');
 
-if (faqItems.length > 0) {
-    faqItems.forEach(item => {
-        const question = item.querySelector('.faq-question');
-        question.addEventListener('click', () => {
-            const isActive = item.classList.contains('active');
-
-            // Close all other FAQ items
-            faqItems.forEach(other => {
-                other.classList.remove('active');
-                const btn = other.querySelector('.faq-question');
-                if (btn) btn.setAttribute('aria-expanded', 'false');
-            });
-
-            // Toggle current item
-            if (!isActive) {
-                item.classList.add('active');
-                question.setAttribute('aria-expanded', 'true');
-            }
-        });
-    });
-}
-
-// ---- FAQ Search Filtering ----
-const faqSearchInput = document.getElementById('faq-search-input');
-
-if (faqSearchInput && faqItems.length > 0) {
-    faqSearchInput.addEventListener('input', () => {
-        const query = faqSearchInput.value.toLowerCase().trim();
-
+    if (faqItems.length > 0) {
         faqItems.forEach(item => {
-            const questionText = item.querySelector('.faq-question-text').textContent.toLowerCase();
-            const answerText = item.querySelector('.faq-answer').textContent.toLowerCase();
+            const question = item.querySelector('.faq-question');
+            question.addEventListener('click', () => {
+                const isActive = item.classList.contains('active');
 
-            if (query === '' || questionText.includes(query) || answerText.includes(query)) {
-                item.classList.remove('faq-hidden');
+                // Close all other FAQ items
+                faqItems.forEach(other => {
+                    other.classList.remove('active');
+                    const btn = other.querySelector('.faq-question');
+                    if (btn) btn.setAttribute('aria-expanded', 'false');
+                });
+
+                // Toggle current item
+                if (!isActive) {
+                    item.classList.add('active');
+                    question.setAttribute('aria-expanded', 'true');
+                }
+            });
+        });
+    }
+
+    // ---- FAQ Search Filtering ----
+    const faqSearchInput = document.getElementById('faq-search-input');
+
+    if (faqSearchInput && faqItems.length > 0) {
+        faqSearchInput.addEventListener('input', () => {
+            const query = faqSearchInput.value.toLowerCase().trim();
+
+            faqItems.forEach(item => {
+                const questionText = item.querySelector('.faq-question-text').textContent.toLowerCase();
+                const answerText = item.querySelector('.faq-answer').textContent.toLowerCase();
+
+                if (query === '' || questionText.includes(query) || answerText.includes(query)) {
+                    item.classList.remove('faq-hidden');
+                } else {
+                    item.classList.add('faq-hidden');
+                }
+            });
+        });
+    }
+    // ---- Dashboard: View All Requests Toggle ----
+    const viewAllBtn = document.getElementById('dash-view-all');
+    const latestSection = document.getElementById('dash-latest');
+
+    if (viewAllBtn && latestSection) {
+        viewAllBtn.addEventListener('click', () => {
+            const isExpanded = latestSection.classList.contains('expanded');
+
+            if (isExpanded) {
+                // Collapse
+                latestSection.classList.remove('expanded');
+                viewAllBtn.setAttribute('aria-expanded', 'false');
+                viewAllBtn.innerHTML = 'View All Requests &rsaquo;';
             } else {
-                item.classList.add('faq-hidden');
+                // Expand
+                latestSection.classList.add('expanded');
+                viewAllBtn.setAttribute('aria-expanded', 'true');
+                viewAllBtn.innerHTML = 'Show Less &lsaquo;';
             }
         });
-    });
-}
-// ---- Dashboard: View All Requests Toggle ----
-const viewAllBtn = document.getElementById('dash-view-all');
-const latestSection = document.getElementById('dash-latest');
+    }
 
-if (viewAllBtn && latestSection) {
-    viewAllBtn.addEventListener('click', () => {
-        const isExpanded = latestSection.classList.contains('expanded');
-
-        if (isExpanded) {
-            // Collapse
-            latestSection.classList.remove('expanded');
-            viewAllBtn.setAttribute('aria-expanded', 'false');
-            viewAllBtn.innerHTML = 'View All Requests &rsaquo;';
-        } else {
-            // Expand
-            latestSection.classList.add('expanded');
-            viewAllBtn.setAttribute('aria-expanded', 'true');
-            viewAllBtn.innerHTML = 'Show Less &lsaquo;';
-        }
-    });
-}
-
-
-
+});

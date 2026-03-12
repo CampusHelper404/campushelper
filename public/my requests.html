@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Track your active, approved, and completed assistant requests on Campus Helper.">
+  <title>My Requests - Campus Helper</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700;800;900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+  <!-- Dashboard Navigation -->
+  <nav class="navbar dash-navbar" id="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="logo" id="logo">
+        <span class="logo-campus">Campus</span> <span class="logo-helper">Helper</span>
+      </a>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="user dashboard.html" class="nav-link" id="nav-dashboard">Dashboard</a></li>
+        <li><a href="find consultants.html" class="nav-link" id="nav-find-consultants">Find
+            Consultants</a></li>
+        <li><a href="my requests.html" class="nav-link nav-link-active" id="nav-my-requests">My Request</a></li>
+        <li><a href="#" class="nav-link" id="nav-settings">Settings</a></li>
+      </ul>
+      <a href="#" class="dash-profile-avatar" id="dash-profile-avatar" aria-label="User profile">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
+        </svg>
+      </a>
+      <button class="mobile-toggle" id="mobile-toggle" aria-label="Toggle navigation menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <main class="dash-main">
+
+    <!-- My Help Requests Banner -->
+    <section class="dash-welcome mr-banner" id="mr-banner">
+      <div class="dash-welcome-text">
+        <h1 class="dash-welcome-title" id="mr-title">My Help Requests</h1>
+        <p class="dash-welcome-subtitle" id="mr-subtitle">Track your active, approved, and completed
+          assistant request here.</p>
+      </div>
+      <div class="dash-welcome-image" id="mr-banner-image">
+        <img src="my requests.svg" alt="Education and student assistance illustration">
+      </div>
+    </section>
+
+    <!-- Requests Table Panel -->
+    <section class="mr-panel" id="mr-panel">
+      <h2 class="mr-panel-title" id="mr-panel-title">Requests</h2>
+
+      <div class="mr-table-wrapper" id="mr-table-wrapper">
+        <table class="mr-table" id="mr-table">
+          <thead>
+            <tr>
+              <th>SUBJECT</th>
+              <th>STATUS</th>
+              <th>CONSULTANT</th>
+              <th>ACTIONS</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr id="mr-row-1">
+              <td class="mr-subject">Discrete Mathematics</td>
+              <td><span class="mr-status mr-status-pending">PENDING</span></td>
+              <td>
+                <div class="mr-consultant">
+                  <div class="mr-consultant-avatar" aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"
+                      fill="currentColor">
+                      <path
+                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
+                    </svg>
+                  </div>
+                  <span class="mr-consultant-name">Mary May</span>
+                </div>
+              </td>
+              <td>
+                <button class="mr-cancel-btn" id="mr-cancel-1">Cancel request</button>
+              </td>
+            </tr>
+            <tr id="mr-row-2">
+              <td class="mr-subject">Survey Of Programming</td>
+              <td><span class="mr-status mr-status-pending">PENDING</span></td>
+              <td>
+                <div class="mr-consultant">
+                  <div class="mr-consultant-avatar" aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"
+                      fill="currentColor">
+                      <path
+                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
+                    </svg>
+                  </div>
+                  <span class="mr-consultant-name">Prince Lamptey</span>
+                </div>
+              </td>
+              <td>
+                <button class="mr-cancel-btn" id="mr-cancel-2">Cancel request</button>
+              </td>
+            </tr>
+            <tr id="mr-row-3">
+              <td class="mr-subject">Operational Research</td>
+              <td><span class="mr-status mr-status-completed">COMPLETED</span></td>
+              <td>
+                <div class="mr-consultant">
+                  <div class="mr-consultant-avatar" aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"
+                      fill="currentColor">
+                      <path
+                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
+                    </svg>
+                  </div>
+                  <span class="mr-consultant-name">Desmond Addo</span>
+                </div>
+              </td>
+              <td>
+                <!-- No action for completed requests -->
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
