@@ -304,133 +304,112 @@
         </div>
     </header>
 
-    <main>
-        <div class="request-card">
-            <div class="request-left">
-                <div class="datetime">
-                    <span>23/03/25</span>
-                    <span class="time">8:00am</span>
-                </div>
-                <div class="separator"></div>
-                <div class="student-details">
-                    <div class="student-avatar"></div>
-                    <div class="student-text">
-                        <h3>Kwabena Fosu</h3>
-                        <p>CSM 293</p>
-                    </div>
-                </div>
-            </div>
-            <div class="actions">
-                <button>Accept</button>
-                <button>Decline</button>
-            </div>
-        </div>
-
-        <div class="request-card">
-            <div class="request-left">
-                <div class="datetime">
-                    <span>20/03/25</span>
-                    <span class="time">2:45pm</span>
-                </div>
-                <div class="separator"></div>
-                <div class="student-details">
-                    <div class="student-avatar"></div>
-                    <div class="student-text">
-                        <h3>Mary Ansong</h3>
-                        <p>CSM 152</p>
-                    </div>
-                </div>
-            </div>
-            <div class="actions">
-                <button>Accept</button>
-                <button>Decline</button>
-            </div>
-        </div>
-
-        <div class="request-card">
-            <div class="request-left">
-                <div class="datetime">
-                    <span>20/03/25</span>
-                    <span class="time">5:30pm</span>
-                </div>
-                <div class="separator"></div>
-                <div class="student-details">
-                    <div class="student-avatar"></div>
-                    <div class="student-text">
-                        <h3>Anita Dadson</h3>
-                        <p>ACC 122</p>
-                    </div>
-                </div>
-            </div>
-            <div class="actions">
-                <button>Accept</button>
-                <button>Decline</button>
-            </div>
-        </div>
-
-        <div class="request-card">
-            <div class="request-left">
-                <div class="datetime">
-                    <span>18/03/25</span>
-                    <span class="time">12:15pm</span>
-                </div>
-                <div class="separator"></div>
-                <div class="student-details">
-                    <div class="student-avatar"></div>
-                    <div class="student-text">
-                        <h3>Kwaku Boateng</h3>
-                        <p>STATS 356</p>
-                    </div>
-                </div>
-            </div>
-            <div class="actions">
-                <button>Accept</button>
-                <button>Decline</button>
-            </div>
-        </div>
-
-        <div class="request-card">
-            <div class="request-left">
-                <div class="datetime">
-                    <span>18/03/25</span>
-                    <span class="time">6:17pm</span>
-                </div>
-                <div class="separator"></div>
-                <div class="student-details">
-                    <div class="student-avatar"></div>
-                    <div class="student-text">
-                        <h3>Amina Amuzu</h3>
-                        <p>CSM 156</p>
-                    </div>
-                </div>
-            </div>
-            <div class="actions">
-                <button>Accept</button>
-                <button>Decline</button>
-            </div>
-        </div>
-
-        <div class="request-card">
-            <div class="request-left">
-                <div class="datetime">
-                    <span>17/03/25</span>
-                    <span class="time">7:45am</span>
-                </div>
-                <div class="separator"></div>
-                <div class="student-details">
-                    <div class="student-avatar"></div>
-                    <div class="student-text">
-                        <h3>Kofi Boakye</h3>
-                        <p>CSM 134</p>
-                    </div>
-                </div>
-            </div>
-            <div class="actions">
-                <button>Accept</button>
-                <button>Decline</button>
-            </div>
+    <main id="requests-main">
+        <!-- Cards rendered dynamically by JavaScript -->
+        <div id="requests-loading" style="padding:2rem;text-align:center;color:#555;font-size:0.95rem;">
+            Loading requests…
         </div>
     </main>
+
+    <!-- Shared API client -->
+    <script src="api.js"></script>
+    <script>
+        // ── Auth guard ─────────────────────────────────────────────
+        requireAuth();
+
+        // ── Avatar initials ────────────────────────────────────────
+        const cu = getUser();
+        if (cu) {
+            document.querySelectorAll('.avatar').forEach(el => {
+                const name = cu.full_name || cu.email || 'Me';
+                el.textContent = name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+            });
+        }
+
+        // ── Helpers ────────────────────────────────────────────────
+        function formatDate(isoStr) {
+            if (!isoStr) return '--/--/--';
+            const d = new Date(isoStr);
+            return `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${String(d.getFullYear()).slice(2)}`;
+        }
+
+        function formatTime(isoStr) {
+            if (!isoStr) return '';
+            const d = new Date(isoStr);
+            let h = d.getHours(), m = d.getMinutes();
+            const ampm = h >= 12 ? 'pm' : 'am';
+            h = h % 12 || 12;
+            return `${h}:${String(m).padStart(2, '0')}${ampm}`;
+        }
+
+        // ── Accept / Decline ───────────────────────────────────────
+        async function handleAction(id, action) {
+            const btn = event.target;
+            btn.disabled = true;
+            btn.textContent = '…';
+            const status = action === 'accept' ? 'accepted' : 'declined';
+            try {
+                await apiFetch(`/api/help-requests/${id}`, { method: 'PATCH', body: { status } });
+                loadRequests();
+            } catch (err) {
+                alert('Failed: ' + err.message);
+                btn.disabled = false;
+                btn.textContent = action === 'accept' ? 'Accept' : 'Decline';
+            }
+        }
+
+        // ── Render ─────────────────────────────────────────────────
+        function renderCards(requests) {
+            const main = document.getElementById('requests-main');
+            const loading = document.getElementById('requests-loading');
+            if (loading) loading.remove();
+
+            if (!requests || requests.length === 0) {
+                main.innerHTML = '<p style="padding:2rem;text-align:center;color:#555;">No pending requests at the moment.</p>';
+                return;
+            }
+
+            main.innerHTML = requests.map(r => `
+          <div class="request-card">
+            <div class="request-left">
+              <div class="datetime">
+                <span>${formatDate(r.preferred_date || r.created_at)}</span>
+                <span class="time">${formatTime(r.preferred_time ? (r.preferred_date + 'T' + r.preferred_time) : r.created_at)}</span>
+              </div>
+              <div class="separator"></div>
+              <div class="student-details">
+                <div class="student-avatar"></div>
+                <div class="student-text">
+                  <h3>${r.title || 'Help Request'}</h3>
+                  <p>${r.course_code || r.course_name || 'No course specified'}</p>
+                </div>
+              </div>
+            </div>
+            <div class="actions">
+              <button onclick="handleAction(${r.id}, 'accept')">Accept</button>
+              <button onclick="handleAction(${r.id}, 'decline')" style="background:#666;">Decline</button>
+            </div>
+          </div>
+        `).join('');
+        }
+
+        // ── Load ───────────────────────────────────────────────────
+        async function loadRequests() {
+            try {
+                const requests = await api.getHelpRequests({ status: 'pending' });
+                renderCards(requests);
+            } catch (err) {
+                console.error(err);
+                if (err.status === 401) { clearToken(); window.location.href = 'login.html'; }
+                else {
+                    const main = document.getElementById('requests-main');
+                    if (main) main.innerHTML = `<p style="padding:2rem;color:#c0392b;">Failed to load requests: ${err.message}</p>`;
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadRequests);
+    </script>
 </body>
 
 </html>

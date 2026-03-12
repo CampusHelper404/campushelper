@@ -620,6 +620,151 @@
       </div>
     </main>
   </div>
+
+  <!-- Load shared API client -->
+  <script src="api.js"></script>
+  <script>
+    // ── Auth guard & personalise nav ────────────────────────────
+    requireAuth();
+
+    const currentUser = getUser();
+    if (currentUser) {
+      // Personalise welcome
+      const welcomeH1 = document.querySelector('.welcome-section h1');
+      if (welcomeH1) {
+        const firstName = (currentUser.full_name || currentUser.name || '').split(' ')[0];
+        welcomeH1.textContent = `Welcome, ${firstName || 'there'}!`;
+      }
+      // Avatar initials
+      document.querySelectorAll('.avatar').forEach(el => {
+        const name = currentUser.full_name || currentUser.email || 'You';
+        el.textContent = name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+      });
+    }
+
+    // ── Helpers ─────────────────────────────────────────────────
+    function pad(n) { return String(n).padStart(2, '0'); }
+
+    function formatTime(isoStr) {
+      if (!isoStr) return '';
+      const d = new Date(isoStr);
+      let h = d.getHours(), m = d.getMinutes();
+      const ampm = h >= 12 ? 'pm' : 'am';
+      h = h % 12 || 12;
+      return `${h}:${pad(m)}${ampm}`;
+    }
+
+    function initials(fullName) {
+      if (!fullName) return '?';
+      return fullName.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+    }
+
+    // ── Accept / Decline request ─────────────────────────────────
+    async function handleRequestAction(id, action) {
+      const status = action === 'accept' ? 'accepted' : 'declined';
+      try {
+        await apiFetch(`/api/help-requests/${id}`, { method: 'PATCH', body: { status } });
+        loadDashboard(); // Reload data
+      } catch (err) {
+        alert('Action failed: ' + err.message);
+      }
+    }
+
+    // ── Render: New Requests section ─────────────────────────────
+    function renderRequestsList(requests) {
+      const container = document.querySelector('.requests-list');
+      if (!container) return;
+
+      if (!requests || requests.length === 0) {
+        container.innerHTML = '<p style="font-size:0.85rem;color:#555;padding:0.5rem 0;">No pending requests.</p>';
+        return;
+      }
+
+      container.innerHTML = requests.slice(0, 3).map(r => `
+        <div class="request-item">
+          <div class="req-info-wrap">
+            <div class="req-avatar" style="display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:700;color:#102b41;">
+              ${initials(r.student_name || r.title)}
+            </div>
+            <div class="req-text">
+              <span class="req-name">${r.student_name || r.title || 'Unknown'}</span>
+              <span class="req-course">${r.course_code || r.course_name || 'No course'}</span>
+            </div>
+          </div>
+          <div class="req-actions">
+            <button class="req-btn" onclick="handleRequestAction(${r.id}, 'accept')">Accept</button>
+            <button class="req-btn" style="background:#888;" onclick="handleRequestAction(${r.id}, 'decline')">Decline</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // ── Render: Today's Sessions section ─────────────────────────
+    function renderSessionsList(sessions) {
+      const container = document.querySelector('.sessions-list');
+      if (!container) return;
+
+      const today = new Date().toDateString();
+      const todaySessions = sessions.filter(s => {
+        return s.start_time && new Date(s.start_time).toDateString() === today;
+      });
+
+      if (todaySessions.length === 0) {
+        container.innerHTML = '<p style="font-size:0.85rem;color:#555;padding:0.5rem 0;">No sessions scheduled for today.</p>';
+        return;
+      }
+
+      container.innerHTML = todaySessions.map(s => `
+        <div class="session-item">
+          <div class="session-info">
+            <div class="session-avatar"></div>
+            <div class="session-text">
+              <span class="session-name">${s.student_name || 'Student'}</span>
+              <span class="session-course">${s.course_name || s.notes || 'Session'}</span>
+            </div>
+          </div>
+          <span class="session-time">${formatTime(s.start_time)}</span>
+        </div>
+      `).join('');
+    }
+
+    // ── Update stat cards ────────────────────────────────────────
+    function updateStats(pendingCount, upcomingCount, allSessions) {
+      const statValues = document.querySelectorAll('.stat-value');
+      const completedCount = allSessions.filter(s => s.status === 'completed').length;
+      const uniqueStudents = new Set(allSessions.map(s => s.student_id)).size;
+
+      if (statValues[0]) statValues[0].textContent = pendingCount;
+      if (statValues[1]) statValues[1].textContent = upcomingCount;
+      if (statValues[2]) statValues[2].textContent = uniqueStudents || '-';
+      if (statValues[3]) statValues[3].textContent = completedCount;
+    }
+
+    // ── Main load function ───────────────────────────────────────
+    async function loadDashboard() {
+      try {
+        const [helpRequests, sessions] = await Promise.all([
+          api.getHelpRequests({ status: 'pending' }),
+          api.getSessions({ status: 'upcoming' }),
+        ]);
+
+        // Also get all sessions for stats
+        const allSessions = await api.getSessions({});
+
+        updateStats(helpRequests.length, sessions.length, allSessions);
+        renderRequestsList(helpRequests);
+        renderSessionsList(allSessions);
+      } catch (err) {
+        console.error('Dashboard load error:', err);
+        if (err.status === 401) {
+          clearToken();
+          window.location.href = 'login.html';
+        }
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', loadDashboard);
+  </script>
 </body>
 
 </html>
