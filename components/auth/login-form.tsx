@@ -18,7 +18,7 @@ export function LoginForm() {
         const { error } = await authClient.signIn.email({
             email,
             password,
-            callbackURL: "/consultant-dashboard.html", // Or your dashboard route
+            callbackURL: "/user-dashboard", // redirects to role-appropriate dashboard
         })
         setIsLoading(false)
 
@@ -30,14 +30,14 @@ export function LoginForm() {
     const loginWithGoogle = async () => {
         await authClient.signIn.social({
             provider: "google",
-            callbackURL: "/consultant-dashboard.html",
+            callbackURL: "/user-dashboard",
         })
     }
 
     const loginWithGithub = async () => {
         await authClient.signIn.social({
             provider: "github",
-            callbackURL: "/consultant-dashboard.html",
+            callbackURL: "/user-dashboard",
         })
     }
 

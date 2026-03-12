@@ -1,15 +1,8 @@
 import { z } from 'zod';
 import { TRPCError } from '@trpc/server';
-import { baseProcedure, createTRPCRouter, protectedProcedure } from '../init';
-import {
-  createApi,
-  setToken,
-  removeToken,
-  type UserRole,
-  type HelpRequestStatus,
-  type SessionStatus,
-  type PaymentStatus,
-} from '@/lib/api';
+import { adminProcedure, baseProcedure, consultantProcedure, createTRPCRouter, protectedProcedure } from '../init';
+import { prisma } from '@/lib/prisma';
+import { HelpRequestStatus, SessionStatus, UserRole } from '@/lib/generated/prisma/client';
 
 function err(e: unknown) {
   return (e as Error).message;
@@ -17,50 +10,16 @@ function err(e: unknown) {
 
 export const appRouter = createTRPCRouter({
   // ── Auth ───────────────────────────────────────────────────────────────────
+  // Note: Most auth is handled directly by better-auth, but we keep these for compatibility
   auth: createTRPCRouter({
-    register: baseProcedure
-      .input(z.object({
-        full_name: z.string().min(1),
-        email: z.string().email(),
-        password: z.string().min(8),
-        role: z.enum(['student', 'helper', 'both', 'admin']),
-        bio: z.string().optional(),
-        avatar_url: z.string().url().optional(),
-      }))
-      .mutation(async ({ input }) => {
-        try {
-          const result = await createApi().auth.register(input);
-          if (typeof window !== 'undefined') setToken(result.token);
-          return result;
-        } catch (e) {
-          throw new TRPCError({ code: 'BAD_REQUEST', message: err(e) });
-        }
-      }),
-
-    login: baseProcedure
-      .input(z.object({ email: z.string().email(), password: z.string() }))
-      .mutation(async ({ input }) => {
-        try {
-          const result = await createApi().auth.login(input.email, input.password);
-          if (typeof window !== 'undefined') setToken(result.token);
-          return result;
-        } catch (e) {
-          throw new TRPCError({ code: 'UNAUTHORIZED', message: err(e) });
-        }
-      }),
-
     me: protectedProcedure
       .query(async ({ ctx }) => {
-        try {
-          return await createApi(ctx.token).auth.me();
-        } catch (e) {
-          throw new TRPCError({ code: 'UNAUTHORIZED', message: err(e) });
-        }
+        return ctx.session.user;
       }),
 
     logout: baseProcedure
       .mutation(() => {
-        if (typeof window !== 'undefined') removeToken();
+        // Sign out is handled by the better-auth client
         return { success: true };
       }),
   }),
@@ -69,45 +28,62 @@ export const appRouter = createTRPCRouter({
   users: createTRPCRouter({
     me: protectedProcedure
       .query(async ({ ctx }) => {
-        try {
-          return await createApi(ctx.token).users.me();
-        } catch (e) {
-          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: err(e) });
-        }
+        return await prisma.user.findUnique({
+          where: { id: ctx.session.user.id }
+        });
       }),
 
     updateMe: protectedProcedure
       .input(z.object({
-        full_name: z.string().optional(),
-        bio: z.string().optional(),
-        avatar_url: z.string().optional(),
+        name: z.string().optional(),
+        image: z.string().optional(),
+        // role is removed to prevent self-escalation
       }))
       .mutation(async ({ input, ctx }) => {
-        try {
-          return await createApi(ctx.token).users.updateMe(input);
-        } catch (e) {
-          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: err(e) });
-        }
+        return await prisma.user.update({
+          where: { id: ctx.session.user.id },
+          data: input,
+        });
+      }),
+
+    setOnboarded: protectedProcedure
+      .mutation(async ({ ctx }) => {
+        return await prisma.user.update({
+          where: { id: ctx.session.user.id },
+          data: { onboarded: true },
+        });
+      }),
+
+    becomeConsultant: protectedProcedure
+      .mutation(async ({ ctx }) => {
+        // Create profile if doesn't exist
+        const profile = await prisma.consultantProfile.upsert({
+          where: { userId: ctx.session.user.id },
+          update: { verificationStatus: 'PENDING' },
+          create: {
+            userId: ctx.session.user.id,
+            verificationStatus: 'PENDING',
+          }
+        });
+
+        // Note: We deliberately do NOT update the user role to 'CONSULTANT' here anymore.
+        // They must remain a STUDENT until an admin approves them via the verification queue.
+        return profile;
       }),
 
     getById: baseProcedure
-      .input(z.object({ id: z.number() }))
+      .input(z.object({ id: z.string() }))
       .query(async ({ input }) => {
-        try {
-          return await createApi().users.getById(input.id);
-        } catch (e) {
-          throw new TRPCError({ code: 'NOT_FOUND', message: err(e) });
-        }
+        const user = await prisma.user.findUnique({
+          where: { id: input.id }
+        });
+        if (!user) throw new TRPCError({ code: 'NOT_FOUND', message: 'User not found' });
+        return user;
       }),
 
-    list: baseProcedure
-      .input(z.object({ role: z.enum(['student', 'helper', 'both', 'admin']).optional() }).optional())
-      .query(async ({ input }) => {
-        try {
-          return await createApi().users.list(input?.role as UserRole);
-        } catch (e) {
-          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: err(e) });
-        }
+    list: adminProcedure
+      .query(async () => {
+        return await prisma.user.findMany();
       }),
   }),
 
@@ -115,21 +91,15 @@ export const appRouter = createTRPCRouter({
   courses: createTRPCRouter({
     list: baseProcedure
       .query(async () => {
-        try {
-          return await createApi().courses.list();
-        } catch (e) {
-          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: err(e) });
-        }
+        return await prisma.course.findMany();
       }),
 
-    create: protectedProcedure
+    create: adminProcedure
       .input(z.object({ code: z.string(), name: z.string(), description: z.string().optional() }))
-      .mutation(async ({ input, ctx }) => {
-        try {
-          return await createApi(ctx.token).courses.create(input);
-        } catch (e) {
-          throw new TRPCError({ code: 'BAD_REQUEST', message: err(e) });
-        }
+      .mutation(async ({ input }) => {
+        return await prisma.course.create({
+          data: input,
+        });
       }),
   }),
 
@@ -137,55 +107,93 @@ export const appRouter = createTRPCRouter({
   helpRequests: createTRPCRouter({
     list: baseProcedure
       .input(z.object({
-        status: z.enum(['pending', 'accepted', 'declined', 'cancelled', 'completed']).optional(),
-        student_id: z.number().optional(),
-        course_id: z.number().optional(),
+        status: z.nativeEnum(HelpRequestStatus).optional(),
+        studentId: z.string().optional(),
+        courseId: z.string().optional(),
       }).optional())
       .query(async ({ input }) => {
-        try {
-          return await createApi().helpRequests.list(input as { status?: HelpRequestStatus; student_id?: number; course_id?: number });
-        } catch (e) {
-          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: err(e) });
-        }
+        return await prisma.helpRequest.findMany({
+          where: {
+            status: input?.status,
+            studentId: input?.studentId,
+            courseId: input?.courseId,
+          },
+          include: {
+            course: true,
+            student: true,
+            acceptedBy: true,
+          },
+        });
       }),
 
     getById: baseProcedure
-      .input(z.object({ id: z.number() }))
+      .input(z.object({ id: z.string() }))
       .query(async ({ input }) => {
-        try {
-          return await createApi().helpRequests.getById(input.id);
-        } catch (e) {
-          throw new TRPCError({ code: 'NOT_FOUND', message: err(e) });
-        }
+        const request = await prisma.helpRequest.findUnique({
+          where: { id: input.id },
+          include: {
+            course: true,
+            student: true,
+          },
+        });
+        if (!request) throw new TRPCError({ code: 'NOT_FOUND', message: 'Request not found' });
+        return request;
       }),
 
     create: protectedProcedure
       .input(z.object({
-        course_id: z.number().optional(),
+        courseId: z.string().optional(),
         title: z.string().min(1),
         description: z.string().optional(),
-        preferred_date: z.string().optional(),
-        preferred_time: z.string().optional(),
+        preferredDate: z.date().optional(),
+        preferredTime: z.string().optional(),
       }))
       .mutation(async ({ input, ctx }) => {
-        try {
-          return await createApi(ctx.token).helpRequests.create(input);
-        } catch (e) {
-          throw new TRPCError({ code: 'BAD_REQUEST', message: err(e) });
-        }
+        return await prisma.helpRequest.create({
+          data: {
+            ...input,
+            studentId: ctx.session.user.id,
+          },
+        });
       }),
 
     updateStatus: protectedProcedure
       .input(z.object({
-        id: z.number(),
-        status: z.enum(['pending', 'accepted', 'declined', 'cancelled', 'completed']),
+        id: z.string(),
+        status: z.nativeEnum(HelpRequestStatus),
       }))
       .mutation(async ({ input, ctx }) => {
-        try {
-          return await createApi(ctx.token).helpRequests.updateStatus(input.id, input.status as HelpRequestStatus);
-        } catch (e) {
-          throw new TRPCError({ code: 'BAD_REQUEST', message: err(e) });
+        const request = await prisma.helpRequest.findUnique({ where: { id: input.id } });
+        if (!request) throw new TRPCError({ code: 'NOT_FOUND' });
+
+        // Logic: Students can cancel their own. Admins can do anything. 
+        // Consultants can accept/decline if they aren't the student.
+        const isAdmin = (ctx.session.user as any).role === 'ADMIN';
+        const isOwner = request.studentId === ctx.session.user.id;
+        const isConsultant = (ctx.session.user as any).role === 'CONSULTANT';
+
+        if (!isAdmin && !isOwner && !isConsultant) {
+          throw new TRPCError({ code: 'FORBIDDEN', message: 'Not authorized to update this request' });
         }
+
+        if (isOwner && input.status !== 'CANCELLED' && !isAdmin) {
+          throw new TRPCError({ code: 'FORBIDDEN', message: 'Students can only cancel their requests' });
+        }
+
+        if (isConsultant && input.status === 'ACCEPTED') {
+          return await prisma.helpRequest.update({
+            where: { id: input.id },
+            data: { 
+              status: input.status,
+              acceptedById: ctx.session.user.id
+            },
+          });
+        }
+
+        return await prisma.helpRequest.update({
+          where: { id: input.id },
+          data: { status: input.status },
+        });
       }),
   }),
 
@@ -193,120 +201,162 @@ export const appRouter = createTRPCRouter({
   sessions: createTRPCRouter({
     list: baseProcedure
       .input(z.object({
-        helper_id: z.number().optional(),
-        student_id: z.number().optional(),
-        status: z.enum(['upcoming', 'in_progress', 'completed', 'cancelled', 'no_show']).optional(),
+        consultantId: z.string().optional(),
+        studentId: z.string().optional(),
+        status: z.nativeEnum(SessionStatus).optional(),
       }).optional())
       .query(async ({ input }) => {
-        try {
-          return await createApi().sessions.list(input as { helper_id?: number; student_id?: number; status?: SessionStatus });
-        } catch (e) {
-          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: err(e) });
-        }
+        return await prisma.academicSession.findMany({
+          where: {
+            consultantId: input?.consultantId,
+            studentId: input?.studentId,
+            status: input?.status,
+          },
+          include: {
+            request: {
+              include: { course: true }
+            },
+            student: true,
+            consultant: true,
+          },
+        });
       }),
 
     getById: baseProcedure
-      .input(z.object({ id: z.number() }))
+      .input(z.object({ id: z.string() }))
       .query(async ({ input }) => {
-        try {
-          return await createApi().sessions.getById(input.id);
-        } catch (e) {
-          throw new TRPCError({ code: 'NOT_FOUND', message: err(e) });
-        }
+        const session = await prisma.academicSession.findUnique({
+          where: { id: input.id },
+          include: {
+            request: {
+              include: { course: true }
+            },
+            student: true,
+            consultant: true,
+          },
+        });
+        if (!session) throw new TRPCError({ code: 'NOT_FOUND', message: 'Session not found' });
+        return session;
       }),
 
     create: protectedProcedure
       .input(z.object({
-        help_request_id: z.number(),
-        student_id: z.number(),
-        helper_id: z.number(),
-        start_time: z.string(),
-        end_time: z.string().optional(),
-        meeting_link: z.string().optional(),
+        requestId: z.string(),
+        studentId: z.string(),
+        consultantId: z.string(),
+        startTime: z.date(),
+        endTime: z.date().optional(),
+        meetingLink: z.string().optional(),
         notes: z.string().optional(),
       }))
-      .mutation(async ({ input, ctx }) => {
-        try {
-          return await createApi(ctx.token).sessions.create(input);
-        } catch (e) {
-          throw new TRPCError({ code: 'BAD_REQUEST', message: err(e) });
-        }
+      .mutation(async ({ input }) => {
+        return await prisma.academicSession.create({
+          data: input,
+        });
       }),
 
     updateStatus: protectedProcedure
       .input(z.object({
-        id: z.number(),
-        status: z.enum(['upcoming', 'in_progress', 'completed', 'cancelled', 'no_show']),
+        id: z.string(),
+        status: z.nativeEnum(SessionStatus),
       }))
       .mutation(async ({ input, ctx }) => {
-        try {
-          return await createApi(ctx.token).sessions.updateStatus(input.id, input.status as SessionStatus);
-        } catch (e) {
-          throw new TRPCError({ code: 'BAD_REQUEST', message: err(e) });
+        const session = await prisma.academicSession.findUnique({ where: { id: input.id } });
+        if (!session) throw new TRPCError({ code: 'NOT_FOUND' });
+
+        const isParticipant = session.studentId === ctx.session.user.id || session.consultantId === ctx.session.user.id;
+        const isAdmin = (ctx.session.user as any).role === 'ADMIN';
+
+        if (!isParticipant && !isAdmin) {
+          throw new TRPCError({ code: 'FORBIDDEN', message: 'Not authorized' });
         }
+
+        return await prisma.academicSession.update({
+          where: { id: input.id },
+          data: { status: input.status },
+        });
       }),
   }),
 
   // ── Helpers ────────────────────────────────────────────────────────────────
   helpers: createTRPCRouter({
     list: baseProcedure
-      .input(z.object({ course_id: z.number().optional() }).optional())
+      .input(z.object({ courseId: z.string().optional() }).optional())
       .query(async ({ input }) => {
-        try {
-          return await createApi().helpers.list(input?.course_id);
-        } catch (e) {
-          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: err(e) });
-        }
+        return await prisma.consultantProfile.findMany({
+          where: {
+            expertise: input?.courseId ? { some: { id: input.courseId } } : undefined,
+          },
+          include: {
+            user: true,
+            expertise: true,
+          },
+        });
       }),
 
-    setCourses: protectedProcedure
-      .input(z.object({ helperId: z.number(), course_ids: z.array(z.number()) }))
+    setCourses: consultantProcedure
+      .input(z.object({ consultantId: z.string(), courseIds: z.array(z.string()) }))
       .mutation(async ({ input, ctx }) => {
-        try {
-          return await createApi(ctx.token).helpers.setCourses(input.helperId, input.course_ids);
-        } catch (e) {
-          throw new TRPCError({ code: 'BAD_REQUEST', message: err(e) });
+        const profile = await prisma.consultantProfile.findUnique({ where: { id: input.consultantId } });
+        if (!profile) throw new TRPCError({ code: 'NOT_FOUND' });
+        
+        if (profile.userId !== ctx.session.user.id && (ctx.session.user as any).role !== 'ADMIN') {
+          throw new TRPCError({ code: 'FORBIDDEN' });
         }
+
+        return await prisma.consultantProfile.update({
+          where: { id: input.consultantId },
+          data: {
+            expertise: {
+              set: input.courseIds.map(id => ({ id })),
+            },
+          },
+        });
       }),
   }),
 
   // ── Availability ───────────────────────────────────────────────────────────
   availability: createTRPCRouter({
     list: baseProcedure
-      .input(z.object({ helper_id: z.number() }))
+      .input(z.object({ consultantId: z.string() }))
       .query(async ({ input }) => {
-        try {
-          return await createApi().availability.list(input.helper_id);
-        } catch (e) {
-          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: err(e) });
-        }
+        return await prisma.availabilitySlot.findMany({
+          where: { consultantId: input.consultantId },
+        });
       }),
 
     create: protectedProcedure
       .input(z.object({
+        consultantId: z.string(),
         weekday: z.number().min(0).max(6).optional(),
-        start_time: z.string(),
-        end_time: z.string(),
-        specific_date: z.string().optional(),
-        is_recurring: z.boolean().optional(),
+        startTime: z.string(),
+        endTime: z.string(),
+        specificDate: z.date().optional(),
+        isRecurring: z.boolean().optional(),
       }))
-      .mutation(async ({ input, ctx }) => {
-        try {
-          return await createApi(ctx.token).availability.create(input);
-        } catch (e) {
-          throw new TRPCError({ code: 'BAD_REQUEST', message: err(e) });
-        }
+      .mutation(async ({ input }) => {
+        return await prisma.availabilitySlot.create({
+          data: input,
+        });
       }),
 
-    delete: protectedProcedure
-      .input(z.object({ id: z.number() }))
+    delete: consultantProcedure
+      .input(z.object({ id: z.string() }))
       .mutation(async ({ input, ctx }) => {
-        try {
-          await createApi(ctx.token).availability.delete(input.id);
-          return { success: true };
-        } catch (e) {
-          throw new TRPCError({ code: 'NOT_FOUND', message: err(e) });
+        const slot = await prisma.availabilitySlot.findUnique({
+          where: { id: input.id },
+          include: { consultant: true }
+        });
+        if (!slot) throw new TRPCError({ code: 'NOT_FOUND' });
+
+        if (slot.consultant.userId !== ctx.session.user.id && (ctx.session.user as any).role !== 'ADMIN') {
+          throw new TRPCError({ code: 'FORBIDDEN' });
         }
+
+        await prisma.availabilitySlot.delete({
+          where: { id: input.id },
+        });
+        return { success: true };
       }),
   }),
 
@@ -314,83 +364,100 @@ export const appRouter = createTRPCRouter({
   messages: createTRPCRouter({
     list: protectedProcedure
       .input(z.object({
-        help_request_id: z.number().optional(),
-        session_id: z.number().optional(),
+        requestId: z.string().optional(),
+        sessionId: z.string().optional(),
       }))
       .query(async ({ input, ctx }) => {
-        try {
-          return await createApi(ctx.token).messages.list(input);
-        } catch (e) {
-          throw new TRPCError({ code: 'BAD_REQUEST', message: err(e) });
-        }
+        return await prisma.message.findMany({
+          where: {
+            requestId: input.requestId,
+            sessionId: input.sessionId,
+            OR: [
+              { senderId: ctx.session.user.id },
+              { recipientId: ctx.session.user.id },
+            ],
+          },
+          orderBy: { sentAt: 'asc' },
+        });
       }),
 
     send: protectedProcedure
       .input(z.object({
-        help_request_id: z.number().optional(),
-        session_id: z.number().optional(),
-        recipient_id: z.number(),
+        requestId: z.string().optional(),
+        sessionId: z.string().optional(),
+        recipientId: z.string(),
         content: z.string().min(1),
       }))
       .mutation(async ({ input, ctx }) => {
-        try {
-          return await createApi(ctx.token).messages.send(input);
-        } catch (e) {
-          throw new TRPCError({ code: 'BAD_REQUEST', message: err(e) });
-        }
+        return await prisma.message.create({
+          data: {
+            ...input,
+            senderId: ctx.session.user.id,
+          },
+        });
       }),
   }),
 
   // ── Reviews ────────────────────────────────────────────────────────────────
   reviews: createTRPCRouter({
     list: protectedProcedure
-      .input(z.object({ user_id: z.number(), as: z.enum(['helper', 'student']).optional() }))
-      .query(async ({ input, ctx }) => {
-        try {
-          return await createApi(ctx.token).reviews.list(input.user_id, input.as);
-        } catch (e) {
-          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: err(e) });
-        }
+      .input(z.object({ userId: z.string() }))
+      .query(async ({ input }) => {
+        return await prisma.review.findMany({
+          where: {
+            session: {
+              OR: [
+                { studentId: input.userId },
+                { consultantId: input.userId },
+              ],
+            },
+          },
+          include: {
+            session: {
+              include: {
+                student: true,
+                consultant: true,
+                request: { include: { course: true } },
+              },
+            },
+          },
+        });
       }),
 
     create: protectedProcedure
       .input(z.object({
-        session_id: z.number(),
-        reviewer_id: z.number(),
-        reviewee_id: z.number(),
-        reviewer_role: z.enum(['student', 'helper']),
-        rating: z.number().min(1).max(5).optional(),
+        sessionId: z.string(),
+        rating: z.number().min(1).max(5),
         comment: z.string().optional(),
       }))
-      .mutation(async ({ input, ctx }) => {
-        try {
-          return await createApi(ctx.token).reviews.create(input);
-        } catch (e) {
-          throw new TRPCError({ code: 'BAD_REQUEST', message: err(e) });
-        }
+      .mutation(async ({ input }) => {
+        return await prisma.review.create({
+          data: input,
+        });
       }),
   }),
 
   // ── Notifications ──────────────────────────────────────────────────────────
   notifications: createTRPCRouter({
     list: protectedProcedure
-      .input(z.object({ unread_only: z.boolean().optional() }))
+      .input(z.object({ unreadOnly: z.boolean().optional() }))
       .query(async ({ input, ctx }) => {
-        try {
-          return await createApi(ctx.token).notifications.list(input.unread_only);
-        } catch (e) {
-          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: err(e) });
-        }
+        return await prisma.notification.findMany({
+          where: {
+            userId: ctx.session.user.id,
+            isRead: input?.unreadOnly ? false : undefined,
+          },
+          orderBy: { sentAt: 'desc' },
+        });
       }),
 
     markRead: protectedProcedure
-      .input(z.object({ id: z.number() }))
-      .mutation(async ({ input, ctx }) => {
-        try {
-          return await createApi(ctx.token).notifications.markRead(input.id);
-        } catch (e) {
-          throw new TRPCError({ code: 'NOT_FOUND', message: err(e) });
-        }
+      .input(z.object({ id: z.string() }))
+      .mutation(async ({ input }) => {
+        return await prisma.notification.update({
+          where: { id: input.id },
+          data: { isRead: true, readAt: new Date() },
+        });
       }),
   }),
 
@@ -398,35 +465,42 @@ export const appRouter = createTRPCRouter({
   payments: createTRPCRouter({
     list: protectedProcedure
       .input(z.object({
-        student_id: z.number().optional(),
-        helper_id: z.number().optional(),
-        status: z.enum(['pending', 'authorized', 'captured', 'refunded', 'failed', 'cancelled']).optional(),
+        studentId: z.string().optional(),
+        consultantId: z.string().optional(),
+        status: z.string().optional(),
       }).optional())
-      .query(async ({ input, ctx }) => {
-        try {
-          return await createApi(ctx.token).payments.list(input as { student_id?: number; helper_id?: number; status?: PaymentStatus });
-        } catch (e) {
-          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: err(e) });
-        }
+      .query(async ({ input }) => {
+        return await prisma.payment.findMany({
+          where: {
+            studentId: input?.studentId,
+            consultantId: input?.consultantId,
+            status: input?.status,
+          },
+          include: {
+            session: {
+              include: {
+                request: { include: { course: true } }
+              }
+            }
+          },
+        });
       }),
 
     create: protectedProcedure
       .input(z.object({
-        session_id: z.number(),
-        student_id: z.number(),
-        helper_id: z.number(),
-        amount_cents: z.number().positive(),
+        sessionId: z.string(),
+        studentId: z.string(),
+        consultantId: z.string(),
+        amountCents: z.number().positive(),
         currency: z.string().length(3).optional(),
-        status: z.enum(['pending', 'authorized', 'captured', 'refunded', 'failed', 'cancelled']).optional(),
+        status: z.string().optional(),
         provider: z.string().optional(),
-        provider_payment_id: z.string().optional(),
+        providerPaymentId: z.string().optional(),
       }))
-      .mutation(async ({ input, ctx }) => {
-        try {
-          return await createApi(ctx.token).payments.create(input);
-        } catch (e) {
-          throw new TRPCError({ code: 'BAD_REQUEST', message: err(e) });
-        }
+      .mutation(async ({ input }) => {
+        return await prisma.payment.create({
+          data: input,
+        });
       }),
   }),
 
@@ -434,35 +508,35 @@ export const appRouter = createTRPCRouter({
   verification: createTRPCRouter({
     submit: protectedProcedure
       .mutation(async ({ ctx }) => {
-        try {
-          return await createApi(ctx.token).verification.submit();
-        } catch (e) {
-          throw new TRPCError({ code: 'BAD_REQUEST', message: err(e) });
-        }
+        return await prisma.consultantProfile.update({
+          where: { userId: ctx.session.user.id },
+          data: { verificationStatus: 'PENDING' },
+        });
       }),
 
-    list: protectedProcedure
-      .input(z.object({ status: z.enum(['pending', 'approved', 'rejected']).optional() }))
-      .query(async ({ input, ctx }) => {
-        try {
-          return await createApi(ctx.token).verification.list(input.status);
-        } catch (e) {
-          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: err(e) });
-        }
+    list: adminProcedure
+      .input(z.object({ status: z.string().optional() }))
+      .query(async ({ input }) => {
+        return await prisma.consultantProfile.findMany({
+          where: { verificationStatus: input.status },
+          include: { user: true },
+        });
       }),
 
-    review: protectedProcedure
+    review: adminProcedure
       .input(z.object({
-        id: z.number(),
-        status: z.enum(['approved', 'rejected']),
-        rejection_reason: z.string().optional(),
+        id: z.string(),
+        status: z.string(),
+        rejectionReason: z.string().optional(),
       }))
-      .mutation(async ({ input, ctx }) => {
-        try {
-          return await createApi(ctx.token).verification.review(input.id, { status: input.status, rejection_reason: input.rejection_reason });
-        } catch (e) {
-          throw new TRPCError({ code: 'BAD_REQUEST', message: err(e) });
-        }
+      .mutation(async ({ input }) => {
+        return await prisma.consultantProfile.update({
+          where: { id: input.id },
+          data: {
+            verificationStatus: input.status,
+            rejectionReason: input.rejectionReason,
+          },
+        });
       }),
   }),
 
@@ -470,27 +544,108 @@ export const appRouter = createTRPCRouter({
   analytics: createTRPCRouter({
     track: protectedProcedure
       .input(z.object({
-        event_type: z.string(),
-        session_id: z.number().optional(),
-        help_request_id: z.number().optional(),
+        eventType: z.string(),
+        sessionId: z.string().optional(),
+        requestId: z.string().optional(),
         metadata: z.record(z.string(), z.unknown()).optional(),
       }))
       .mutation(async ({ input, ctx }) => {
-        try {
-          return await createApi(ctx.token).analytics.track(input.event_type, input);
-        } catch (e) {
-          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: err(e) });
-        }
+        return await prisma.analyticsEvent.create({
+          data: {
+            ...input,
+            userId: ctx.session.user.id,
+            metadata: input.metadata as any,
+          },
+        });
       }),
 
     summary: protectedProcedure
-      .query(async ({ ctx }) => {
-        try {
-          return await createApi(ctx.token).analytics.summary();
-        } catch (e) {
-          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: err(e) });
-        }
+      .query(async () => {
+        const events = await prisma.analyticsEvent.findMany({
+          orderBy: { timestamp: 'desc' },
+          take: 100,
+        });
+        return { events };
       }),
+  }),
+
+  // ── Admin ──────────────────────────────────────────────────────────────────
+  admin: createTRPCRouter({
+    announcements: createTRPCRouter({
+      list: baseProcedure
+        .input(z.object({ role: z.nativeEnum(UserRole).optional() }).optional())
+        .query(async ({ input }) => {
+          return await prisma.announcement.findMany({
+            where: {
+              targetRole: input?.role,
+              isActive: true,
+            },
+            orderBy: { createdAt: 'desc' },
+          });
+        }),
+      create: adminProcedure
+        .input(z.object({
+          title: z.string(),
+          content: z.string(),
+          targetRole: z.nativeEnum(UserRole).optional(),
+          expiresAt: z.date().optional(),
+        }))
+        .mutation(async ({ input }) => {
+          return await prisma.announcement.create({ data: input });
+        }),
+    }),
+
+    reports: createTRPCRouter({
+      list: adminProcedure
+        .input(z.object({ status: z.string().optional() }))
+        .query(async ({ input }) => {
+          return await prisma.report.findMany({
+            where: { status: input.status },
+            include: { reporter: true, reportedUser: true, session: true },
+          });
+        }),
+      update: adminProcedure
+        .input(z.object({ id: z.string(), status: z.string(), adminNote: z.string().optional() }))
+        .mutation(async ({ input }) => {
+          return await prisma.report.update({
+            where: { id: input.id },
+            data: { status: input.status, adminNote: input.adminNote },
+          });
+        }),
+    }),
+
+    auditLogs: adminProcedure
+      .query(async () => {
+        return await prisma.auditLog.findMany({
+          orderBy: { timestamp: 'desc' },
+          include: { user: true },
+          take: 100,
+        });
+      }),
+  }),
+
+  // ── Discovery ──────────────────────────────────────────────────────────────
+  discovery: createTRPCRouter({
+    departments: createTRPCRouter({
+      list: baseProcedure.query(async () => {
+        return await prisma.department.findMany({ include: { _count: { select: { courses: true } } } });
+      }),
+      create: adminProcedure
+        .input(z.object({ name: z.string(), description: z.string().optional() }))
+        .mutation(async ({ input }) => {
+          return await prisma.department.create({ data: input });
+        }),
+    }),
+    skills: createTRPCRouter({
+      list: baseProcedure.query(async () => {
+        return await prisma.skill.findMany();
+      }),
+      create: adminProcedure
+        .input(z.object({ name: z.string() }))
+        .mutation(async ({ input }) => {
+          return await prisma.skill.create({ data: input });
+        }),
+    }),
   }),
 });
 

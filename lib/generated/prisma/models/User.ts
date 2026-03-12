@@ -30,6 +30,8 @@ export type UserMinAggregateOutputType = {
   email: string | null
   emailVerified: boolean | null
   image: string | null
+  role: $Enums.UserRole | null
+  onboarded: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -40,6 +42,8 @@ export type UserMaxAggregateOutputType = {
   email: string | null
   emailVerified: boolean | null
   image: string | null
+  role: $Enums.UserRole | null
+  onboarded: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -50,6 +54,8 @@ export type UserCountAggregateOutputType = {
   email: number
   emailVerified: number
   image: number
+  role: number
+  onboarded: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -62,6 +68,8 @@ export type UserMinAggregateInputType = {
   email?: true
   emailVerified?: true
   image?: true
+  role?: true
+  onboarded?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -72,6 +80,8 @@ export type UserMaxAggregateInputType = {
   email?: true
   emailVerified?: true
   image?: true
+  role?: true
+  onboarded?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -82,6 +92,8 @@ export type UserCountAggregateInputType = {
   email?: true
   emailVerified?: true
   image?: true
+  role?: true
+  onboarded?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -165,6 +177,8 @@ export type UserGroupByOutputType = {
   email: string
   emailVerified: boolean
   image: string | null
+  role: $Enums.UserRole
+  onboarded: boolean
   createdAt: Date
   updatedAt: Date
   _count: UserCountAggregateOutputType | null
@@ -196,10 +210,25 @@ export type UserWhereInput = {
   email?: Prisma.StringFilter<"User"> | string
   emailVerified?: Prisma.BoolFilter<"User"> | boolean
   image?: Prisma.StringNullableFilter<"User"> | string | null
+  role?: Prisma.EnumUserRoleFilter<"User"> | $Enums.UserRole
+  onboarded?: Prisma.BoolFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   sessions?: Prisma.SessionListRelationFilter
   accounts?: Prisma.AccountListRelationFilter
+  requests?: Prisma.HelpRequestListRelationFilter
+  studentSessions?: Prisma.AcademicSessionListRelationFilter
+  consultantSessions?: Prisma.AcademicSessionListRelationFilter
+  consultantProfile?: Prisma.XOR<Prisma.ConsultantProfileNullableScalarRelationFilter, Prisma.ConsultantProfileWhereInput> | null
+  sentMessages?: Prisma.MessageListRelationFilter
+  receivedMessages?: Prisma.MessageListRelationFilter
+  notifications?: Prisma.NotificationListRelationFilter
+  analyticsEvents?: Prisma.AnalyticsEventListRelationFilter
+  reportsCreated?: Prisma.ReportListRelationFilter
+  reportsAbout?: Prisma.ReportListRelationFilter
+  auditLogs?: Prisma.AuditLogListRelationFilter
+  acceptedRequests?: Prisma.HelpRequestListRelationFilter
+  verificationReqs?: Prisma.VerificationRequestListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -208,10 +237,25 @@ export type UserOrderByWithRelationInput = {
   email?: Prisma.SortOrder
   emailVerified?: Prisma.SortOrder
   image?: Prisma.SortOrderInput | Prisma.SortOrder
+  role?: Prisma.SortOrder
+  onboarded?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   sessions?: Prisma.SessionOrderByRelationAggregateInput
   accounts?: Prisma.AccountOrderByRelationAggregateInput
+  requests?: Prisma.HelpRequestOrderByRelationAggregateInput
+  studentSessions?: Prisma.AcademicSessionOrderByRelationAggregateInput
+  consultantSessions?: Prisma.AcademicSessionOrderByRelationAggregateInput
+  consultantProfile?: Prisma.ConsultantProfileOrderByWithRelationInput
+  sentMessages?: Prisma.MessageOrderByRelationAggregateInput
+  receivedMessages?: Prisma.MessageOrderByRelationAggregateInput
+  notifications?: Prisma.NotificationOrderByRelationAggregateInput
+  analyticsEvents?: Prisma.AnalyticsEventOrderByRelationAggregateInput
+  reportsCreated?: Prisma.ReportOrderByRelationAggregateInput
+  reportsAbout?: Prisma.ReportOrderByRelationAggregateInput
+  auditLogs?: Prisma.AuditLogOrderByRelationAggregateInput
+  acceptedRequests?: Prisma.HelpRequestOrderByRelationAggregateInput
+  verificationReqs?: Prisma.VerificationRequestOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -223,10 +267,25 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   name?: Prisma.StringFilter<"User"> | string
   emailVerified?: Prisma.BoolFilter<"User"> | boolean
   image?: Prisma.StringNullableFilter<"User"> | string | null
+  role?: Prisma.EnumUserRoleFilter<"User"> | $Enums.UserRole
+  onboarded?: Prisma.BoolFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   sessions?: Prisma.SessionListRelationFilter
   accounts?: Prisma.AccountListRelationFilter
+  requests?: Prisma.HelpRequestListRelationFilter
+  studentSessions?: Prisma.AcademicSessionListRelationFilter
+  consultantSessions?: Prisma.AcademicSessionListRelationFilter
+  consultantProfile?: Prisma.XOR<Prisma.ConsultantProfileNullableScalarRelationFilter, Prisma.ConsultantProfileWhereInput> | null
+  sentMessages?: Prisma.MessageListRelationFilter
+  receivedMessages?: Prisma.MessageListRelationFilter
+  notifications?: Prisma.NotificationListRelationFilter
+  analyticsEvents?: Prisma.AnalyticsEventListRelationFilter
+  reportsCreated?: Prisma.ReportListRelationFilter
+  reportsAbout?: Prisma.ReportListRelationFilter
+  auditLogs?: Prisma.AuditLogListRelationFilter
+  acceptedRequests?: Prisma.HelpRequestListRelationFilter
+  verificationReqs?: Prisma.VerificationRequestListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -235,6 +294,8 @@ export type UserOrderByWithAggregationInput = {
   email?: Prisma.SortOrder
   emailVerified?: Prisma.SortOrder
   image?: Prisma.SortOrderInput | Prisma.SortOrder
+  role?: Prisma.SortOrder
+  onboarded?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
@@ -251,6 +312,8 @@ export type UserScalarWhereWithAggregatesInput = {
   email?: Prisma.StringWithAggregatesFilter<"User"> | string
   emailVerified?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   image?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  role?: Prisma.EnumUserRoleWithAggregatesFilter<"User"> | $Enums.UserRole
+  onboarded?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
 }
@@ -261,10 +324,25 @@ export type UserCreateInput = {
   email: string
   emailVerified?: boolean
   image?: string | null
+  role?: $Enums.UserRole
+  onboarded?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  requests?: Prisma.HelpRequestCreateNestedManyWithoutStudentInput
+  studentSessions?: Prisma.AcademicSessionCreateNestedManyWithoutStudentInput
+  consultantSessions?: Prisma.AcademicSessionCreateNestedManyWithoutConsultantInput
+  consultantProfile?: Prisma.ConsultantProfileCreateNestedOneWithoutUserInput
+  sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
+  receivedMessages?: Prisma.MessageCreateNestedManyWithoutRecipientInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  analyticsEvents?: Prisma.AnalyticsEventCreateNestedManyWithoutUserInput
+  reportsCreated?: Prisma.ReportCreateNestedManyWithoutReporterInput
+  reportsAbout?: Prisma.ReportCreateNestedManyWithoutReportedUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
+  acceptedRequests?: Prisma.HelpRequestCreateNestedManyWithoutAcceptedByInput
+  verificationReqs?: Prisma.VerificationRequestCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -273,10 +351,25 @@ export type UserUncheckedCreateInput = {
   email: string
   emailVerified?: boolean
   image?: string | null
+  role?: $Enums.UserRole
+  onboarded?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  requests?: Prisma.HelpRequestUncheckedCreateNestedManyWithoutStudentInput
+  studentSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutStudentInput
+  consultantSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutConsultantInput
+  consultantProfile?: Prisma.ConsultantProfileUncheckedCreateNestedOneWithoutUserInput
+  sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
+  receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutRecipientInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  analyticsEvents?: Prisma.AnalyticsEventUncheckedCreateNestedManyWithoutUserInput
+  reportsCreated?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
+  reportsAbout?: Prisma.ReportUncheckedCreateNestedManyWithoutReportedUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
+  acceptedRequests?: Prisma.HelpRequestUncheckedCreateNestedManyWithoutAcceptedByInput
+  verificationReqs?: Prisma.VerificationRequestUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -285,10 +378,25 @@ export type UserUpdateInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  requests?: Prisma.HelpRequestUpdateManyWithoutStudentNestedInput
+  studentSessions?: Prisma.AcademicSessionUpdateManyWithoutStudentNestedInput
+  consultantSessions?: Prisma.AcademicSessionUpdateManyWithoutConsultantNestedInput
+  consultantProfile?: Prisma.ConsultantProfileUpdateOneWithoutUserNestedInput
+  sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
+  receivedMessages?: Prisma.MessageUpdateManyWithoutRecipientNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  analyticsEvents?: Prisma.AnalyticsEventUpdateManyWithoutUserNestedInput
+  reportsCreated?: Prisma.ReportUpdateManyWithoutReporterNestedInput
+  reportsAbout?: Prisma.ReportUpdateManyWithoutReportedUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
+  acceptedRequests?: Prisma.HelpRequestUpdateManyWithoutAcceptedByNestedInput
+  verificationReqs?: Prisma.VerificationRequestUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -297,10 +405,25 @@ export type UserUncheckedUpdateInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  requests?: Prisma.HelpRequestUncheckedUpdateManyWithoutStudentNestedInput
+  studentSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutStudentNestedInput
+  consultantSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutConsultantNestedInput
+  consultantProfile?: Prisma.ConsultantProfileUncheckedUpdateOneWithoutUserNestedInput
+  sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
+  receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutRecipientNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  analyticsEvents?: Prisma.AnalyticsEventUncheckedUpdateManyWithoutUserNestedInput
+  reportsCreated?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
+  reportsAbout?: Prisma.ReportUncheckedUpdateManyWithoutReportedUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
+  acceptedRequests?: Prisma.HelpRequestUncheckedUpdateManyWithoutAcceptedByNestedInput
+  verificationReqs?: Prisma.VerificationRequestUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -309,6 +432,8 @@ export type UserCreateManyInput = {
   email: string
   emailVerified?: boolean
   image?: string | null
+  role?: $Enums.UserRole
+  onboarded?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -319,6 +444,8 @@ export type UserUpdateManyMutationInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -329,6 +456,8 @@ export type UserUncheckedUpdateManyInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -339,6 +468,8 @@ export type UserCountOrderByAggregateInput = {
   email?: Prisma.SortOrder
   emailVerified?: Prisma.SortOrder
   image?: Prisma.SortOrder
+  role?: Prisma.SortOrder
+  onboarded?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -349,6 +480,8 @@ export type UserMaxOrderByAggregateInput = {
   email?: Prisma.SortOrder
   emailVerified?: Prisma.SortOrder
   image?: Prisma.SortOrder
+  role?: Prisma.SortOrder
+  onboarded?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -359,6 +492,8 @@ export type UserMinOrderByAggregateInput = {
   email?: Prisma.SortOrder
   emailVerified?: Prisma.SortOrder
   image?: Prisma.SortOrder
+  role?: Prisma.SortOrder
+  onboarded?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -366,6 +501,11 @@ export type UserMinOrderByAggregateInput = {
 export type UserScalarRelationFilter = {
   is?: Prisma.UserWhereInput
   isNot?: Prisma.UserWhereInput
+}
+
+export type UserNullableScalarRelationFilter = {
+  is?: Prisma.UserWhereInput | null
+  isNot?: Prisma.UserWhereInput | null
 }
 
 export type StringFieldUpdateOperationsInput = {
@@ -380,8 +520,200 @@ export type NullableStringFieldUpdateOperationsInput = {
   set?: string | null
 }
 
+export type EnumUserRoleFieldUpdateOperationsInput = {
+  set?: $Enums.UserRole
+}
+
 export type DateTimeFieldUpdateOperationsInput = {
   set?: Date | string
+}
+
+export type UserCreateNestedOneWithoutRequestsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutRequestsInput, Prisma.UserUncheckedCreateWithoutRequestsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutRequestsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserCreateNestedOneWithoutAcceptedRequestsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAcceptedRequestsInput, Prisma.UserUncheckedCreateWithoutAcceptedRequestsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAcceptedRequestsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutRequestsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutRequestsInput, Prisma.UserUncheckedCreateWithoutRequestsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutRequestsInput
+  upsert?: Prisma.UserUpsertWithoutRequestsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutRequestsInput, Prisma.UserUpdateWithoutRequestsInput>, Prisma.UserUncheckedUpdateWithoutRequestsInput>
+}
+
+export type UserUpdateOneWithoutAcceptedRequestsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAcceptedRequestsInput, Prisma.UserUncheckedCreateWithoutAcceptedRequestsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAcceptedRequestsInput
+  upsert?: Prisma.UserUpsertWithoutAcceptedRequestsInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAcceptedRequestsInput, Prisma.UserUpdateWithoutAcceptedRequestsInput>, Prisma.UserUncheckedUpdateWithoutAcceptedRequestsInput>
+}
+
+export type UserCreateNestedOneWithoutStudentSessionsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutStudentSessionsInput, Prisma.UserUncheckedCreateWithoutStudentSessionsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutStudentSessionsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserCreateNestedOneWithoutConsultantSessionsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutConsultantSessionsInput, Prisma.UserUncheckedCreateWithoutConsultantSessionsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutConsultantSessionsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutStudentSessionsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutStudentSessionsInput, Prisma.UserUncheckedCreateWithoutStudentSessionsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutStudentSessionsInput
+  upsert?: Prisma.UserUpsertWithoutStudentSessionsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutStudentSessionsInput, Prisma.UserUpdateWithoutStudentSessionsInput>, Prisma.UserUncheckedUpdateWithoutStudentSessionsInput>
+}
+
+export type UserUpdateOneRequiredWithoutConsultantSessionsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutConsultantSessionsInput, Prisma.UserUncheckedCreateWithoutConsultantSessionsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutConsultantSessionsInput
+  upsert?: Prisma.UserUpsertWithoutConsultantSessionsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutConsultantSessionsInput, Prisma.UserUpdateWithoutConsultantSessionsInput>, Prisma.UserUncheckedUpdateWithoutConsultantSessionsInput>
+}
+
+export type UserCreateNestedOneWithoutConsultantProfileInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutConsultantProfileInput, Prisma.UserUncheckedCreateWithoutConsultantProfileInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutConsultantProfileInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutConsultantProfileNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutConsultantProfileInput, Prisma.UserUncheckedCreateWithoutConsultantProfileInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutConsultantProfileInput
+  upsert?: Prisma.UserUpsertWithoutConsultantProfileInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutConsultantProfileInput, Prisma.UserUpdateWithoutConsultantProfileInput>, Prisma.UserUncheckedUpdateWithoutConsultantProfileInput>
+}
+
+export type UserCreateNestedOneWithoutAnalyticsEventsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAnalyticsEventsInput, Prisma.UserUncheckedCreateWithoutAnalyticsEventsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAnalyticsEventsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneWithoutAnalyticsEventsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAnalyticsEventsInput, Prisma.UserUncheckedCreateWithoutAnalyticsEventsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAnalyticsEventsInput
+  upsert?: Prisma.UserUpsertWithoutAnalyticsEventsInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAnalyticsEventsInput, Prisma.UserUpdateWithoutAnalyticsEventsInput>, Prisma.UserUncheckedUpdateWithoutAnalyticsEventsInput>
+}
+
+export type UserCreateNestedOneWithoutVerificationReqsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutVerificationReqsInput, Prisma.UserUncheckedCreateWithoutVerificationReqsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutVerificationReqsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutVerificationReqsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutVerificationReqsInput, Prisma.UserUncheckedCreateWithoutVerificationReqsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutVerificationReqsInput
+  upsert?: Prisma.UserUpsertWithoutVerificationReqsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutVerificationReqsInput, Prisma.UserUpdateWithoutVerificationReqsInput>, Prisma.UserUncheckedUpdateWithoutVerificationReqsInput>
+}
+
+export type UserCreateNestedOneWithoutReportsCreatedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutReportsCreatedInput, Prisma.UserUncheckedCreateWithoutReportsCreatedInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutReportsCreatedInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserCreateNestedOneWithoutReportsAboutInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutReportsAboutInput, Prisma.UserUncheckedCreateWithoutReportsAboutInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutReportsAboutInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutReportsCreatedNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutReportsCreatedInput, Prisma.UserUncheckedCreateWithoutReportsCreatedInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutReportsCreatedInput
+  upsert?: Prisma.UserUpsertWithoutReportsCreatedInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutReportsCreatedInput, Prisma.UserUpdateWithoutReportsCreatedInput>, Prisma.UserUncheckedUpdateWithoutReportsCreatedInput>
+}
+
+export type UserUpdateOneWithoutReportsAboutNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutReportsAboutInput, Prisma.UserUncheckedCreateWithoutReportsAboutInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutReportsAboutInput
+  upsert?: Prisma.UserUpsertWithoutReportsAboutInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutReportsAboutInput, Prisma.UserUpdateWithoutReportsAboutInput>, Prisma.UserUncheckedUpdateWithoutReportsAboutInput>
+}
+
+export type UserCreateNestedOneWithoutAuditLogsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAuditLogsInput, Prisma.UserUncheckedCreateWithoutAuditLogsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAuditLogsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutAuditLogsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAuditLogsInput, Prisma.UserUncheckedCreateWithoutAuditLogsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAuditLogsInput
+  upsert?: Prisma.UserUpsertWithoutAuditLogsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAuditLogsInput, Prisma.UserUpdateWithoutAuditLogsInput>, Prisma.UserUncheckedUpdateWithoutAuditLogsInput>
+}
+
+export type UserCreateNestedOneWithoutSentMessagesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutSentMessagesInput, Prisma.UserUncheckedCreateWithoutSentMessagesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSentMessagesInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserCreateNestedOneWithoutReceivedMessagesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutReceivedMessagesInput, Prisma.UserUncheckedCreateWithoutReceivedMessagesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutReceivedMessagesInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutSentMessagesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutSentMessagesInput, Prisma.UserUncheckedCreateWithoutSentMessagesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSentMessagesInput
+  upsert?: Prisma.UserUpsertWithoutSentMessagesInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSentMessagesInput, Prisma.UserUpdateWithoutSentMessagesInput>, Prisma.UserUncheckedUpdateWithoutSentMessagesInput>
+}
+
+export type UserUpdateOneRequiredWithoutReceivedMessagesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutReceivedMessagesInput, Prisma.UserUncheckedCreateWithoutReceivedMessagesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutReceivedMessagesInput
+  upsert?: Prisma.UserUpsertWithoutReceivedMessagesInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutReceivedMessagesInput, Prisma.UserUpdateWithoutReceivedMessagesInput>, Prisma.UserUncheckedUpdateWithoutReceivedMessagesInput>
+}
+
+export type UserCreateNestedOneWithoutNotificationsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutNotificationsInput, Prisma.UserUncheckedCreateWithoutNotificationsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutNotificationsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutNotificationsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutNotificationsInput, Prisma.UserUncheckedCreateWithoutNotificationsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutNotificationsInput
+  upsert?: Prisma.UserUpsertWithoutNotificationsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutNotificationsInput, Prisma.UserUpdateWithoutNotificationsInput>, Prisma.UserUncheckedUpdateWithoutNotificationsInput>
 }
 
 export type UserCreateNestedOneWithoutSessionsInput = {
@@ -412,15 +744,1590 @@ export type UserUpdateOneRequiredWithoutAccountsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAccountsInput, Prisma.UserUpdateWithoutAccountsInput>, Prisma.UserUncheckedUpdateWithoutAccountsInput>
 }
 
+export type UserCreateWithoutRequestsInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  role?: $Enums.UserRole
+  onboarded?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  studentSessions?: Prisma.AcademicSessionCreateNestedManyWithoutStudentInput
+  consultantSessions?: Prisma.AcademicSessionCreateNestedManyWithoutConsultantInput
+  consultantProfile?: Prisma.ConsultantProfileCreateNestedOneWithoutUserInput
+  sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
+  receivedMessages?: Prisma.MessageCreateNestedManyWithoutRecipientInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  analyticsEvents?: Prisma.AnalyticsEventCreateNestedManyWithoutUserInput
+  reportsCreated?: Prisma.ReportCreateNestedManyWithoutReporterInput
+  reportsAbout?: Prisma.ReportCreateNestedManyWithoutReportedUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
+  acceptedRequests?: Prisma.HelpRequestCreateNestedManyWithoutAcceptedByInput
+  verificationReqs?: Prisma.VerificationRequestCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutRequestsInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  role?: $Enums.UserRole
+  onboarded?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  studentSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutStudentInput
+  consultantSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutConsultantInput
+  consultantProfile?: Prisma.ConsultantProfileUncheckedCreateNestedOneWithoutUserInput
+  sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
+  receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutRecipientInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  analyticsEvents?: Prisma.AnalyticsEventUncheckedCreateNestedManyWithoutUserInput
+  reportsCreated?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
+  reportsAbout?: Prisma.ReportUncheckedCreateNestedManyWithoutReportedUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
+  acceptedRequests?: Prisma.HelpRequestUncheckedCreateNestedManyWithoutAcceptedByInput
+  verificationReqs?: Prisma.VerificationRequestUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutRequestsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutRequestsInput, Prisma.UserUncheckedCreateWithoutRequestsInput>
+}
+
+export type UserCreateWithoutAcceptedRequestsInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  role?: $Enums.UserRole
+  onboarded?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  requests?: Prisma.HelpRequestCreateNestedManyWithoutStudentInput
+  studentSessions?: Prisma.AcademicSessionCreateNestedManyWithoutStudentInput
+  consultantSessions?: Prisma.AcademicSessionCreateNestedManyWithoutConsultantInput
+  consultantProfile?: Prisma.ConsultantProfileCreateNestedOneWithoutUserInput
+  sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
+  receivedMessages?: Prisma.MessageCreateNestedManyWithoutRecipientInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  analyticsEvents?: Prisma.AnalyticsEventCreateNestedManyWithoutUserInput
+  reportsCreated?: Prisma.ReportCreateNestedManyWithoutReporterInput
+  reportsAbout?: Prisma.ReportCreateNestedManyWithoutReportedUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
+  verificationReqs?: Prisma.VerificationRequestCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutAcceptedRequestsInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  role?: $Enums.UserRole
+  onboarded?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  requests?: Prisma.HelpRequestUncheckedCreateNestedManyWithoutStudentInput
+  studentSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutStudentInput
+  consultantSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutConsultantInput
+  consultantProfile?: Prisma.ConsultantProfileUncheckedCreateNestedOneWithoutUserInput
+  sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
+  receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutRecipientInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  analyticsEvents?: Prisma.AnalyticsEventUncheckedCreateNestedManyWithoutUserInput
+  reportsCreated?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
+  reportsAbout?: Prisma.ReportUncheckedCreateNestedManyWithoutReportedUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
+  verificationReqs?: Prisma.VerificationRequestUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutAcceptedRequestsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutAcceptedRequestsInput, Prisma.UserUncheckedCreateWithoutAcceptedRequestsInput>
+}
+
+export type UserUpsertWithoutRequestsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutRequestsInput, Prisma.UserUncheckedUpdateWithoutRequestsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutRequestsInput, Prisma.UserUncheckedCreateWithoutRequestsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutRequestsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutRequestsInput, Prisma.UserUncheckedUpdateWithoutRequestsInput>
+}
+
+export type UserUpdateWithoutRequestsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  studentSessions?: Prisma.AcademicSessionUpdateManyWithoutStudentNestedInput
+  consultantSessions?: Prisma.AcademicSessionUpdateManyWithoutConsultantNestedInput
+  consultantProfile?: Prisma.ConsultantProfileUpdateOneWithoutUserNestedInput
+  sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
+  receivedMessages?: Prisma.MessageUpdateManyWithoutRecipientNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  analyticsEvents?: Prisma.AnalyticsEventUpdateManyWithoutUserNestedInput
+  reportsCreated?: Prisma.ReportUpdateManyWithoutReporterNestedInput
+  reportsAbout?: Prisma.ReportUpdateManyWithoutReportedUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
+  acceptedRequests?: Prisma.HelpRequestUpdateManyWithoutAcceptedByNestedInput
+  verificationReqs?: Prisma.VerificationRequestUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutRequestsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  studentSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutStudentNestedInput
+  consultantSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutConsultantNestedInput
+  consultantProfile?: Prisma.ConsultantProfileUncheckedUpdateOneWithoutUserNestedInput
+  sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
+  receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutRecipientNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  analyticsEvents?: Prisma.AnalyticsEventUncheckedUpdateManyWithoutUserNestedInput
+  reportsCreated?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
+  reportsAbout?: Prisma.ReportUncheckedUpdateManyWithoutReportedUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
+  acceptedRequests?: Prisma.HelpRequestUncheckedUpdateManyWithoutAcceptedByNestedInput
+  verificationReqs?: Prisma.VerificationRequestUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserUpsertWithoutAcceptedRequestsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutAcceptedRequestsInput, Prisma.UserUncheckedUpdateWithoutAcceptedRequestsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutAcceptedRequestsInput, Prisma.UserUncheckedCreateWithoutAcceptedRequestsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutAcceptedRequestsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutAcceptedRequestsInput, Prisma.UserUncheckedUpdateWithoutAcceptedRequestsInput>
+}
+
+export type UserUpdateWithoutAcceptedRequestsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  requests?: Prisma.HelpRequestUpdateManyWithoutStudentNestedInput
+  studentSessions?: Prisma.AcademicSessionUpdateManyWithoutStudentNestedInput
+  consultantSessions?: Prisma.AcademicSessionUpdateManyWithoutConsultantNestedInput
+  consultantProfile?: Prisma.ConsultantProfileUpdateOneWithoutUserNestedInput
+  sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
+  receivedMessages?: Prisma.MessageUpdateManyWithoutRecipientNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  analyticsEvents?: Prisma.AnalyticsEventUpdateManyWithoutUserNestedInput
+  reportsCreated?: Prisma.ReportUpdateManyWithoutReporterNestedInput
+  reportsAbout?: Prisma.ReportUpdateManyWithoutReportedUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
+  verificationReqs?: Prisma.VerificationRequestUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutAcceptedRequestsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  requests?: Prisma.HelpRequestUncheckedUpdateManyWithoutStudentNestedInput
+  studentSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutStudentNestedInput
+  consultantSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutConsultantNestedInput
+  consultantProfile?: Prisma.ConsultantProfileUncheckedUpdateOneWithoutUserNestedInput
+  sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
+  receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutRecipientNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  analyticsEvents?: Prisma.AnalyticsEventUncheckedUpdateManyWithoutUserNestedInput
+  reportsCreated?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
+  reportsAbout?: Prisma.ReportUncheckedUpdateManyWithoutReportedUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
+  verificationReqs?: Prisma.VerificationRequestUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutStudentSessionsInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  role?: $Enums.UserRole
+  onboarded?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  requests?: Prisma.HelpRequestCreateNestedManyWithoutStudentInput
+  consultantSessions?: Prisma.AcademicSessionCreateNestedManyWithoutConsultantInput
+  consultantProfile?: Prisma.ConsultantProfileCreateNestedOneWithoutUserInput
+  sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
+  receivedMessages?: Prisma.MessageCreateNestedManyWithoutRecipientInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  analyticsEvents?: Prisma.AnalyticsEventCreateNestedManyWithoutUserInput
+  reportsCreated?: Prisma.ReportCreateNestedManyWithoutReporterInput
+  reportsAbout?: Prisma.ReportCreateNestedManyWithoutReportedUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
+  acceptedRequests?: Prisma.HelpRequestCreateNestedManyWithoutAcceptedByInput
+  verificationReqs?: Prisma.VerificationRequestCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutStudentSessionsInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  role?: $Enums.UserRole
+  onboarded?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  requests?: Prisma.HelpRequestUncheckedCreateNestedManyWithoutStudentInput
+  consultantSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutConsultantInput
+  consultantProfile?: Prisma.ConsultantProfileUncheckedCreateNestedOneWithoutUserInput
+  sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
+  receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutRecipientInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  analyticsEvents?: Prisma.AnalyticsEventUncheckedCreateNestedManyWithoutUserInput
+  reportsCreated?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
+  reportsAbout?: Prisma.ReportUncheckedCreateNestedManyWithoutReportedUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
+  acceptedRequests?: Prisma.HelpRequestUncheckedCreateNestedManyWithoutAcceptedByInput
+  verificationReqs?: Prisma.VerificationRequestUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutStudentSessionsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutStudentSessionsInput, Prisma.UserUncheckedCreateWithoutStudentSessionsInput>
+}
+
+export type UserCreateWithoutConsultantSessionsInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  role?: $Enums.UserRole
+  onboarded?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  requests?: Prisma.HelpRequestCreateNestedManyWithoutStudentInput
+  studentSessions?: Prisma.AcademicSessionCreateNestedManyWithoutStudentInput
+  consultantProfile?: Prisma.ConsultantProfileCreateNestedOneWithoutUserInput
+  sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
+  receivedMessages?: Prisma.MessageCreateNestedManyWithoutRecipientInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  analyticsEvents?: Prisma.AnalyticsEventCreateNestedManyWithoutUserInput
+  reportsCreated?: Prisma.ReportCreateNestedManyWithoutReporterInput
+  reportsAbout?: Prisma.ReportCreateNestedManyWithoutReportedUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
+  acceptedRequests?: Prisma.HelpRequestCreateNestedManyWithoutAcceptedByInput
+  verificationReqs?: Prisma.VerificationRequestCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutConsultantSessionsInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  role?: $Enums.UserRole
+  onboarded?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  requests?: Prisma.HelpRequestUncheckedCreateNestedManyWithoutStudentInput
+  studentSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutStudentInput
+  consultantProfile?: Prisma.ConsultantProfileUncheckedCreateNestedOneWithoutUserInput
+  sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
+  receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutRecipientInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  analyticsEvents?: Prisma.AnalyticsEventUncheckedCreateNestedManyWithoutUserInput
+  reportsCreated?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
+  reportsAbout?: Prisma.ReportUncheckedCreateNestedManyWithoutReportedUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
+  acceptedRequests?: Prisma.HelpRequestUncheckedCreateNestedManyWithoutAcceptedByInput
+  verificationReqs?: Prisma.VerificationRequestUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutConsultantSessionsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutConsultantSessionsInput, Prisma.UserUncheckedCreateWithoutConsultantSessionsInput>
+}
+
+export type UserUpsertWithoutStudentSessionsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutStudentSessionsInput, Prisma.UserUncheckedUpdateWithoutStudentSessionsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutStudentSessionsInput, Prisma.UserUncheckedCreateWithoutStudentSessionsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutStudentSessionsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutStudentSessionsInput, Prisma.UserUncheckedUpdateWithoutStudentSessionsInput>
+}
+
+export type UserUpdateWithoutStudentSessionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  requests?: Prisma.HelpRequestUpdateManyWithoutStudentNestedInput
+  consultantSessions?: Prisma.AcademicSessionUpdateManyWithoutConsultantNestedInput
+  consultantProfile?: Prisma.ConsultantProfileUpdateOneWithoutUserNestedInput
+  sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
+  receivedMessages?: Prisma.MessageUpdateManyWithoutRecipientNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  analyticsEvents?: Prisma.AnalyticsEventUpdateManyWithoutUserNestedInput
+  reportsCreated?: Prisma.ReportUpdateManyWithoutReporterNestedInput
+  reportsAbout?: Prisma.ReportUpdateManyWithoutReportedUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
+  acceptedRequests?: Prisma.HelpRequestUpdateManyWithoutAcceptedByNestedInput
+  verificationReqs?: Prisma.VerificationRequestUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutStudentSessionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  requests?: Prisma.HelpRequestUncheckedUpdateManyWithoutStudentNestedInput
+  consultantSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutConsultantNestedInput
+  consultantProfile?: Prisma.ConsultantProfileUncheckedUpdateOneWithoutUserNestedInput
+  sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
+  receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutRecipientNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  analyticsEvents?: Prisma.AnalyticsEventUncheckedUpdateManyWithoutUserNestedInput
+  reportsCreated?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
+  reportsAbout?: Prisma.ReportUncheckedUpdateManyWithoutReportedUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
+  acceptedRequests?: Prisma.HelpRequestUncheckedUpdateManyWithoutAcceptedByNestedInput
+  verificationReqs?: Prisma.VerificationRequestUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserUpsertWithoutConsultantSessionsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutConsultantSessionsInput, Prisma.UserUncheckedUpdateWithoutConsultantSessionsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutConsultantSessionsInput, Prisma.UserUncheckedCreateWithoutConsultantSessionsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutConsultantSessionsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutConsultantSessionsInput, Prisma.UserUncheckedUpdateWithoutConsultantSessionsInput>
+}
+
+export type UserUpdateWithoutConsultantSessionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  requests?: Prisma.HelpRequestUpdateManyWithoutStudentNestedInput
+  studentSessions?: Prisma.AcademicSessionUpdateManyWithoutStudentNestedInput
+  consultantProfile?: Prisma.ConsultantProfileUpdateOneWithoutUserNestedInput
+  sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
+  receivedMessages?: Prisma.MessageUpdateManyWithoutRecipientNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  analyticsEvents?: Prisma.AnalyticsEventUpdateManyWithoutUserNestedInput
+  reportsCreated?: Prisma.ReportUpdateManyWithoutReporterNestedInput
+  reportsAbout?: Prisma.ReportUpdateManyWithoutReportedUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
+  acceptedRequests?: Prisma.HelpRequestUpdateManyWithoutAcceptedByNestedInput
+  verificationReqs?: Prisma.VerificationRequestUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutConsultantSessionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  requests?: Prisma.HelpRequestUncheckedUpdateManyWithoutStudentNestedInput
+  studentSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutStudentNestedInput
+  consultantProfile?: Prisma.ConsultantProfileUncheckedUpdateOneWithoutUserNestedInput
+  sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
+  receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutRecipientNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  analyticsEvents?: Prisma.AnalyticsEventUncheckedUpdateManyWithoutUserNestedInput
+  reportsCreated?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
+  reportsAbout?: Prisma.ReportUncheckedUpdateManyWithoutReportedUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
+  acceptedRequests?: Prisma.HelpRequestUncheckedUpdateManyWithoutAcceptedByNestedInput
+  verificationReqs?: Prisma.VerificationRequestUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutConsultantProfileInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  role?: $Enums.UserRole
+  onboarded?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  requests?: Prisma.HelpRequestCreateNestedManyWithoutStudentInput
+  studentSessions?: Prisma.AcademicSessionCreateNestedManyWithoutStudentInput
+  consultantSessions?: Prisma.AcademicSessionCreateNestedManyWithoutConsultantInput
+  sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
+  receivedMessages?: Prisma.MessageCreateNestedManyWithoutRecipientInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  analyticsEvents?: Prisma.AnalyticsEventCreateNestedManyWithoutUserInput
+  reportsCreated?: Prisma.ReportCreateNestedManyWithoutReporterInput
+  reportsAbout?: Prisma.ReportCreateNestedManyWithoutReportedUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
+  acceptedRequests?: Prisma.HelpRequestCreateNestedManyWithoutAcceptedByInput
+  verificationReqs?: Prisma.VerificationRequestCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutConsultantProfileInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  role?: $Enums.UserRole
+  onboarded?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  requests?: Prisma.HelpRequestUncheckedCreateNestedManyWithoutStudentInput
+  studentSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutStudentInput
+  consultantSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutConsultantInput
+  sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
+  receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutRecipientInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  analyticsEvents?: Prisma.AnalyticsEventUncheckedCreateNestedManyWithoutUserInput
+  reportsCreated?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
+  reportsAbout?: Prisma.ReportUncheckedCreateNestedManyWithoutReportedUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
+  acceptedRequests?: Prisma.HelpRequestUncheckedCreateNestedManyWithoutAcceptedByInput
+  verificationReqs?: Prisma.VerificationRequestUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutConsultantProfileInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutConsultantProfileInput, Prisma.UserUncheckedCreateWithoutConsultantProfileInput>
+}
+
+export type UserUpsertWithoutConsultantProfileInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutConsultantProfileInput, Prisma.UserUncheckedUpdateWithoutConsultantProfileInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutConsultantProfileInput, Prisma.UserUncheckedCreateWithoutConsultantProfileInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutConsultantProfileInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutConsultantProfileInput, Prisma.UserUncheckedUpdateWithoutConsultantProfileInput>
+}
+
+export type UserUpdateWithoutConsultantProfileInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  requests?: Prisma.HelpRequestUpdateManyWithoutStudentNestedInput
+  studentSessions?: Prisma.AcademicSessionUpdateManyWithoutStudentNestedInput
+  consultantSessions?: Prisma.AcademicSessionUpdateManyWithoutConsultantNestedInput
+  sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
+  receivedMessages?: Prisma.MessageUpdateManyWithoutRecipientNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  analyticsEvents?: Prisma.AnalyticsEventUpdateManyWithoutUserNestedInput
+  reportsCreated?: Prisma.ReportUpdateManyWithoutReporterNestedInput
+  reportsAbout?: Prisma.ReportUpdateManyWithoutReportedUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
+  acceptedRequests?: Prisma.HelpRequestUpdateManyWithoutAcceptedByNestedInput
+  verificationReqs?: Prisma.VerificationRequestUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutConsultantProfileInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  requests?: Prisma.HelpRequestUncheckedUpdateManyWithoutStudentNestedInput
+  studentSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutStudentNestedInput
+  consultantSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutConsultantNestedInput
+  sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
+  receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutRecipientNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  analyticsEvents?: Prisma.AnalyticsEventUncheckedUpdateManyWithoutUserNestedInput
+  reportsCreated?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
+  reportsAbout?: Prisma.ReportUncheckedUpdateManyWithoutReportedUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
+  acceptedRequests?: Prisma.HelpRequestUncheckedUpdateManyWithoutAcceptedByNestedInput
+  verificationReqs?: Prisma.VerificationRequestUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutAnalyticsEventsInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  role?: $Enums.UserRole
+  onboarded?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  requests?: Prisma.HelpRequestCreateNestedManyWithoutStudentInput
+  studentSessions?: Prisma.AcademicSessionCreateNestedManyWithoutStudentInput
+  consultantSessions?: Prisma.AcademicSessionCreateNestedManyWithoutConsultantInput
+  consultantProfile?: Prisma.ConsultantProfileCreateNestedOneWithoutUserInput
+  sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
+  receivedMessages?: Prisma.MessageCreateNestedManyWithoutRecipientInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  reportsCreated?: Prisma.ReportCreateNestedManyWithoutReporterInput
+  reportsAbout?: Prisma.ReportCreateNestedManyWithoutReportedUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
+  acceptedRequests?: Prisma.HelpRequestCreateNestedManyWithoutAcceptedByInput
+  verificationReqs?: Prisma.VerificationRequestCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutAnalyticsEventsInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  role?: $Enums.UserRole
+  onboarded?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  requests?: Prisma.HelpRequestUncheckedCreateNestedManyWithoutStudentInput
+  studentSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutStudentInput
+  consultantSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutConsultantInput
+  consultantProfile?: Prisma.ConsultantProfileUncheckedCreateNestedOneWithoutUserInput
+  sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
+  receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutRecipientInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  reportsCreated?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
+  reportsAbout?: Prisma.ReportUncheckedCreateNestedManyWithoutReportedUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
+  acceptedRequests?: Prisma.HelpRequestUncheckedCreateNestedManyWithoutAcceptedByInput
+  verificationReqs?: Prisma.VerificationRequestUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutAnalyticsEventsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutAnalyticsEventsInput, Prisma.UserUncheckedCreateWithoutAnalyticsEventsInput>
+}
+
+export type UserUpsertWithoutAnalyticsEventsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutAnalyticsEventsInput, Prisma.UserUncheckedUpdateWithoutAnalyticsEventsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutAnalyticsEventsInput, Prisma.UserUncheckedCreateWithoutAnalyticsEventsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutAnalyticsEventsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutAnalyticsEventsInput, Prisma.UserUncheckedUpdateWithoutAnalyticsEventsInput>
+}
+
+export type UserUpdateWithoutAnalyticsEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  requests?: Prisma.HelpRequestUpdateManyWithoutStudentNestedInput
+  studentSessions?: Prisma.AcademicSessionUpdateManyWithoutStudentNestedInput
+  consultantSessions?: Prisma.AcademicSessionUpdateManyWithoutConsultantNestedInput
+  consultantProfile?: Prisma.ConsultantProfileUpdateOneWithoutUserNestedInput
+  sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
+  receivedMessages?: Prisma.MessageUpdateManyWithoutRecipientNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  reportsCreated?: Prisma.ReportUpdateManyWithoutReporterNestedInput
+  reportsAbout?: Prisma.ReportUpdateManyWithoutReportedUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
+  acceptedRequests?: Prisma.HelpRequestUpdateManyWithoutAcceptedByNestedInput
+  verificationReqs?: Prisma.VerificationRequestUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutAnalyticsEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  requests?: Prisma.HelpRequestUncheckedUpdateManyWithoutStudentNestedInput
+  studentSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutStudentNestedInput
+  consultantSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutConsultantNestedInput
+  consultantProfile?: Prisma.ConsultantProfileUncheckedUpdateOneWithoutUserNestedInput
+  sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
+  receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutRecipientNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  reportsCreated?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
+  reportsAbout?: Prisma.ReportUncheckedUpdateManyWithoutReportedUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
+  acceptedRequests?: Prisma.HelpRequestUncheckedUpdateManyWithoutAcceptedByNestedInput
+  verificationReqs?: Prisma.VerificationRequestUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutVerificationReqsInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  role?: $Enums.UserRole
+  onboarded?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  requests?: Prisma.HelpRequestCreateNestedManyWithoutStudentInput
+  studentSessions?: Prisma.AcademicSessionCreateNestedManyWithoutStudentInput
+  consultantSessions?: Prisma.AcademicSessionCreateNestedManyWithoutConsultantInput
+  consultantProfile?: Prisma.ConsultantProfileCreateNestedOneWithoutUserInput
+  sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
+  receivedMessages?: Prisma.MessageCreateNestedManyWithoutRecipientInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  analyticsEvents?: Prisma.AnalyticsEventCreateNestedManyWithoutUserInput
+  reportsCreated?: Prisma.ReportCreateNestedManyWithoutReporterInput
+  reportsAbout?: Prisma.ReportCreateNestedManyWithoutReportedUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
+  acceptedRequests?: Prisma.HelpRequestCreateNestedManyWithoutAcceptedByInput
+}
+
+export type UserUncheckedCreateWithoutVerificationReqsInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  role?: $Enums.UserRole
+  onboarded?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  requests?: Prisma.HelpRequestUncheckedCreateNestedManyWithoutStudentInput
+  studentSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutStudentInput
+  consultantSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutConsultantInput
+  consultantProfile?: Prisma.ConsultantProfileUncheckedCreateNestedOneWithoutUserInput
+  sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
+  receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutRecipientInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  analyticsEvents?: Prisma.AnalyticsEventUncheckedCreateNestedManyWithoutUserInput
+  reportsCreated?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
+  reportsAbout?: Prisma.ReportUncheckedCreateNestedManyWithoutReportedUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
+  acceptedRequests?: Prisma.HelpRequestUncheckedCreateNestedManyWithoutAcceptedByInput
+}
+
+export type UserCreateOrConnectWithoutVerificationReqsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutVerificationReqsInput, Prisma.UserUncheckedCreateWithoutVerificationReqsInput>
+}
+
+export type UserUpsertWithoutVerificationReqsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutVerificationReqsInput, Prisma.UserUncheckedUpdateWithoutVerificationReqsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutVerificationReqsInput, Prisma.UserUncheckedCreateWithoutVerificationReqsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutVerificationReqsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutVerificationReqsInput, Prisma.UserUncheckedUpdateWithoutVerificationReqsInput>
+}
+
+export type UserUpdateWithoutVerificationReqsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  requests?: Prisma.HelpRequestUpdateManyWithoutStudentNestedInput
+  studentSessions?: Prisma.AcademicSessionUpdateManyWithoutStudentNestedInput
+  consultantSessions?: Prisma.AcademicSessionUpdateManyWithoutConsultantNestedInput
+  consultantProfile?: Prisma.ConsultantProfileUpdateOneWithoutUserNestedInput
+  sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
+  receivedMessages?: Prisma.MessageUpdateManyWithoutRecipientNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  analyticsEvents?: Prisma.AnalyticsEventUpdateManyWithoutUserNestedInput
+  reportsCreated?: Prisma.ReportUpdateManyWithoutReporterNestedInput
+  reportsAbout?: Prisma.ReportUpdateManyWithoutReportedUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
+  acceptedRequests?: Prisma.HelpRequestUpdateManyWithoutAcceptedByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutVerificationReqsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  requests?: Prisma.HelpRequestUncheckedUpdateManyWithoutStudentNestedInput
+  studentSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutStudentNestedInput
+  consultantSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutConsultantNestedInput
+  consultantProfile?: Prisma.ConsultantProfileUncheckedUpdateOneWithoutUserNestedInput
+  sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
+  receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutRecipientNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  analyticsEvents?: Prisma.AnalyticsEventUncheckedUpdateManyWithoutUserNestedInput
+  reportsCreated?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
+  reportsAbout?: Prisma.ReportUncheckedUpdateManyWithoutReportedUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
+  acceptedRequests?: Prisma.HelpRequestUncheckedUpdateManyWithoutAcceptedByNestedInput
+}
+
+export type UserCreateWithoutReportsCreatedInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  role?: $Enums.UserRole
+  onboarded?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  requests?: Prisma.HelpRequestCreateNestedManyWithoutStudentInput
+  studentSessions?: Prisma.AcademicSessionCreateNestedManyWithoutStudentInput
+  consultantSessions?: Prisma.AcademicSessionCreateNestedManyWithoutConsultantInput
+  consultantProfile?: Prisma.ConsultantProfileCreateNestedOneWithoutUserInput
+  sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
+  receivedMessages?: Prisma.MessageCreateNestedManyWithoutRecipientInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  analyticsEvents?: Prisma.AnalyticsEventCreateNestedManyWithoutUserInput
+  reportsAbout?: Prisma.ReportCreateNestedManyWithoutReportedUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
+  acceptedRequests?: Prisma.HelpRequestCreateNestedManyWithoutAcceptedByInput
+  verificationReqs?: Prisma.VerificationRequestCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutReportsCreatedInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  role?: $Enums.UserRole
+  onboarded?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  requests?: Prisma.HelpRequestUncheckedCreateNestedManyWithoutStudentInput
+  studentSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutStudentInput
+  consultantSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutConsultantInput
+  consultantProfile?: Prisma.ConsultantProfileUncheckedCreateNestedOneWithoutUserInput
+  sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
+  receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutRecipientInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  analyticsEvents?: Prisma.AnalyticsEventUncheckedCreateNestedManyWithoutUserInput
+  reportsAbout?: Prisma.ReportUncheckedCreateNestedManyWithoutReportedUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
+  acceptedRequests?: Prisma.HelpRequestUncheckedCreateNestedManyWithoutAcceptedByInput
+  verificationReqs?: Prisma.VerificationRequestUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutReportsCreatedInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutReportsCreatedInput, Prisma.UserUncheckedCreateWithoutReportsCreatedInput>
+}
+
+export type UserCreateWithoutReportsAboutInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  role?: $Enums.UserRole
+  onboarded?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  requests?: Prisma.HelpRequestCreateNestedManyWithoutStudentInput
+  studentSessions?: Prisma.AcademicSessionCreateNestedManyWithoutStudentInput
+  consultantSessions?: Prisma.AcademicSessionCreateNestedManyWithoutConsultantInput
+  consultantProfile?: Prisma.ConsultantProfileCreateNestedOneWithoutUserInput
+  sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
+  receivedMessages?: Prisma.MessageCreateNestedManyWithoutRecipientInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  analyticsEvents?: Prisma.AnalyticsEventCreateNestedManyWithoutUserInput
+  reportsCreated?: Prisma.ReportCreateNestedManyWithoutReporterInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
+  acceptedRequests?: Prisma.HelpRequestCreateNestedManyWithoutAcceptedByInput
+  verificationReqs?: Prisma.VerificationRequestCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutReportsAboutInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  role?: $Enums.UserRole
+  onboarded?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  requests?: Prisma.HelpRequestUncheckedCreateNestedManyWithoutStudentInput
+  studentSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutStudentInput
+  consultantSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutConsultantInput
+  consultantProfile?: Prisma.ConsultantProfileUncheckedCreateNestedOneWithoutUserInput
+  sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
+  receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutRecipientInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  analyticsEvents?: Prisma.AnalyticsEventUncheckedCreateNestedManyWithoutUserInput
+  reportsCreated?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
+  acceptedRequests?: Prisma.HelpRequestUncheckedCreateNestedManyWithoutAcceptedByInput
+  verificationReqs?: Prisma.VerificationRequestUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutReportsAboutInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutReportsAboutInput, Prisma.UserUncheckedCreateWithoutReportsAboutInput>
+}
+
+export type UserUpsertWithoutReportsCreatedInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutReportsCreatedInput, Prisma.UserUncheckedUpdateWithoutReportsCreatedInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutReportsCreatedInput, Prisma.UserUncheckedCreateWithoutReportsCreatedInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutReportsCreatedInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutReportsCreatedInput, Prisma.UserUncheckedUpdateWithoutReportsCreatedInput>
+}
+
+export type UserUpdateWithoutReportsCreatedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  requests?: Prisma.HelpRequestUpdateManyWithoutStudentNestedInput
+  studentSessions?: Prisma.AcademicSessionUpdateManyWithoutStudentNestedInput
+  consultantSessions?: Prisma.AcademicSessionUpdateManyWithoutConsultantNestedInput
+  consultantProfile?: Prisma.ConsultantProfileUpdateOneWithoutUserNestedInput
+  sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
+  receivedMessages?: Prisma.MessageUpdateManyWithoutRecipientNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  analyticsEvents?: Prisma.AnalyticsEventUpdateManyWithoutUserNestedInput
+  reportsAbout?: Prisma.ReportUpdateManyWithoutReportedUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
+  acceptedRequests?: Prisma.HelpRequestUpdateManyWithoutAcceptedByNestedInput
+  verificationReqs?: Prisma.VerificationRequestUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutReportsCreatedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  requests?: Prisma.HelpRequestUncheckedUpdateManyWithoutStudentNestedInput
+  studentSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutStudentNestedInput
+  consultantSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutConsultantNestedInput
+  consultantProfile?: Prisma.ConsultantProfileUncheckedUpdateOneWithoutUserNestedInput
+  sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
+  receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutRecipientNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  analyticsEvents?: Prisma.AnalyticsEventUncheckedUpdateManyWithoutUserNestedInput
+  reportsAbout?: Prisma.ReportUncheckedUpdateManyWithoutReportedUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
+  acceptedRequests?: Prisma.HelpRequestUncheckedUpdateManyWithoutAcceptedByNestedInput
+  verificationReqs?: Prisma.VerificationRequestUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserUpsertWithoutReportsAboutInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutReportsAboutInput, Prisma.UserUncheckedUpdateWithoutReportsAboutInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutReportsAboutInput, Prisma.UserUncheckedCreateWithoutReportsAboutInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutReportsAboutInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutReportsAboutInput, Prisma.UserUncheckedUpdateWithoutReportsAboutInput>
+}
+
+export type UserUpdateWithoutReportsAboutInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  requests?: Prisma.HelpRequestUpdateManyWithoutStudentNestedInput
+  studentSessions?: Prisma.AcademicSessionUpdateManyWithoutStudentNestedInput
+  consultantSessions?: Prisma.AcademicSessionUpdateManyWithoutConsultantNestedInput
+  consultantProfile?: Prisma.ConsultantProfileUpdateOneWithoutUserNestedInput
+  sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
+  receivedMessages?: Prisma.MessageUpdateManyWithoutRecipientNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  analyticsEvents?: Prisma.AnalyticsEventUpdateManyWithoutUserNestedInput
+  reportsCreated?: Prisma.ReportUpdateManyWithoutReporterNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
+  acceptedRequests?: Prisma.HelpRequestUpdateManyWithoutAcceptedByNestedInput
+  verificationReqs?: Prisma.VerificationRequestUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutReportsAboutInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  requests?: Prisma.HelpRequestUncheckedUpdateManyWithoutStudentNestedInput
+  studentSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutStudentNestedInput
+  consultantSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutConsultantNestedInput
+  consultantProfile?: Prisma.ConsultantProfileUncheckedUpdateOneWithoutUserNestedInput
+  sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
+  receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutRecipientNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  analyticsEvents?: Prisma.AnalyticsEventUncheckedUpdateManyWithoutUserNestedInput
+  reportsCreated?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
+  acceptedRequests?: Prisma.HelpRequestUncheckedUpdateManyWithoutAcceptedByNestedInput
+  verificationReqs?: Prisma.VerificationRequestUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutAuditLogsInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  role?: $Enums.UserRole
+  onboarded?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  requests?: Prisma.HelpRequestCreateNestedManyWithoutStudentInput
+  studentSessions?: Prisma.AcademicSessionCreateNestedManyWithoutStudentInput
+  consultantSessions?: Prisma.AcademicSessionCreateNestedManyWithoutConsultantInput
+  consultantProfile?: Prisma.ConsultantProfileCreateNestedOneWithoutUserInput
+  sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
+  receivedMessages?: Prisma.MessageCreateNestedManyWithoutRecipientInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  analyticsEvents?: Prisma.AnalyticsEventCreateNestedManyWithoutUserInput
+  reportsCreated?: Prisma.ReportCreateNestedManyWithoutReporterInput
+  reportsAbout?: Prisma.ReportCreateNestedManyWithoutReportedUserInput
+  acceptedRequests?: Prisma.HelpRequestCreateNestedManyWithoutAcceptedByInput
+  verificationReqs?: Prisma.VerificationRequestCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutAuditLogsInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  role?: $Enums.UserRole
+  onboarded?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  requests?: Prisma.HelpRequestUncheckedCreateNestedManyWithoutStudentInput
+  studentSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutStudentInput
+  consultantSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutConsultantInput
+  consultantProfile?: Prisma.ConsultantProfileUncheckedCreateNestedOneWithoutUserInput
+  sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
+  receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutRecipientInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  analyticsEvents?: Prisma.AnalyticsEventUncheckedCreateNestedManyWithoutUserInput
+  reportsCreated?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
+  reportsAbout?: Prisma.ReportUncheckedCreateNestedManyWithoutReportedUserInput
+  acceptedRequests?: Prisma.HelpRequestUncheckedCreateNestedManyWithoutAcceptedByInput
+  verificationReqs?: Prisma.VerificationRequestUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutAuditLogsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutAuditLogsInput, Prisma.UserUncheckedCreateWithoutAuditLogsInput>
+}
+
+export type UserUpsertWithoutAuditLogsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutAuditLogsInput, Prisma.UserUncheckedUpdateWithoutAuditLogsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutAuditLogsInput, Prisma.UserUncheckedCreateWithoutAuditLogsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutAuditLogsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutAuditLogsInput, Prisma.UserUncheckedUpdateWithoutAuditLogsInput>
+}
+
+export type UserUpdateWithoutAuditLogsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  requests?: Prisma.HelpRequestUpdateManyWithoutStudentNestedInput
+  studentSessions?: Prisma.AcademicSessionUpdateManyWithoutStudentNestedInput
+  consultantSessions?: Prisma.AcademicSessionUpdateManyWithoutConsultantNestedInput
+  consultantProfile?: Prisma.ConsultantProfileUpdateOneWithoutUserNestedInput
+  sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
+  receivedMessages?: Prisma.MessageUpdateManyWithoutRecipientNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  analyticsEvents?: Prisma.AnalyticsEventUpdateManyWithoutUserNestedInput
+  reportsCreated?: Prisma.ReportUpdateManyWithoutReporterNestedInput
+  reportsAbout?: Prisma.ReportUpdateManyWithoutReportedUserNestedInput
+  acceptedRequests?: Prisma.HelpRequestUpdateManyWithoutAcceptedByNestedInput
+  verificationReqs?: Prisma.VerificationRequestUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutAuditLogsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  requests?: Prisma.HelpRequestUncheckedUpdateManyWithoutStudentNestedInput
+  studentSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutStudentNestedInput
+  consultantSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutConsultantNestedInput
+  consultantProfile?: Prisma.ConsultantProfileUncheckedUpdateOneWithoutUserNestedInput
+  sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
+  receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutRecipientNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  analyticsEvents?: Prisma.AnalyticsEventUncheckedUpdateManyWithoutUserNestedInput
+  reportsCreated?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
+  reportsAbout?: Prisma.ReportUncheckedUpdateManyWithoutReportedUserNestedInput
+  acceptedRequests?: Prisma.HelpRequestUncheckedUpdateManyWithoutAcceptedByNestedInput
+  verificationReqs?: Prisma.VerificationRequestUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutSentMessagesInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  role?: $Enums.UserRole
+  onboarded?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  requests?: Prisma.HelpRequestCreateNestedManyWithoutStudentInput
+  studentSessions?: Prisma.AcademicSessionCreateNestedManyWithoutStudentInput
+  consultantSessions?: Prisma.AcademicSessionCreateNestedManyWithoutConsultantInput
+  consultantProfile?: Prisma.ConsultantProfileCreateNestedOneWithoutUserInput
+  receivedMessages?: Prisma.MessageCreateNestedManyWithoutRecipientInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  analyticsEvents?: Prisma.AnalyticsEventCreateNestedManyWithoutUserInput
+  reportsCreated?: Prisma.ReportCreateNestedManyWithoutReporterInput
+  reportsAbout?: Prisma.ReportCreateNestedManyWithoutReportedUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
+  acceptedRequests?: Prisma.HelpRequestCreateNestedManyWithoutAcceptedByInput
+  verificationReqs?: Prisma.VerificationRequestCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutSentMessagesInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  role?: $Enums.UserRole
+  onboarded?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  requests?: Prisma.HelpRequestUncheckedCreateNestedManyWithoutStudentInput
+  studentSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutStudentInput
+  consultantSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutConsultantInput
+  consultantProfile?: Prisma.ConsultantProfileUncheckedCreateNestedOneWithoutUserInput
+  receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutRecipientInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  analyticsEvents?: Prisma.AnalyticsEventUncheckedCreateNestedManyWithoutUserInput
+  reportsCreated?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
+  reportsAbout?: Prisma.ReportUncheckedCreateNestedManyWithoutReportedUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
+  acceptedRequests?: Prisma.HelpRequestUncheckedCreateNestedManyWithoutAcceptedByInput
+  verificationReqs?: Prisma.VerificationRequestUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutSentMessagesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutSentMessagesInput, Prisma.UserUncheckedCreateWithoutSentMessagesInput>
+}
+
+export type UserCreateWithoutReceivedMessagesInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  role?: $Enums.UserRole
+  onboarded?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  requests?: Prisma.HelpRequestCreateNestedManyWithoutStudentInput
+  studentSessions?: Prisma.AcademicSessionCreateNestedManyWithoutStudentInput
+  consultantSessions?: Prisma.AcademicSessionCreateNestedManyWithoutConsultantInput
+  consultantProfile?: Prisma.ConsultantProfileCreateNestedOneWithoutUserInput
+  sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  analyticsEvents?: Prisma.AnalyticsEventCreateNestedManyWithoutUserInput
+  reportsCreated?: Prisma.ReportCreateNestedManyWithoutReporterInput
+  reportsAbout?: Prisma.ReportCreateNestedManyWithoutReportedUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
+  acceptedRequests?: Prisma.HelpRequestCreateNestedManyWithoutAcceptedByInput
+  verificationReqs?: Prisma.VerificationRequestCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutReceivedMessagesInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  role?: $Enums.UserRole
+  onboarded?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  requests?: Prisma.HelpRequestUncheckedCreateNestedManyWithoutStudentInput
+  studentSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutStudentInput
+  consultantSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutConsultantInput
+  consultantProfile?: Prisma.ConsultantProfileUncheckedCreateNestedOneWithoutUserInput
+  sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  analyticsEvents?: Prisma.AnalyticsEventUncheckedCreateNestedManyWithoutUserInput
+  reportsCreated?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
+  reportsAbout?: Prisma.ReportUncheckedCreateNestedManyWithoutReportedUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
+  acceptedRequests?: Prisma.HelpRequestUncheckedCreateNestedManyWithoutAcceptedByInput
+  verificationReqs?: Prisma.VerificationRequestUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutReceivedMessagesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutReceivedMessagesInput, Prisma.UserUncheckedCreateWithoutReceivedMessagesInput>
+}
+
+export type UserUpsertWithoutSentMessagesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutSentMessagesInput, Prisma.UserUncheckedUpdateWithoutSentMessagesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutSentMessagesInput, Prisma.UserUncheckedCreateWithoutSentMessagesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutSentMessagesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutSentMessagesInput, Prisma.UserUncheckedUpdateWithoutSentMessagesInput>
+}
+
+export type UserUpdateWithoutSentMessagesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  requests?: Prisma.HelpRequestUpdateManyWithoutStudentNestedInput
+  studentSessions?: Prisma.AcademicSessionUpdateManyWithoutStudentNestedInput
+  consultantSessions?: Prisma.AcademicSessionUpdateManyWithoutConsultantNestedInput
+  consultantProfile?: Prisma.ConsultantProfileUpdateOneWithoutUserNestedInput
+  receivedMessages?: Prisma.MessageUpdateManyWithoutRecipientNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  analyticsEvents?: Prisma.AnalyticsEventUpdateManyWithoutUserNestedInput
+  reportsCreated?: Prisma.ReportUpdateManyWithoutReporterNestedInput
+  reportsAbout?: Prisma.ReportUpdateManyWithoutReportedUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
+  acceptedRequests?: Prisma.HelpRequestUpdateManyWithoutAcceptedByNestedInput
+  verificationReqs?: Prisma.VerificationRequestUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutSentMessagesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  requests?: Prisma.HelpRequestUncheckedUpdateManyWithoutStudentNestedInput
+  studentSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutStudentNestedInput
+  consultantSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutConsultantNestedInput
+  consultantProfile?: Prisma.ConsultantProfileUncheckedUpdateOneWithoutUserNestedInput
+  receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutRecipientNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  analyticsEvents?: Prisma.AnalyticsEventUncheckedUpdateManyWithoutUserNestedInput
+  reportsCreated?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
+  reportsAbout?: Prisma.ReportUncheckedUpdateManyWithoutReportedUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
+  acceptedRequests?: Prisma.HelpRequestUncheckedUpdateManyWithoutAcceptedByNestedInput
+  verificationReqs?: Prisma.VerificationRequestUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserUpsertWithoutReceivedMessagesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutReceivedMessagesInput, Prisma.UserUncheckedUpdateWithoutReceivedMessagesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutReceivedMessagesInput, Prisma.UserUncheckedCreateWithoutReceivedMessagesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutReceivedMessagesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutReceivedMessagesInput, Prisma.UserUncheckedUpdateWithoutReceivedMessagesInput>
+}
+
+export type UserUpdateWithoutReceivedMessagesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  requests?: Prisma.HelpRequestUpdateManyWithoutStudentNestedInput
+  studentSessions?: Prisma.AcademicSessionUpdateManyWithoutStudentNestedInput
+  consultantSessions?: Prisma.AcademicSessionUpdateManyWithoutConsultantNestedInput
+  consultantProfile?: Prisma.ConsultantProfileUpdateOneWithoutUserNestedInput
+  sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  analyticsEvents?: Prisma.AnalyticsEventUpdateManyWithoutUserNestedInput
+  reportsCreated?: Prisma.ReportUpdateManyWithoutReporterNestedInput
+  reportsAbout?: Prisma.ReportUpdateManyWithoutReportedUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
+  acceptedRequests?: Prisma.HelpRequestUpdateManyWithoutAcceptedByNestedInput
+  verificationReqs?: Prisma.VerificationRequestUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutReceivedMessagesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  requests?: Prisma.HelpRequestUncheckedUpdateManyWithoutStudentNestedInput
+  studentSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutStudentNestedInput
+  consultantSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutConsultantNestedInput
+  consultantProfile?: Prisma.ConsultantProfileUncheckedUpdateOneWithoutUserNestedInput
+  sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  analyticsEvents?: Prisma.AnalyticsEventUncheckedUpdateManyWithoutUserNestedInput
+  reportsCreated?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
+  reportsAbout?: Prisma.ReportUncheckedUpdateManyWithoutReportedUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
+  acceptedRequests?: Prisma.HelpRequestUncheckedUpdateManyWithoutAcceptedByNestedInput
+  verificationReqs?: Prisma.VerificationRequestUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutNotificationsInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  role?: $Enums.UserRole
+  onboarded?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  requests?: Prisma.HelpRequestCreateNestedManyWithoutStudentInput
+  studentSessions?: Prisma.AcademicSessionCreateNestedManyWithoutStudentInput
+  consultantSessions?: Prisma.AcademicSessionCreateNestedManyWithoutConsultantInput
+  consultantProfile?: Prisma.ConsultantProfileCreateNestedOneWithoutUserInput
+  sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
+  receivedMessages?: Prisma.MessageCreateNestedManyWithoutRecipientInput
+  analyticsEvents?: Prisma.AnalyticsEventCreateNestedManyWithoutUserInput
+  reportsCreated?: Prisma.ReportCreateNestedManyWithoutReporterInput
+  reportsAbout?: Prisma.ReportCreateNestedManyWithoutReportedUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
+  acceptedRequests?: Prisma.HelpRequestCreateNestedManyWithoutAcceptedByInput
+  verificationReqs?: Prisma.VerificationRequestCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutNotificationsInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  role?: $Enums.UserRole
+  onboarded?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  requests?: Prisma.HelpRequestUncheckedCreateNestedManyWithoutStudentInput
+  studentSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutStudentInput
+  consultantSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutConsultantInput
+  consultantProfile?: Prisma.ConsultantProfileUncheckedCreateNestedOneWithoutUserInput
+  sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
+  receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutRecipientInput
+  analyticsEvents?: Prisma.AnalyticsEventUncheckedCreateNestedManyWithoutUserInput
+  reportsCreated?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
+  reportsAbout?: Prisma.ReportUncheckedCreateNestedManyWithoutReportedUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
+  acceptedRequests?: Prisma.HelpRequestUncheckedCreateNestedManyWithoutAcceptedByInput
+  verificationReqs?: Prisma.VerificationRequestUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutNotificationsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutNotificationsInput, Prisma.UserUncheckedCreateWithoutNotificationsInput>
+}
+
+export type UserUpsertWithoutNotificationsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutNotificationsInput, Prisma.UserUncheckedUpdateWithoutNotificationsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutNotificationsInput, Prisma.UserUncheckedCreateWithoutNotificationsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutNotificationsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutNotificationsInput, Prisma.UserUncheckedUpdateWithoutNotificationsInput>
+}
+
+export type UserUpdateWithoutNotificationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  requests?: Prisma.HelpRequestUpdateManyWithoutStudentNestedInput
+  studentSessions?: Prisma.AcademicSessionUpdateManyWithoutStudentNestedInput
+  consultantSessions?: Prisma.AcademicSessionUpdateManyWithoutConsultantNestedInput
+  consultantProfile?: Prisma.ConsultantProfileUpdateOneWithoutUserNestedInput
+  sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
+  receivedMessages?: Prisma.MessageUpdateManyWithoutRecipientNestedInput
+  analyticsEvents?: Prisma.AnalyticsEventUpdateManyWithoutUserNestedInput
+  reportsCreated?: Prisma.ReportUpdateManyWithoutReporterNestedInput
+  reportsAbout?: Prisma.ReportUpdateManyWithoutReportedUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
+  acceptedRequests?: Prisma.HelpRequestUpdateManyWithoutAcceptedByNestedInput
+  verificationReqs?: Prisma.VerificationRequestUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutNotificationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  requests?: Prisma.HelpRequestUncheckedUpdateManyWithoutStudentNestedInput
+  studentSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutStudentNestedInput
+  consultantSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutConsultantNestedInput
+  consultantProfile?: Prisma.ConsultantProfileUncheckedUpdateOneWithoutUserNestedInput
+  sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
+  receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutRecipientNestedInput
+  analyticsEvents?: Prisma.AnalyticsEventUncheckedUpdateManyWithoutUserNestedInput
+  reportsCreated?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
+  reportsAbout?: Prisma.ReportUncheckedUpdateManyWithoutReportedUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
+  acceptedRequests?: Prisma.HelpRequestUncheckedUpdateManyWithoutAcceptedByNestedInput
+  verificationReqs?: Prisma.VerificationRequestUncheckedUpdateManyWithoutUserNestedInput
+}
+
 export type UserCreateWithoutSessionsInput = {
   id: string
   name: string
   email: string
   emailVerified?: boolean
   image?: string | null
+  role?: $Enums.UserRole
+  onboarded?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  requests?: Prisma.HelpRequestCreateNestedManyWithoutStudentInput
+  studentSessions?: Prisma.AcademicSessionCreateNestedManyWithoutStudentInput
+  consultantSessions?: Prisma.AcademicSessionCreateNestedManyWithoutConsultantInput
+  consultantProfile?: Prisma.ConsultantProfileCreateNestedOneWithoutUserInput
+  sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
+  receivedMessages?: Prisma.MessageCreateNestedManyWithoutRecipientInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  analyticsEvents?: Prisma.AnalyticsEventCreateNestedManyWithoutUserInput
+  reportsCreated?: Prisma.ReportCreateNestedManyWithoutReporterInput
+  reportsAbout?: Prisma.ReportCreateNestedManyWithoutReportedUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
+  acceptedRequests?: Prisma.HelpRequestCreateNestedManyWithoutAcceptedByInput
+  verificationReqs?: Prisma.VerificationRequestCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSessionsInput = {
@@ -429,9 +2336,24 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   email: string
   emailVerified?: boolean
   image?: string | null
+  role?: $Enums.UserRole
+  onboarded?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  requests?: Prisma.HelpRequestUncheckedCreateNestedManyWithoutStudentInput
+  studentSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutStudentInput
+  consultantSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutConsultantInput
+  consultantProfile?: Prisma.ConsultantProfileUncheckedCreateNestedOneWithoutUserInput
+  sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
+  receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutRecipientInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  analyticsEvents?: Prisma.AnalyticsEventUncheckedCreateNestedManyWithoutUserInput
+  reportsCreated?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
+  reportsAbout?: Prisma.ReportUncheckedCreateNestedManyWithoutReportedUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
+  acceptedRequests?: Prisma.HelpRequestUncheckedCreateNestedManyWithoutAcceptedByInput
+  verificationReqs?: Prisma.VerificationRequestUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSessionsInput = {
@@ -456,9 +2378,24 @@ export type UserUpdateWithoutSessionsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  requests?: Prisma.HelpRequestUpdateManyWithoutStudentNestedInput
+  studentSessions?: Prisma.AcademicSessionUpdateManyWithoutStudentNestedInput
+  consultantSessions?: Prisma.AcademicSessionUpdateManyWithoutConsultantNestedInput
+  consultantProfile?: Prisma.ConsultantProfileUpdateOneWithoutUserNestedInput
+  sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
+  receivedMessages?: Prisma.MessageUpdateManyWithoutRecipientNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  analyticsEvents?: Prisma.AnalyticsEventUpdateManyWithoutUserNestedInput
+  reportsCreated?: Prisma.ReportUpdateManyWithoutReporterNestedInput
+  reportsAbout?: Prisma.ReportUpdateManyWithoutReportedUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
+  acceptedRequests?: Prisma.HelpRequestUpdateManyWithoutAcceptedByNestedInput
+  verificationReqs?: Prisma.VerificationRequestUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -467,9 +2404,24 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  requests?: Prisma.HelpRequestUncheckedUpdateManyWithoutStudentNestedInput
+  studentSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutStudentNestedInput
+  consultantSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutConsultantNestedInput
+  consultantProfile?: Prisma.ConsultantProfileUncheckedUpdateOneWithoutUserNestedInput
+  sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
+  receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutRecipientNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  analyticsEvents?: Prisma.AnalyticsEventUncheckedUpdateManyWithoutUserNestedInput
+  reportsCreated?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
+  reportsAbout?: Prisma.ReportUncheckedUpdateManyWithoutReportedUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
+  acceptedRequests?: Prisma.HelpRequestUncheckedUpdateManyWithoutAcceptedByNestedInput
+  verificationReqs?: Prisma.VerificationRequestUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutAccountsInput = {
@@ -478,9 +2430,24 @@ export type UserCreateWithoutAccountsInput = {
   email: string
   emailVerified?: boolean
   image?: string | null
+  role?: $Enums.UserRole
+  onboarded?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  requests?: Prisma.HelpRequestCreateNestedManyWithoutStudentInput
+  studentSessions?: Prisma.AcademicSessionCreateNestedManyWithoutStudentInput
+  consultantSessions?: Prisma.AcademicSessionCreateNestedManyWithoutConsultantInput
+  consultantProfile?: Prisma.ConsultantProfileCreateNestedOneWithoutUserInput
+  sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
+  receivedMessages?: Prisma.MessageCreateNestedManyWithoutRecipientInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  analyticsEvents?: Prisma.AnalyticsEventCreateNestedManyWithoutUserInput
+  reportsCreated?: Prisma.ReportCreateNestedManyWithoutReporterInput
+  reportsAbout?: Prisma.ReportCreateNestedManyWithoutReportedUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
+  acceptedRequests?: Prisma.HelpRequestCreateNestedManyWithoutAcceptedByInput
+  verificationReqs?: Prisma.VerificationRequestCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutAccountsInput = {
@@ -489,9 +2456,24 @@ export type UserUncheckedCreateWithoutAccountsInput = {
   email: string
   emailVerified?: boolean
   image?: string | null
+  role?: $Enums.UserRole
+  onboarded?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  requests?: Prisma.HelpRequestUncheckedCreateNestedManyWithoutStudentInput
+  studentSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutStudentInput
+  consultantSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutConsultantInput
+  consultantProfile?: Prisma.ConsultantProfileUncheckedCreateNestedOneWithoutUserInput
+  sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
+  receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutRecipientInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  analyticsEvents?: Prisma.AnalyticsEventUncheckedCreateNestedManyWithoutUserInput
+  reportsCreated?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
+  reportsAbout?: Prisma.ReportUncheckedCreateNestedManyWithoutReportedUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
+  acceptedRequests?: Prisma.HelpRequestUncheckedCreateNestedManyWithoutAcceptedByInput
+  verificationReqs?: Prisma.VerificationRequestUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutAccountsInput = {
@@ -516,9 +2498,24 @@ export type UserUpdateWithoutAccountsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  requests?: Prisma.HelpRequestUpdateManyWithoutStudentNestedInput
+  studentSessions?: Prisma.AcademicSessionUpdateManyWithoutStudentNestedInput
+  consultantSessions?: Prisma.AcademicSessionUpdateManyWithoutConsultantNestedInput
+  consultantProfile?: Prisma.ConsultantProfileUpdateOneWithoutUserNestedInput
+  sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
+  receivedMessages?: Prisma.MessageUpdateManyWithoutRecipientNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  analyticsEvents?: Prisma.AnalyticsEventUpdateManyWithoutUserNestedInput
+  reportsCreated?: Prisma.ReportUpdateManyWithoutReporterNestedInput
+  reportsAbout?: Prisma.ReportUpdateManyWithoutReportedUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
+  acceptedRequests?: Prisma.HelpRequestUpdateManyWithoutAcceptedByNestedInput
+  verificationReqs?: Prisma.VerificationRequestUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAccountsInput = {
@@ -527,9 +2524,24 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  requests?: Prisma.HelpRequestUncheckedUpdateManyWithoutStudentNestedInput
+  studentSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutStudentNestedInput
+  consultantSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutConsultantNestedInput
+  consultantProfile?: Prisma.ConsultantProfileUncheckedUpdateOneWithoutUserNestedInput
+  sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
+  receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutRecipientNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  analyticsEvents?: Prisma.AnalyticsEventUncheckedUpdateManyWithoutUserNestedInput
+  reportsCreated?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
+  reportsAbout?: Prisma.ReportUncheckedUpdateManyWithoutReportedUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
+  acceptedRequests?: Prisma.HelpRequestUncheckedUpdateManyWithoutAcceptedByNestedInput
+  verificationReqs?: Prisma.VerificationRequestUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -540,11 +2552,35 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
 export type UserCountOutputType = {
   sessions: number
   accounts: number
+  requests: number
+  studentSessions: number
+  consultantSessions: number
+  sentMessages: number
+  receivedMessages: number
+  notifications: number
+  analyticsEvents: number
+  reportsCreated: number
+  reportsAbout: number
+  auditLogs: number
+  acceptedRequests: number
+  verificationReqs: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   sessions?: boolean | UserCountOutputTypeCountSessionsArgs
   accounts?: boolean | UserCountOutputTypeCountAccountsArgs
+  requests?: boolean | UserCountOutputTypeCountRequestsArgs
+  studentSessions?: boolean | UserCountOutputTypeCountStudentSessionsArgs
+  consultantSessions?: boolean | UserCountOutputTypeCountConsultantSessionsArgs
+  sentMessages?: boolean | UserCountOutputTypeCountSentMessagesArgs
+  receivedMessages?: boolean | UserCountOutputTypeCountReceivedMessagesArgs
+  notifications?: boolean | UserCountOutputTypeCountNotificationsArgs
+  analyticsEvents?: boolean | UserCountOutputTypeCountAnalyticsEventsArgs
+  reportsCreated?: boolean | UserCountOutputTypeCountReportsCreatedArgs
+  reportsAbout?: boolean | UserCountOutputTypeCountReportsAboutArgs
+  auditLogs?: boolean | UserCountOutputTypeCountAuditLogsArgs
+  acceptedRequests?: boolean | UserCountOutputTypeCountAcceptedRequestsArgs
+  verificationReqs?: boolean | UserCountOutputTypeCountVerificationReqsArgs
 }
 
 /**
@@ -571,6 +2607,90 @@ export type UserCountOutputTypeCountAccountsArgs<ExtArgs extends runtime.Types.E
   where?: Prisma.AccountWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountRequestsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.HelpRequestWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountStudentSessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AcademicSessionWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountConsultantSessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AcademicSessionWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountSentMessagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MessageWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountReceivedMessagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MessageWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountNotificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.NotificationWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountAnalyticsEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AnalyticsEventWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountReportsCreatedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ReportWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountReportsAboutArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ReportWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountAuditLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AuditLogWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountAcceptedRequestsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.HelpRequestWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountVerificationReqsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.VerificationRequestWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -578,10 +2698,25 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   email?: boolean
   emailVerified?: boolean
   image?: boolean
+  role?: boolean
+  onboarded?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
   accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
+  requests?: boolean | Prisma.User$requestsArgs<ExtArgs>
+  studentSessions?: boolean | Prisma.User$studentSessionsArgs<ExtArgs>
+  consultantSessions?: boolean | Prisma.User$consultantSessionsArgs<ExtArgs>
+  consultantProfile?: boolean | Prisma.User$consultantProfileArgs<ExtArgs>
+  sentMessages?: boolean | Prisma.User$sentMessagesArgs<ExtArgs>
+  receivedMessages?: boolean | Prisma.User$receivedMessagesArgs<ExtArgs>
+  notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
+  analyticsEvents?: boolean | Prisma.User$analyticsEventsArgs<ExtArgs>
+  reportsCreated?: boolean | Prisma.User$reportsCreatedArgs<ExtArgs>
+  reportsAbout?: boolean | Prisma.User$reportsAboutArgs<ExtArgs>
+  auditLogs?: boolean | Prisma.User$auditLogsArgs<ExtArgs>
+  acceptedRequests?: boolean | Prisma.User$acceptedRequestsArgs<ExtArgs>
+  verificationReqs?: boolean | Prisma.User$verificationReqsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -591,6 +2726,8 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   email?: boolean
   emailVerified?: boolean
   image?: boolean
+  role?: boolean
+  onboarded?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["user"]>
@@ -601,6 +2738,8 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   email?: boolean
   emailVerified?: boolean
   image?: boolean
+  role?: boolean
+  onboarded?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["user"]>
@@ -611,14 +2750,29 @@ export type UserSelectScalar = {
   email?: boolean
   emailVerified?: boolean
   image?: boolean
+  role?: boolean
+  onboarded?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "emailVerified" | "image" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "emailVerified" | "image" | "role" | "onboarded" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
   accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
+  requests?: boolean | Prisma.User$requestsArgs<ExtArgs>
+  studentSessions?: boolean | Prisma.User$studentSessionsArgs<ExtArgs>
+  consultantSessions?: boolean | Prisma.User$consultantSessionsArgs<ExtArgs>
+  consultantProfile?: boolean | Prisma.User$consultantProfileArgs<ExtArgs>
+  sentMessages?: boolean | Prisma.User$sentMessagesArgs<ExtArgs>
+  receivedMessages?: boolean | Prisma.User$receivedMessagesArgs<ExtArgs>
+  notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
+  analyticsEvents?: boolean | Prisma.User$analyticsEventsArgs<ExtArgs>
+  reportsCreated?: boolean | Prisma.User$reportsCreatedArgs<ExtArgs>
+  reportsAbout?: boolean | Prisma.User$reportsAboutArgs<ExtArgs>
+  auditLogs?: boolean | Prisma.User$auditLogsArgs<ExtArgs>
+  acceptedRequests?: boolean | Prisma.User$acceptedRequestsArgs<ExtArgs>
+  verificationReqs?: boolean | Prisma.User$verificationReqsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -629,6 +2783,19 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   objects: {
     sessions: Prisma.$SessionPayload<ExtArgs>[]
     accounts: Prisma.$AccountPayload<ExtArgs>[]
+    requests: Prisma.$HelpRequestPayload<ExtArgs>[]
+    studentSessions: Prisma.$AcademicSessionPayload<ExtArgs>[]
+    consultantSessions: Prisma.$AcademicSessionPayload<ExtArgs>[]
+    consultantProfile: Prisma.$ConsultantProfilePayload<ExtArgs> | null
+    sentMessages: Prisma.$MessagePayload<ExtArgs>[]
+    receivedMessages: Prisma.$MessagePayload<ExtArgs>[]
+    notifications: Prisma.$NotificationPayload<ExtArgs>[]
+    analyticsEvents: Prisma.$AnalyticsEventPayload<ExtArgs>[]
+    reportsCreated: Prisma.$ReportPayload<ExtArgs>[]
+    reportsAbout: Prisma.$ReportPayload<ExtArgs>[]
+    auditLogs: Prisma.$AuditLogPayload<ExtArgs>[]
+    acceptedRequests: Prisma.$HelpRequestPayload<ExtArgs>[]
+    verificationReqs: Prisma.$VerificationRequestPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -636,6 +2803,8 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     email: string
     emailVerified: boolean
     image: string | null
+    role: $Enums.UserRole
+    onboarded: boolean
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["user"]>
@@ -1034,6 +3203,19 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   readonly [Symbol.toStringTag]: "PrismaPromise"
   sessions<T extends Prisma.User$sessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   accounts<T extends Prisma.User$accountsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$accountsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  requests<T extends Prisma.User$requestsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$requestsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$HelpRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  studentSessions<T extends Prisma.User$studentSessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$studentSessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AcademicSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  consultantSessions<T extends Prisma.User$consultantSessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$consultantSessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AcademicSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  consultantProfile<T extends Prisma.User$consultantProfileArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$consultantProfileArgs<ExtArgs>>): Prisma.Prisma__ConsultantProfileClient<runtime.Types.Result.GetResult<Prisma.$ConsultantProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  sentMessages<T extends Prisma.User$sentMessagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$sentMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  receivedMessages<T extends Prisma.User$receivedMessagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$receivedMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  notifications<T extends Prisma.User$notificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  analyticsEvents<T extends Prisma.User$analyticsEventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$analyticsEventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AnalyticsEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  reportsCreated<T extends Prisma.User$reportsCreatedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$reportsCreatedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  reportsAbout<T extends Prisma.User$reportsAboutArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$reportsAboutArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  auditLogs<T extends Prisma.User$auditLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$auditLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AuditLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  acceptedRequests<T extends Prisma.User$acceptedRequestsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$acceptedRequestsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$HelpRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  verificationReqs<T extends Prisma.User$verificationReqsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$verificationReqsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$VerificationRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1068,6 +3250,8 @@ export interface UserFieldRefs {
   readonly email: Prisma.FieldRef<"User", 'String'>
   readonly emailVerified: Prisma.FieldRef<"User", 'Boolean'>
   readonly image: Prisma.FieldRef<"User", 'String'>
+  readonly role: Prisma.FieldRef<"User", 'UserRole'>
+  readonly onboarded: Prisma.FieldRef<"User", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>
 }
@@ -1503,6 +3687,313 @@ export type User$accountsArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   take?: number
   skip?: number
   distinct?: Prisma.AccountScalarFieldEnum | Prisma.AccountScalarFieldEnum[]
+}
+
+/**
+ * User.requests
+ */
+export type User$requestsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the HelpRequest
+   */
+  select?: Prisma.HelpRequestSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the HelpRequest
+   */
+  omit?: Prisma.HelpRequestOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.HelpRequestInclude<ExtArgs> | null
+  where?: Prisma.HelpRequestWhereInput
+  orderBy?: Prisma.HelpRequestOrderByWithRelationInput | Prisma.HelpRequestOrderByWithRelationInput[]
+  cursor?: Prisma.HelpRequestWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.HelpRequestScalarFieldEnum | Prisma.HelpRequestScalarFieldEnum[]
+}
+
+/**
+ * User.studentSessions
+ */
+export type User$studentSessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AcademicSession
+   */
+  select?: Prisma.AcademicSessionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AcademicSession
+   */
+  omit?: Prisma.AcademicSessionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AcademicSessionInclude<ExtArgs> | null
+  where?: Prisma.AcademicSessionWhereInput
+  orderBy?: Prisma.AcademicSessionOrderByWithRelationInput | Prisma.AcademicSessionOrderByWithRelationInput[]
+  cursor?: Prisma.AcademicSessionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AcademicSessionScalarFieldEnum | Prisma.AcademicSessionScalarFieldEnum[]
+}
+
+/**
+ * User.consultantSessions
+ */
+export type User$consultantSessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AcademicSession
+   */
+  select?: Prisma.AcademicSessionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AcademicSession
+   */
+  omit?: Prisma.AcademicSessionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AcademicSessionInclude<ExtArgs> | null
+  where?: Prisma.AcademicSessionWhereInput
+  orderBy?: Prisma.AcademicSessionOrderByWithRelationInput | Prisma.AcademicSessionOrderByWithRelationInput[]
+  cursor?: Prisma.AcademicSessionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AcademicSessionScalarFieldEnum | Prisma.AcademicSessionScalarFieldEnum[]
+}
+
+/**
+ * User.consultantProfile
+ */
+export type User$consultantProfileArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ConsultantProfile
+   */
+  select?: Prisma.ConsultantProfileSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ConsultantProfile
+   */
+  omit?: Prisma.ConsultantProfileOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ConsultantProfileInclude<ExtArgs> | null
+  where?: Prisma.ConsultantProfileWhereInput
+}
+
+/**
+ * User.sentMessages
+ */
+export type User$sentMessagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Message
+   */
+  select?: Prisma.MessageSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Message
+   */
+  omit?: Prisma.MessageOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MessageInclude<ExtArgs> | null
+  where?: Prisma.MessageWhereInput
+  orderBy?: Prisma.MessageOrderByWithRelationInput | Prisma.MessageOrderByWithRelationInput[]
+  cursor?: Prisma.MessageWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MessageScalarFieldEnum | Prisma.MessageScalarFieldEnum[]
+}
+
+/**
+ * User.receivedMessages
+ */
+export type User$receivedMessagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Message
+   */
+  select?: Prisma.MessageSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Message
+   */
+  omit?: Prisma.MessageOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MessageInclude<ExtArgs> | null
+  where?: Prisma.MessageWhereInput
+  orderBy?: Prisma.MessageOrderByWithRelationInput | Prisma.MessageOrderByWithRelationInput[]
+  cursor?: Prisma.MessageWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MessageScalarFieldEnum | Prisma.MessageScalarFieldEnum[]
+}
+
+/**
+ * User.notifications
+ */
+export type User$notificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Notification
+   */
+  select?: Prisma.NotificationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Notification
+   */
+  omit?: Prisma.NotificationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.NotificationInclude<ExtArgs> | null
+  where?: Prisma.NotificationWhereInput
+  orderBy?: Prisma.NotificationOrderByWithRelationInput | Prisma.NotificationOrderByWithRelationInput[]
+  cursor?: Prisma.NotificationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.NotificationScalarFieldEnum | Prisma.NotificationScalarFieldEnum[]
+}
+
+/**
+ * User.analyticsEvents
+ */
+export type User$analyticsEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AnalyticsEvent
+   */
+  select?: Prisma.AnalyticsEventSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AnalyticsEvent
+   */
+  omit?: Prisma.AnalyticsEventOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AnalyticsEventInclude<ExtArgs> | null
+  where?: Prisma.AnalyticsEventWhereInput
+  orderBy?: Prisma.AnalyticsEventOrderByWithRelationInput | Prisma.AnalyticsEventOrderByWithRelationInput[]
+  cursor?: Prisma.AnalyticsEventWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AnalyticsEventScalarFieldEnum | Prisma.AnalyticsEventScalarFieldEnum[]
+}
+
+/**
+ * User.reportsCreated
+ */
+export type User$reportsCreatedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Report
+   */
+  select?: Prisma.ReportSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Report
+   */
+  omit?: Prisma.ReportOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ReportInclude<ExtArgs> | null
+  where?: Prisma.ReportWhereInput
+  orderBy?: Prisma.ReportOrderByWithRelationInput | Prisma.ReportOrderByWithRelationInput[]
+  cursor?: Prisma.ReportWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ReportScalarFieldEnum | Prisma.ReportScalarFieldEnum[]
+}
+
+/**
+ * User.reportsAbout
+ */
+export type User$reportsAboutArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Report
+   */
+  select?: Prisma.ReportSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Report
+   */
+  omit?: Prisma.ReportOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ReportInclude<ExtArgs> | null
+  where?: Prisma.ReportWhereInput
+  orderBy?: Prisma.ReportOrderByWithRelationInput | Prisma.ReportOrderByWithRelationInput[]
+  cursor?: Prisma.ReportWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ReportScalarFieldEnum | Prisma.ReportScalarFieldEnum[]
+}
+
+/**
+ * User.auditLogs
+ */
+export type User$auditLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AuditLog
+   */
+  select?: Prisma.AuditLogSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AuditLog
+   */
+  omit?: Prisma.AuditLogOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AuditLogInclude<ExtArgs> | null
+  where?: Prisma.AuditLogWhereInput
+  orderBy?: Prisma.AuditLogOrderByWithRelationInput | Prisma.AuditLogOrderByWithRelationInput[]
+  cursor?: Prisma.AuditLogWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AuditLogScalarFieldEnum | Prisma.AuditLogScalarFieldEnum[]
+}
+
+/**
+ * User.acceptedRequests
+ */
+export type User$acceptedRequestsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the HelpRequest
+   */
+  select?: Prisma.HelpRequestSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the HelpRequest
+   */
+  omit?: Prisma.HelpRequestOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.HelpRequestInclude<ExtArgs> | null
+  where?: Prisma.HelpRequestWhereInput
+  orderBy?: Prisma.HelpRequestOrderByWithRelationInput | Prisma.HelpRequestOrderByWithRelationInput[]
+  cursor?: Prisma.HelpRequestWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.HelpRequestScalarFieldEnum | Prisma.HelpRequestScalarFieldEnum[]
+}
+
+/**
+ * User.verificationReqs
+ */
+export type User$verificationReqsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the VerificationRequest
+   */
+  select?: Prisma.VerificationRequestSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the VerificationRequest
+   */
+  omit?: Prisma.VerificationRequestOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.VerificationRequestInclude<ExtArgs> | null
+  where?: Prisma.VerificationRequestWhereInput
+  orderBy?: Prisma.VerificationRequestOrderByWithRelationInput | Prisma.VerificationRequestOrderByWithRelationInput[]
+  cursor?: Prisma.VerificationRequestWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.VerificationRequestScalarFieldEnum | Prisma.VerificationRequestScalarFieldEnum[]
 }
 
 /**
