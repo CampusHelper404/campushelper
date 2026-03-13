@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import Image from "next/image"
 import Link from "next/link"
@@ -20,11 +20,18 @@ export default function StudentDashboardPage() {
     const { data: notifications } = trpc.notifications.list.useQuery({ unreadOnly: true })
     const { data: helpers } = trpc.helpers.list.useQuery()
 
-    const openRequestsCount = requests?.filter(r => r.status === 'PENDING').length || 0
-    const completedSessionsCount = sessions?.filter(s => s.status === 'COMPLETED').length || 0
+    const openRequestsCount = requests?.filter((r: any) => r.status === 'PENDING').length || 0
+    const completedSessionsCount = sessions?.filter((s: any) => s.status === 'COMPLETED').length || 0
     const unreadNotifCount = notifications?.length || 0
-    const consultantCount = helpers?.filter(h => h.verificationStatus === 'APPROVED').length || helpers?.length || 0
+    const consultantCount = helpers?.filter((h: any) => h.verificationStatus === 'APPROVED').length || helpers?.length || 0
     
+    // ── Role Guard ───────────────────────────────────────────────────────────
+    useEffect(() => {
+        if (user && user.role === 'CONSULTANT') {
+            router.push("/dashboard")
+        }
+    }, [user, router])
+
     const visibleRequests = showAllRequests ? requests : requests?.slice(0, 2)
 
     return (
@@ -46,6 +53,9 @@ export default function StudentDashboardPage() {
                     overflow: 'hidden'
                 }}>
                     <div style={{ maxWidth: '450px', zIndex: 1 }}>
+                        <div style={{ fontSize: '0.8rem', fontWeight: 800, color: 'var(--accent-main)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.5rem' }}>
+                            Student Dashboard
+                        </div>
                         <h1 style={{ fontSize: '1.75rem', fontWeight: 700, margin: 0, color: '#003249' }}>
                             Welcome Back, {user?.name?.split(" ")[0] || "User"}!
                         </h1>
@@ -129,10 +139,10 @@ export default function StudentDashboardPage() {
                     <div style={{ background: '#ccdbdc', borderRadius: '12px', padding: '1.5rem' }}>
                         <h2 style={{ fontSize: '1rem', fontWeight: 700, marginBottom: '1.25rem', color: '#003249' }}>Upcoming Sessions</h2>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                            {sessions?.filter(s => s.status === 'UPCOMING').length === 0 ? (
+                            {sessions?.filter((s: any) => s.status === 'UPCOMING').length === 0 ? (
                                 <p style={{ fontSize: '0.9rem', opacity: 0.7 }}>No upcoming sessions.</p>
                             ) : (
-                                sessions?.filter(s => s.status === 'UPCOMING').map(s => (
+                                sessions?.filter((s: any) => s.status === 'UPCOMING').map((s: any) => (
                                     <div key={s.id} style={{ 
                                         background: '#fff', 
                                         padding: '1rem', 
@@ -169,7 +179,7 @@ export default function StudentDashboardPage() {
                         </Link>
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                        {visibleRequests?.map(r => (
+                        {visibleRequests?.map((r: any) => (
                             <div key={r.id} style={{ 
                                 background: '#fff', 
                                 padding: '1rem 1.5rem', 

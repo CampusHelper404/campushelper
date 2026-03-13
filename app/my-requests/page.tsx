@@ -1,5 +1,7 @@
 "use client"
 
+import { useEffect } from "react"
+import { useRouter } from "next/navigation"
 import { trpc } from "@/trpc/client"
 import Image from "next/image"
 import { MessageSquare, CheckCircle, Search, HelpCircle, User } from "lucide-react"
@@ -7,8 +9,16 @@ import StudentNavbar from "@/components/dashboard/StudentNavbar"
 import "../dashboard/dashboard.css"
 
 export default function MyHelpRequestsPage() {
+    const router = useRouter()
     const { data: user } = trpc.users.me.useQuery()
     const { data: requests, isLoading } = trpc.helpRequests.list.useQuery({ studentId: user?.id }, { enabled: !!user?.id })
+
+    // ── Role Guard ───────────────────────────────────────────────────────────
+    useEffect(() => {
+        if (user && user.role === 'CONSULTANT') {
+            router.push("/dashboard")
+        }
+    }, [user, router])
 
     return (
         <div className="dash-wrapper" style={{ background: '#f0f4f5', minHeight: '100vh', paddingTop: '70px' }}>
@@ -27,6 +37,9 @@ export default function MyHelpRequestsPage() {
                     marginBottom: '3rem'
                 }}>
                     <div style={{ maxWidth: '450px' }}>
+                        <div style={{ fontSize: '0.8rem', fontWeight: 800, color: 'var(--accent-main)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.5rem' }}>
+                            Student Dashboard
+                        </div>
                         <h1 style={{ fontSize: '1.75rem', fontWeight: 700, margin: 0, color: '#003249' }}>My Help Requests</h1>
                         <p style={{ fontSize: '1.05rem', color: '#003249', marginTop: '0.75rem', opacity: 0.9 }}>
                             Track your active, approved, and completed assistant requests here.

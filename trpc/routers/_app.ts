@@ -366,19 +366,62 @@ export const appRouter = createTRPCRouter({
       .input(z.object({
         requestId: z.string().optional(),
         sessionId: z.string().optional(),
+        partnerId: z.string().optional(),
       }))
       .query(async ({ input, ctx }) => {
         return await prisma.message.findMany({
           where: {
             requestId: input.requestId,
             sessionId: input.sessionId,
-            OR: [
-              { senderId: ctx.session.user.id },
-              { recipientId: ctx.session.user.id },
+            AND: input.partnerId ? [
+              {
+                OR: [
+                  { senderId: ctx.session.user.id, recipientId: input.partnerId },
+                  { senderId: input.partnerId, recipientId: ctx.session.user.id },
+                ]
+              }
+            ] : [
+              {
+                OR: [
+                  { senderId: ctx.session.user.id },
+                  { recipientId: ctx.session.user.id },
+                ]
+              }
             ],
           },
           orderBy: { sentAt: 'asc' },
         });
+      }),
+
+    listConversations: protectedProcedure
+      .query(async ({ ctx }) => {
+        const userId = ctx.session.user.id;
+        
+        // Get all messages where user is sender or recipient
+        const messages = await prisma.message.findMany({
+          where: {
+            OR: [{ senderId: userId }, { recipientId: userId }],
+          },
+          include: {
+            sender: true,
+            recipient: true,
+          },
+          orderBy: { sentAt: 'desc' },
+        });
+
+        const conversationsMap = new Map<string, { partner: any, lastMessage: any }>();
+        
+        for (const msg of messages) {
+          const partnerId = msg.senderId === userId ? msg.recipientId : msg.senderId;
+          if (!conversationsMap.has(partnerId)) {
+            conversationsMap.set(partnerId, {
+              partner: msg.senderId === userId ? msg.recipient : msg.sender,
+              lastMessage: msg,
+            });
+          }
+        }
+
+        return Array.from(conversationsMap.values());
       }),
 
     send: protectedProcedure
@@ -508,9 +551,30 @@ export const appRouter = createTRPCRouter({
   verification: createTRPCRouter({
     submit: protectedProcedure
       .mutation(async ({ ctx }) => {
-        return await prisma.consultantProfile.update({
+        return await prisma.consultantProfile.upsert({
           where: { userId: ctx.session.user.id },
-          data: { verificationStatus: 'PENDING' },
+          update: { verificationStatus: 'PENDING' },
+          create: {
+            userId: ctx.session.user.id,
+            verificationStatus: 'PENDING',
+          },
+        });
+      }),
+
+    submitDetails: protectedProcedure
+      .input(z.object({
+        idFrontUrl: z.string().optional(),
+        idBackUrl: z.string().optional(),
+        transcriptUrl: z.string().optional(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        // Create or update verification request
+        return await prisma.verificationRequest.create({
+          data: {
+            ...input,
+            userId: ctx.session.user.id,
+            status: 'PENDING',
+          },
         });
       }),
 

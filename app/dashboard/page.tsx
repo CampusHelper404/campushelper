@@ -5,6 +5,7 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { ClipboardList, Users, MessageSquare, CheckCircle, Search, PlusCircle } from "lucide-react"
 import { trpc } from "@/trpc/client"
+import ConsultantNavbar from "@/components/dashboard/ConsultantNavbar"
 import "./dashboard.css"
 
 export default function DashboardPage() {
@@ -40,27 +41,13 @@ export default function DashboardPage() {
 
     return (
         <div className="dash-wrapper">
-            <nav className="dash-nav">
-                <div className="dash-brand">
-                    <span className="campus">Campus</span>
-                    <span className="helper">Helper</span>
-                </div>
-                <ul className="dash-nav-links">
-                    <li><Link href="/dashboard" className="active">Dashboard</Link></li>
-                    <li><Link href="/student-requests">Student Requests</Link></li>
-                    <li><Link href="/sessions">Sessions</Link></li>
-                    <li><Link href="#">Messages</Link></li>
-                    <li><Link href="#">Settings</Link></li>
-                    <li>
-                        <div className="dash-avatar">
-                            {user?.name ? getInitials(user.name) : "U"}
-                        </div>
-                    </li>
-                </ul>
-            </nav>
+            <ConsultantNavbar />
 
             <main className="dash-main">
                 <div className="dash-welcome">
+                    <div style={{ fontSize: '0.75rem', fontWeight: 800, color: 'var(--accent-main)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.5rem' }}>
+                        Consultant Dashboard
+                    </div>
                     <h1>Welcome Back, {user?.name?.split(" ")[0] || "User"}!</h1>
                     <p>Post requests, track your progress, and manage your help sessions.</p>
                 </div>

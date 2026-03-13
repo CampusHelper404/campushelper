@@ -1,14 +1,24 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { trpc } from "@/trpc/client"
+import ConsultantNavbar from "@/components/dashboard/ConsultantNavbar"
 import "../dashboard/dashboard.css"
 
 export default function StudentRequestsPage() {
+    const router = useRouter()
     const utils = trpc.useUtils()
     const { data: user } = trpc.users.me.useQuery()
     const { data: pendingRequests, isLoading } = trpc.helpRequests.list.useQuery({ status: 'PENDING' })
+
+    // ── Role Guard ───────────────────────────────────────────────────────────
+    useEffect(() => {
+        if (user && user.role === 'STUDENT') {
+            router.push("/student-dashboard")
+        }
+    }, [user, router])
     
     const updateRequest = trpc.helpRequests.updateStatus.useMutation({
         onSuccess: () => {
@@ -30,27 +40,13 @@ export default function StudentRequestsPage() {
 
     return (
         <div className="dash-wrapper">
-            <nav className="dash-nav">
-                <div className="dash-brand">
-                    <span className="campus">Campus</span>
-                    <span className="helper">Helper</span>
-                </div>
-                <ul className="dash-nav-links">
-                    <li><Link href="/dashboard">Dashboard</Link></li>
-                    <li><Link href="/student-requests" className="active">Student Requests</Link></li>
-                    <li><Link href="/sessions">Sessions</Link></li>
-                    <li><Link href="#">Messages</Link></li>
-                    <li><Link href="#">Settings</Link></li>
-                    <li>
-                        <div className="dash-avatar">
-                            {user?.name ? getInitials(user.name) : "U"}
-                        </div>
-                    </li>
-                </ul>
-            </nav>
+            <ConsultantNavbar />
 
             <main className="dash-main">
                 <div className="dash-welcome">
+                    <div style={{ fontSize: '0.75rem', fontWeight: 800, color: 'var(--accent-main)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.5rem' }}>
+                        Consultant Dashboard
+                    </div>
                     <h1>Student Requests</h1>
                     <p>Review and accept incoming requests for your expertise</p>
                 </div>

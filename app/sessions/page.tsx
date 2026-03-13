@@ -2,6 +2,7 @@
 
 import Link from "next/link"
 import { trpc } from "@/trpc/client"
+import ConsultantNavbar from "@/components/dashboard/ConsultantNavbar"
 import "../dashboard/dashboard.css"
 
 export default function SessionsPage() {
@@ -26,24 +27,7 @@ export default function SessionsPage() {
 
     return (
         <div className="dash-wrapper">
-            <nav className="dash-nav">
-                <div className="dash-brand">
-                    <span className="campus">Campus</span>
-                    <span className="helper">Helper</span>
-                </div>
-                <ul className="dash-nav-links">
-                    <li><Link href="/dashboard">Dashboard</Link></li>
-                    <li><Link href="/student-requests">Student Requests</Link></li>
-                    <li><Link href="/sessions" className="active">Sessions</Link></li>
-                    <li><Link href="#">Messages</Link></li>
-                    <li><Link href="#">Settings</Link></li>
-                    <li>
-                        <div className="dash-avatar">
-                            {user?.name ? getInitials(user.name) : "U"}
-                        </div>
-                    </li>
-                </ul>
-            </nav>
+            <ConsultantNavbar />
 
             <main className="dash-main">
                 <div className="dash-welcome">

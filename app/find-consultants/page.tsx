@@ -1,6 +1,7 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { useRouter } from "next/navigation"
 import { trpc } from "@/trpc/client"
 import StudentNavbar from "@/components/dashboard/StudentNavbar"
 import Link from "next/link"
@@ -12,11 +13,20 @@ export default function FindConsultantsPage() {
     const [searchQuery, setSearchQuery] = useState("")
     
     // Fetch helpers from backend
+    const router = useRouter()
+    const { data: user } = trpc.users.me.useQuery()
     const { data: helpers, isLoading } = trpc.helpers.list.useQuery()
+    
+    // ── Role Guard ───────────────────────────────────────────────────────────
+    useEffect(() => {
+        if (user && user.role === 'CONSULTANT') {
+            router.push("/dashboard")
+        }
+    }, [user, router])
 
-    const filteredHelpers = helpers?.filter(h => 
+    const filteredHelpers = helpers?.filter((h: any) => 
         h.user.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        h.expertise.some(e => e.name.toLowerCase().includes(searchQuery.toLowerCase()))
+        h.expertise.some((e: any) => e.name.toLowerCase().includes(searchQuery.toLowerCase()))
     )
 
     return (
@@ -36,6 +46,9 @@ export default function FindConsultantsPage() {
                     marginBottom: '2rem'
                 }}>
                     <div style={{ maxWidth: '500px' }}>
+                        <div style={{ fontSize: '0.8rem', fontWeight: 800, color: 'var(--accent-main)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.5rem' }}>
+                            Student Dashboard
+                        </div>
                         <h1 style={{ fontSize: '1.75rem', fontWeight: 700, margin: 0, color: '#003249' }}>Find Consultants</h1>
                         <p style={{ fontSize: '1.05rem', color: '#003249', marginTop: '0.75rem', opacity: 0.9 }}>
                             Find and connect with expert student consultants across all subjects
@@ -81,7 +94,7 @@ export default function FindConsultantsPage() {
                     ) : filteredHelpers?.length === 0 ? (
                         <p style={{ gridColumn: '1 / -1', textAlign: 'center' }}>No consultants found matching your search.</p>
                     ) : (
-                        filteredHelpers?.map((h) => (
+                        filteredHelpers?.map((h: any) => (
                             <div key={h.id} style={{ 
                                 background: '#ccdbdc', 
                                 padding: '1.75rem', 
@@ -111,7 +124,7 @@ export default function FindConsultantsPage() {
                                 </span>
                                 
                                 <p style={{ fontSize: '1rem', color: '#003249', opacity: 0.8, fontWeight: 500, margin: 0 }}>
-                                    {h.expertise.map(e => e.name).join(", ") || "General Tutor"}
+                                    {h.expertise.map((e: any) => e.name).join(", ") || "General Tutor"}
                                 </p>
                                 
                                 <Link 
