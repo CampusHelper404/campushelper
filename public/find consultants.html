@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="Find and connect with expert student consultants across all subjects on Campus Helper.">
+  <title>Find Consultants - Campus Helper</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700;800;900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* =============================================
+       Find Consultants — Shared Page Styles
+       ============================================= */
+
+    /* ---- Consultant Cards Grid ---- */
+    .fc-search-section {
+      padding: 20px 24px 10px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .fc-search-bar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: #fff;
+      border: 1.5px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: 10px 18px;
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow var(--transition-fast), border-color var(--transition-fast);
+    }
+
+    .fc-search-bar:focus-within {
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 3px rgba(26, 138, 138, 0.12);
+    }
+
+    .fc-search-icon {
+      color: var(--color-text-light);
+      flex-shrink: 0;
+    }
+
+    .fc-search-input {
+      flex: 1;
+      border: none;
+      background: transparent;
+      font-family: var(--font-primary);
+      font-size: 0.95rem;
+      color: var(--color-text);
+      outline: none;
+    }
+
+    .fc-search-input::placeholder {
+      color: var(--color-text-light);
+    }
+
+    .fc-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      padding: 20px 24px 40px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .fc-card {
+      background: #fff;
+      border-radius: var(--radius-md);
+      padding: 22px 20px 18px;
+      box-shadow: var(--shadow-sm);
+      border: 1.5px solid var(--color-border);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      transition: box-shadow var(--transition-normal), transform var(--transition-normal);
+    }
+
+    .fc-card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-3px);
+    }
+
+    .fc-card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .fc-avatar {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: var(--color-bg);
+      border: 2px solid var(--color-primary-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-primary);
+      flex-shrink: 0;
+    }
+
+    .fc-name {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--color-dark);
+    }
+
+    .fc-subject {
+      font-size: 0.84rem;
+      color: var(--color-text-light);
+      font-weight: 400;
+    }
+
+    .fc-view-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 9px 18px;
+      background: var(--color-btn-bg);
+      color: #fff;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border-radius: var(--radius-sm);
+      border: none;
+      cursor: pointer;
+      transition: background var(--transition-fast), transform var(--transition-fast);
+      width: 100%;
+      margin-top: auto;
+      letter-spacing: 0.01em;
+    }
+
+    .fc-view-btn:hover {
+      background: var(--color-btn-hover);
+      transform: translateY(-1px);
+    }
+
+    /* =============================================
+       Consultant Profile View
+       ============================================= */
+    #fc-profile-view,
+    #fc-request-view {
+      display: none;
+      animation: fcFadeIn 0.3s ease;
+    }
+
+    @keyframes fcFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Back Arrow */
+    .fc-back-arrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--color-dark);
+      font-weight: 500;
+      font-size: 0.92rem;
+      padding: 16px 24px 8px;
+      cursor: pointer;
+      transition: color var(--transition-fast);
+      background: none;
+      border: none;
+    }
+
+    .fc-back-arrow:hover {
+      color: var(--color-primary);
+    }
+
+    /* Profile Banner (teal header card) */
+    .fcp-banner {
+      margin: 0 24px 24px;
+      background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+      border-radius: var(--radius-md);
+      padding: 28px 36px;
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      position: relative;
+      overflow: hidden;
+      max-width: 1052px;
+    }
+
+    .fcp-banner::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      width: 45%;
+      background: rgba(255, 255, 255, 0.07);
+      border-radius: 50% 0 0 50%;
+    }
+
+    .fcp-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: var(--radius-sm);
+      background: rgba(255, 255, 255, 0.25);
+      border: 2.5px solid rgba(255, 255, 255, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    .fcp-info {
+      flex: 1;
+    }
+
+    .fcp-name {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+
+    .fcp-expertise {
+      font-size: 0.88rem;
+      color: rgba(255, 255, 255, 0.85);
+      margin-bottom: 6px;
+    }
+
+    .fcp-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.84rem;
+      color: rgba(255, 255, 255, 0.75);
+    }
+
+    .fcp-meta-sep {
+      opacity: 0.5;
+    }
+
+    .fcp-rating-star {
+      color: #ffe066;
+      font-size: 0.95rem;
+    }
+
+    .fcp-banner-image {
+      position: absolute;
+      right: 20px;
+      bottom: 0;
+      height: 130px;
+      z-index: 1;
+      opacity: 0.9;
+    }
+
+    .fcp-banner-image img {
+      height: 100%;
+      width: auto;
+      object-fit: contain;
+    }
+
+    /* Profile Body Grid */
+    .fcp-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      padding: 0 24px 100px;
+      max-width: 1100px;
+    }
+
+    .fcp-left {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .fcp-right {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .fcp-section-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--color-dark);
+      margin-bottom: 10px;
+    }
+
+    /* About Me Box */
+    .fcp-about-box {
+      background: #fff;
+      border-radius: var(--radius-md);
+      padding: 20px;
+      border: 1.5px solid var(--color-border);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .fcp-about-text {
+      font-size: 0.89rem;
+      color: var(--color-text-light);
+      line-height: 1.8;
+    }
+
+    /* Availability Box */
+    .fcp-availability-box {
+      background: #fff;
+      border-radius: var(--radius-md);
+      padding: 20px;
+      border: 1.5px solid var(--color-border);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .fcp-avail-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 9px 0;
+      border-bottom: 1px solid var(--color-border);
+      font-size: 0.88rem;
+    }
+
+    .fcp-avail-row:last-child {
+      border-bottom: none;
+    }
+
+    .fcp-avail-day {
+      color: var(--color-text);
+      font-weight: 500;
+      width: 96px;
+    }
+
+    .fcp-avail-time {
+      color: var(--color-text-light);
+    }
+
+    /* Reviews */
+    .fcp-reviews-box {
+      background: #fff;
+      border-radius: var(--radius-md);
+      padding: 20px;
+      border: 1.5px solid var(--color-border);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .fcp-review-card {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .fcp-review-card:last-child {
+      border-bottom: none;
+    }
+
+    .fcp-review-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--color-bg);
+      border: 1.5px solid var(--color-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--color-text-light);
+    }
+
+    .fcp-review-name {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--color-dark);
+    }
+
+    .fcp-review-time {
+      font-size: 0.78rem;
+      color: var(--color-text-light);
+    }
+
+    .fcp-review-stars {
+      margin-left: auto;
+      color: #e8a800;
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+    }
+
+    /* Request Session Sticky Button */
+    .fcp-footer-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(255, 255, 255, 0.97);
+      border-top: 1px solid var(--color-border);
+      padding: 14px 24px;
+      display: flex;
+      justify-content: flex-end;
+      z-index: 200;
+      backdrop-filter: blur(8px);
+    }
+
+    .fcp-footer-bar.hidden {
+      display: none;
+    }
+
+    .fc-request-btn {
+      padding: 12px 36px;
+      background: var(--color-btn-bg);
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.95rem;
+      border: none;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: background var(--transition-fast), transform var(--transition-fast);
+      letter-spacing: 0.01em;
+    }
+
+    .fc-request-btn:hover {
+      background: var(--color-primary);
+      transform: translateY(-1px);
+    }
+
+    /* =============================================
+       Request Session View
+       ============================================= */
+    .fcr-banner {
+      margin: 0 24px 28px;
+      background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+      border-radius: var(--radius-md);
+      padding: 26px 36px;
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      position: relative;
+      overflow: hidden;
+      max-width: 1052px;
+    }
+
+    .fcr-banner::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      width: 45%;
+      background: rgba(255, 255, 255, 0.07);
+      border-radius: 50% 0 0 50%;
+    }
+
+    .fcr-banner-image {
+      position: absolute;
+      right: 20px;
+      bottom: 0;
+      height: 130px;
+      z-index: 1;
+    }
+
+    .fcr-banner-image img {
+      height: 100%;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .fcr-form-container {
+      padding: 0 24px 40px;
+      max-width: 1100px;
+    }
+
+    .fcr-form-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--color-dark);
+      margin-bottom: 22px;
+    }
+
+    .fcr-form {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .fcr-field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .fcr-label {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--color-dark);
+    }
+
+    .fcr-label span {
+      color: var(--color-primary);
+    }
+
+    .fcr-input,
+    .fcr-textarea {
+      background: #e8eff3;
+      border: 1.5px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      padding: 12px 16px;
+      font-family: var(--font-primary);
+      font-size: 0.92rem;
+      color: var(--color-text);
+      outline: none;
+      transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+      width: 100%;
+    }
+
+    .fcr-input:focus,
+    .fcr-textarea:focus {
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 3px rgba(26, 138, 138, 0.12);
+      background: #fff;
+    }
+
+    .fcr-input::placeholder,
+    .fcr-textarea::placeholder {
+      color: var(--color-text-light);
+    }
+
+    .fcr-textarea {
+      resize: vertical;
+      min-height: 90px;
+    }
+
+    .fcr-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .fcr-input-icon-wrap {
+      position: relative;
+    }
+
+    .fcr-input-icon-wrap .fcr-input {
+      padding-right: 44px;
+    }
+
+    .fcr-input-icon {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--color-text-light);
+      pointer-events: none;
+    }
+
+    /* Session Type Radio */
+    .fcr-session-type {
+      display: flex;
+      gap: 28px;
+      align-items: center;
+    }
+
+    .fcr-radio-label {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      color: var(--color-text);
+      font-weight: 500;
+    }
+
+    .fcr-radio-label input[type="radio"] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--color-primary);
+      cursor: pointer;
+    }
+
+    /* Form Action Buttons */
+    .fcr-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 14px;
+      padding-top: 8px;
+    }
+
+    .fcr-cancel-btn {
+      padding: 12px 30px;
+      background: #fff;
+      color: var(--color-btn-bg);
+      border: 2px solid var(--color-btn-bg);
+      border-radius: var(--radius-sm);
+      font-family: var(--font-primary);
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+
+    .fcr-cancel-btn:hover {
+      background: var(--color-btn-bg);
+      color: #fff;
+    }
+
+    .fcr-send-btn {
+      padding: 12px 30px;
+      background: var(--color-btn-bg);
+      color: #fff;
+      border: 2px solid var(--color-btn-bg);
+      border-radius: var(--radius-sm);
+      font-family: var(--font-primary);
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+
+    .fcr-send-btn:hover {
+      background: var(--color-primary);
+      border-color: var(--color-primary);
+      transform: translateY(-1px);
+    }
+
+    /* Success Toast */
+    .fc-toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: var(--color-primary);
+      color: #fff;
+      padding: 14px 28px;
+      border-radius: var(--radius-pill);
+      font-weight: 600;
+      font-size: 0.92rem;
+      box-shadow: 0 4px 20px rgba(26, 138, 138, 0.35);
+      z-index: 999;
+      transition: transform 0.4s cubic-bezier(.22, 1, .36, 1), opacity 0.4s;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .fc-toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .fc-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .fcp-body {
+        grid-template-columns: 1fr;
+      }
+
+      .fcp-banner,
+      .fcr-banner {
+        margin: 0 12px 20px;
+        padding: 20px;
+      }
+
+      .fcp-body,
+      .fcr-form-container {
+        padding: 0 12px 80px;
+      }
+
+      .fc-search-section {
+        padding: 16px 12px 8px;
+      }
+
+      .fcp-banner-image,
+      .fcr-banner-image {
+        height: 90px;
+      }
+
+      .fcr-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .fc-grid {
+        grid-template-columns: 1fr;
+        padding: 14px 12px 40px;
+      }
+
+      .fc-search-section {
+        padding: 14px 12px 6px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Dashboard Navigation -->
+  <nav class="navbar dash-navbar" id="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="logo" id="logo">
+        <span class="logo-campus">Campus</span> <span class="logo-helper">Helper</span>
+      </a>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="user dashboard.html" class="nav-link" id="nav-dashboard">Dashboard</a></li>
+        <li><a href="find consultants.html" class="nav-link nav-link-active" id="nav-find-consultants">Find
+            Consultants</a></li>
+        <li><a href="my requests.html" class="nav-link" id="nav-my-requests">My Requests</a></li>
+        <li><a href="#" class="nav-link" id="nav-settings">Settings</a></li>
+      </ul>
+      <a href="#" class="dash-profile-avatar" id="dash-profile-avatar" aria-label="User profile">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
+        </svg>
+      </a>
+      <button class="mobile-toggle" id="mobile-toggle" aria-label="Toggle navigation menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <main class="dash-main">
+
+    <!-- ================================================
+         VIEW 1: Find Consultants (Default List View)
+         ================================================ -->
+    <div id="fc-list-view">
+
+      <!-- Find Consultants Banner -->
+      <section class="dash-welcome fc-banner" id="fc-banner">
+        <div class="dash-welcome-text">
+          <h1 class="dash-welcome-title" id="fc-title">Find Consultants</h1>
+          <p class="dash-welcome-subtitle" id="fc-subtitle">Find and connect with expert student consultants across all
+            subjects</p>
+        </div>
+        <div class="dash-welcome-image" id="fc-banner-image">
+          <img src="find consultant.svg" alt="Students collaborating and consulting illustration">
+        </div>
+      </section>
+
+      <!-- Search Bar -->
+      <section class="fc-search-section" id="fc-search-section">
+        <div class="fc-search-bar" id="fc-search-bar">
+          <svg class="fc-search-icon" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" class="fc-search-input" id="fc-search-input" placeholder="search by subject"
+            aria-label="Search consultants by subject">
+        </div>
+      </section>
+
+      <!-- Consultant Cards Grid -->
+      <section class="fc-grid" id="fc-grid">
+
+        <div class="fc-card" id="fc-card-1">
+          <div class="fc-card-header">
+            <div class="fc-avatar" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
+              </svg>
+            </div>
+            <span class="fc-name">Dr. Prince Lamptey</span>
+          </div>
+          <p class="fc-subject">Survey of Programming Tutor</p>
+          <button class="fc-view-btn" id="fc-view-1"
+            onclick="fcShowProfile({name:'Dr. Prince Lamptey', expertise:'Survey of Programming, Algorithms', joined:'2019', rating:'4.7', about:'Dr. Prince Lamptey is an experienced programming tutor passionate about helping students master foundational computer science concepts. With a strong background in software engineering, he brings real-world examples into his tutoring sessions to make learning engaging and practical.', availability:[{day:'Monday',time:'9:00am – 2:00pm'},{day:'Tuesday',time:'10:00am – 2:00pm'},{day:'Wednesday',time:'1:00pm – 5:00pm'},{day:'Thursday',time:'9:00am – 12:00pm'},{day:'Friday',time:'12:00pm – 4:00pm'}], reviews:[{name:'Abena Mensah',time:'1 day ago',stars:5},{name:'Kwame Osei',time:'3 days ago',stars:4},{name:'Linda Asante',time:'5 days ago',stars:5}]})">View
+            Profile</button>
+        </div>
+
+        <div class="fc-card" id="fc-card-2">
+          <div class="fc-card-header">
+            <div class="fc-avatar" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
+              </svg>
+            </div>
+            <span class="fc-name">Dr. Desmond Addo</span>
+          </div>
+          <p class="fc-subject">Operational Research Tutor</p>
+          <button class="fc-view-btn" id="fc-view-2"
+            onclick="fcShowProfile({name:'Dr. Desmond Addo', expertise:'Operational Research, Statistics', joined:'2020', rating:'4.5', about:'Dr. Desmond Addo specialises in Operational Research and statistical modelling. He uses a structured approach to break down complex optimisation problems into digestible steps, guiding students from theory to practical application with clarity and patience.', availability:[{day:'Monday',time:'8:00am – 12:00pm'},{day:'Wednesday',time:'2:00pm – 5:00pm'},{day:'Friday',time:'9:00am – 1:00pm'}], reviews:[{name:'Efua Darko',time:'2 days ago',stars:4},{name:'Samuel Adu',time:'1 week ago',stars:5}]})">View
+            Profile</button>
+        </div>
+
+        <div class="fc-card" id="fc-card-3">
+          <div class="fc-card-header">
+            <div class="fc-avatar" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
+              </svg>
+            </div>
+            <span class="fc-name">Dr. Mary May</span>
+          </div>
+          <p class="fc-subject">Discrete Mathematics Tutor</p>
+          <button class="fc-view-btn" id="fc-view-3"
+            onclick="fcShowProfile({name:'Dr. Mary May', expertise:'Discrete Mathematics, Logic', joined:'2021', rating:'4.8', about:'Dr. Mary May is a Discrete Mathematics expert who combines rigorous mathematical thinking with approachable teaching. She has a talent for demystifying proofs and abstract structures, helping students build genuine confidence in mathematical reasoning.', availability:[{day:'Tuesday',time:'9:00am – 1:00pm'},{day:'Thursday',time:'10:00am – 3:00pm'},{day:'Saturday',time:'10:00am – 12:00pm'}], reviews:[{name:'Anita Owusu',time:'2 days ago',stars:4},{name:'Kofi Acheampong',time:'4 days ago',stars:5},{name:'Priscilla Dankwa',time:'1 week ago',stars:4}]})">View
+            Profile</button>
+        </div>
+
+        <div class="fc-card" id="fc-card-4">
+          <div class="fc-card-header">
+            <div class="fc-avatar" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
+              </svg>
+            </div>
+            <span class="fc-name">Dr. William Arthur</span>
+          </div>
+          <p class="fc-subject">Financial Accounting I Tutor</p>
+          <button class="fc-view-btn" id="fc-view-4"
+            onclick="fcShowProfile({name:'Dr. William Arthur', expertise:'Financial Accounting, Auditing', joined:'2018', rating:'4.6', about:'Dr. William Arthur is a seasoned financial accounting consultant who draws from years of professional practice to enrich his tutoring sessions. He specialises in making foundational accounting principles accessible and relatable to students from all backgrounds.', availability:[{day:'Monday',time:'11:00am – 3:00pm'},{day:'Wednesday',time:'9:00am – 1:00pm'},{day:'Friday',time:'2:00pm – 5:00pm'}], reviews:[{name:'Joyce Opoku',time:'3 days ago',stars:5},{name:'Evans Darko',time:'6 days ago',stars:4}]})">View
+            Profile</button>
+        </div>
+
+        <div class="fc-card" id="fc-card-5">
+          <div class="fc-card-header">
+            <div class="fc-avatar" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
+              </svg>
+            </div>
+            <span class="fc-name">Dr. Priscilla Agyemang</span>
+          </div>
+          <p class="fc-subject">Data Structure I Tutor</p>
+          <button class="fc-view-btn" id="fc-view-5"
+            onclick="fcShowProfile({name:'Dr. Priscilla Agyemang', expertise:'Data Structures, Algorithms', joined:'2022', rating:'4.9', about:'Dr. Priscilla Agyemang is one of the platform\'s highest-rated tutors, specialising in Data Structures and Algorithms. Her sessions are highly interactive and focus on building strong conceptual foundations alongside practical problem-solving skills.', availability:[{day:'Monday',time:'9:00am – 12:00pm'},{day:'Tuesday',time:'2:00pm – 5:00pm'},{day:'Thursday',time:'9:00am – 1:00pm'},{day:'Friday',time:'3:00pm – 6:00pm'}], reviews:[{name:'George Mensah',time:'1 day ago',stars:5},{name:'Abena Frempong',time:'3 days ago',stars:5},{name:'Nana Boateng',time:'5 days ago',stars:4}]})">View
+            Profile</button>
+        </div>
+
+        <div class="fc-card" id="fc-card-6">
+          <div class="fc-card-header">
+            <div class="fc-avatar" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
+              </svg>
+            </div>
+            <span class="fc-name">Dr. Jessica Asamoah</span>
+          </div>
+          <p class="fc-subject">Introduction to AI Tutor</p>
+          <button class="fc-view-btn" id="fc-view-6"
+            onclick="fcShowProfile({name:'Dr. Jessica Asamoah', expertise:'Artificial Intelligence, Machine Learning', joined:'2021', rating:'4.8', about:'Dr. Jessica Asamoah combines academic excellence with a passion for emerging technology. Her AI tutoring sessions cover everything from classic search algorithms to modern machine learning, tailored to meet each student at their current level of understanding.', availability:[{day:'Monday',time:'10:00am – 2:00pm'},{day:'Wednesday',time:'1:00pm – 5:00pm'},{day:'Friday',time:'9:00am – 12:00pm'}], reviews:[{name:'Kweku Agyei',time:'2 days ago',stars:5},{name:'Ama Korsah',time:'4 days ago',stars:4},{name:'Bernard Asante',time:'1 week ago',stars:5}]})">View
+            Profile</button>
+        </div>
+
+      </section>
+    </div><!-- end #fc-list-view -->
+
+
+    <!-- ================================================
+         VIEW 2: Consultant Profile Page
+         ================================================ -->
+    <div id="fc-profile-view">
+      <button class="fc-back-arrow" id="fc-profile-back" onclick="fcShowList()" aria-label="Back to consultants list">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="19" y1="12" x2="5" y2="12"></line>
+          <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+        Back
+      </button>
+
+      <!-- Profile Banner -->
+      <div class="fcp-banner" id="fcp-banner">
+        <div class="fcp-avatar" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
+          </svg>
+        </div>
+        <div class="fcp-info">
+          <div class="fcp-name" id="fcp-name">John Mensah</div>
+          <div class="fcp-expertise" id="fcp-expertise">Expertise: Calculus, Artificial Intelligence</div>
+          <div class="fcp-meta">
+            <span id="fcp-joined">Joined in 2021</span>
+            <span class="fcp-meta-sep">|</span>
+            <span class="fcp-rating-star">&#9733;</span>
+            <span id="fcp-rating">4.8 Rating</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Profile Body -->
+      <div class="fcp-body">
+        <!-- Left Column -->
+        <div class="fcp-left">
+          <!-- About Me -->
+          <div>
+            <p class="fcp-section-title">About me :</p>
+            <div class="fcp-about-box">
+              <p class="fcp-about-text" id="fcp-about"></p>
+            </div>
+          </div>
+          <!-- Reviews -->
+          <div>
+            <p class="fcp-section-title" id="fcp-reviews-title">Reviews (0)</p>
+            <div class="fcp-reviews-box" id="fcp-reviews-list"></div>
+          </div>
+        </div>
+
+        <!-- Right Column -->
+        <div class="fcp-right">
+          <!-- Availability -->
+          <div>
+            <p class="fcp-section-title">Availability :</p>
+            <div class="fcp-availability-box" id="fcp-availability-list"></div>
+          </div>
+        </div>
+      </div><!-- end fcp-body -->
+
+      <!-- Sticky Footer Bar with Request Button -->
+      <div class="fcp-footer-bar" id="fcp-footer-bar">
+        <button class="fc-request-btn" id="fc-request-session-btn" onclick="fcShowRequestSession()">Request
+          Session</button>
+      </div>
+    </div><!-- end #fc-profile-view -->
+
+
+    <!-- ================================================
+         VIEW 3: Request Session Page
+         ================================================ -->
+    <div id="fc-request-view">
+      <button class="fc-back-arrow" id="fc-request-back" onclick="fcShowProfile(null)" aria-label="Back to profile">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="19" y1="12" x2="5" y2="12"></line>
+          <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+        Back
+      </button>
+
+      <!-- Request Banner -->
+      <div class="fcr-banner" id="fcr-banner">
+        <div class="fcp-avatar" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
+          </svg>
+        </div>
+        <div class="fcp-info">
+          <div class="fcp-name" id="fcr-name">—</div>
+          <div class="fcp-expertise" id="fcr-expertise">Expertise : —</div>
+          <div class="fcp-meta">
+            <span id="fcr-joined">—</span>
+            <span class="fcp-meta-sep">|</span>
+            <span class="fcp-rating-star">&#9733;</span>
+            <span id="fcr-rating">—</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Request Form -->
+      <div class="fcr-form-container">
+        <p class="fcr-form-title">Request</p>
+        <form class="fcr-form" id="fcr-form" autocomplete="off" onsubmit="fcSendRequest(event)">
+
+          <div class="fcr-field">
+            <label class="fcr-label" for="fcr-course">Course <span>*</span></label>
+            <input type="text" class="fcr-input" id="fcr-course" name="course" placeholder="e.g. DCIT 102" required>
+          </div>
+
+          <div class="fcr-field">
+            <label class="fcr-label" for="fcr-topic">Topic <span>*</span></label>
+            <input type="text" class="fcr-input" id="fcr-topic" name="topic" placeholder="e.g. Binary Search Trees"
+              required>
+          </div>
+
+          <div class="fcr-row">
+            <div class="fcr-field">
+              <label class="fcr-label" for="fcr-date">Preferred Date <span>*</span></label>
+              <div class="fcr-input-icon-wrap">
+                <input type="date" class="fcr-input" id="fcr-date" name="date" required>
+                <span class="fcr-input-icon" aria-hidden="true">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                  </svg>
+                </span>
+              </div>
+            </div>
+            <div class="fcr-field">
+              <label class="fcr-label" for="fcr-time">Preferred Time <span>*</span></label>
+              <div class="fcr-input-icon-wrap">
+                <input type="time" class="fcr-input" id="fcr-time" name="time" required>
+                <span class="fcr-input-icon" aria-hidden="true">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="fcr-field">
+            <label class="fcr-label">Session Type</label>
+            <div class="fcr-session-type">
+              <label class="fcr-radio-label" for="fcr-online">
+                <input type="radio" id="fcr-online" name="session-type" value="online" checked>
+                Online
+              </label>
+              <label class="fcr-radio-label" for="fcr-inperson">
+                <input type="radio" id="fcr-inperson" name="session-type" value="in-person">
+                In-person
+              </label>
+            </div>
+          </div>
+
+          <div class="fcr-field">
+            <label class="fcr-label" for="fcr-notes">Additional Notes</label>
+            <textarea class="fcr-textarea" id="fcr-notes" name="notes"
+              placeholder="Any extra context or special requirements for the session…"></textarea>
+          </div>
+
+          <div class="fcr-actions">
+            <button type="button" class="fcr-cancel-btn" id="fcr-cancel-btn"
+              onclick="fcShowProfile(null)">Cancel</button>
+            <button type="submit" class="fcr-send-btn" id="fcr-send-btn">Send Request</button>
+          </div>
+        </form>
+      </div>
+    </div><!-- end #fc-request-view -->
+
+  </main><!-- end .dash-main -->
+
+  <!-- Success Toast -->
+  <div class="fc-toast" id="fc-toast" role="alert" aria-live="polite">✓ Request sent successfully!</div>
+
+  <script src="script.js"></script>
+  <script>
+    // =============================================
+    // Find Consultants — View Controller
+    // =============================================
+    const fcViews = {
+      list: document.getElementById('fc-list-view'),
+      profile: document.getElementById('fc-profile-view'),
+      request: document.getElementById('fc-request-view'),
+    };
+    const fcFooterBar = document.getElementById('fcp-footer-bar');
+
+    let fcCurrentConsultant = null; // holds the active consultant data
+
+    function fcHideAll() {
+      Object.values(fcViews).forEach(v => { v.style.display = 'none'; });
+      fcFooterBar.classList.add('hidden');
+    }
+
+    // ---- Show the consultant list ----
+    function fcShowList() {
+      fcHideAll();
+      fcViews.list.style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ---- Show consultant profile ----
+    function fcShowProfile(consultant) {
+      if (consultant) {
+        fcCurrentConsultant = consultant;
+      }
+      const c = fcCurrentConsultant;
+      if (!c) return;
+
+      fcHideAll();
+
+      // Populate banner
+      document.getElementById('fcp-name').textContent = c.name;
+      document.getElementById('fcp-expertise').textContent = 'Expertise:  ' + c.expertise;
+      document.getElementById('fcp-joined').textContent = 'Joined in ' + c.joined;
+      document.getElementById('fcp-rating').textContent = c.rating + ' Rating';
+
+      // Populate About
+      document.getElementById('fcp-about').textContent = c.about;
+
+      // Populate Availability
+      const availList = document.getElementById('fcp-availability-list');
+      availList.innerHTML = '';
+      c.availability.forEach(function (slot) {
+        const row = document.createElement('div');
+        row.className = 'fcp-avail-row';
+        row.innerHTML = '<span class="fcp-avail-day">' + slot.day + '</span>' +
+          '<span class="fcp-avail-time">' + slot.time + '</span>';
+        availList.appendChild(row);
+      });
+
+      // Populate Reviews
+      const reviewsList = document.getElementById('fcp-reviews-list');
+      reviewsList.innerHTML = '';
+      document.getElementById('fcp-reviews-title').textContent = 'Reviews (' + c.reviews.length + ')';
+      c.reviews.forEach(function (rev) {
+        const stars = '★'.repeat(rev.stars) + '☆'.repeat(5 - rev.stars);
+        const card = document.createElement('div');
+        card.className = 'fcp-review-card';
+        card.innerHTML =
+          '<div class="fcp-review-avatar" aria-hidden="true">' +
+          '<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>' +
+          '</div>' +
+          '<div>' +
+          '<div class="fcp-review-name">' + rev.name + '</div>' +
+          '<div class="fcp-review-time">' + rev.time + '</div>' +
+          '</div>' +
+          '<div class="fcp-review-stars" aria-label="' + rev.stars + ' stars">' + stars + '</div>';
+        reviewsList.appendChild(card);
+      });
+
+      fcViews.profile.style.display = 'block';
+      fcFooterBar.classList.remove('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ---- Show request session ----
+    function fcShowRequestSession() {
+      const c = fcCurrentConsultant;
+      if (!c) return;
+      fcHideAll();
+
+      // Populate request banner with consultant info
+      document.getElementById('fcr-name').textContent = c.name;
+      document.getElementById('fcr-expertise').textContent = 'Expertise : ' + c.expertise;
+      document.getElementById('fcr-joined').textContent = 'Joined in ' + c.joined;
+      document.getElementById('fcr-rating').textContent = c.rating + ' Rating';
+
+      // Reset form
+      document.getElementById('fcr-form').reset();
+
+      fcViews.request.style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ---- Handle form submission ----
+    function fcSendRequest(e) {
+      e.preventDefault();
+      // Show toast
+      const toast = document.getElementById('fc-toast');
+      toast.classList.add('show');
+      setTimeout(function () {
+        toast.classList.remove('show');
+        // Navigate back to list after success
+        fcShowList();
+      }, 2600);
+    }
+
+    // ---- Init: show the list view on page load ----
+    fcShowList();
+
+    // ---- Search filtering ----
+    const fcSearchInput = document.getElementById('fc-search-input');
+    const fcCards = document.querySelectorAll('.fc-card');
+    if (fcSearchInput) {
+      fcSearchInput.addEventListener('input', function () {
+        const q = this.value.toLowerCase().trim();
+        fcCards.forEach(function (card) {
+          const subject = card.querySelector('.fc-subject').textContent.toLowerCase();
+          const name = card.querySelector('.fc-name').textContent.toLowerCase();
+          card.style.display = (q === '' || subject.includes(q) || name.includes(q)) ? '' : 'none';
+        });
+      });
+    }
+  </script>
+</body>
+
+</html>

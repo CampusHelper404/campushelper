@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Campus Helper Student Requests - Review and respond to student help requests.">
+  <title>Student Requests - Campus Helper</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700;800;900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+  <!-- Consultant Navigation -->
+  <nav class="navbar dash-navbar" id="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="logo" id="logo">
+        <span class="logo-campus">Campus</span> <span class="logo-helper">Helper</span>
+      </a>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="consultant dashboard.html" class="nav-link" id="nav-cd-dashboard">Dashboard</a></li>
+        <li><a href="student requests.html" class="nav-link nav-link-active" id="nav-cd-requests">Student Requests</a>
+        </li>
+        <li><a href="sessions.html" class="nav-link" id="nav-cd-sessions">Sessions</a></li>
+        <li><a href="messages.html" class="nav-link" id="nav-cd-messages">Messages</a></li>
+        <li><a href="consultant settings.html" class="nav-link" id="nav-cd-settings">Settings</a></li>
+      </ul>
+      <a href="#" class="dash-profile-avatar" id="dash-profile-avatar" aria-label="Consultant profile">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
+        </svg>
+      </a>
+      <button class="mobile-toggle" id="mobile-toggle" aria-label="Toggle navigation menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <main class="dash-main">
+
+    <!-- Banner -->
+    <section class="dash-welcome sr-banner" id="sr-banner">
+      <div class="dash-welcome-text">
+        <h1 class="dash-welcome-title sr-banner-title" id="sr-banner-title">Student Requests</h1>
+        <p class="dash-welcome-subtitle sr-banner-subtitle" id="sr-banner-subtitle">Review and respond to student
+          requests</p>
+      </div>
+      <div class="dash-welcome-image sr-banner-image" id="sr-banner-image">
+        <img src="student requests.svg" alt="Student requests illustration">
+      </div>
+    </section>
+
+    <!-- Filter / Search Bar -->
+    <section class="sr-controls" id="sr-controls">
+      <div class="sr-search-bar" id="sr-search-bar">
+        <svg class="sr-search-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+          fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" class="sr-search-input" id="sr-search-input" placeholder="Search by name or course code…"
+          aria-label="Search student requests">
+      </div>
+      <div class="sr-filter-group" id="sr-filter-group">
+        <button class="sr-filter-btn sr-filter-active" id="sr-filter-all" data-filter="all">All</button>
+        <button class="sr-filter-btn" id="sr-filter-pending" data-filter="pending">Pending</button>
+        <button class="sr-filter-btn" id="sr-filter-accepted" data-filter="accepted">Accepted</button>
+        <button class="sr-filter-btn" id="sr-filter-declined" data-filter="declined">Declined</button>
+      </div>
+    </section>
+
+    <!-- Requests List -->
+    <section class="sr-list-section" id="sr-list-section">
+      <div class="sr-list" id="sr-list">
+
+        <!-- Request 1 -->
+        <div class="sr-card" id="sr-card-1" data-status="pending">
+          <div class="sr-card-meta">
+            <span class="sr-date">23/03/25</span>
+            <span class="sr-time">8:00am</span>
+          </div>
+          <div class="sr-divider" aria-hidden="true"></div>
+          <div class="sr-avatar" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
+            </svg>
+          </div>
+          <div class="sr-info">
+            <span class="sr-name">Kwabena Fosu</span>
+            <span class="sr-course">CSM 293</span>
+          </div>
+          <div class="sr-status-badge sr-badge-pending" id="sr-badge-1" aria-label="Status: Pending">Pending</div>
+          <div class="sr-actions">
+            <button class="sr-btn-accept" id="sr-accept-1" onclick="handleSrRequest('sr-card-1', 'accepted')"
+              aria-label="Accept Kwabena Fosu's request">Accept</button>
+            <button class="sr-btn-decline" id="sr-decline-1" onclick="handleSrRequest('sr-card-1', 'declined')"
+              aria-label="Decline Kwabena Fosu's request">Decline</button>
+          </div>
+        </div>
+
+        <!-- Request 2 -->
+        <div class="sr-card" id="sr-card-2" data-status="pending">
+          <div class="sr-card-meta">
+            <span class="sr-date">20/03/25</span>
+            <span class="sr-time">2:45pm</span>
+          </div>
+          <div class="sr-divider" aria-hidden="true"></div>
+          <div class="sr-avatar" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
+            </svg>
+          </div>
+          <div class="sr-info">
+            <span class="sr-name">Mary Ansong</span>
+            <span class="sr-course">CSM 152</span>
+          </div>
+          <div class="sr-status-badge sr-badge-pending" id="sr-badge-2" aria-label="Status: Pending">Pending</div>
+          <div class="sr-actions">
+            <button class="sr-btn-accept" id="sr-accept-2" onclick="handleSrRequest('sr-card-2', 'accepted')"
+              aria-label="Accept Mary Ansong's request">Accept</button>
+            <button class="sr-btn-decline" id="sr-decline-2" onclick="handleSrRequest('sr-card-2', 'declined')"
+              aria-label="Decline Mary Ansong's request">Decline</button>
+          </div>
+        </div>
+
+        <!-- Request 3 -->
+        <div class="sr-card" id="sr-card-3" data-status="pending">
+          <div class="sr-card-meta">
+            <span class="sr-date">20/03/25</span>
+            <span class="sr-time">5:30pm</span>
+          </div>
+          <div class="sr-divider" aria-hidden="true"></div>
+          <div class="sr-avatar" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
+            </svg>
+          </div>
+          <div class="sr-info">
+            <span class="sr-name">Anita Dadson</span>
+            <span class="sr-course">ACC 122</span>
+          </div>
+          <div class="sr-status-badge sr-badge-pending" id="sr-badge-3" aria-label="Status: Pending">Pending</div>
+          <div class="sr-actions">
+            <button class="sr-btn-accept" id="sr-accept-3" onclick="handleSrRequest('sr-card-3', 'accepted')"
+              aria-label="Accept Anita Dadson's request">Accept</button>
+            <button class="sr-btn-decline" id="sr-decline-3" onclick="handleSrRequest('sr-card-3', 'declined')"
+              aria-label="Decline Anita Dadson's request">Decline</button>
+          </div>
+        </div>
+
+        <!-- Request 4 -->
+        <div class="sr-card" id="sr-card-4" data-status="pending">
+          <div class="sr-card-meta">
+            <span class="sr-date">18/03/25</span>
+            <span class="sr-time">12:15pm</span>
+          </div>
+          <div class="sr-divider" aria-hidden="true"></div>
+          <div class="sr-avatar" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
+            </svg>
+          </div>
+          <div class="sr-info">
+            <span class="sr-name">Kwaku Boateng</span>
+            <span class="sr-course">STATS 356</span>
+          </div>
+          <div class="sr-status-badge sr-badge-pending" id="sr-badge-4" aria-label="Status: Pending">Pending</div>
+          <div class="sr-actions">
+            <button class="sr-btn-accept" id="sr-accept-4" onclick="handleSrRequest('sr-card-4', 'accepted')"
+              aria-label="Accept Kwaku Boateng's request">Accept</button>
+            <button class="sr-btn-decline" id="sr-decline-4" onclick="handleSrRequest('sr-card-4', 'declined')"
+              aria-label="Decline Kwaku Boateng's request">Decline</button>
+          </div>
+        </div>
+
+        <!-- Request 5 -->
+        <div class="sr-card" id="sr-card-5" data-status="pending">
+          <div class="sr-card-meta">
+            <span class="sr-date">18/03/25</span>
+            <span class="sr-time">6:17pm</span>
+          </div>
+          <div class="sr-divider" aria-hidden="true"></div>
+          <div class="sr-avatar" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
+            </svg>
+          </div>
+          <div class="sr-info">
+            <span class="sr-name">Amina Amuzu</span>
+            <span class="sr-course">CSM 156</span>
+          </div>
+          <div class="sr-status-badge sr-badge-pending" id="sr-badge-5" aria-label="Status: Pending">Pending</div>
+          <div class="sr-actions">
+            <button class="sr-btn-accept" id="sr-accept-5" onclick="handleSrRequest('sr-card-5', 'accepted')"
+              aria-label="Accept Amina Amuzu's request">Accept</button>
+            <button class="sr-btn-decline" id="sr-decline-5" onclick="handleSrRequest('sr-card-5', 'declined')"
+              aria-label="Decline Amina Amuzu's request">Decline</button>
+          </div>
+        </div>
+
+        <!-- Request 6 -->
+        <div class="sr-card" id="sr-card-6" data-status="pending">
+          <div class="sr-card-meta">
+            <span class="sr-date">17/03/25</span>
+            <span class="sr-time">7:45am</span>
+          </div>
+          <div class="sr-divider" aria-hidden="true"></div>
+          <div class="sr-avatar" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
+            </svg>
+          </div>
+          <div class="sr-info">
+            <span class="sr-name">Kofi Boakye</span>
+            <span class="sr-course">CSM 134</span>
+          </div>
+          <div class="sr-status-badge sr-badge-pending" id="sr-badge-6" aria-label="Status: Pending">Pending</div>
+          <div class="sr-actions">
+            <button class="sr-btn-accept" id="sr-accept-6" onclick="handleSrRequest('sr-card-6', 'accepted')"
+              aria-label="Accept Kofi Boakye's request">Accept</button>
+            <button class="sr-btn-decline" id="sr-decline-6" onclick="handleSrRequest('sr-card-6', 'declined')"
+              aria-label="Decline Kofi Boakye's request">Decline</button>
+          </div>
+        </div>
+
+        <!-- Request 7 -->
+        <div class="sr-card" id="sr-card-7" data-status="pending">
+          <div class="sr-card-meta">
+            <span class="sr-date">15/03/25</span>
+            <span class="sr-time">10:00am</span>
+          </div>
+          <div class="sr-divider" aria-hidden="true"></div>
+          <div class="sr-avatar" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
+            </svg>
+          </div>
+          <div class="sr-info">
+            <span class="sr-name">Ama Serwah</span>
+            <span class="sr-course">MATH 201</span>
+          </div>
+          <div class="sr-status-badge sr-badge-pending" id="sr-badge-7" aria-label="Status: Pending">Pending</div>
+          <div class="sr-actions">
+            <button class="sr-btn-accept" id="sr-accept-7" onclick="handleSrRequest('sr-card-7', 'accepted')"
+              aria-label="Accept Ama Serwah's request">Accept</button>
+            <button class="sr-btn-decline" id="sr-decline-7" onclick="handleSrRequest('sr-card-7', 'declined')"
+              aria-label="Decline Ama Serwah's request">Decline</button>
+          </div>
+        </div>
+
+        <!-- Empty state (hidden by default) -->
+        <div class="sr-empty" id="sr-empty" style="display: none;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+          </svg>
+          <p>No requests found.</p>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Toast notification -->
+  <div class="cd-toast" id="sr-toast" role="alert" aria-live="polite"></div>
+
+  <script src="script.js"></script>
+  <script>
+    // =============================================
+    // Student Requests Page — Accept / Decline
+    // =============================================
+
+    function handleSrRequest(cardId, action) {
+      const card = document.getElementById(cardId);
+      if (!card) return;
+
+      const name = card.querySelector('.sr-name').textContent;
+      const badge = card.querySelector('.sr-status-badge');
+      const actionsEl = card.querySelector('.sr-actions');
+      const toast = document.getElementById('sr-toast');
+
+      const isAccept = action === 'accepted';
+
+      // Update badge
+      badge.textContent = isAccept ? 'Accepted' : 'Declined';
+      badge.className = 'sr-status-badge ' + (isAccept ? 'sr-badge-accepted' : 'sr-badge-declined');
+
+      // Disable buttons and show resolved state
+      actionsEl.innerHTML = `<span class="sr-resolved-label ${isAccept ? 'sr-resolved-accept' : 'sr-resolved-decline'}">${isAccept ? '✓ Accepted' : '✗ Declined'}</span>`;
+
+      // Update data attribute for filter
+      card.dataset.status = action;
+
+      // Show toast
+      toast.textContent = isAccept
+        ? `✓ You accepted ${name}'s request.`
+        : `✗ You declined ${name}'s request.`;
+      toast.className = 'cd-toast cd-toast--show ' + (isAccept ? 'cd-toast--accept' : 'cd-toast--decline');
+
+      clearTimeout(window._srToastTimer);
+      window._srToastTimer = setTimeout(() => {
+        toast.className = 'cd-toast';
+      }, 3000);
+
+      // Re-run filter to keep view consistent
+      applyFilter(document.querySelector('.sr-filter-btn.sr-filter-active')?.dataset.filter || 'all');
+    }
+
+    // =============================================
+    // Filter Buttons
+    // =============================================
+    const filterBtns = document.querySelectorAll('.sr-filter-btn');
+    const searchInput = document.getElementById('sr-search-input');
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('sr-filter-active'));
+        btn.classList.add('sr-filter-active');
+        applyFilter(btn.dataset.filter);
+      });
+    });
+
+    searchInput.addEventListener('input', () => {
+      const activeFilter = document.querySelector('.sr-filter-btn.sr-filter-active')?.dataset.filter || 'all';
+      applyFilter(activeFilter);
+    });
+
+    function applyFilter(filter) {
+      const query = searchInput.value.toLowerCase().trim();
+      const cards = document.querySelectorAll('.sr-card');
+      let visibleCount = 0;
+
+      cards.forEach(card => {
+        const status = card.dataset.status;
+        const name = card.querySelector('.sr-name').textContent.toLowerCase();
+        const course = card.querySelector('.sr-course').textContent.toLowerCase();
+
+        const matchesFilter = filter === 'all' || status === filter;
+        const matchesSearch = query === '' || name.includes(query) || course.includes(query);
+
+        if (matchesFilter && matchesSearch) {
+          card.style.display = '';
+          visibleCount++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      document.getElementById('sr-empty').style.display = visibleCount === 0 ? 'flex' : 'none';
+    }
+  </script>
+
+</body>
+
+</html>
