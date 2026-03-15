@@ -1,15 +1,17 @@
 import { initTRPC, TRPCError } from '@trpc/server';
 import superjson from 'superjson';
+import { auth } from '@/lib/auth';
+import { headers } from 'next/headers';
 
 export interface TRPCContext {
-  token: string | null;
+  session: typeof auth.$Infer.Session | null;
 }
 
-export async function createTRPCContext(opts?: { req?: Request }): Promise<TRPCContext> {
-  // Read JWT from Authorization header (sent by the tRPC client)
-  const authorization = opts?.req?.headers.get('authorization');
-  const token = authorization?.startsWith('Bearer ') ? authorization.slice(7) : null;
-  return { token };
+export async function createTRPCContext(): Promise<TRPCContext> {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+  return { session };
 }
 
 const t = initTRPC.context<TRPCContext>().create({
@@ -22,10 +24,28 @@ export const createCallerFactory = t.createCallerFactory;
 // Public procedure - no auth required
 export const baseProcedure = t.procedure;
 
-// Protected procedure - requires a valid JWT token in context
+// Protected procedure - requires a valid session
 export const protectedProcedure = t.procedure.use(({ ctx, next }) => {
-  if (!ctx.token) {
+  if (!ctx.session) {
     throw new TRPCError({ code: 'UNAUTHORIZED', message: 'Not authenticated' });
   }
-  return next({ ctx: { ...ctx, token: ctx.token } });
+  return next({ ctx: { ...ctx, session: ctx.session } });
+});
+
+// Admin procedure - requires a session with ADMIN role
+export const adminProcedure = protectedProcedure.use(({ ctx, next }) => {
+  const user = ctx.session.user as any;
+  if (user.role !== 'ADMIN') {
+    throw new TRPCError({ code: 'FORBIDDEN', message: 'Admin access required' });
+  }
+  return next({ ctx });
+});
+
+// Consultant procedure - requires a session with CONSULTANT or ADMIN role
+export const consultantProcedure = protectedProcedure.use(({ ctx, next }) => {
+  const user = ctx.session.user as any;
+  if (user.role !== 'CONSULTANT' && user.role !== 'ADMIN') {
+    throw new TRPCError({ code: 'FORBIDDEN', message: 'Consultant access required' });
+  }
+  return next({ ctx });
 });

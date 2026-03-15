@@ -23,6 +23,91 @@ export * from './enums';
  */
 export type User = Prisma.UserModel
 /**
+ * Model Course
+ * 
+ */
+export type Course = Prisma.CourseModel
+/**
+ * Model Department
+ * 
+ */
+export type Department = Prisma.DepartmentModel
+/**
+ * Model Skill
+ * 
+ */
+export type Skill = Prisma.SkillModel
+/**
+ * Model HelpRequest
+ * 
+ */
+export type HelpRequest = Prisma.HelpRequestModel
+/**
+ * Model AcademicSession
+ * 
+ */
+export type AcademicSession = Prisma.AcademicSessionModel
+/**
+ * Model Review
+ * 
+ */
+export type Review = Prisma.ReviewModel
+/**
+ * Model ConsultantProfile
+ * 
+ */
+export type ConsultantProfile = Prisma.ConsultantProfileModel
+/**
+ * Model AnalyticsEvent
+ * 
+ */
+export type AnalyticsEvent = Prisma.AnalyticsEventModel
+/**
+ * Model AvailabilitySlot
+ * 
+ */
+export type AvailabilitySlot = Prisma.AvailabilitySlotModel
+/**
+ * Model VerificationRequest
+ * 
+ */
+export type VerificationRequest = Prisma.VerificationRequestModel
+/**
+ * Model Report
+ * 
+ */
+export type Report = Prisma.ReportModel
+/**
+ * Model Announcement
+ * 
+ */
+export type Announcement = Prisma.AnnouncementModel
+/**
+ * Model Attachment
+ * 
+ */
+export type Attachment = Prisma.AttachmentModel
+/**
+ * Model AuditLog
+ * 
+ */
+export type AuditLog = Prisma.AuditLogModel
+/**
+ * Model Message
+ * 
+ */
+export type Message = Prisma.MessageModel
+/**
+ * Model Notification
+ * 
+ */
+export type Notification = Prisma.NotificationModel
+/**
+ * Model Payment
+ * 
+ */
+export type Payment = Prisma.PaymentModel
+/**
  * Model Session
  * 
  */

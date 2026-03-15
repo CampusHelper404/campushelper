@@ -8,7 +8,6 @@ import { useState } from 'react';
 import { makeQueryClient } from './query-client';
 import type { AppRouter } from './routers/_app';
 import superjson from 'superjson';
-import { getToken } from '@/lib/api';
 
 export const trpc = createTRPCReact<AppRouter>();
 let clientQueryClientSingleton: QueryClient;
@@ -44,10 +43,6 @@ export function TRPCProvider(
         httpBatchLink({
           transformer: superjson,
           url: getUrl(),
-          headers() {
-            const token = getToken();
-            return token ? { Authorization: `Bearer ${token}` } : {};
-          },
         }),
       ],
     }),

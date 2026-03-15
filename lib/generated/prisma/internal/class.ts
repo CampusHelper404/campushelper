@@ -20,7 +20,7 @@ const config: runtime.GetPrismaClientConfig = {
   "clientVersion": "7.3.0",
   "engineVersion": "9d6ad21cbbceab97458517b147a6a09ff43aa735",
   "activeProvider": "postgresql",
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client\"\n  output   = \"../lib/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\nmodel User {\n  id            String    @id\n  name          String\n  email         String\n  emailVerified Boolean   @default(false)\n  image         String?\n  createdAt     DateTime  @default(now())\n  updatedAt     DateTime  @updatedAt\n  sessions      Session[]\n  accounts      Account[]\n\n  @@unique([email])\n  @@map(\"user\")\n}\n\nmodel Session {\n  id        String   @id\n  expiresAt DateTime\n  token     String\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n  ipAddress String?\n  userAgent String?\n  userId    String\n  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n  @@unique([token])\n  @@index([userId])\n  @@map(\"session\")\n}\n\nmodel Account {\n  id                    String    @id\n  accountId             String\n  providerId            String\n  userId                String\n  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)\n  accessToken           String?\n  refreshToken          String?\n  idToken               String?\n  accessTokenExpiresAt  DateTime?\n  refreshTokenExpiresAt DateTime?\n  scope                 String?\n  password              String?\n  createdAt             DateTime  @default(now())\n  updatedAt             DateTime  @updatedAt\n\n  @@index([userId])\n  @@map(\"account\")\n}\n\nmodel Verification {\n  id         String   @id\n  identifier String\n  value      String\n  expiresAt  DateTime\n  createdAt  DateTime @default(now())\n  updatedAt  DateTime @updatedAt\n\n  @@index([identifier])\n  @@map(\"verification\")\n}\n",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client\"\n  output   = \"../lib/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\nenum UserRole {\n  STUDENT\n  CONSULTANT\n  ADMIN\n}\n\nmodel User {\n  id                 String                @id\n  name               String\n  email              String\n  emailVerified      Boolean               @default(false)\n  image              String?\n  role               UserRole              @default(STUDENT)\n  onboarded          Boolean               @default(false)\n  createdAt          DateTime              @default(now())\n  updatedAt          DateTime              @updatedAt\n  sessions           Session[]\n  accounts           Account[]\n  requests           HelpRequest[]         @relation(\"StudentRequests\")\n  studentSessions    AcademicSession[]     @relation(\"StudentSessions\")\n  consultantSessions AcademicSession[]     @relation(\"ConsultantSessions\")\n  consultantProfile  ConsultantProfile?\n  sentMessages       Message[]             @relation(\"SentMessages\")\n  receivedMessages   Message[]             @relation(\"ReceivedMessages\")\n  notifications      Notification[]\n  analyticsEvents    AnalyticsEvent[]\n  reportsCreated     Report[]              @relation(\"ReportedBy\")\n  reportsAbout       Report[]              @relation(\"ReportedAbout\")\n  auditLogs          AuditLog[]\n  acceptedRequests   HelpRequest[]         @relation(\"AcceptedRequests\")\n  verificationReqs   VerificationRequest[]\n\n  @@unique([email])\n  @@map(\"user\")\n}\n\nmodel Course {\n  id           String              @id @default(cuid())\n  code         String              @unique\n  name         String\n  description  String?\n  departmentId String?\n  department   Department?         @relation(fields: [departmentId], references: [id])\n  requests     HelpRequest[]\n  helpers      ConsultantProfile[]\n}\n\nmodel Department {\n  id          String   @id @default(cuid())\n  name        String   @unique\n  description String?\n  courses     Course[]\n}\n\nmodel Skill {\n  id       String              @id @default(cuid())\n  name     String              @unique\n  profiles ConsultantProfile[]\n}\n\nenum HelpRequestStatus {\n  PENDING\n  ACCEPTED\n  DECLINED\n  CANCELLED\n  COMPLETED\n}\n\nmodel HelpRequest {\n  id            String            @id @default(cuid())\n  studentId     String\n  student       User              @relation(\"StudentRequests\", fields: [studentId], references: [id])\n  courseId      String?\n  course        Course?           @relation(fields: [courseId], references: [id])\n  title         String\n  description   String?\n  status        HelpRequestStatus @default(PENDING)\n  preferredDate DateTime?\n  preferredTime String?\n  acceptedById  String?\n  acceptedBy    User?             @relation(\"AcceptedRequests\", fields: [acceptedById], references: [id])\n  createdAt     DateTime          @default(now())\n  updatedAt     DateTime          @updatedAt\n  sessions      AcademicSession[]\n  attachments   Attachment[]\n}\n\nenum SessionStatus {\n  UPCOMING\n  IN_PROGRESS\n  COMPLETED\n  CANCELLED\n  NO_SHOW\n}\n\nmodel AcademicSession {\n  id           String        @id @default(cuid())\n  requestId    String        @unique\n  request      HelpRequest   @relation(fields: [requestId], references: [id])\n  studentId    String\n  student      User          @relation(\"StudentSessions\", fields: [studentId], references: [id])\n  consultantId String\n  consultant   User          @relation(\"ConsultantSessions\", fields: [consultantId], references: [id])\n  startTime    DateTime\n  endTime      DateTime?\n  status       SessionStatus @default(UPCOMING)\n  meetingLink  String?\n  notes        String?\n  createdAt    DateTime      @default(now())\n  updatedAt    DateTime      @updatedAt\n  review       Review?\n  payment      Payment?\n  reports      Report[]\n}\n\nmodel Review {\n  id        String          @id @default(cuid())\n  sessionId String          @unique\n  session   AcademicSession @relation(fields: [sessionId], references: [id])\n  rating    Int\n  comment   String?\n  createdAt DateTime        @default(now())\n}\n\nmodel ConsultantProfile {\n  id                 String             @id @default(cuid())\n  userId             String             @unique\n  user               User               @relation(fields: [userId], references: [id])\n  bio                String?\n  expertise          Course[]\n  skills             Skill[]\n  rating             Float              @default(0)\n  availability       AvailabilitySlot[]\n  verificationStatus String             @default(\"PENDING\") // PENDING, APPROVED, REJECTED\n  rejectionReason    String?\n}\n\nmodel AnalyticsEvent {\n  id        String   @id @default(cuid())\n  eventType String\n  userId    String?\n  user      User?    @relation(fields: [userId], references: [id])\n  sessionId String?\n  requestId String?\n  metadata  Json?\n  timestamp DateTime @default(now())\n}\n\nmodel AvailabilitySlot {\n  id           String            @id @default(cuid())\n  consultantId String\n  consultant   ConsultantProfile @relation(fields: [consultantId], references: [id])\n  weekday      Int? // 0-6 for recurring\n  startTime    String // \"HH:mm\"\n  endTime      String // \"HH:mm\"\n  specificDate DateTime? // For one-off availability\n  isRecurring  Boolean           @default(true)\n  createdAt    DateTime          @default(now())\n}\n\nmodel VerificationRequest {\n  id            String    @id @default(cuid())\n  userId        String\n  user          User      @relation(fields: [userId], references: [id])\n  idFrontUrl    String?\n  idBackUrl     String?\n  transcriptUrl String?\n  status        String    @default(\"PENDING\") // PENDING, APPROVED, REJECTED\n  reviewerNote  String?\n  reviewedAt    DateTime?\n  createdAt     DateTime  @default(now())\n}\n\nmodel Report {\n  id             String           @id @default(cuid())\n  reporterId     String\n  reporter       User             @relation(\"ReportedBy\", fields: [reporterId], references: [id])\n  reportedUserId String?\n  reportedUser   User?            @relation(\"ReportedAbout\", fields: [reportedUserId], references: [id])\n  sessionId      String?\n  session        AcademicSession? @relation(fields: [sessionId], references: [id])\n  type           String // HARASSMENT, NO_SHOW, QUALITY, OTHER\n  description    String\n  status         String           @default(\"OPEN\") // OPEN, INVESTIGATING, RESOLVED, DISMISSED\n  adminNote      String?\n  createdAt      DateTime         @default(now())\n}\n\nmodel Announcement {\n  id         String    @id @default(cuid())\n  title      String\n  content    String\n  targetRole UserRole?\n  isActive   Boolean   @default(true)\n  expiresAt  DateTime?\n  createdAt  DateTime  @default(now())\n}\n\nmodel Attachment {\n  id        String       @id @default(cuid())\n  messageId String?\n  message   Message?     @relation(fields: [messageId], references: [id])\n  requestId String?\n  request   HelpRequest? @relation(fields: [requestId], references: [id])\n  fileName  String\n  fileUrl   String\n  fileType  String\n  fileSize  Int\n  createdAt DateTime     @default(now())\n}\n\nmodel AuditLog {\n  id         String   @id @default(cuid())\n  userId     String\n  user       User     @relation(fields: [userId], references: [id])\n  action     String\n  targetType String\n  targetId   String\n  changes    Json?\n  timestamp  DateTime @default(now())\n}\n\nmodel Message {\n  id          String       @id @default(cuid())\n  requestId   String?\n  sessionId   String?\n  senderId    String\n  sender      User         @relation(\"SentMessages\", fields: [senderId], references: [id])\n  recipientId String\n  recipient   User         @relation(\"ReceivedMessages\", fields: [recipientId], references: [id])\n  content     String\n  sentAt      DateTime     @default(now())\n  readAt      DateTime?\n  attachments Attachment[]\n}\n\nmodel Notification {\n  id     String    @id @default(cuid())\n  userId String\n  user   User      @relation(fields: [userId], references: [id])\n  type   String\n  title  String?\n  body   String\n  data   Json?\n  isRead Boolean   @default(false)\n  sentAt DateTime  @default(now())\n  readAt DateTime?\n}\n\nmodel Payment {\n  id                String          @id @default(cuid())\n  sessionId         String          @unique\n  session           AcademicSession @relation(fields: [sessionId], references: [id])\n  studentId         String\n  consultantId      String\n  amountCents       Int\n  currency          String          @default(\"USD\")\n  status            String          @default(\"PENDING\")\n  provider          String?\n  providerPaymentId String?\n  createdAt         DateTime        @default(now())\n  updatedAt         DateTime        @updatedAt\n}\n\nmodel Session {\n  id        String   @id\n  expiresAt DateTime\n  token     String\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n  ipAddress String?\n  userAgent String?\n  userId    String\n  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n  @@unique([token])\n  @@index([userId])\n  @@map(\"session\")\n}\n\nmodel Account {\n  id                    String    @id\n  accountId             String\n  providerId            String\n  userId                String\n  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)\n  accessToken           String?\n  refreshToken          String?\n  idToken               String?\n  accessTokenExpiresAt  DateTime?\n  refreshTokenExpiresAt DateTime?\n  scope                 String?\n  password              String?\n  createdAt             DateTime  @default(now())\n  updatedAt             DateTime  @updatedAt\n\n  @@index([userId])\n  @@map(\"account\")\n}\n\nmodel Verification {\n  id         String   @id\n  identifier String\n  value      String\n  expiresAt  DateTime\n  createdAt  DateTime @default(now())\n  updatedAt  DateTime @updatedAt\n\n  @@index([identifier])\n  @@map(\"verification\")\n}\n",
   "runtimeDataModel": {
     "models": {},
     "enums": {},
@@ -28,7 +28,7 @@ const config: runtime.GetPrismaClientConfig = {
   }
 }
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"emailVerified\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"image\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"sessions\",\"kind\":\"object\",\"type\":\"Session\",\"relationName\":\"SessionToUser\"},{\"name\":\"accounts\",\"kind\":\"object\",\"type\":\"Account\",\"relationName\":\"AccountToUser\"}],\"dbName\":\"user\"},\"Session\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"expiresAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"token\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"ipAddress\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userAgent\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"SessionToUser\"}],\"dbName\":\"session\"},\"Account\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"accountId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"providerId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"AccountToUser\"},{\"name\":\"accessToken\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"refreshToken\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"idToken\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"accessTokenExpiresAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"refreshTokenExpiresAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"scope\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"password\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":\"account\"},\"Verification\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"identifier\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"value\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"expiresAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":\"verification\"}},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"emailVerified\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"image\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"role\",\"kind\":\"enum\",\"type\":\"UserRole\"},{\"name\":\"onboarded\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"sessions\",\"kind\":\"object\",\"type\":\"Session\",\"relationName\":\"SessionToUser\"},{\"name\":\"accounts\",\"kind\":\"object\",\"type\":\"Account\",\"relationName\":\"AccountToUser\"},{\"name\":\"requests\",\"kind\":\"object\",\"type\":\"HelpRequest\",\"relationName\":\"StudentRequests\"},{\"name\":\"studentSessions\",\"kind\":\"object\",\"type\":\"AcademicSession\",\"relationName\":\"StudentSessions\"},{\"name\":\"consultantSessions\",\"kind\":\"object\",\"type\":\"AcademicSession\",\"relationName\":\"ConsultantSessions\"},{\"name\":\"consultantProfile\",\"kind\":\"object\",\"type\":\"ConsultantProfile\",\"relationName\":\"ConsultantProfileToUser\"},{\"name\":\"sentMessages\",\"kind\":\"object\",\"type\":\"Message\",\"relationName\":\"SentMessages\"},{\"name\":\"receivedMessages\",\"kind\":\"object\",\"type\":\"Message\",\"relationName\":\"ReceivedMessages\"},{\"name\":\"notifications\",\"kind\":\"object\",\"type\":\"Notification\",\"relationName\":\"NotificationToUser\"},{\"name\":\"analyticsEvents\",\"kind\":\"object\",\"type\":\"AnalyticsEvent\",\"relationName\":\"AnalyticsEventToUser\"},{\"name\":\"reportsCreated\",\"kind\":\"object\",\"type\":\"Report\",\"relationName\":\"ReportedBy\"},{\"name\":\"reportsAbout\",\"kind\":\"object\",\"type\":\"Report\",\"relationName\":\"ReportedAbout\"},{\"name\":\"auditLogs\",\"kind\":\"object\",\"type\":\"AuditLog\",\"relationName\":\"AuditLogToUser\"},{\"name\":\"acceptedRequests\",\"kind\":\"object\",\"type\":\"HelpRequest\",\"relationName\":\"AcceptedRequests\"},{\"name\":\"verificationReqs\",\"kind\":\"object\",\"type\":\"VerificationRequest\",\"relationName\":\"UserToVerificationRequest\"}],\"dbName\":\"user\"},\"Course\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"code\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"departmentId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"department\",\"kind\":\"object\",\"type\":\"Department\",\"relationName\":\"CourseToDepartment\"},{\"name\":\"requests\",\"kind\":\"object\",\"type\":\"HelpRequest\",\"relationName\":\"CourseToHelpRequest\"},{\"name\":\"helpers\",\"kind\":\"object\",\"type\":\"ConsultantProfile\",\"relationName\":\"ConsultantProfileToCourse\"}],\"dbName\":null},\"Department\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"courses\",\"kind\":\"object\",\"type\":\"Course\",\"relationName\":\"CourseToDepartment\"}],\"dbName\":null},\"Skill\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"profiles\",\"kind\":\"object\",\"type\":\"ConsultantProfile\",\"relationName\":\"ConsultantProfileToSkill\"}],\"dbName\":null},\"HelpRequest\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"studentId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"student\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"StudentRequests\"},{\"name\":\"courseId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"course\",\"kind\":\"object\",\"type\":\"Course\",\"relationName\":\"CourseToHelpRequest\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"status\",\"kind\":\"enum\",\"type\":\"HelpRequestStatus\"},{\"name\":\"preferredDate\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"preferredTime\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"acceptedById\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"acceptedBy\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"AcceptedRequests\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"sessions\",\"kind\":\"object\",\"type\":\"AcademicSession\",\"relationName\":\"AcademicSessionToHelpRequest\"},{\"name\":\"attachments\",\"kind\":\"object\",\"type\":\"Attachment\",\"relationName\":\"AttachmentToHelpRequest\"}],\"dbName\":null},\"AcademicSession\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"requestId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"request\",\"kind\":\"object\",\"type\":\"HelpRequest\",\"relationName\":\"AcademicSessionToHelpRequest\"},{\"name\":\"studentId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"student\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"StudentSessions\"},{\"name\":\"consultantId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"consultant\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"ConsultantSessions\"},{\"name\":\"startTime\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"endTime\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"status\",\"kind\":\"enum\",\"type\":\"SessionStatus\"},{\"name\":\"meetingLink\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"notes\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"review\",\"kind\":\"object\",\"type\":\"Review\",\"relationName\":\"AcademicSessionToReview\"},{\"name\":\"payment\",\"kind\":\"object\",\"type\":\"Payment\",\"relationName\":\"AcademicSessionToPayment\"},{\"name\":\"reports\",\"kind\":\"object\",\"type\":\"Report\",\"relationName\":\"AcademicSessionToReport\"}],\"dbName\":null},\"Review\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"sessionId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"session\",\"kind\":\"object\",\"type\":\"AcademicSession\",\"relationName\":\"AcademicSessionToReview\"},{\"name\":\"rating\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"comment\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"ConsultantProfile\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"ConsultantProfileToUser\"},{\"name\":\"bio\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"expertise\",\"kind\":\"object\",\"type\":\"Course\",\"relationName\":\"ConsultantProfileToCourse\"},{\"name\":\"skills\",\"kind\":\"object\",\"type\":\"Skill\",\"relationName\":\"ConsultantProfileToSkill\"},{\"name\":\"rating\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"availability\",\"kind\":\"object\",\"type\":\"AvailabilitySlot\",\"relationName\":\"AvailabilitySlotToConsultantProfile\"},{\"name\":\"verificationStatus\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"rejectionReason\",\"kind\":\"scalar\",\"type\":\"String\"}],\"dbName\":null},\"AnalyticsEvent\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"eventType\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"AnalyticsEventToUser\"},{\"name\":\"sessionId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"requestId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"metadata\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"timestamp\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"AvailabilitySlot\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"consultantId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"consultant\",\"kind\":\"object\",\"type\":\"ConsultantProfile\",\"relationName\":\"AvailabilitySlotToConsultantProfile\"},{\"name\":\"weekday\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"startTime\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"endTime\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"specificDate\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"isRecurring\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"VerificationRequest\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"UserToVerificationRequest\"},{\"name\":\"idFrontUrl\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"idBackUrl\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"transcriptUrl\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"status\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"reviewerNote\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"reviewedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"Report\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"reporterId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"reporter\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"ReportedBy\"},{\"name\":\"reportedUserId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"reportedUser\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"ReportedAbout\"},{\"name\":\"sessionId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"session\",\"kind\":\"object\",\"type\":\"AcademicSession\",\"relationName\":\"AcademicSessionToReport\"},{\"name\":\"type\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"status\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"adminNote\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"Announcement\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"content\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"targetRole\",\"kind\":\"enum\",\"type\":\"UserRole\"},{\"name\":\"isActive\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"expiresAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"Attachment\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"messageId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"message\",\"kind\":\"object\",\"type\":\"Message\",\"relationName\":\"AttachmentToMessage\"},{\"name\":\"requestId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"request\",\"kind\":\"object\",\"type\":\"HelpRequest\",\"relationName\":\"AttachmentToHelpRequest\"},{\"name\":\"fileName\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"fileUrl\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"fileType\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"fileSize\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"AuditLog\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"AuditLogToUser\"},{\"name\":\"action\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"targetType\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"targetId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"changes\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"timestamp\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"Message\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"requestId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"sessionId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"senderId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"sender\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"SentMessages\"},{\"name\":\"recipientId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"recipient\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"ReceivedMessages\"},{\"name\":\"content\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"sentAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"readAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"attachments\",\"kind\":\"object\",\"type\":\"Attachment\",\"relationName\":\"AttachmentToMessage\"}],\"dbName\":null},\"Notification\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"NotificationToUser\"},{\"name\":\"type\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"body\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"data\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"isRead\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"sentAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"readAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"Payment\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"sessionId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"session\",\"kind\":\"object\",\"type\":\"AcademicSession\",\"relationName\":\"AcademicSessionToPayment\"},{\"name\":\"studentId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"consultantId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"amountCents\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"currency\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"status\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"provider\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"providerPaymentId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"Session\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"expiresAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"token\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"ipAddress\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userAgent\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"SessionToUser\"}],\"dbName\":\"session\"},\"Account\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"accountId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"providerId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"AccountToUser\"},{\"name\":\"accessToken\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"refreshToken\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"idToken\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"accessTokenExpiresAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"refreshTokenExpiresAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"scope\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"password\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":\"account\"},\"Verification\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"identifier\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"value\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"expiresAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":\"verification\"}},\"enums\":{},\"types\":{}}")
 
 async function decodeBase64AsWasm(wasmBase64: string): Promise<WebAssembly.Module> {
   const { Buffer } = await import('node:buffer')
@@ -185,6 +185,176 @@ export interface PrismaClient<
     * ```
     */
   get user(): Prisma.UserDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.course`: Exposes CRUD operations for the **Course** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Courses
+    * const courses = await prisma.course.findMany()
+    * ```
+    */
+  get course(): Prisma.CourseDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.department`: Exposes CRUD operations for the **Department** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Departments
+    * const departments = await prisma.department.findMany()
+    * ```
+    */
+  get department(): Prisma.DepartmentDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.skill`: Exposes CRUD operations for the **Skill** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Skills
+    * const skills = await prisma.skill.findMany()
+    * ```
+    */
+  get skill(): Prisma.SkillDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.helpRequest`: Exposes CRUD operations for the **HelpRequest** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more HelpRequests
+    * const helpRequests = await prisma.helpRequest.findMany()
+    * ```
+    */
+  get helpRequest(): Prisma.HelpRequestDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.academicSession`: Exposes CRUD operations for the **AcademicSession** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more AcademicSessions
+    * const academicSessions = await prisma.academicSession.findMany()
+    * ```
+    */
+  get academicSession(): Prisma.AcademicSessionDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.review`: Exposes CRUD operations for the **Review** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Reviews
+    * const reviews = await prisma.review.findMany()
+    * ```
+    */
+  get review(): Prisma.ReviewDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.consultantProfile`: Exposes CRUD operations for the **ConsultantProfile** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ConsultantProfiles
+    * const consultantProfiles = await prisma.consultantProfile.findMany()
+    * ```
+    */
+  get consultantProfile(): Prisma.ConsultantProfileDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.analyticsEvent`: Exposes CRUD operations for the **AnalyticsEvent** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more AnalyticsEvents
+    * const analyticsEvents = await prisma.analyticsEvent.findMany()
+    * ```
+    */
+  get analyticsEvent(): Prisma.AnalyticsEventDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.availabilitySlot`: Exposes CRUD operations for the **AvailabilitySlot** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more AvailabilitySlots
+    * const availabilitySlots = await prisma.availabilitySlot.findMany()
+    * ```
+    */
+  get availabilitySlot(): Prisma.AvailabilitySlotDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.verificationRequest`: Exposes CRUD operations for the **VerificationRequest** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more VerificationRequests
+    * const verificationRequests = await prisma.verificationRequest.findMany()
+    * ```
+    */
+  get verificationRequest(): Prisma.VerificationRequestDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.report`: Exposes CRUD operations for the **Report** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Reports
+    * const reports = await prisma.report.findMany()
+    * ```
+    */
+  get report(): Prisma.ReportDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.announcement`: Exposes CRUD operations for the **Announcement** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Announcements
+    * const announcements = await prisma.announcement.findMany()
+    * ```
+    */
+  get announcement(): Prisma.AnnouncementDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.attachment`: Exposes CRUD operations for the **Attachment** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Attachments
+    * const attachments = await prisma.attachment.findMany()
+    * ```
+    */
+  get attachment(): Prisma.AttachmentDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.auditLog`: Exposes CRUD operations for the **AuditLog** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more AuditLogs
+    * const auditLogs = await prisma.auditLog.findMany()
+    * ```
+    */
+  get auditLog(): Prisma.AuditLogDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.message`: Exposes CRUD operations for the **Message** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Messages
+    * const messages = await prisma.message.findMany()
+    * ```
+    */
+  get message(): Prisma.MessageDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.notification`: Exposes CRUD operations for the **Notification** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Notifications
+    * const notifications = await prisma.notification.findMany()
+    * ```
+    */
+  get notification(): Prisma.NotificationDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.payment`: Exposes CRUD operations for the **Payment** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Payments
+    * const payments = await prisma.payment.findMany()
+    * ```
+    */
+  get payment(): Prisma.PaymentDelegate<ExtArgs, { omit: OmitOpts }>;
 
   /**
    * `prisma.session`: Exposes CRUD operations for the **Session** model.

@@ -52,6 +52,23 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   User: 'User',
+  Course: 'Course',
+  Department: 'Department',
+  Skill: 'Skill',
+  HelpRequest: 'HelpRequest',
+  AcademicSession: 'AcademicSession',
+  Review: 'Review',
+  ConsultantProfile: 'ConsultantProfile',
+  AnalyticsEvent: 'AnalyticsEvent',
+  AvailabilitySlot: 'AvailabilitySlot',
+  VerificationRequest: 'VerificationRequest',
+  Report: 'Report',
+  Announcement: 'Announcement',
+  Attachment: 'Attachment',
+  AuditLog: 'AuditLog',
+  Message: 'Message',
+  Notification: 'Notification',
+  Payment: 'Payment',
   Session: 'Session',
   Account: 'Account',
   Verification: 'Verification'
@@ -79,11 +96,241 @@ export const UserScalarFieldEnum = {
   email: 'email',
   emailVerified: 'emailVerified',
   image: 'image',
+  role: 'role',
+  onboarded: 'onboarded',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const CourseScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  name: 'name',
+  description: 'description',
+  departmentId: 'departmentId'
+} as const
+
+export type CourseScalarFieldEnum = (typeof CourseScalarFieldEnum)[keyof typeof CourseScalarFieldEnum]
+
+
+export const DepartmentScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description'
+} as const
+
+export type DepartmentScalarFieldEnum = (typeof DepartmentScalarFieldEnum)[keyof typeof DepartmentScalarFieldEnum]
+
+
+export const SkillScalarFieldEnum = {
+  id: 'id',
+  name: 'name'
+} as const
+
+export type SkillScalarFieldEnum = (typeof SkillScalarFieldEnum)[keyof typeof SkillScalarFieldEnum]
+
+
+export const HelpRequestScalarFieldEnum = {
+  id: 'id',
+  studentId: 'studentId',
+  courseId: 'courseId',
+  title: 'title',
+  description: 'description',
+  status: 'status',
+  preferredDate: 'preferredDate',
+  preferredTime: 'preferredTime',
+  acceptedById: 'acceptedById',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type HelpRequestScalarFieldEnum = (typeof HelpRequestScalarFieldEnum)[keyof typeof HelpRequestScalarFieldEnum]
+
+
+export const AcademicSessionScalarFieldEnum = {
+  id: 'id',
+  requestId: 'requestId',
+  studentId: 'studentId',
+  consultantId: 'consultantId',
+  startTime: 'startTime',
+  endTime: 'endTime',
+  status: 'status',
+  meetingLink: 'meetingLink',
+  notes: 'notes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AcademicSessionScalarFieldEnum = (typeof AcademicSessionScalarFieldEnum)[keyof typeof AcademicSessionScalarFieldEnum]
+
+
+export const ReviewScalarFieldEnum = {
+  id: 'id',
+  sessionId: 'sessionId',
+  rating: 'rating',
+  comment: 'comment',
+  createdAt: 'createdAt'
+} as const
+
+export type ReviewScalarFieldEnum = (typeof ReviewScalarFieldEnum)[keyof typeof ReviewScalarFieldEnum]
+
+
+export const ConsultantProfileScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  bio: 'bio',
+  rating: 'rating',
+  verificationStatus: 'verificationStatus',
+  rejectionReason: 'rejectionReason'
+} as const
+
+export type ConsultantProfileScalarFieldEnum = (typeof ConsultantProfileScalarFieldEnum)[keyof typeof ConsultantProfileScalarFieldEnum]
+
+
+export const AnalyticsEventScalarFieldEnum = {
+  id: 'id',
+  eventType: 'eventType',
+  userId: 'userId',
+  sessionId: 'sessionId',
+  requestId: 'requestId',
+  metadata: 'metadata',
+  timestamp: 'timestamp'
+} as const
+
+export type AnalyticsEventScalarFieldEnum = (typeof AnalyticsEventScalarFieldEnum)[keyof typeof AnalyticsEventScalarFieldEnum]
+
+
+export const AvailabilitySlotScalarFieldEnum = {
+  id: 'id',
+  consultantId: 'consultantId',
+  weekday: 'weekday',
+  startTime: 'startTime',
+  endTime: 'endTime',
+  specificDate: 'specificDate',
+  isRecurring: 'isRecurring',
+  createdAt: 'createdAt'
+} as const
+
+export type AvailabilitySlotScalarFieldEnum = (typeof AvailabilitySlotScalarFieldEnum)[keyof typeof AvailabilitySlotScalarFieldEnum]
+
+
+export const VerificationRequestScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  idFrontUrl: 'idFrontUrl',
+  idBackUrl: 'idBackUrl',
+  transcriptUrl: 'transcriptUrl',
+  status: 'status',
+  reviewerNote: 'reviewerNote',
+  reviewedAt: 'reviewedAt',
+  createdAt: 'createdAt'
+} as const
+
+export type VerificationRequestScalarFieldEnum = (typeof VerificationRequestScalarFieldEnum)[keyof typeof VerificationRequestScalarFieldEnum]
+
+
+export const ReportScalarFieldEnum = {
+  id: 'id',
+  reporterId: 'reporterId',
+  reportedUserId: 'reportedUserId',
+  sessionId: 'sessionId',
+  type: 'type',
+  description: 'description',
+  status: 'status',
+  adminNote: 'adminNote',
+  createdAt: 'createdAt'
+} as const
+
+export type ReportScalarFieldEnum = (typeof ReportScalarFieldEnum)[keyof typeof ReportScalarFieldEnum]
+
+
+export const AnnouncementScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  content: 'content',
+  targetRole: 'targetRole',
+  isActive: 'isActive',
+  expiresAt: 'expiresAt',
+  createdAt: 'createdAt'
+} as const
+
+export type AnnouncementScalarFieldEnum = (typeof AnnouncementScalarFieldEnum)[keyof typeof AnnouncementScalarFieldEnum]
+
+
+export const AttachmentScalarFieldEnum = {
+  id: 'id',
+  messageId: 'messageId',
+  requestId: 'requestId',
+  fileName: 'fileName',
+  fileUrl: 'fileUrl',
+  fileType: 'fileType',
+  fileSize: 'fileSize',
+  createdAt: 'createdAt'
+} as const
+
+export type AttachmentScalarFieldEnum = (typeof AttachmentScalarFieldEnum)[keyof typeof AttachmentScalarFieldEnum]
+
+
+export const AuditLogScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  action: 'action',
+  targetType: 'targetType',
+  targetId: 'targetId',
+  changes: 'changes',
+  timestamp: 'timestamp'
+} as const
+
+export type AuditLogScalarFieldEnum = (typeof AuditLogScalarFieldEnum)[keyof typeof AuditLogScalarFieldEnum]
+
+
+export const MessageScalarFieldEnum = {
+  id: 'id',
+  requestId: 'requestId',
+  sessionId: 'sessionId',
+  senderId: 'senderId',
+  recipientId: 'recipientId',
+  content: 'content',
+  sentAt: 'sentAt',
+  readAt: 'readAt'
+} as const
+
+export type MessageScalarFieldEnum = (typeof MessageScalarFieldEnum)[keyof typeof MessageScalarFieldEnum]
+
+
+export const NotificationScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  type: 'type',
+  title: 'title',
+  body: 'body',
+  data: 'data',
+  isRead: 'isRead',
+  sentAt: 'sentAt',
+  readAt: 'readAt'
+} as const
+
+export type NotificationScalarFieldEnum = (typeof NotificationScalarFieldEnum)[keyof typeof NotificationScalarFieldEnum]
+
+
+export const PaymentScalarFieldEnum = {
+  id: 'id',
+  sessionId: 'sessionId',
+  studentId: 'studentId',
+  consultantId: 'consultantId',
+  amountCents: 'amountCents',
+  currency: 'currency',
+  status: 'status',
+  provider: 'provider',
+  providerPaymentId: 'providerPaymentId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PaymentScalarFieldEnum = (typeof PaymentScalarFieldEnum)[keyof typeof PaymentScalarFieldEnum]
 
 
 export const SessionScalarFieldEnum = {
@@ -139,6 +386,14 @@ export const SortOrder = {
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
+export const NullableJsonNullValueInput = {
+  DbNull: DbNull,
+  JsonNull: JsonNull
+} as const
+
+export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
 export const QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
@@ -153,4 +408,13 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 
