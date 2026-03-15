@@ -95,37 +95,19 @@ document.addEventListener('DOMContentLoaded', () => {
     // Check on load as well
     setTimeout(checkStatsVisibility, 600);
 
-    // ---- Smooth parallax & Mouse hover effect on images ----
-    const heroSection = document.getElementById('hero-section');
+    // ---- Smooth parallax effect on images ----
     const imageTop = document.getElementById('image-card-top');
     const imageBottom = document.getElementById('image-card-bottom');
 
-    if (heroSection) {
-        heroSection.addEventListener('mousemove', (e) => {
-            const { clientX, clientY } = e;
-            const centerX = window.innerWidth / 2;
-            const centerY = window.innerHeight / 2;
-            const moveX = (clientX - centerX) / 50;
-            const moveY = (clientY - centerY) / 50;
-
-            if (imageTop) {
-                imageTop.style.transform = `translate(${moveX}px, ${moveY}px) rotate(${moveX * 0.1}deg)`;
-            }
-            if (imageBottom) {
-                imageBottom.style.transform = `translate(${-moveX}px, ${-moveY}px) rotate(${-moveX * 0.1}deg)`;
-            }
-        });
-    }
-
     window.addEventListener('scroll', () => {
         const scrollY = window.pageYOffset;
-        const speed = 0.05;
+        const speed = 0.03;
 
-        if (imageTop && !window.matchMedia('(max-width: 768px)').matches) {
-            imageTop.style.marginTop = `${scrollY * speed}px`;
+        if (imageTop) {
+            imageTop.style.transform = `translateY(${scrollY * speed}px)`;
         }
-        if (imageBottom && !window.matchMedia('(max-width: 768px)').matches) {
-            imageBottom.style.marginTop = `${scrollY * -speed}px`;
+        if (imageBottom) {
+            imageBottom.style.transform = `translateY(${scrollY * -speed}px)`;
         }
     });
 

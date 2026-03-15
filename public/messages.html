@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Campus Helper Messages - View and respond to messages from students.">
+  <title>Messages - Campus Helper</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700;800;900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+  <!-- Consultant Navigation -->
+  <nav class="navbar dash-navbar" id="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="logo" id="logo">
+        <span class="logo-campus">Campus</span> <span class="logo-helper">Helper</span>
+      </a>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="consultant dashboard.html" class="nav-link" id="nav-cd-dashboard">Dashboard</a></li>
+        <li><a href="student requests.html" class="nav-link" id="nav-cd-requests">Student Requests</a></li>
+        <li><a href="sessions.html" class="nav-link" id="nav-cd-sessions">Sessions</a></li>
+        <li><a href="messages.html" class="nav-link nav-link-active" id="nav-cd-messages">Messages</a></li>
+        <li><a href="consultant settings.html" class="nav-link" id="nav-cd-settings">Settings</a></li>
+      </ul>
+      <a href="#" class="dash-profile-avatar" id="dash-profile-avatar" aria-label="Consultant profile">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
+        </svg>
+      </a>
+      <button class="mobile-toggle" id="mobile-toggle" aria-label="Toggle navigation menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <main class="dash-main msg-main" id="msg-main">
+
+    <!-- Messages Banner -->
+    <section class="dash-welcome msg-banner" id="msg-banner">
+      <div class="dash-welcome-text">
+        <h1 class="dash-welcome-title msg-banner-title" id="msg-banner-title">Messages</h1>
+        <p class="dash-welcome-subtitle msg-banner-subtitle" id="msg-banner-subtitle">View and respond to messages</p>
+      </div>
+      <div class="dash-welcome-image msg-banner-image" id="msg-banner-image">
+        <img src="messages.svg" alt="Messaging illustration">
+      </div>
+    </section>
+
+    <!-- Chat Layout -->
+    <section class="msg-chat-layout" id="msg-chat-layout" aria-label="Messaging interface">
+
+      <!-- Left Sidebar: Contacts List -->
+      <aside class="msg-sidebar" id="msg-sidebar" aria-label="Conversations list">
+
+        <!-- Contact items -->
+        <button class="msg-contact msg-contact-active" id="msg-contact-1" onclick="selectContact(this, 'kwabena')"
+          aria-label="Open conversation with Kwabena Boakye">
+          <div class="msg-contact-avatar" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
+            </svg>
+          </div>
+          <div class="msg-contact-info">
+            <span class="msg-contact-name">Kwabena Boakye</span>
+            <span class="msg-contact-preview">Thanks for the session today!</span>
+          </div>
+          <div class="msg-contact-unread" aria-label="2 unread messages">2</div>
+        </button>
+
+        <button class="msg-contact" id="msg-contact-2" onclick="selectContact(this, 'ann')"
+          aria-label="Open conversation with Ann Marie">
+          <div class="msg-contact-avatar" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
+            </svg>
+          </div>
+          <div class="msg-contact-info">
+            <span class="msg-contact-name">Ann Marie</span>
+            <span class="msg-contact-preview">Can we reschedule to 6pm?</span>
+          </div>
+        </button>
+
+        <button class="msg-contact" id="msg-contact-3" onclick="selectContact(this, 'blessing')"
+          aria-label="Open conversation with Blessing Konadu">
+          <div class="msg-contact-avatar" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
+            </svg>
+          </div>
+          <div class="msg-contact-info">
+            <span class="msg-contact-name">Blessing Konadu</span>
+            <span class="msg-contact-preview">I need help with CSM 275.</span>
+          </div>
+        </button>
+
+        <button class="msg-contact" id="msg-contact-4" onclick="selectContact(this, 'newton')"
+          aria-label="Open conversation with Newton Asante">
+          <div class="msg-contact-avatar" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
+            </svg>
+          </div>
+          <div class="msg-contact-info">
+            <span class="msg-contact-name">Newton Asante</span>
+            <span class="msg-contact-preview">Is Tuesday still available?</span>
+          </div>
+        </button>
+
+        <button class="msg-contact" id="msg-contact-5" onclick="selectContact(this, 'nana')"
+          aria-label="Open conversation with Nana Ama">
+          <div class="msg-contact-avatar" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
+            </svg>
+          </div>
+          <div class="msg-contact-info">
+            <span class="msg-contact-name">Nana Ama</span>
+            <span class="msg-contact-preview">Thank you so much!</span>
+          </div>
+        </button>
+
+        <button class="msg-contact" id="msg-contact-6" onclick="selectContact(this, 'evans')"
+          aria-label="Open conversation with Evans Darko">
+          <div class="msg-contact-avatar" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
+            </svg>
+          </div>
+          <div class="msg-contact-info">
+            <span class="msg-contact-name">Evans Darko</span>
+            <span class="msg-contact-preview">When is the next slot?</span>
+          </div>
+        </button>
+
+      </aside>
+
+      <!-- Right Panel: Active Conversation -->
+      <div class="msg-conversation" id="msg-conversation" aria-label="Active conversation">
+
+        <!-- Chat Header -->
+        <div class="msg-chat-header" id="msg-chat-header">
+          <div class="msg-chat-avatar" id="msg-chat-avatar" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
+            </svg>
+          </div>
+          <div class="msg-chat-header-info">
+            <span class="msg-chat-name" id="msg-chat-name">Kwabena Boakye</span>
+            <span class="msg-chat-status" id="msg-chat-status">
+              <span class="msg-status-dot" aria-hidden="true"></span>Online
+            </span>
+          </div>
+        </div>
+
+        <!-- Messages Area -->
+        <div class="msg-messages-area" id="msg-messages-area" aria-live="polite" aria-label="Messages">
+
+          <!-- Conversation: Kwabena -->
+          <div class="msg-thread msg-thread-active" id="msg-thread-kwabena" data-contact="kwabena">
+
+            <!-- Student message -->
+            <div class="msg-bubble-row msg-bubble-row--incoming">
+              <div class="msg-bubble msg-bubble--incoming" id="msg-b-k1">
+                Hi! I wanted to ask about the upcoming session on Monday.
+              </div>
+            </div>
+
+            <!-- Consultant reply -->
+            <div class="msg-bubble-row msg-bubble-row--outgoing">
+              <div class="msg-bubble msg-bubble--outgoing" id="msg-b-k2">
+                Of course! We're still on for 3pm Monday. Is there anything specific you want to cover?
+              </div>
+            </div>
+
+            <!-- Student message -->
+            <div class="msg-bubble-row msg-bubble-row--incoming">
+              <div class="msg-bubble msg-bubble--incoming" id="msg-b-k3">
+                Yes, I'm struggling with the second chapter of CSM 293. Specifically the recursion problems.
+              </div>
+            </div>
+
+            <!-- Consultant reply -->
+            <div class="msg-bubble-row msg-bubble-row--outgoing">
+              <div class="msg-bubble msg-bubble--outgoing" id="msg-b-k4">
+                No worries at all — we'll dedicate Monday's session to recursion. Bring any exercises you're stuck on!
+              </div>
+            </div>
+
+            <!-- Student message -->
+            <div class="msg-bubble-row msg-bubble-row--incoming">
+              <div class="msg-bubble msg-bubble--incoming" id="msg-b-k5">
+                Perfect. Thanks for the session today!
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Conversation: Ann Marie (hidden) -->
+          <div class="msg-thread" id="msg-thread-ann" data-contact="ann">
+            <div class="msg-bubble-row msg-bubble-row--incoming">
+              <div class="msg-bubble msg-bubble--incoming">Hello! I have a question about our Friday session.</div>
+            </div>
+            <div class="msg-bubble-row msg-bubble-row--outgoing">
+              <div class="msg-bubble msg-bubble--outgoing">Sure, what's up?</div>
+            </div>
+            <div class="msg-bubble-row msg-bubble-row--incoming">
+              <div class="msg-bubble msg-bubble--incoming">Can we reschedule to 6pm?</div>
+            </div>
+          </div>
+
+          <!-- Conversation: Blessing (hidden) -->
+          <div class="msg-thread" id="msg-thread-blessing" data-contact="blessing">
+            <div class="msg-bubble-row msg-bubble-row--incoming">
+              <div class="msg-bubble msg-bubble--incoming">Good afternoon. I need help with CSM 275.</div>
+            </div>
+            <div class="msg-bubble-row msg-bubble-row--outgoing">
+              <div class="msg-bubble msg-bubble--outgoing">I'm happy to help! What part are you struggling with?</div>
+            </div>
+            <div class="msg-bubble-row msg-bubble-row--incoming">
+              <div class="msg-bubble msg-bubble--incoming">I need help with CSM 275.</div>
+            </div>
+          </div>
+
+          <!-- Conversation: Newton (hidden) -->
+          <div class="msg-thread" id="msg-thread-newton" data-contact="newton">
+            <div class="msg-bubble-row msg-bubble-row--outgoing">
+              <div class="msg-bubble msg-bubble--outgoing">Hey Newton, just confirming your session request was
+                accepted.</div>
+            </div>
+            <div class="msg-bubble-row msg-bubble-row--incoming">
+              <div class="msg-bubble msg-bubble--incoming">Great! Is Tuesday still available?</div>
+            </div>
+          </div>
+
+          <!-- Conversation: Nana (hidden) -->
+          <div class="msg-thread" id="msg-thread-nana" data-contact="nana">
+            <div class="msg-bubble-row msg-bubble-row--incoming">
+              <div class="msg-bubble msg-bubble--incoming">The session was really helpful!</div>
+            </div>
+            <div class="msg-bubble-row msg-bubble-row--outgoing">
+              <div class="msg-bubble msg-bubble--outgoing">I'm glad it helped! Keep practising the examples we went
+                through.</div>
+            </div>
+            <div class="msg-bubble-row msg-bubble-row--incoming">
+              <div class="msg-bubble msg-bubble--incoming">Thank you so much!</div>
+            </div>
+          </div>
+
+          <!-- Conversation: Evans (hidden) -->
+          <div class="msg-thread" id="msg-thread-evans" data-contact="evans">
+            <div class="msg-bubble-row msg-bubble-row--incoming">
+              <div class="msg-bubble msg-bubble--incoming">Hi, I saw my request was accepted!</div>
+            </div>
+            <div class="msg-bubble-row msg-bubble-row--outgoing">
+              <div class="msg-bubble msg-bubble--outgoing">Yes! We're confirmed for the coming week.</div>
+            </div>
+            <div class="msg-bubble-row msg-bubble-row--incoming">
+              <div class="msg-bubble msg-bubble--incoming">When is the next slot?</div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Input Bar -->
+        <form class="msg-input-bar" id="msg-input-bar" onsubmit="sendMessage(event)" aria-label="Send a message">
+          <input type="text" class="msg-input" id="msg-input" placeholder="Type a message…" autocomplete="off"
+            aria-label="Message input">
+          <button type="submit" class="msg-send-btn" id="msg-send-btn" aria-label="Send message">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="22" y1="2" x2="11" y2="13"></line>
+              <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+            </svg>
+          </button>
+        </form>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <script src="script.js"></script>
+  <script>
+    // =============================================
+    // Messages Page — Contact Switching & Send
+    // =============================================
+
+    const contactData = {
+      kwabena: { name: 'Kwabena Boakye', status: 'Online' },
+      ann: { name: 'Ann Marie', status: 'Online' },
+      blessing: { name: 'Blessing Konadu', status: 'Online' },
+      newton: { name: 'Newton Asante', status: 'Offline' },
+      nana: { name: 'Nana Ama', status: 'Online' },
+      evans: { name: 'Evans Darko', status: 'Away' },
+    };
+
+    function selectContact(btn, contactKey) {
+      // Update active contact button
+      document.querySelectorAll('.msg-contact').forEach(c => c.classList.remove('msg-contact-active'));
+      btn.classList.add('msg-contact-active');
+
+      // Remove unread badge from clicked contact
+      const badge = btn.querySelector('.msg-contact-unread');
+      if (badge) badge.remove();
+
+      // Update chat header
+      const data = contactData[contactKey];
+      document.getElementById('msg-chat-name').textContent = data.name;
+      const statusEl = document.getElementById('msg-chat-status');
+      const dot = statusEl.querySelector('.msg-status-dot');
+      statusEl.innerHTML = '';
+      const newDot = document.createElement('span');
+      newDot.className = 'msg-status-dot';
+      if (data.status === 'Away') newDot.classList.add('msg-status-dot--away');
+      if (data.status === 'Offline') newDot.classList.add('msg-status-dot--offline');
+      statusEl.appendChild(newDot);
+      statusEl.append(data.status);
+
+      // Switch active thread
+      document.querySelectorAll('.msg-thread').forEach(t => t.classList.remove('msg-thread-active'));
+      const thread = document.getElementById('msg-thread-' + contactKey);
+      if (thread) thread.classList.add('msg-thread-active');
+
+      // Scroll to bottom
+      scrollToBottom();
+    }
+
+    function sendMessage(e) {
+      e.preventDefault();
+      const input = document.getElementById('msg-input');
+      const text = input.value.trim();
+      if (!text) return;
+
+      // Find active thread
+      const thread = document.querySelector('.msg-thread.msg-thread-active');
+      if (!thread) return;
+
+      const row = document.createElement('div');
+      row.className = 'msg-bubble-row msg-bubble-row--outgoing msg-bubble-new';
+
+      const bubble = document.createElement('div');
+      bubble.className = 'msg-bubble msg-bubble--outgoing';
+      bubble.textContent = text;
+
+      row.appendChild(bubble);
+      thread.appendChild(row);
+
+      // Update contact preview
+      const activeContact = document.querySelector('.msg-contact.msg-contact-active');
+      if (activeContact) {
+        const preview = activeContact.querySelector('.msg-contact-preview');
+        if (preview) preview.textContent = text;
+      }
+
+      input.value = '';
+      scrollToBottom();
+    }
+
+    function scrollToBottom() {
+      const area = document.getElementById('msg-messages-area');
+      if (area) area.scrollTop = area.scrollHeight;
+    }
+
+    // Scroll on load
+    scrollToBottom();
+  </script>
+
+</body>
+
+</html>

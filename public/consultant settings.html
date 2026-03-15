@@ -1,0 +1,663 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Manage your consultant account settings on Campus Helper.">
+  <title>Settings - Campus Helper</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700;800;900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <nav class="navbar dash-navbar" id="consultant-navbar">
+    <div class="nav-container">
+      <a href="index.html" class="logo" id="consultant-logo"><span class="logo-campus">Campus</span> <span
+          class="logo-helper">Helper</span></a>
+      <ul class="nav-links" id="consultant-nav-links">
+        <li><a href="consultant dashboard.html" class="nav-link" id="consultant-nav-dashboard">Dashboard</a></li>
+        <li><a href="student requests.html" class="nav-link" id="consultant-nav-requests">Student Requests</a></li>
+        <li><a href="sessions.html" class="nav-link" id="consultant-nav-sessions">Sessions</a></li>
+        <li><a href="messages.html" class="nav-link" id="consultant-nav-messages">Messages</a></li>
+        <li><a href="consultant settings.html" class="nav-link nav-link-active"
+            id="consultant-nav-settings">Settings</a></li>
+      </ul>
+      <a href="#" class="dash-profile-avatar" id="consultant-profile-avatar" aria-label="Consultant profile">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
+        </svg>
+      </a>
+      <button class="mobile-toggle" id="consultant-mobile-toggle"
+        aria-label="Toggle navigation menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <main class="dash-main">
+    <!-- VIEW 1: Settings Main Menu -->
+    <div id="consultant-settings-view">
+      <section class="dash-welcome st-banner" id="consultant-st-banner">
+        <div class="st-banner-content">
+          <div class="st-banner-icon" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="52" height="52" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="3"></circle>
+              <path
+                d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z">
+              </path>
+            </svg>
+          </div>
+          <h1 class="dash-welcome-title" id="consultant-st-title">Settings</h1>
+        </div>
+        <div class="dash-welcome-image" id="consultant-st-banner-image">
+          <img src="user settings.svg" alt="Settings illustration">
+        </div>
+      </section>
+      <section class="st-panel" id="consultant-st-panel">
+        <div class="st-panel-header" id="consultant-st-panel-header">
+          <div class="st-panel-icon" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="3"></circle>
+              <path
+                d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z">
+              </path>
+            </svg>
+          </div>
+          <h2 class="st-panel-title">Account Settings</h2>
+        </div>
+        <div class="st-menu" id="consultant-st-menu">
+          <a href="#" class="st-menu-item" id="consultant-st-personal-info" onclick="csShowPersonalInfo(event)">
+            <div class="st-menu-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg></div>
+            <span class="st-menu-label">Personal Information</span>
+            <svg class="st-menu-chevron" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"
+              fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </a>
+          <a href="#" class="st-menu-item" id="consultant-st-change-password" onclick="csShowChangePassword(event)">
+            <div class="st-menu-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                <circle cx="12" cy="16" r="1"></circle>
+              </svg></div>
+            <span class="st-menu-label">Change Password</span>
+            <svg class="st-menu-chevron" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"
+              fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </a>
+          <a href="#" class="st-menu-item" id="consultant-st-notification" onclick="csShowNotifications(event)">
+            <div class="st-menu-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+              </svg></div>
+            <span class="st-menu-label">Notification</span>
+            <svg class="st-menu-chevron" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"
+              fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </a>
+          <a href="#" class="st-menu-item" id="consultant-st-availability" onclick="csShowAvailability(event)">
+            <div class="st-menu-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+              </svg></div>
+            <span class="st-menu-label">Availability</span>
+            <svg class="st-menu-chevron" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"
+              fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </a>
+          <a href="#" class="st-menu-item" id="consultant-st-platform-settings" onclick="csShowPlatformSettings(event)">
+            <div class="st-menu-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <circle cx="12" cy="12" r="3"></circle>
+                <path
+                  d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z">
+                </path>
+              </svg></div>
+            <span class="st-menu-label">Platform Settings</span>
+            <svg class="st-menu-chevron" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"
+              fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </a>
+        </div>
+      </section>
+    </div>
+    <!-- VIEW 2: Personal Information -->
+    <div id="consultant-personal-info-view" class="pi-view" style="display:none;">
+      <a href="#" class="pi-back-arrow" id="consultant-pi-back" aria-label="Back to Settings"
+        onclick="csShowSettings(event)"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28"
+          viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+          stroke-linejoin="round">
+          <line x1="19" y1="12" x2="5" y2="12"></line>
+          <polyline points="12 19 5 12 12 5"></polyline>
+        </svg></a>
+      <div class="pi-content-grid">
+        <div class="pi-form-section">
+          <div class="pi-header" id="consultant-pi-header">
+            <div class="pi-header-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="48"
+                height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect>
+                <line x1="2" y1="10" x2="22" y2="10"></line>
+                <circle cx="8" cy="15" r="2"></circle>
+                <line x1="14" y1="13" x2="19" y2="13"></line>
+                <line x1="14" y1="17" x2="18" y2="17"></line>
+              </svg></div>
+            <h2 class="pi-title">Personal Information</h2>
+          </div>
+          <form class="pi-form" id="consultant-pi-form" autocomplete="off">
+            <div class="pi-field" id="consultant-pi-field-firstname"><label class="pi-label"
+                for="consultant-pi-firstname">First name</label><input type="text" class="pi-input"
+                id="consultant-pi-firstname" name="firstname" placeholder="Enter your first name"></div>
+            <div class="pi-field" id="consultant-pi-field-lastname"><label class="pi-label"
+                for="consultant-pi-lastname">Last Name</label><input type="text" class="pi-input"
+                id="consultant-pi-lastname" name="lastname" placeholder="Enter your last name"></div>
+            <div class="pi-field" id="consultant-pi-field-email"><label class="pi-label"
+                for="consultant-pi-email">Email</label><input type="email" class="pi-input" id="consultant-pi-email"
+                name="email" placeholder="Enter your email address"></div>
+            <div class="pi-field" id="consultant-pi-field-contact"><label class="pi-label"
+                for="consultant-pi-contact">Contact Info</label><input type="tel" class="pi-input"
+                id="consultant-pi-contact" name="contact" placeholder="Enter your phone number"></div>
+            <div class="pi-actions" id="consultant-pi-actions"><button type="submit" class="pi-save-btn"
+                id="consultant-pi-save-btn">Save Changes</button><span class="pi-save-status"
+                id="consultant-pi-save-status"></span></div>
+          </form>
+        </div>
+        <div class="pi-illustration" id="consultant-pi-illustration"><img src="personal information.svg"
+            alt="Personal information illustration"></div>
+      </div>
+    </div>
+
+    <!-- VIEW 3: Change Password -->
+    <div id="consultant-change-password-view" class="pi-view" style="display:none;">
+      <a href="#" class="pi-back-arrow" id="consultant-cp-back" aria-label="Back to Settings"
+        onclick="csShowSettings(event)"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28"
+          viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+          stroke-linejoin="round">
+          <line x1="19" y1="12" x2="5" y2="12"></line>
+          <polyline points="12 19 5 12 12 5"></polyline>
+        </svg></a>
+      <div class="pi-content-grid">
+        <div class="pi-form-section">
+          <div class="pi-header" id="consultant-cp-header">
+            <div class="pi-header-icon cp-header-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg"
+                width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                <circle cx="12" cy="16" r="1"></circle>
+              </svg></div>
+            <h2 class="pi-title">Change Password</h2>
+          </div>
+          <form class="pi-form" id="consultant-cp-form" autocomplete="off">
+            <div class="pi-field" id="consultant-cp-field-newpass">
+              <label class="pi-label" for="consultant-cp-newpass">New Password</label>
+              <div class="cp-input-wrapper"><input type="password" class="pi-input cp-password-input"
+                  id="consultant-cp-newpass" placeholder="Enter new password"><button type="button"
+                  class="cp-eye-toggle" id="consultant-cp-eye-new" aria-label="Toggle"
+                  onclick="togglePasswordVisibility('consultant-cp-newpass','consultant-cp-eye-new')"><svg
+                    xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="cp-eye-icon">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                  </svg><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="cp-eye-off-icon" style="display:none;">
+                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"></path>
+                    <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"></path>
+                    <line x1="1" y1="1" x2="23" y2="23"></line>
+                    <path d="M14.12 14.12a3 3 0 1 1-4.24-4.24"></path>
+                  </svg></button></div>
+            </div>
+            <div class="pi-field" id="consultant-cp-field-confirm">
+              <label class="pi-label" for="consultant-cp-confirm">Confirm Password</label>
+              <div class="cp-input-wrapper"><input type="password" class="pi-input cp-password-input"
+                  id="consultant-cp-confirm" placeholder="Confirm new password"><button type="button"
+                  class="cp-eye-toggle" id="consultant-cp-eye-confirm" aria-label="Toggle"
+                  onclick="togglePasswordVisibility('consultant-cp-confirm','consultant-cp-eye-confirm')"><svg
+                    xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="cp-eye-icon">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                  </svg><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="cp-eye-off-icon" style="display:none;">
+                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"></path>
+                    <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"></path>
+                    <line x1="1" y1="1" x2="23" y2="23"></line>
+                    <path d="M14.12 14.12a3 3 0 1 1-4.24-4.24"></path>
+                  </svg></button></div>
+            </div>
+            <p class="cp-error" id="consultant-cp-error"></p>
+            <div class="pi-actions cp-actions" id="consultant-cp-actions"><button type="submit" class="pi-save-btn"
+                id="consultant-cp-save-btn">Save Changes</button><span class="pi-save-status"
+                id="consultant-cp-save-status"></span></div>
+          </form>
+        </div>
+        <div class="pi-illustration" id="consultant-cp-illustration"><img src="change password.svg"
+            alt="Change password illustration"></div>
+      </div>
+    </div>
+    <!-- VIEW 4: Notifications -->
+    <div id="consultant-notifications-view" class="pi-view" style="display:none;">
+      <a href="#" class="pi-back-arrow" id="consultant-nt-back" aria-label="Back to Settings"
+        onclick="csShowSettings(event)"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28"
+          viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+          stroke-linejoin="round">
+          <line x1="19" y1="12" x2="5" y2="12"></line>
+          <polyline points="12 19 5 12 12 5"></polyline>
+        </svg></a>
+      <div class="pi-content-grid">
+        <div class="pi-form-section">
+          <div class="pi-header" id="consultant-nt-header">
+            <div class="pi-header-icon nt-header-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg"
+                width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+              </svg></div>
+            <h2 class="pi-title">Notifications</h2>
+          </div>
+          <div class="nt-toggles" id="consultant-nt-toggles">
+            <div class="nt-toggle-item" id="consultant-nt-item-students">
+              <div class="nt-toggle-info"><span class="nt-toggle-label">Students Request Alert</span><span
+                  class="nt-toggle-desc">Receive notifications for new student requests</span></div><label
+                class="nt-switch" for="consultant-nt-students-toggle"><input type="checkbox"
+                  id="consultant-nt-students-toggle" checked><span class="nt-slider"></span></label>
+            </div>
+            <div class="nt-toggle-item" id="consultant-nt-item-sessions">
+              <div class="nt-toggle-info"><span class="nt-toggle-label">Sessions Reminders</span><span
+                  class="nt-toggle-desc">Get reminders for your upcoming sessions</span></div><label class="nt-switch"
+                for="consultant-nt-sessions-toggle"><input type="checkbox" id="consultant-nt-sessions-toggle"
+                  checked><span class="nt-slider"></span></label>
+            </div>
+            <div class="nt-toggle-item" id="consultant-nt-item-messages">
+              <div class="nt-toggle-info"><span class="nt-toggle-label">New Message Alert</span><span
+                  class="nt-toggle-desc">Receive notifications for new messages from students</span></div><label
+                class="nt-switch" for="consultant-nt-messages-toggle"><input type="checkbox"
+                  id="consultant-nt-messages-toggle" checked><span class="nt-slider"></span></label>
+            </div>
+            <div class="nt-toggle-item" id="consultant-nt-item-platform">
+              <div class="nt-toggle-info"><span class="nt-toggle-label">Platform Updates</span><span
+                  class="nt-toggle-desc">Receive updates about platform changes and announcements</span></div><label
+                class="nt-switch" for="consultant-nt-platform-toggle"><input type="checkbox"
+                  id="consultant-nt-platform-toggle" checked><span class="nt-slider"></span></label>
+            </div>
+          </div>
+          <div class="pi-actions nt-actions" id="consultant-nt-actions"><button type="button" class="pi-save-btn"
+              id="consultant-nt-save-btn" onclick="csSaveNotifications()">Save Changes</button><span
+              class="pi-save-status" id="consultant-nt-save-status"></span></div>
+        </div>
+        <div class="pi-illustration" id="consultant-nt-illustration"><img src="notifications.svg"
+            alt="Notifications illustration"></div>
+      </div>
+    </div>
+
+    <!-- VIEW 5: Availability -->
+    <div id="consultant-availability-view" class="pi-view" style="display:none;">
+      <a href="#" class="pi-back-arrow" id="consultant-av-back" aria-label="Back to Settings"
+        onclick="csShowSettings(event)"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28"
+          viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+          stroke-linejoin="round">
+          <line x1="19" y1="12" x2="5" y2="12"></line>
+          <polyline points="12 19 5 12 12 5"></polyline>
+        </svg></a>
+      <div class="av-layout">
+        <!-- Banner -->
+        <div class="av-banner" id="consultant-av-banner">
+          <div class="av-banner-text">
+            <h2 class="pi-title" id="consultant-av-title">Weekly Availability</h2>
+            <p class="dash-welcome-subtitle" id="consultant-av-subtitle">Define your weekly availability to assist
+              students</p>
+          </div>
+          <div class="av-banner-image" id="consultant-av-image"><img src="availability.svg"
+              alt="Availability illustration"></div>
+        </div>
+        <!-- Currently Available Toggle -->
+        <div class="av-global-row" id="consultant-av-global-row">
+          <label class="nt-switch av-global-switch" for="consultant-av-global-toggle"
+            aria-label="Toggle current availability">
+            <input type="checkbox" id="consultant-av-global-toggle" checked>
+            <span class="nt-slider"></span>
+          </label>
+          <span class="av-global-label">Currently Available</span>
+        </div>
+        <!-- Days List -->
+        <div class="av-days-list" id="consultant-av-days-list">
+          <div class="av-day-row" id="consultant-av-monday">
+            <span class="av-day-name">Monday</span>
+            <div class="av-day-divider" aria-hidden="true"></div>
+            <label class="nt-switch av-day-switch" for="consultant-av-mon-toggle"><input type="checkbox"
+                id="consultant-av-mon-toggle" checked><span class="nt-slider"></span></label>
+            <div class="av-slot-display" id="consultant-av-mon-slot" data-active="true">9:00AM - 12:00PM</div>
+            <button class="av-delete-btn" id="consultant-av-mon-del" onclick="csDeleteSlot('consultant-av-monday')"
+              aria-label="Remove Monday slot">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="3 6 5 6 21 6"></polyline>
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+              </svg>
+            </button>
+          </div>
+          <div class="av-day-row" id="consultant-av-tuesday">
+            <span class="av-day-name">Tuesday</span>
+            <div class="av-day-divider" aria-hidden="true"></div>
+            <label class="nt-switch av-day-switch" for="consultant-av-tue-toggle"><input type="checkbox"
+                id="consultant-av-tue-toggle" checked><span class="nt-slider"></span></label>
+            <div class="av-slot-display" id="consultant-av-tue-slot" data-active="true">2:00PM - 5:00PM</div>
+            <button class="av-delete-btn" id="consultant-av-tue-del" onclick="csDeleteSlot('consultant-av-tuesday')"
+              aria-label="Remove Tuesday slot">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="3 6 5 6 21 6"></polyline>
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+              </svg>
+            </button>
+          </div>
+          <div class="av-day-row" id="consultant-av-wednesday">
+            <span class="av-day-name">Wednesday</span>
+            <div class="av-day-divider" aria-hidden="true"></div>
+            <label class="nt-switch av-day-switch" for="consultant-av-wed-toggle"><input type="checkbox"
+                id="consultant-av-wed-toggle"><span class="nt-slider"></span></label>
+            <div class="av-slot-display av-slot-empty" id="consultant-av-wed-slot" data-active="false"
+              onclick="csAddSlot('consultant-av-wednesday')">+ Add Time Slot</div>
+            <button class="av-delete-btn" id="consultant-av-wed-del" onclick="csDeleteSlot('consultant-av-wednesday')"
+              aria-label="Remove Wednesday slot">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="3 6 5 6 21 6"></polyline>
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+              </svg>
+            </button>
+          </div>
+          <div class="av-day-row" id="consultant-av-thursday">
+            <span class="av-day-name">Thursday</span>
+            <div class="av-day-divider" aria-hidden="true"></div>
+            <label class="nt-switch av-day-switch" for="consultant-av-thu-toggle"><input type="checkbox"
+                id="consultant-av-thu-toggle" checked><span class="nt-slider"></span></label>
+            <div class="av-slot-display" id="consultant-av-thu-slot" data-active="true">8:00AM - 10:00AM</div>
+            <button class="av-delete-btn" id="consultant-av-thu-del" onclick="csDeleteSlot('consultant-av-thursday')"
+              aria-label="Remove Thursday slot">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="3 6 5 6 21 6"></polyline>
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+              </svg>
+            </button>
+          </div>
+          <div class="av-day-row" id="consultant-av-friday">
+            <span class="av-day-name">Friday</span>
+            <div class="av-day-divider" aria-hidden="true"></div>
+            <label class="nt-switch av-day-switch" for="consultant-av-fri-toggle"><input type="checkbox"
+                id="consultant-av-fri-toggle"><span class="nt-slider"></span></label>
+            <div class="av-slot-display av-slot-empty" id="consultant-av-fri-slot" data-active="false"
+              onclick="csAddSlot('consultant-av-friday')">+ Add Time Slot</div>
+            <button class="av-delete-btn" id="consultant-av-fri-del" onclick="csDeleteSlot('consultant-av-friday')"
+              aria-label="Remove Friday slot">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="3 6 5 6 21 6"></polyline>
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+              </svg>
+            </button>
+          </div>
+          <div class="av-day-row" id="consultant-av-saturday">
+            <span class="av-day-name">Saturday</span>
+            <div class="av-day-divider" aria-hidden="true"></div>
+            <label class="nt-switch av-day-switch" for="consultant-av-sat-toggle"><input type="checkbox"
+                id="consultant-av-sat-toggle"><span class="nt-slider"></span></label>
+            <div class="av-slot-display av-slot-empty" id="consultant-av-sat-slot" data-active="false"
+              onclick="csAddSlot('consultant-av-saturday')">+ Add Time Slot</div>
+            <button class="av-delete-btn" id="consultant-av-sat-del" onclick="csDeleteSlot('consultant-av-saturday')"
+              aria-label="Remove Saturday slot">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="3 6 5 6 21 6"></polyline>
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+        <!-- Availability Actions -->
+        <div class="av-actions" id="consultant-av-actions">
+          <button type="button" class="pi-save-btn" id="consultant-av-save-btn" onclick="csSaveAvailability()">Save
+            Changes</button>
+          <button type="button" class="av-cancel-btn" id="consultant-av-cancel-btn"
+            onclick="csShowSettings(event)">Cancel</button>
+        </div>
+      </div>
+    </div>
+    <!-- VIEW 6: Platform Settings -->
+    <div id="consultant-platform-settings-view" class="pi-view" style="display:none;">
+      <a href="#" class="pi-back-arrow" id="consultant-ps-back" aria-label="Back to Settings"
+        onclick="csShowSettings(event)"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28"
+          viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+          stroke-linejoin="round">
+          <line x1="19" y1="12" x2="5" y2="12"></line>
+          <polyline points="12 19 5 12 12 5"></polyline>
+        </svg></a>
+      <div class="pi-content-grid">
+        <div class="pi-form-section">
+          <div class="pi-header" id="consultant-ps-header">
+            <div class="pi-header-icon ps-header-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg"
+                width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="3"></circle>
+                <path
+                  d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z">
+                </path>
+              </svg></div>
+            <h2 class="pi-title">Platform Settings</h2>
+          </div>
+          <div class="ps-section" id="consultant-ps-appearance">
+            <h3 class="ps-section-title">Appearance</h3>
+            <div class="ps-section-items">
+              <div class="ps-toggle-item" id="consultant-ps-item-light">
+                <div class="ps-toggle-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="22"
+                    height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                  </svg></div>
+                <span class="ps-toggle-label">Light Mode</span>
+                <label class="nt-switch" for="consultant-ps-light-toggle"><input type="radio" name="consultant-ps-theme"
+                    id="consultant-ps-light-toggle" value="light" checked><span class="nt-slider"></span></label>
+              </div>
+              <div class="ps-toggle-item" id="consultant-ps-item-dark">
+                <div class="ps-toggle-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="22"
+                    height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                  </svg></div>
+                <span class="ps-toggle-label">Dark mode</span>
+                <label class="nt-switch" for="consultant-ps-dark-toggle"><input type="radio" name="consultant-ps-theme"
+                    id="consultant-ps-dark-toggle" value="dark"><span class="nt-slider"></span></label>
+              </div>
+            </div>
+          </div>
+          <a href="#" class="ps-action-row" id="consultant-ps-security">
+            <div class="ps-action-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="22"
+                height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                <circle cx="12" cy="11" r="3"></circle>
+              </svg></div><span class="ps-action-label">Security &amp; Privacy</span>
+          </a>
+          <a href="#" class="ps-action-row ps-delete-row" id="consultant-ps-delete"
+            onclick="csConfirmDeleteAccount(event)">
+            <div class="ps-action-icon ps-delete-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg"
+                width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="3 6 5 6 21 6"></polyline>
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                <line x1="10" y1="11" x2="10" y2="17"></line>
+                <line x1="14" y1="11" x2="14" y2="17"></line>
+              </svg></div><span class="ps-action-label">Delete Account</span>
+          </a>
+        </div>
+        <div class="pi-illustration" id="consultant-ps-illustration"><img src="platform settings.svg"
+            alt="Platform settings illustration"></div>
+      </div>
+    </div>
+
+    <!-- Delete Modal -->
+    <div class="ps-modal-overlay" id="consultant-ps-delete-modal" style="display:none;">
+      <div class="ps-modal" id="consultant-ps-modal-box">
+        <div class="ps-modal-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="36" height="36"
+            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="15" y1="9" x2="9" y2="15"></line>
+            <line x1="9" y1="9" x2="15" y2="15"></line>
+          </svg></div>
+        <h3 class="ps-modal-title">Delete Account</h3>
+        <p class="ps-modal-text">Are you sure you want to delete your account? This action cannot be undone and all your
+          data will be permanently removed.</p>
+        <div class="ps-modal-actions">
+          <button class="ps-modal-cancel" id="consultant-ps-modal-cancel" onclick="csCloseDeleteModal()">Cancel</button>
+          <button class="ps-modal-confirm" id="consultant-ps-modal-confirm" onclick="csDeleteAccount()">Delete</button>
+        </div>
+      </div>
+    </div>
+  </main>
+  <script src="script.js"></script>
+  <script>
+    // =============================================
+    // Consultant Settings — View Switching
+    // =============================================
+    const csViews = {
+      settings: document.getElementById('consultant-settings-view'),
+      personalInfo: document.getElementById('consultant-personal-info-view'),
+      changePassword: document.getElementById('consultant-change-password-view'),
+      notifications: document.getElementById('consultant-notifications-view'),
+      availability: document.getElementById('consultant-availability-view'),
+      platform: document.getElementById('consultant-platform-settings-view'),
+    };
+
+    function csHideAll() { Object.values(csViews).forEach(function (v) { v.style.display = 'none'; }); }
+
+    function csShowSettings(e) { if (e) e.preventDefault(); csHideAll(); csViews.settings.style.display = 'block'; window.scrollTo({ top: 0, behavior: 'smooth' }); }
+    function csShowPersonalInfo(e) { e.preventDefault(); csHideAll(); csViews.personalInfo.style.display = 'block'; csViews.personalInfo.classList.add('pi-view-animate'); csLoadPersonalInfo(); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+    function csShowChangePassword(e) { e.preventDefault(); csHideAll(); csViews.changePassword.style.display = 'block'; csViews.changePassword.classList.add('pi-view-animate'); document.getElementById('consultant-cp-newpass').value = ''; document.getElementById('consultant-cp-confirm').value = ''; document.getElementById('consultant-cp-error').textContent = ''; window.scrollTo({ top: 0, behavior: 'smooth' }); }
+    function csShowNotifications(e) { e.preventDefault(); csHideAll(); csViews.notifications.style.display = 'block'; csViews.notifications.classList.add('pi-view-animate'); csLoadNotifications(); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+    function csShowAvailability(e) { e.preventDefault(); csHideAll(); csViews.availability.style.display = 'block'; csViews.availability.classList.add('pi-view-animate'); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+    function csShowPlatformSettings(e) { e.preventDefault(); csHideAll(); csViews.platform.style.display = 'block'; csViews.platform.classList.add('pi-view-animate'); csLoadPlatformSettings(); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+
+    // Personal Info
+    const CS_PI_KEY = 'campusHelper_consultant_personalInfo';
+    const csPiFields = ['firstname', 'lastname', 'email', 'contact'];
+    function csLoadPersonalInfo() {
+      const saved = localStorage.getItem(CS_PI_KEY);
+      if (saved) { try { const d = JSON.parse(saved); csPiFields.forEach(function (f) { const el = document.getElementById('consultant-pi-' + f); if (el && d[f]) el.value = d[f]; }); } catch (e) { } }
+    }
+    function csSavePersonalInfo(e) {
+      e.preventDefault();
+      const d = {}; csPiFields.forEach(function (f) { const el = document.getElementById('consultant-pi-' + f); if (el) d[f] = el.value.trim(); });
+      localStorage.setItem(CS_PI_KEY, JSON.stringify(d));
+      var s = document.getElementById('consultant-pi-save-status'); s.textContent = '✓ Saved successfully'; s.classList.add('visible'); setTimeout(function () { s.classList.remove('visible'); }, 2500);
+    }
+    document.getElementById('consultant-pi-form').addEventListener('submit', csSavePersonalInfo);
+
+    // Change Password
+    function togglePasswordVisibility(inputId, btnId) {
+      var input = document.getElementById(inputId); var btn = document.getElementById(btnId);
+      var eye = btn.querySelector('.cp-eye-icon'); var eyeOff = btn.querySelector('.cp-eye-off-icon');
+      if (input.type === 'password') { input.type = 'text'; eye.style.display = 'none'; eyeOff.style.display = 'block'; }
+      else { input.type = 'password'; eye.style.display = 'block'; eyeOff.style.display = 'none'; }
+    }
+    function csSavePassword(e) {
+      e.preventDefault();
+      var np = document.getElementById('consultant-cp-newpass').value; var cp = document.getElementById('consultant-cp-confirm').value; var err = document.getElementById('consultant-cp-error');
+      if (!np || !cp) { err.textContent = 'Please fill in both fields.'; return; }
+      if (np.length < 6) { err.textContent = 'Password must be at least 6 characters.'; return; }
+      if (np !== cp) { err.textContent = 'Passwords do not match.'; return; }
+      err.textContent = ''; localStorage.setItem('campusHelper_consultant_password', np);
+      var s = document.getElementById('consultant-cp-save-status'); s.textContent = '✓ Password updated'; s.classList.add('visible'); setTimeout(function () { s.classList.remove('visible'); }, 2500);
+    }
+    document.getElementById('consultant-cp-form').addEventListener('submit', csSavePassword);
+
+    // Notifications
+    const CS_NT_KEY = 'campusHelper_consultant_notifications';
+    const csNtKeys = ['students', 'sessions', 'messages', 'platform'];
+    function csLoadNotifications() {
+      const saved = localStorage.getItem(CS_NT_KEY);
+      if (saved) { try { const d = JSON.parse(saved); csNtKeys.forEach(function (k) { var t = document.getElementById('consultant-nt-' + k + '-toggle'); if (t && typeof d[k] === 'boolean') t.checked = d[k]; }); } catch (e) { } }
+    }
+    function csSaveNotifications() {
+      const d = {}; csNtKeys.forEach(function (k) { var t = document.getElementById('consultant-nt-' + k + '-toggle'); if (t) d[k] = t.checked; });
+      localStorage.setItem(CS_NT_KEY, JSON.stringify(d));
+      var s = document.getElementById('consultant-nt-save-status'); s.textContent = '✓ Saved successfully'; s.classList.add('visible'); setTimeout(function () { s.classList.remove('visible'); }, 2500);
+    }
+
+    // Availability
+    function csDeleteSlot(rowId) {
+      var row = document.getElementById(rowId);
+      if (!row) return;
+      var slot = row.querySelector('.av-slot-display');
+      var toggle = row.querySelector('input[type="checkbox"]');
+      if (slot) { slot.textContent = '+ Add Time Slot'; slot.dataset.active = 'false'; slot.classList.add('av-slot-empty'); slot.onclick = function () { csAddSlot(rowId); }; }
+      if (toggle) toggle.checked = false;
+    }
+    function csAddSlot(rowId) {
+      var row = document.getElementById(rowId);
+      if (!row) return;
+      var slot = row.querySelector('.av-slot-display');
+      var toggle = row.querySelector('input[type="checkbox"]');
+      var time = prompt('Enter time slot (e.g. 9:00AM - 12:00PM):');
+      if (time && time.trim()) { slot.textContent = time.trim(); slot.dataset.active = 'true'; slot.classList.remove('av-slot-empty'); slot.onclick = null; if (toggle) toggle.checked = true; }
+    }
+    function csSaveAvailability() {
+      var s = document.createElement('span'); s.className = 'pi-save-status visible'; s.textContent = '✓ Availability saved';
+      var actionsEl = document.getElementById('consultant-av-actions'); actionsEl.appendChild(s);
+      setTimeout(function () { s.remove(); }, 2500);
+    }
+
+    // Platform Settings
+    const CS_PS_KEY = 'campusHelper_consultant_platformSettings';
+    function csLoadPlatformSettings() {
+      const saved = localStorage.getItem(CS_PS_KEY);
+      if (saved) { try { const d = JSON.parse(saved); if (d.theme === 'dark') document.getElementById('consultant-ps-dark-toggle').checked = true; else document.getElementById('consultant-ps-light-toggle').checked = true; } catch (e) { } }
+    }
+    document.getElementById('consultant-ps-light-toggle').addEventListener('change', function () { if (this.checked) { document.getElementById('consultant-ps-dark-toggle').checked = false; csSavePlatformTheme('light'); } });
+    document.getElementById('consultant-ps-dark-toggle').addEventListener('change', function () { if (this.checked) { document.getElementById('consultant-ps-light-toggle').checked = false; csSavePlatformTheme('dark'); } });
+    function csSavePlatformTheme(theme) { const saved = localStorage.getItem(CS_PS_KEY); let d = {}; if (saved) { try { d = JSON.parse(saved); } catch (e) { } } d.theme = theme; localStorage.setItem(CS_PS_KEY, JSON.stringify(d)); }
+
+    function csConfirmDeleteAccount(e) { e.preventDefault(); document.getElementById('consultant-ps-delete-modal').style.display = 'flex'; }
+    function csCloseDeleteModal() { document.getElementById('consultant-ps-delete-modal').style.display = 'none'; }
+    function csDeleteAccount() { localStorage.removeItem(CS_PS_KEY); localStorage.removeItem(CS_PI_KEY); localStorage.removeItem(CS_NT_KEY); localStorage.removeItem('campusHelper_consultant_password'); csCloseDeleteModal(); alert('Your account has been deleted.'); window.location.href = 'index.html'; }
+    document.getElementById('consultant-ps-delete-modal').addEventListener('click', function (e) { if (e.target === this) csCloseDeleteModal(); });
+  </script>
+</body>
+
+</html>

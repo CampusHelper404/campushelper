@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="Campus Helper Consultant Dashboard - Manage student requests, sessions, and your availability.">
+  <title>Consultant Dashboard - Campus Helper</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700;800;900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+  <!-- Consultant Dashboard Navigation -->
+  <nav class="navbar dash-navbar" id="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="logo" id="logo">
+        <span class="logo-campus">Campus</span> <span class="logo-helper">Helper</span>
+      </a>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="consultant dashboard.html" class="nav-link nav-link-active" id="nav-cd-dashboard">Dashboard</a>
+        </li>
+        <li><a href="student requests.html" class="nav-link" id="nav-cd-requests">Student Requests</a></li>
+        <li><a href="sessions.html" class="nav-link" id="nav-cd-sessions">Sessions</a></li>
+        <li><a href="messages.html" class="nav-link" id="nav-cd-messages">Messages</a></li>
+        <li><a href="consultant settings.html" class="nav-link" id="nav-cd-settings">Settings</a></li>
+      </ul>
+      <a href="#" class="dash-profile-avatar" id="dash-profile-avatar" aria-label="User profile">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
+        </svg>
+      </a>
+      <button class="mobile-toggle" id="mobile-toggle" aria-label="Toggle navigation menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <main class="dash-main">
+
+    <!-- Welcome Banner -->
+    <section class="dash-welcome cd-welcome" id="cd-welcome">
+      <div class="dash-welcome-text">
+        <h1 class="dash-welcome-title" id="cd-welcome-title">Welcome, Nutifafa!</h1>
+        <p class="dash-welcome-subtitle" id="cd-welcome-subtitle">Ready to kick start your day?</p>
+      </div>
+      <div class="dash-welcome-image cd-welcome-image" id="cd-welcome-image">
+        <img src="consultant dashboard.png" alt="Consultant working on campus illustration">
+      </div>
+    </section>
+
+    <!-- Stats Row -->
+    <section class="dash-stats cd-stats" id="cd-stats">
+      <div class="dash-stat-card cd-stat-card" id="cd-stat-pending">
+        <div class="dash-stat-label-row">
+          <div class="cd-stat-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+          </div>
+          <span class="dash-stat-label">Pending Requests</span>
+        </div>
+        <span class="dash-stat-number" id="cd-pending-count">5</span>
+      </div>
+      <div class="dash-stat-card cd-stat-card" id="cd-stat-upcoming">
+        <div class="dash-stat-label-row">
+          <div class="cd-stat-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+          </div>
+          <span class="dash-stat-label">Upcoming Sessions</span>
+        </div>
+        <span class="dash-stat-number" id="cd-upcoming-count">3</span>
+      </div>
+      <div class="dash-stat-card cd-stat-card" id="cd-stat-active">
+        <div class="dash-stat-label-row">
+          <div class="cd-stat-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+          </div>
+          <span class="dash-stat-label">Active Students</span>
+        </div>
+        <span class="dash-stat-number" id="cd-active-count">5</span>
+      </div>
+      <div class="dash-stat-card cd-stat-card" id="cd-stat-completed">
+        <div class="dash-stat-label-row">
+          <div class="cd-stat-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+              <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+          </div>
+          <span class="dash-stat-label">Completed</span>
+        </div>
+        <span class="dash-stat-number" id="cd-completed-count">10</span>
+      </div>
+    </section>
+
+    <!-- Middle Row: Quick Actions + Today's Sessions -->
+    <section class="dash-middle cd-middle" id="cd-middle">
+
+      <!-- Left Column: Quick Actions + New Requests -->
+      <div class="cd-left-col">
+
+        <!-- Quick Actions -->
+        <div class="dash-panel cd-quick-actions" id="cd-quick-actions">
+          <h2 class="dash-panel-title">Quick Actions</h2>
+          <div class="dash-actions-row cd-actions-row">
+            <a href="#" class="dash-action-btn cd-action-btn" id="cd-action-view-requests">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+                <polyline points="10 9 9 9 8 9"></polyline>
+              </svg>
+              <span>View Student Requests</span>
+            </a>
+            <a href="#" class="dash-action-btn cd-action-btn" id="cd-action-update-availability">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+              <span>Update Availability</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- New Requests -->
+        <div class="dash-panel cd-new-requests" id="cd-new-requests">
+          <div class="cd-requests-header">
+            <h2 class="dash-panel-title">New Requests</h2>
+            <a href="#" class="dash-view-all cd-view-all" id="cd-view-all-requests" aria-expanded="false">View All &#8594;</a>
+          </div>
+          <div class="cd-requests-list" id="cd-requests-list">
+
+            <!-- Request: Newton -->
+            <div class="cd-request-item" id="cd-request-1">
+              <div class="dash-session-avatar cd-req-avatar">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                  <path
+                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
+                </svg>
+              </div>
+              <div class="cd-req-info">
+                <span class="cd-req-name">Newton</span>
+                <span class="cd-req-subject">Artificial Intelligence</span>
+              </div>
+              <div class="cd-req-actions">
+                <button class="cd-btn-accept" id="cd-accept-1" onclick="handleRequest(this, 'accept', 'cd-request-1')"
+                  aria-label="Accept Newton's request">Accept</button>
+                <button class="cd-btn-decline" id="cd-decline-1"
+                  onclick="handleRequest(this, 'decline', 'cd-request-1')"
+                  aria-label="Decline Newton's request">Decline</button>
+              </div>
+            </div>
+
+            <!-- Request: Nana Ama -->
+            <div class="cd-request-item" id="cd-request-2">
+              <div class="dash-session-avatar cd-req-avatar">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                  <path
+                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
+                </svg>
+              </div>
+              <div class="cd-req-info">
+                <span class="cd-req-name">Nana Ama</span>
+                <span class="cd-req-subject">Human Computer Interaction</span>
+              </div>
+              <div class="cd-req-actions">
+                <button class="cd-btn-accept" id="cd-accept-2" onclick="handleRequest(this, 'accept', 'cd-request-2')"
+                  aria-label="Accept Nana Ama's request">Accept</button>
+                <button class="cd-btn-decline" id="cd-decline-2"
+                  onclick="handleRequest(this, 'decline', 'cd-request-2')"
+                  aria-label="Decline Nana Ama's request">Decline</button>
+              </div>
+            </div>
+
+            <!-- Request: Evans -->
+            <div class="cd-request-item" id="cd-request-3">
+              <div class="dash-session-avatar cd-req-avatar">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                  <path
+                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
+                </svg>
+              </div>
+              <div class="cd-req-info">
+                <span class="cd-req-name">Evans</span>
+                <span class="cd-req-subject">Financial Accounting</span>
+              </div>
+              <div class="cd-req-actions">
+                <button class="cd-btn-accept" id="cd-accept-3" onclick="handleRequest(this, 'accept', 'cd-request-3')"
+                  aria-label="Accept Evans's request">Accept</button>
+                <button class="cd-btn-decline" id="cd-decline-3"
+                  onclick="handleRequest(this, 'decline', 'cd-request-3')"
+                  aria-label="Decline Evans's request">Decline</button>
+              </div>
+            </div>
+
+            <!-- Hidden Request: Adwoa -->
+            <div class="cd-request-item cd-request-hidden" id="cd-request-4">
+              <div class="dash-session-avatar cd-req-avatar">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                  <path
+                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
+                </svg>
+              </div>
+              <div class="cd-req-info">
+                <span class="cd-req-name">Adwoa Asante</span>
+                <span class="cd-req-subject">Linear Algebra</span>
+              </div>
+              <div class="cd-req-actions">
+                <button class="cd-btn-accept" id="cd-accept-4" onclick="handleRequest(this, 'accept', 'cd-request-4')"
+                  aria-label="Accept Adwoa's request">Accept</button>
+                <button class="cd-btn-decline" id="cd-decline-4"
+                  onclick="handleRequest(this, 'decline', 'cd-request-4')"
+                  aria-label="Decline Adwoa's request">Decline</button>
+              </div>
+            </div>
+
+            <!-- Hidden Request: Kofi -->
+            <div class="cd-request-item cd-request-hidden" id="cd-request-5">
+              <div class="dash-session-avatar cd-req-avatar">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                  <path
+                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
+                </svg>
+              </div>
+              <div class="cd-req-info">
+                <span class="cd-req-name">Kofi Mensah</span>
+                <span class="cd-req-subject">Thermodynamics</span>
+              </div>
+              <div class="cd-req-actions">
+                <button class="cd-btn-accept" id="cd-accept-5" onclick="handleRequest(this, 'accept', 'cd-request-5')"
+                  aria-label="Accept Kofi's request">Accept</button>
+                <button class="cd-btn-decline" id="cd-decline-5"
+                  onclick="handleRequest(this, 'decline', 'cd-request-5')"
+                  aria-label="Decline Kofi's request">Decline</button>
+              </div>
+            </div>
+
+            <!-- Hidden Request: Priscilla -->
+            <div class="cd-request-item cd-request-hidden" id="cd-request-6">
+              <div class="dash-session-avatar cd-req-avatar">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                  <path
+                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
+                </svg>
+              </div>
+              <div class="cd-req-info">
+                <span class="cd-req-name">Priscilla Boateng</span>
+                <span class="cd-req-subject">Organic Chemistry</span>
+              </div>
+              <div class="cd-req-actions">
+                <button class="cd-btn-accept" id="cd-accept-6" onclick="handleRequest(this, 'accept', 'cd-request-6')"
+                  aria-label="Accept Priscilla's request">Accept</button>
+                <button class="cd-btn-decline" id="cd-decline-6"
+                  onclick="handleRequest(this, 'decline', 'cd-request-6')"
+                  aria-label="Decline Priscilla's request">Decline</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right Column: Today's Sessions -->
+      <div class="dash-panel cd-todays-sessions" id="cd-todays-sessions">
+        <h2 class="dash-panel-title">Today's Sessions</h2>
+        <div class="dash-sessions-list cd-sessions-list">
+
+          <div class="dash-session-card cd-session-card" id="cd-session-1">
+            <div class="dash-session-avatar">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
+              </svg>
+            </div>
+            <div class="dash-session-info">
+              <span class="dash-session-name">Kwame Baah</span>
+              <span class="dash-session-subject">Calculus 101</span>
+            </div>
+            <span class="dash-session-time">3:00pm</span>
+          </div>
+
+          <div class="dash-session-card cd-session-card" id="cd-session-2">
+            <div class="dash-session-avatar">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
+              </svg>
+            </div>
+            <div class="dash-session-info">
+              <span class="dash-session-name">Samuel Annor</span>
+              <span class="dash-session-subject">Web Development</span>
+            </div>
+            <span class="dash-session-time">5:00pm</span>
+          </div>
+
+          <div class="dash-session-card cd-session-card" id="cd-session-3">
+            <div class="dash-session-avatar">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
+              </svg>
+            </div>
+            <div class="dash-session-info">
+              <span class="dash-session-name">Kelvin Agyapong</span>
+              <span class="dash-session-subject">Data Structures</span>
+            </div>
+            <span class="dash-session-time">6:00pm</span>
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Request handled toast notification -->
+  <div class="cd-toast" id="cd-toast" role="alert" aria-live="polite"></div>
+
+  <script src="script.js"></script>
+  <script>
+    // ---- Consultant Dashboard: Accept / Decline Requests ----
+    function handleRequest(btn, action, cardId) {
+      const card = document.getElementById(cardId);
+      if (!card) return;
+
+      const name = card.querySelector('.cd-req-name').textContent;
+      const toast = document.getElementById('cd-toast');
+
+      // Animate card out
+      card.style.transition = 'opacity 0.35s ease, transform 0.35s ease, max-height 0.4s ease, margin 0.4s ease, padding 0.4s ease';
+      card.style.opacity = '0';
+      card.style.transform = 'translateX(40px)';
+      card.style.maxHeight = card.offsetHeight + 'px';
+
+      setTimeout(() => {
+        card.style.maxHeight = '0';
+        card.style.marginBottom = '0';
+        card.style.paddingTop = '0';
+        card.style.paddingBottom = '0';
+        card.style.overflow = 'hidden';
+      }, 320);
+
+      setTimeout(() => {
+        card.remove();
+
+        // Update pending count
+        const pendingEl = document.getElementById('cd-pending-count');
+        if (pendingEl) {
+          const current = parseInt(pendingEl.textContent, 10);
+          if (current > 0) pendingEl.textContent = current - 1;
+        }
+      }, 700);
+
+      // Show toast
+      const isAccept = action === 'accept';
+      toast.textContent = isAccept
+        ? `✓ You accepted ${name}'s request.`
+        : `✗ You declined ${name}'s request.`;
+      toast.className = 'cd-toast cd-toast--show ' + (isAccept ? 'cd-toast--accept' : 'cd-toast--decline');
+
+      clearTimeout(window._cdToastTimer);
+      window._cdToastTimer = setTimeout(() => {
+        toast.className = 'cd-toast';
+      }, 3000);
+    }
+
+    // ---- View All: New Requests toggle ----
+    const viewAllBtn = document.getElementById('cd-view-all-requests');
+    const requestsPanel = document.getElementById('cd-new-requests');
+
+    if (viewAllBtn && requestsPanel) {
+      viewAllBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const isExpanded = requestsPanel.classList.contains('cd-expanded');
+
+        if (isExpanded) {
+          requestsPanel.classList.remove('cd-expanded');
+          viewAllBtn.setAttribute('aria-expanded', 'false');
+          viewAllBtn.innerHTML = 'View All &#8594;';
+        } else {
+          requestsPanel.classList.add('cd-expanded');
+          viewAllBtn.setAttribute('aria-expanded', 'true');
+          viewAllBtn.innerHTML = 'Show Less &#8592;';
+        }
+      });
+    }
+  </script>
+
+</body>
+
+</html>
