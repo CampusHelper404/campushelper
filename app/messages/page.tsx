@@ -1,15 +1,22 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect, useRef, Suspense } from "react"
+import { useSearchParams } from "next/navigation"
 import { trpc } from "@/trpc/client"
 import StudentNavbar from "@/components/dashboard/StudentNavbar"
+import HelperNavbar from "@/components/dashboard/HelperNavbar"
+import AdminNavbar from "@/components/dashboard/AdminNavbar"
 import { Search, Send, User, MessageCircle, MoreHorizontal, Loader2 } from "lucide-react"
 import Image from "next/image"
 
-export default function MessagesPage() {
-    const [selectedPartnerId, setSelectedPartnerId] = useState<string | null>(null)
+function MessagesContent() {
+    const searchParams = useSearchParams()
+    const [selectedPartnerId, setSelectedPartnerId] = useState<string | null>(searchParams.get("userId"))
     const [messageInput, setMessageInput] = useState("")
     const scrollRef = useRef<HTMLDivElement>(null)
+
+    // Current User to determine which Navbar to show
+    const { data: user } = trpc.users.me.useQuery()
 
     // Fetch unique conversations
     const { data: conversations, isLoading: isLoadingConvos } = trpc.messages.listConversations.useQuery(undefined, {
@@ -51,9 +58,9 @@ export default function MessagesPage() {
 
     return (
         <div className="dash-wrapper" style={{ height: '100vh', display: 'flex', flexDirection: 'column', background: '#f8fafc' }}>
-            <StudentNavbar />
+            {user?.role === 'ADMIN' ? <AdminNavbar /> : user?.role === 'HELPER' ? <HelperNavbar /> : <StudentNavbar />}
             
-            <main style={{ marginTop: '70px', display: 'flex', flex: 1, overflow: 'hidden' }}>
+            <main style={{ display: 'flex', flex: 1, overflow: 'hidden' }}>
                 
                 {/* Conversation Sidebar */}
                 <div style={{ 
@@ -306,10 +313,10 @@ export default function MessagesPage() {
                                 animation: 'pulse 3s infinite ease-in-out'
                             }}>
                                 <Image 
-                                    src="/messages.svg" 
+                                    src="/messages-empty.png" 
                                     alt="Messaging" 
                                     fill 
-                                    style={{ objectFit: 'contain', opacity: 0.8 }} 
+                                    style={{ objectFit: 'contain', opacity: 0.9 }} 
                                 />
                                 <div style={{ 
                                     position: 'absolute', 
@@ -325,7 +332,7 @@ export default function MessagesPage() {
                                 Your <span style={{ color: '#007ea7' }}>Inbox</span>
                             </h2>
                             <p style={{ color: '#64748b', textAlign: 'center', maxWidth: '450px', fontSize: '1.15rem', lineHeight: 1.6, fontWeight: 500 }}>
-                                Select a consultant or student from the sidebar to start a conversation and get help.
+                                Select a helper or student from the sidebar to start a conversation and get help.
                             </p>
                         </div>
                     )}
@@ -352,5 +359,17 @@ export default function MessagesPage() {
                 }
             `}</style>
         </div>
+    )
+}
+
+export default function MessagesPage() {
+    return (
+        <Suspense fallback={
+            <div style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#f8fafc' }}>
+                <Loader2 className="animate-spin" color="#007ea7" size={32} />
+            </div>
+        }>
+            <MessagesContent />
+        </Suspense>
     )
 }

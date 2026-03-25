@@ -36,7 +36,7 @@ export type AvailabilitySlotSumAggregateOutputType = {
 
 export type AvailabilitySlotMinAggregateOutputType = {
   id: string | null
-  consultantId: string | null
+  helperId: string | null
   weekday: number | null
   startTime: string | null
   endTime: string | null
@@ -47,7 +47,7 @@ export type AvailabilitySlotMinAggregateOutputType = {
 
 export type AvailabilitySlotMaxAggregateOutputType = {
   id: string | null
-  consultantId: string | null
+  helperId: string | null
   weekday: number | null
   startTime: string | null
   endTime: string | null
@@ -58,7 +58,7 @@ export type AvailabilitySlotMaxAggregateOutputType = {
 
 export type AvailabilitySlotCountAggregateOutputType = {
   id: number
-  consultantId: number
+  helperId: number
   weekday: number
   startTime: number
   endTime: number
@@ -79,7 +79,7 @@ export type AvailabilitySlotSumAggregateInputType = {
 
 export type AvailabilitySlotMinAggregateInputType = {
   id?: true
-  consultantId?: true
+  helperId?: true
   weekday?: true
   startTime?: true
   endTime?: true
@@ -90,7 +90,7 @@ export type AvailabilitySlotMinAggregateInputType = {
 
 export type AvailabilitySlotMaxAggregateInputType = {
   id?: true
-  consultantId?: true
+  helperId?: true
   weekday?: true
   startTime?: true
   endTime?: true
@@ -101,7 +101,7 @@ export type AvailabilitySlotMaxAggregateInputType = {
 
 export type AvailabilitySlotCountAggregateInputType = {
   id?: true
-  consultantId?: true
+  helperId?: true
   weekday?: true
   startTime?: true
   endTime?: true
@@ -199,7 +199,7 @@ export type AvailabilitySlotGroupByArgs<ExtArgs extends runtime.Types.Extensions
 
 export type AvailabilitySlotGroupByOutputType = {
   id: string
-  consultantId: string
+  helperId: string
   weekday: number | null
   startTime: string
   endTime: string
@@ -233,26 +233,26 @@ export type AvailabilitySlotWhereInput = {
   OR?: Prisma.AvailabilitySlotWhereInput[]
   NOT?: Prisma.AvailabilitySlotWhereInput | Prisma.AvailabilitySlotWhereInput[]
   id?: Prisma.StringFilter<"AvailabilitySlot"> | string
-  consultantId?: Prisma.StringFilter<"AvailabilitySlot"> | string
+  helperId?: Prisma.StringFilter<"AvailabilitySlot"> | string
   weekday?: Prisma.IntNullableFilter<"AvailabilitySlot"> | number | null
   startTime?: Prisma.StringFilter<"AvailabilitySlot"> | string
   endTime?: Prisma.StringFilter<"AvailabilitySlot"> | string
   specificDate?: Prisma.DateTimeNullableFilter<"AvailabilitySlot"> | Date | string | null
   isRecurring?: Prisma.BoolFilter<"AvailabilitySlot"> | boolean
   createdAt?: Prisma.DateTimeFilter<"AvailabilitySlot"> | Date | string
-  consultant?: Prisma.XOR<Prisma.ConsultantProfileScalarRelationFilter, Prisma.ConsultantProfileWhereInput>
+  helper?: Prisma.XOR<Prisma.HelperProfileScalarRelationFilter, Prisma.HelperProfileWhereInput>
 }
 
 export type AvailabilitySlotOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  consultantId?: Prisma.SortOrder
+  helperId?: Prisma.SortOrder
   weekday?: Prisma.SortOrderInput | Prisma.SortOrder
   startTime?: Prisma.SortOrder
   endTime?: Prisma.SortOrder
   specificDate?: Prisma.SortOrderInput | Prisma.SortOrder
   isRecurring?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  consultant?: Prisma.ConsultantProfileOrderByWithRelationInput
+  helper?: Prisma.HelperProfileOrderByWithRelationInput
 }
 
 export type AvailabilitySlotWhereUniqueInput = Prisma.AtLeast<{
@@ -260,19 +260,19 @@ export type AvailabilitySlotWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.AvailabilitySlotWhereInput | Prisma.AvailabilitySlotWhereInput[]
   OR?: Prisma.AvailabilitySlotWhereInput[]
   NOT?: Prisma.AvailabilitySlotWhereInput | Prisma.AvailabilitySlotWhereInput[]
-  consultantId?: Prisma.StringFilter<"AvailabilitySlot"> | string
+  helperId?: Prisma.StringFilter<"AvailabilitySlot"> | string
   weekday?: Prisma.IntNullableFilter<"AvailabilitySlot"> | number | null
   startTime?: Prisma.StringFilter<"AvailabilitySlot"> | string
   endTime?: Prisma.StringFilter<"AvailabilitySlot"> | string
   specificDate?: Prisma.DateTimeNullableFilter<"AvailabilitySlot"> | Date | string | null
   isRecurring?: Prisma.BoolFilter<"AvailabilitySlot"> | boolean
   createdAt?: Prisma.DateTimeFilter<"AvailabilitySlot"> | Date | string
-  consultant?: Prisma.XOR<Prisma.ConsultantProfileScalarRelationFilter, Prisma.ConsultantProfileWhereInput>
+  helper?: Prisma.XOR<Prisma.HelperProfileScalarRelationFilter, Prisma.HelperProfileWhereInput>
 }, "id">
 
 export type AvailabilitySlotOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  consultantId?: Prisma.SortOrder
+  helperId?: Prisma.SortOrder
   weekday?: Prisma.SortOrderInput | Prisma.SortOrder
   startTime?: Prisma.SortOrder
   endTime?: Prisma.SortOrder
@@ -291,7 +291,7 @@ export type AvailabilitySlotScalarWhereWithAggregatesInput = {
   OR?: Prisma.AvailabilitySlotScalarWhereWithAggregatesInput[]
   NOT?: Prisma.AvailabilitySlotScalarWhereWithAggregatesInput | Prisma.AvailabilitySlotScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"AvailabilitySlot"> | string
-  consultantId?: Prisma.StringWithAggregatesFilter<"AvailabilitySlot"> | string
+  helperId?: Prisma.StringWithAggregatesFilter<"AvailabilitySlot"> | string
   weekday?: Prisma.IntNullableWithAggregatesFilter<"AvailabilitySlot"> | number | null
   startTime?: Prisma.StringWithAggregatesFilter<"AvailabilitySlot"> | string
   endTime?: Prisma.StringWithAggregatesFilter<"AvailabilitySlot"> | string
@@ -308,12 +308,12 @@ export type AvailabilitySlotCreateInput = {
   specificDate?: Date | string | null
   isRecurring?: boolean
   createdAt?: Date | string
-  consultant: Prisma.ConsultantProfileCreateNestedOneWithoutAvailabilityInput
+  helper: Prisma.HelperProfileCreateNestedOneWithoutAvailabilityInput
 }
 
 export type AvailabilitySlotUncheckedCreateInput = {
   id?: string
-  consultantId: string
+  helperId: string
   weekday?: number | null
   startTime: string
   endTime: string
@@ -330,12 +330,12 @@ export type AvailabilitySlotUpdateInput = {
   specificDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isRecurring?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  consultant?: Prisma.ConsultantProfileUpdateOneRequiredWithoutAvailabilityNestedInput
+  helper?: Prisma.HelperProfileUpdateOneRequiredWithoutAvailabilityNestedInput
 }
 
 export type AvailabilitySlotUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  consultantId?: Prisma.StringFieldUpdateOperationsInput | string
+  helperId?: Prisma.StringFieldUpdateOperationsInput | string
   weekday?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   startTime?: Prisma.StringFieldUpdateOperationsInput | string
   endTime?: Prisma.StringFieldUpdateOperationsInput | string
@@ -346,7 +346,7 @@ export type AvailabilitySlotUncheckedUpdateInput = {
 
 export type AvailabilitySlotCreateManyInput = {
   id?: string
-  consultantId: string
+  helperId: string
   weekday?: number | null
   startTime: string
   endTime: string
@@ -367,7 +367,7 @@ export type AvailabilitySlotUpdateManyMutationInput = {
 
 export type AvailabilitySlotUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  consultantId?: Prisma.StringFieldUpdateOperationsInput | string
+  helperId?: Prisma.StringFieldUpdateOperationsInput | string
   weekday?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   startTime?: Prisma.StringFieldUpdateOperationsInput | string
   endTime?: Prisma.StringFieldUpdateOperationsInput | string
@@ -388,7 +388,7 @@ export type AvailabilitySlotOrderByRelationAggregateInput = {
 
 export type AvailabilitySlotCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  consultantId?: Prisma.SortOrder
+  helperId?: Prisma.SortOrder
   weekday?: Prisma.SortOrder
   startTime?: Prisma.SortOrder
   endTime?: Prisma.SortOrder
@@ -403,7 +403,7 @@ export type AvailabilitySlotAvgOrderByAggregateInput = {
 
 export type AvailabilitySlotMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  consultantId?: Prisma.SortOrder
+  helperId?: Prisma.SortOrder
   weekday?: Prisma.SortOrder
   startTime?: Prisma.SortOrder
   endTime?: Prisma.SortOrder
@@ -414,7 +414,7 @@ export type AvailabilitySlotMaxOrderByAggregateInput = {
 
 export type AvailabilitySlotMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  consultantId?: Prisma.SortOrder
+  helperId?: Prisma.SortOrder
   weekday?: Prisma.SortOrder
   startTime?: Prisma.SortOrder
   endTime?: Prisma.SortOrder
@@ -427,45 +427,45 @@ export type AvailabilitySlotSumOrderByAggregateInput = {
   weekday?: Prisma.SortOrder
 }
 
-export type AvailabilitySlotCreateNestedManyWithoutConsultantInput = {
-  create?: Prisma.XOR<Prisma.AvailabilitySlotCreateWithoutConsultantInput, Prisma.AvailabilitySlotUncheckedCreateWithoutConsultantInput> | Prisma.AvailabilitySlotCreateWithoutConsultantInput[] | Prisma.AvailabilitySlotUncheckedCreateWithoutConsultantInput[]
-  connectOrCreate?: Prisma.AvailabilitySlotCreateOrConnectWithoutConsultantInput | Prisma.AvailabilitySlotCreateOrConnectWithoutConsultantInput[]
-  createMany?: Prisma.AvailabilitySlotCreateManyConsultantInputEnvelope
+export type AvailabilitySlotCreateNestedManyWithoutHelperInput = {
+  create?: Prisma.XOR<Prisma.AvailabilitySlotCreateWithoutHelperInput, Prisma.AvailabilitySlotUncheckedCreateWithoutHelperInput> | Prisma.AvailabilitySlotCreateWithoutHelperInput[] | Prisma.AvailabilitySlotUncheckedCreateWithoutHelperInput[]
+  connectOrCreate?: Prisma.AvailabilitySlotCreateOrConnectWithoutHelperInput | Prisma.AvailabilitySlotCreateOrConnectWithoutHelperInput[]
+  createMany?: Prisma.AvailabilitySlotCreateManyHelperInputEnvelope
   connect?: Prisma.AvailabilitySlotWhereUniqueInput | Prisma.AvailabilitySlotWhereUniqueInput[]
 }
 
-export type AvailabilitySlotUncheckedCreateNestedManyWithoutConsultantInput = {
-  create?: Prisma.XOR<Prisma.AvailabilitySlotCreateWithoutConsultantInput, Prisma.AvailabilitySlotUncheckedCreateWithoutConsultantInput> | Prisma.AvailabilitySlotCreateWithoutConsultantInput[] | Prisma.AvailabilitySlotUncheckedCreateWithoutConsultantInput[]
-  connectOrCreate?: Prisma.AvailabilitySlotCreateOrConnectWithoutConsultantInput | Prisma.AvailabilitySlotCreateOrConnectWithoutConsultantInput[]
-  createMany?: Prisma.AvailabilitySlotCreateManyConsultantInputEnvelope
+export type AvailabilitySlotUncheckedCreateNestedManyWithoutHelperInput = {
+  create?: Prisma.XOR<Prisma.AvailabilitySlotCreateWithoutHelperInput, Prisma.AvailabilitySlotUncheckedCreateWithoutHelperInput> | Prisma.AvailabilitySlotCreateWithoutHelperInput[] | Prisma.AvailabilitySlotUncheckedCreateWithoutHelperInput[]
+  connectOrCreate?: Prisma.AvailabilitySlotCreateOrConnectWithoutHelperInput | Prisma.AvailabilitySlotCreateOrConnectWithoutHelperInput[]
+  createMany?: Prisma.AvailabilitySlotCreateManyHelperInputEnvelope
   connect?: Prisma.AvailabilitySlotWhereUniqueInput | Prisma.AvailabilitySlotWhereUniqueInput[]
 }
 
-export type AvailabilitySlotUpdateManyWithoutConsultantNestedInput = {
-  create?: Prisma.XOR<Prisma.AvailabilitySlotCreateWithoutConsultantInput, Prisma.AvailabilitySlotUncheckedCreateWithoutConsultantInput> | Prisma.AvailabilitySlotCreateWithoutConsultantInput[] | Prisma.AvailabilitySlotUncheckedCreateWithoutConsultantInput[]
-  connectOrCreate?: Prisma.AvailabilitySlotCreateOrConnectWithoutConsultantInput | Prisma.AvailabilitySlotCreateOrConnectWithoutConsultantInput[]
-  upsert?: Prisma.AvailabilitySlotUpsertWithWhereUniqueWithoutConsultantInput | Prisma.AvailabilitySlotUpsertWithWhereUniqueWithoutConsultantInput[]
-  createMany?: Prisma.AvailabilitySlotCreateManyConsultantInputEnvelope
+export type AvailabilitySlotUpdateManyWithoutHelperNestedInput = {
+  create?: Prisma.XOR<Prisma.AvailabilitySlotCreateWithoutHelperInput, Prisma.AvailabilitySlotUncheckedCreateWithoutHelperInput> | Prisma.AvailabilitySlotCreateWithoutHelperInput[] | Prisma.AvailabilitySlotUncheckedCreateWithoutHelperInput[]
+  connectOrCreate?: Prisma.AvailabilitySlotCreateOrConnectWithoutHelperInput | Prisma.AvailabilitySlotCreateOrConnectWithoutHelperInput[]
+  upsert?: Prisma.AvailabilitySlotUpsertWithWhereUniqueWithoutHelperInput | Prisma.AvailabilitySlotUpsertWithWhereUniqueWithoutHelperInput[]
+  createMany?: Prisma.AvailabilitySlotCreateManyHelperInputEnvelope
   set?: Prisma.AvailabilitySlotWhereUniqueInput | Prisma.AvailabilitySlotWhereUniqueInput[]
   disconnect?: Prisma.AvailabilitySlotWhereUniqueInput | Prisma.AvailabilitySlotWhereUniqueInput[]
   delete?: Prisma.AvailabilitySlotWhereUniqueInput | Prisma.AvailabilitySlotWhereUniqueInput[]
   connect?: Prisma.AvailabilitySlotWhereUniqueInput | Prisma.AvailabilitySlotWhereUniqueInput[]
-  update?: Prisma.AvailabilitySlotUpdateWithWhereUniqueWithoutConsultantInput | Prisma.AvailabilitySlotUpdateWithWhereUniqueWithoutConsultantInput[]
-  updateMany?: Prisma.AvailabilitySlotUpdateManyWithWhereWithoutConsultantInput | Prisma.AvailabilitySlotUpdateManyWithWhereWithoutConsultantInput[]
+  update?: Prisma.AvailabilitySlotUpdateWithWhereUniqueWithoutHelperInput | Prisma.AvailabilitySlotUpdateWithWhereUniqueWithoutHelperInput[]
+  updateMany?: Prisma.AvailabilitySlotUpdateManyWithWhereWithoutHelperInput | Prisma.AvailabilitySlotUpdateManyWithWhereWithoutHelperInput[]
   deleteMany?: Prisma.AvailabilitySlotScalarWhereInput | Prisma.AvailabilitySlotScalarWhereInput[]
 }
 
-export type AvailabilitySlotUncheckedUpdateManyWithoutConsultantNestedInput = {
-  create?: Prisma.XOR<Prisma.AvailabilitySlotCreateWithoutConsultantInput, Prisma.AvailabilitySlotUncheckedCreateWithoutConsultantInput> | Prisma.AvailabilitySlotCreateWithoutConsultantInput[] | Prisma.AvailabilitySlotUncheckedCreateWithoutConsultantInput[]
-  connectOrCreate?: Prisma.AvailabilitySlotCreateOrConnectWithoutConsultantInput | Prisma.AvailabilitySlotCreateOrConnectWithoutConsultantInput[]
-  upsert?: Prisma.AvailabilitySlotUpsertWithWhereUniqueWithoutConsultantInput | Prisma.AvailabilitySlotUpsertWithWhereUniqueWithoutConsultantInput[]
-  createMany?: Prisma.AvailabilitySlotCreateManyConsultantInputEnvelope
+export type AvailabilitySlotUncheckedUpdateManyWithoutHelperNestedInput = {
+  create?: Prisma.XOR<Prisma.AvailabilitySlotCreateWithoutHelperInput, Prisma.AvailabilitySlotUncheckedCreateWithoutHelperInput> | Prisma.AvailabilitySlotCreateWithoutHelperInput[] | Prisma.AvailabilitySlotUncheckedCreateWithoutHelperInput[]
+  connectOrCreate?: Prisma.AvailabilitySlotCreateOrConnectWithoutHelperInput | Prisma.AvailabilitySlotCreateOrConnectWithoutHelperInput[]
+  upsert?: Prisma.AvailabilitySlotUpsertWithWhereUniqueWithoutHelperInput | Prisma.AvailabilitySlotUpsertWithWhereUniqueWithoutHelperInput[]
+  createMany?: Prisma.AvailabilitySlotCreateManyHelperInputEnvelope
   set?: Prisma.AvailabilitySlotWhereUniqueInput | Prisma.AvailabilitySlotWhereUniqueInput[]
   disconnect?: Prisma.AvailabilitySlotWhereUniqueInput | Prisma.AvailabilitySlotWhereUniqueInput[]
   delete?: Prisma.AvailabilitySlotWhereUniqueInput | Prisma.AvailabilitySlotWhereUniqueInput[]
   connect?: Prisma.AvailabilitySlotWhereUniqueInput | Prisma.AvailabilitySlotWhereUniqueInput[]
-  update?: Prisma.AvailabilitySlotUpdateWithWhereUniqueWithoutConsultantInput | Prisma.AvailabilitySlotUpdateWithWhereUniqueWithoutConsultantInput[]
-  updateMany?: Prisma.AvailabilitySlotUpdateManyWithWhereWithoutConsultantInput | Prisma.AvailabilitySlotUpdateManyWithWhereWithoutConsultantInput[]
+  update?: Prisma.AvailabilitySlotUpdateWithWhereUniqueWithoutHelperInput | Prisma.AvailabilitySlotUpdateWithWhereUniqueWithoutHelperInput[]
+  updateMany?: Prisma.AvailabilitySlotUpdateManyWithWhereWithoutHelperInput | Prisma.AvailabilitySlotUpdateManyWithWhereWithoutHelperInput[]
   deleteMany?: Prisma.AvailabilitySlotScalarWhereInput | Prisma.AvailabilitySlotScalarWhereInput[]
 }
 
@@ -477,7 +477,7 @@ export type NullableIntFieldUpdateOperationsInput = {
   divide?: number
 }
 
-export type AvailabilitySlotCreateWithoutConsultantInput = {
+export type AvailabilitySlotCreateWithoutHelperInput = {
   id?: string
   weekday?: number | null
   startTime: string
@@ -487,7 +487,7 @@ export type AvailabilitySlotCreateWithoutConsultantInput = {
   createdAt?: Date | string
 }
 
-export type AvailabilitySlotUncheckedCreateWithoutConsultantInput = {
+export type AvailabilitySlotUncheckedCreateWithoutHelperInput = {
   id?: string
   weekday?: number | null
   startTime: string
@@ -497,30 +497,30 @@ export type AvailabilitySlotUncheckedCreateWithoutConsultantInput = {
   createdAt?: Date | string
 }
 
-export type AvailabilitySlotCreateOrConnectWithoutConsultantInput = {
+export type AvailabilitySlotCreateOrConnectWithoutHelperInput = {
   where: Prisma.AvailabilitySlotWhereUniqueInput
-  create: Prisma.XOR<Prisma.AvailabilitySlotCreateWithoutConsultantInput, Prisma.AvailabilitySlotUncheckedCreateWithoutConsultantInput>
+  create: Prisma.XOR<Prisma.AvailabilitySlotCreateWithoutHelperInput, Prisma.AvailabilitySlotUncheckedCreateWithoutHelperInput>
 }
 
-export type AvailabilitySlotCreateManyConsultantInputEnvelope = {
-  data: Prisma.AvailabilitySlotCreateManyConsultantInput | Prisma.AvailabilitySlotCreateManyConsultantInput[]
+export type AvailabilitySlotCreateManyHelperInputEnvelope = {
+  data: Prisma.AvailabilitySlotCreateManyHelperInput | Prisma.AvailabilitySlotCreateManyHelperInput[]
   skipDuplicates?: boolean
 }
 
-export type AvailabilitySlotUpsertWithWhereUniqueWithoutConsultantInput = {
+export type AvailabilitySlotUpsertWithWhereUniqueWithoutHelperInput = {
   where: Prisma.AvailabilitySlotWhereUniqueInput
-  update: Prisma.XOR<Prisma.AvailabilitySlotUpdateWithoutConsultantInput, Prisma.AvailabilitySlotUncheckedUpdateWithoutConsultantInput>
-  create: Prisma.XOR<Prisma.AvailabilitySlotCreateWithoutConsultantInput, Prisma.AvailabilitySlotUncheckedCreateWithoutConsultantInput>
+  update: Prisma.XOR<Prisma.AvailabilitySlotUpdateWithoutHelperInput, Prisma.AvailabilitySlotUncheckedUpdateWithoutHelperInput>
+  create: Prisma.XOR<Prisma.AvailabilitySlotCreateWithoutHelperInput, Prisma.AvailabilitySlotUncheckedCreateWithoutHelperInput>
 }
 
-export type AvailabilitySlotUpdateWithWhereUniqueWithoutConsultantInput = {
+export type AvailabilitySlotUpdateWithWhereUniqueWithoutHelperInput = {
   where: Prisma.AvailabilitySlotWhereUniqueInput
-  data: Prisma.XOR<Prisma.AvailabilitySlotUpdateWithoutConsultantInput, Prisma.AvailabilitySlotUncheckedUpdateWithoutConsultantInput>
+  data: Prisma.XOR<Prisma.AvailabilitySlotUpdateWithoutHelperInput, Prisma.AvailabilitySlotUncheckedUpdateWithoutHelperInput>
 }
 
-export type AvailabilitySlotUpdateManyWithWhereWithoutConsultantInput = {
+export type AvailabilitySlotUpdateManyWithWhereWithoutHelperInput = {
   where: Prisma.AvailabilitySlotScalarWhereInput
-  data: Prisma.XOR<Prisma.AvailabilitySlotUpdateManyMutationInput, Prisma.AvailabilitySlotUncheckedUpdateManyWithoutConsultantInput>
+  data: Prisma.XOR<Prisma.AvailabilitySlotUpdateManyMutationInput, Prisma.AvailabilitySlotUncheckedUpdateManyWithoutHelperInput>
 }
 
 export type AvailabilitySlotScalarWhereInput = {
@@ -528,7 +528,7 @@ export type AvailabilitySlotScalarWhereInput = {
   OR?: Prisma.AvailabilitySlotScalarWhereInput[]
   NOT?: Prisma.AvailabilitySlotScalarWhereInput | Prisma.AvailabilitySlotScalarWhereInput[]
   id?: Prisma.StringFilter<"AvailabilitySlot"> | string
-  consultantId?: Prisma.StringFilter<"AvailabilitySlot"> | string
+  helperId?: Prisma.StringFilter<"AvailabilitySlot"> | string
   weekday?: Prisma.IntNullableFilter<"AvailabilitySlot"> | number | null
   startTime?: Prisma.StringFilter<"AvailabilitySlot"> | string
   endTime?: Prisma.StringFilter<"AvailabilitySlot"> | string
@@ -537,7 +537,7 @@ export type AvailabilitySlotScalarWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"AvailabilitySlot"> | Date | string
 }
 
-export type AvailabilitySlotCreateManyConsultantInput = {
+export type AvailabilitySlotCreateManyHelperInput = {
   id?: string
   weekday?: number | null
   startTime: string
@@ -547,7 +547,7 @@ export type AvailabilitySlotCreateManyConsultantInput = {
   createdAt?: Date | string
 }
 
-export type AvailabilitySlotUpdateWithoutConsultantInput = {
+export type AvailabilitySlotUpdateWithoutHelperInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   weekday?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   startTime?: Prisma.StringFieldUpdateOperationsInput | string
@@ -557,7 +557,7 @@ export type AvailabilitySlotUpdateWithoutConsultantInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type AvailabilitySlotUncheckedUpdateWithoutConsultantInput = {
+export type AvailabilitySlotUncheckedUpdateWithoutHelperInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   weekday?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   startTime?: Prisma.StringFieldUpdateOperationsInput | string
@@ -567,7 +567,7 @@ export type AvailabilitySlotUncheckedUpdateWithoutConsultantInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type AvailabilitySlotUncheckedUpdateManyWithoutConsultantInput = {
+export type AvailabilitySlotUncheckedUpdateManyWithoutHelperInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   weekday?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   startTime?: Prisma.StringFieldUpdateOperationsInput | string
@@ -581,43 +581,43 @@ export type AvailabilitySlotUncheckedUpdateManyWithoutConsultantInput = {
 
 export type AvailabilitySlotSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  consultantId?: boolean
+  helperId?: boolean
   weekday?: boolean
   startTime?: boolean
   endTime?: boolean
   specificDate?: boolean
   isRecurring?: boolean
   createdAt?: boolean
-  consultant?: boolean | Prisma.ConsultantProfileDefaultArgs<ExtArgs>
+  helper?: boolean | Prisma.HelperProfileDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["availabilitySlot"]>
 
 export type AvailabilitySlotSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  consultantId?: boolean
+  helperId?: boolean
   weekday?: boolean
   startTime?: boolean
   endTime?: boolean
   specificDate?: boolean
   isRecurring?: boolean
   createdAt?: boolean
-  consultant?: boolean | Prisma.ConsultantProfileDefaultArgs<ExtArgs>
+  helper?: boolean | Prisma.HelperProfileDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["availabilitySlot"]>
 
 export type AvailabilitySlotSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  consultantId?: boolean
+  helperId?: boolean
   weekday?: boolean
   startTime?: boolean
   endTime?: boolean
   specificDate?: boolean
   isRecurring?: boolean
   createdAt?: boolean
-  consultant?: boolean | Prisma.ConsultantProfileDefaultArgs<ExtArgs>
+  helper?: boolean | Prisma.HelperProfileDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["availabilitySlot"]>
 
 export type AvailabilitySlotSelectScalar = {
   id?: boolean
-  consultantId?: boolean
+  helperId?: boolean
   weekday?: boolean
   startTime?: boolean
   endTime?: boolean
@@ -626,25 +626,25 @@ export type AvailabilitySlotSelectScalar = {
   createdAt?: boolean
 }
 
-export type AvailabilitySlotOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "consultantId" | "weekday" | "startTime" | "endTime" | "specificDate" | "isRecurring" | "createdAt", ExtArgs["result"]["availabilitySlot"]>
+export type AvailabilitySlotOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "helperId" | "weekday" | "startTime" | "endTime" | "specificDate" | "isRecurring" | "createdAt", ExtArgs["result"]["availabilitySlot"]>
 export type AvailabilitySlotInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  consultant?: boolean | Prisma.ConsultantProfileDefaultArgs<ExtArgs>
+  helper?: boolean | Prisma.HelperProfileDefaultArgs<ExtArgs>
 }
 export type AvailabilitySlotIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  consultant?: boolean | Prisma.ConsultantProfileDefaultArgs<ExtArgs>
+  helper?: boolean | Prisma.HelperProfileDefaultArgs<ExtArgs>
 }
 export type AvailabilitySlotIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  consultant?: boolean | Prisma.ConsultantProfileDefaultArgs<ExtArgs>
+  helper?: boolean | Prisma.HelperProfileDefaultArgs<ExtArgs>
 }
 
 export type $AvailabilitySlotPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "AvailabilitySlot"
   objects: {
-    consultant: Prisma.$ConsultantProfilePayload<ExtArgs>
+    helper: Prisma.$HelperProfilePayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    consultantId: string
+    helperId: string
     weekday: number | null
     startTime: string
     endTime: string
@@ -1045,7 +1045,7 @@ readonly fields: AvailabilitySlotFieldRefs;
  */
 export interface Prisma__AvailabilitySlotClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  consultant<T extends Prisma.ConsultantProfileDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ConsultantProfileDefaultArgs<ExtArgs>>): Prisma.Prisma__ConsultantProfileClient<runtime.Types.Result.GetResult<Prisma.$ConsultantProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  helper<T extends Prisma.HelperProfileDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.HelperProfileDefaultArgs<ExtArgs>>): Prisma.Prisma__HelperProfileClient<runtime.Types.Result.GetResult<Prisma.$HelperProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1076,7 +1076,7 @@ export interface Prisma__AvailabilitySlotClient<T, Null = never, ExtArgs extends
  */
 export interface AvailabilitySlotFieldRefs {
   readonly id: Prisma.FieldRef<"AvailabilitySlot", 'String'>
-  readonly consultantId: Prisma.FieldRef<"AvailabilitySlot", 'String'>
+  readonly helperId: Prisma.FieldRef<"AvailabilitySlot", 'String'>
   readonly weekday: Prisma.FieldRef<"AvailabilitySlot", 'Int'>
   readonly startTime: Prisma.FieldRef<"AvailabilitySlot", 'String'>
   readonly endTime: Prisma.FieldRef<"AvailabilitySlot", 'String'>

@@ -1,29 +1,45 @@
-/* Dashboard Styles — CampusHelper */
+/* Dashboard Styles — CampusHelper V2 Premium */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
 
 :root {
-    --bg-color: #f0f4f5;
-    --header-bg: #9ad1d4; /* Closer to the screenshot banner teal */
-    --card-bg: #ccdbdc;
+    --bg-color: #f3f6f8; /* Softer cool gray for contrast */
+    --header-bg: linear-gradient(135deg, #003249 0%, #007ea7 100%);
+    --card-bg: #ffffff;
     --text-main: #003249;
+    --text-muted: #5b7586;
     --btn-bg: #007ea7;
+    --btn-bg-hover: #005f80;
     --btn-text: #ffffff;
     --white: #ffffff;
     --accent-teal: #9ad1d4;
-    --border-color: #ccdbdc;
-    --shadow-sm: 0 1px 3px rgba(0, 50, 73, 0.06);
-    --shadow-md: 0 4px 12px rgba(0, 50, 73, 0.1);
-    --radius-sm: 8px;
-    --radius-md: 14px;
-    --radius-lg: 20px;
+    --accent-light: #ccdbdc;
+    --border-color: rgba(0, 50, 73, 0.08);
+    
+    /* Modern SaaS Shadows */
+    --shadow-sm: 0 2px 4px rgba(0, 50, 73, 0.04);
+    --shadow-md: 0 8px 16px rgba(0, 50, 73, 0.06);
+    --shadow-lg: 0 16px 32px rgba(0, 50, 73, 0.08);
+    --shadow-glow: 0 0 20px rgba(0, 126, 167, 0.15);
+    
+    /* Border Radius */
+    --radius-sm: 10px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
     --radius-pill: 9999px;
-    --transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    --transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @keyframes fadeInUp {
     from { opacity: 0; transform: translateY(16px); }
     to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-5px); }
+    100% { transform: translateY(0px); }
 }
 
 /* ── Layout ── */

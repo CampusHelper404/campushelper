@@ -38,7 +38,7 @@ export type PaymentMinAggregateOutputType = {
   id: string | null
   sessionId: string | null
   studentId: string | null
-  consultantId: string | null
+  helperId: string | null
   amountCents: number | null
   currency: string | null
   status: string | null
@@ -52,7 +52,7 @@ export type PaymentMaxAggregateOutputType = {
   id: string | null
   sessionId: string | null
   studentId: string | null
-  consultantId: string | null
+  helperId: string | null
   amountCents: number | null
   currency: string | null
   status: string | null
@@ -66,7 +66,7 @@ export type PaymentCountAggregateOutputType = {
   id: number
   sessionId: number
   studentId: number
-  consultantId: number
+  helperId: number
   amountCents: number
   currency: number
   status: number
@@ -90,7 +90,7 @@ export type PaymentMinAggregateInputType = {
   id?: true
   sessionId?: true
   studentId?: true
-  consultantId?: true
+  helperId?: true
   amountCents?: true
   currency?: true
   status?: true
@@ -104,7 +104,7 @@ export type PaymentMaxAggregateInputType = {
   id?: true
   sessionId?: true
   studentId?: true
-  consultantId?: true
+  helperId?: true
   amountCents?: true
   currency?: true
   status?: true
@@ -118,7 +118,7 @@ export type PaymentCountAggregateInputType = {
   id?: true
   sessionId?: true
   studentId?: true
-  consultantId?: true
+  helperId?: true
   amountCents?: true
   currency?: true
   status?: true
@@ -219,7 +219,7 @@ export type PaymentGroupByOutputType = {
   id: string
   sessionId: string
   studentId: string
-  consultantId: string
+  helperId: string
   amountCents: number
   currency: string
   status: string
@@ -256,7 +256,7 @@ export type PaymentWhereInput = {
   id?: Prisma.StringFilter<"Payment"> | string
   sessionId?: Prisma.StringFilter<"Payment"> | string
   studentId?: Prisma.StringFilter<"Payment"> | string
-  consultantId?: Prisma.StringFilter<"Payment"> | string
+  helperId?: Prisma.StringFilter<"Payment"> | string
   amountCents?: Prisma.IntFilter<"Payment"> | number
   currency?: Prisma.StringFilter<"Payment"> | string
   status?: Prisma.StringFilter<"Payment"> | string
@@ -271,7 +271,7 @@ export type PaymentOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   sessionId?: Prisma.SortOrder
   studentId?: Prisma.SortOrder
-  consultantId?: Prisma.SortOrder
+  helperId?: Prisma.SortOrder
   amountCents?: Prisma.SortOrder
   currency?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -289,7 +289,7 @@ export type PaymentWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.PaymentWhereInput[]
   NOT?: Prisma.PaymentWhereInput | Prisma.PaymentWhereInput[]
   studentId?: Prisma.StringFilter<"Payment"> | string
-  consultantId?: Prisma.StringFilter<"Payment"> | string
+  helperId?: Prisma.StringFilter<"Payment"> | string
   amountCents?: Prisma.IntFilter<"Payment"> | number
   currency?: Prisma.StringFilter<"Payment"> | string
   status?: Prisma.StringFilter<"Payment"> | string
@@ -304,7 +304,7 @@ export type PaymentOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   sessionId?: Prisma.SortOrder
   studentId?: Prisma.SortOrder
-  consultantId?: Prisma.SortOrder
+  helperId?: Prisma.SortOrder
   amountCents?: Prisma.SortOrder
   currency?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -326,7 +326,7 @@ export type PaymentScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Payment"> | string
   sessionId?: Prisma.StringWithAggregatesFilter<"Payment"> | string
   studentId?: Prisma.StringWithAggregatesFilter<"Payment"> | string
-  consultantId?: Prisma.StringWithAggregatesFilter<"Payment"> | string
+  helperId?: Prisma.StringWithAggregatesFilter<"Payment"> | string
   amountCents?: Prisma.IntWithAggregatesFilter<"Payment"> | number
   currency?: Prisma.StringWithAggregatesFilter<"Payment"> | string
   status?: Prisma.StringWithAggregatesFilter<"Payment"> | string
@@ -339,7 +339,7 @@ export type PaymentScalarWhereWithAggregatesInput = {
 export type PaymentCreateInput = {
   id?: string
   studentId: string
-  consultantId: string
+  helperId: string
   amountCents: number
   currency?: string
   status?: string
@@ -354,7 +354,7 @@ export type PaymentUncheckedCreateInput = {
   id?: string
   sessionId: string
   studentId: string
-  consultantId: string
+  helperId: string
   amountCents: number
   currency?: string
   status?: string
@@ -367,7 +367,7 @@ export type PaymentUncheckedCreateInput = {
 export type PaymentUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   studentId?: Prisma.StringFieldUpdateOperationsInput | string
-  consultantId?: Prisma.StringFieldUpdateOperationsInput | string
+  helperId?: Prisma.StringFieldUpdateOperationsInput | string
   amountCents?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
@@ -382,7 +382,7 @@ export type PaymentUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   sessionId?: Prisma.StringFieldUpdateOperationsInput | string
   studentId?: Prisma.StringFieldUpdateOperationsInput | string
-  consultantId?: Prisma.StringFieldUpdateOperationsInput | string
+  helperId?: Prisma.StringFieldUpdateOperationsInput | string
   amountCents?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
@@ -396,7 +396,7 @@ export type PaymentCreateManyInput = {
   id?: string
   sessionId: string
   studentId: string
-  consultantId: string
+  helperId: string
   amountCents: number
   currency?: string
   status?: string
@@ -409,7 +409,7 @@ export type PaymentCreateManyInput = {
 export type PaymentUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   studentId?: Prisma.StringFieldUpdateOperationsInput | string
-  consultantId?: Prisma.StringFieldUpdateOperationsInput | string
+  helperId?: Prisma.StringFieldUpdateOperationsInput | string
   amountCents?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
@@ -423,7 +423,7 @@ export type PaymentUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   sessionId?: Prisma.StringFieldUpdateOperationsInput | string
   studentId?: Prisma.StringFieldUpdateOperationsInput | string
-  consultantId?: Prisma.StringFieldUpdateOperationsInput | string
+  helperId?: Prisma.StringFieldUpdateOperationsInput | string
   amountCents?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
@@ -442,7 +442,7 @@ export type PaymentCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   sessionId?: Prisma.SortOrder
   studentId?: Prisma.SortOrder
-  consultantId?: Prisma.SortOrder
+  helperId?: Prisma.SortOrder
   amountCents?: Prisma.SortOrder
   currency?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -460,7 +460,7 @@ export type PaymentMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   sessionId?: Prisma.SortOrder
   studentId?: Prisma.SortOrder
-  consultantId?: Prisma.SortOrder
+  helperId?: Prisma.SortOrder
   amountCents?: Prisma.SortOrder
   currency?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -474,7 +474,7 @@ export type PaymentMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   sessionId?: Prisma.SortOrder
   studentId?: Prisma.SortOrder
-  consultantId?: Prisma.SortOrder
+  helperId?: Prisma.SortOrder
   amountCents?: Prisma.SortOrder
   currency?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -523,7 +523,7 @@ export type PaymentUncheckedUpdateOneWithoutSessionNestedInput = {
 export type PaymentCreateWithoutSessionInput = {
   id?: string
   studentId: string
-  consultantId: string
+  helperId: string
   amountCents: number
   currency?: string
   status?: string
@@ -536,7 +536,7 @@ export type PaymentCreateWithoutSessionInput = {
 export type PaymentUncheckedCreateWithoutSessionInput = {
   id?: string
   studentId: string
-  consultantId: string
+  helperId: string
   amountCents: number
   currency?: string
   status?: string
@@ -565,7 +565,7 @@ export type PaymentUpdateToOneWithWhereWithoutSessionInput = {
 export type PaymentUpdateWithoutSessionInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   studentId?: Prisma.StringFieldUpdateOperationsInput | string
-  consultantId?: Prisma.StringFieldUpdateOperationsInput | string
+  helperId?: Prisma.StringFieldUpdateOperationsInput | string
   amountCents?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
@@ -578,7 +578,7 @@ export type PaymentUpdateWithoutSessionInput = {
 export type PaymentUncheckedUpdateWithoutSessionInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   studentId?: Prisma.StringFieldUpdateOperationsInput | string
-  consultantId?: Prisma.StringFieldUpdateOperationsInput | string
+  helperId?: Prisma.StringFieldUpdateOperationsInput | string
   amountCents?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
@@ -594,7 +594,7 @@ export type PaymentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   id?: boolean
   sessionId?: boolean
   studentId?: boolean
-  consultantId?: boolean
+  helperId?: boolean
   amountCents?: boolean
   currency?: boolean
   status?: boolean
@@ -609,7 +609,7 @@ export type PaymentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   id?: boolean
   sessionId?: boolean
   studentId?: boolean
-  consultantId?: boolean
+  helperId?: boolean
   amountCents?: boolean
   currency?: boolean
   status?: boolean
@@ -624,7 +624,7 @@ export type PaymentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   id?: boolean
   sessionId?: boolean
   studentId?: boolean
-  consultantId?: boolean
+  helperId?: boolean
   amountCents?: boolean
   currency?: boolean
   status?: boolean
@@ -639,7 +639,7 @@ export type PaymentSelectScalar = {
   id?: boolean
   sessionId?: boolean
   studentId?: boolean
-  consultantId?: boolean
+  helperId?: boolean
   amountCents?: boolean
   currency?: boolean
   status?: boolean
@@ -649,7 +649,7 @@ export type PaymentSelectScalar = {
   updatedAt?: boolean
 }
 
-export type PaymentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "sessionId" | "studentId" | "consultantId" | "amountCents" | "currency" | "status" | "provider" | "providerPaymentId" | "createdAt" | "updatedAt", ExtArgs["result"]["payment"]>
+export type PaymentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "sessionId" | "studentId" | "helperId" | "amountCents" | "currency" | "status" | "provider" | "providerPaymentId" | "createdAt" | "updatedAt", ExtArgs["result"]["payment"]>
 export type PaymentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   session?: boolean | Prisma.AcademicSessionDefaultArgs<ExtArgs>
 }
@@ -669,7 +669,7 @@ export type $PaymentPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     id: string
     sessionId: string
     studentId: string
-    consultantId: string
+    helperId: string
     amountCents: number
     currency: string
     status: string
@@ -1104,7 +1104,7 @@ export interface PaymentFieldRefs {
   readonly id: Prisma.FieldRef<"Payment", 'String'>
   readonly sessionId: Prisma.FieldRef<"Payment", 'String'>
   readonly studentId: Prisma.FieldRef<"Payment", 'String'>
-  readonly consultantId: Prisma.FieldRef<"Payment", 'String'>
+  readonly helperId: Prisma.FieldRef<"Payment", 'String'>
   readonly amountCents: Prisma.FieldRef<"Payment", 'Int'>
   readonly currency: Prisma.FieldRef<"Payment", 'String'>
   readonly status: Prisma.FieldRef<"Payment", 'String'>

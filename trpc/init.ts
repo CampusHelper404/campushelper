@@ -2,6 +2,7 @@ import { initTRPC, TRPCError } from '@trpc/server';
 import superjson from 'superjson';
 import { auth } from '@/lib/auth';
 import { headers } from 'next/headers';
+import { prisma } from '@/lib/prisma';
 
 export interface TRPCContext {
   session: typeof auth.$Infer.Session | null;
@@ -33,19 +34,19 @@ export const protectedProcedure = t.procedure.use(({ ctx, next }) => {
 });
 
 // Admin procedure - requires a session with ADMIN role
-export const adminProcedure = protectedProcedure.use(({ ctx, next }) => {
-  const user = ctx.session.user as any;
-  if (user.role !== 'ADMIN') {
+export const adminProcedure = protectedProcedure.use(async ({ ctx, next }) => {
+  const dbUser = await prisma.user.findUnique({ where: { id: ctx.session.user.id } });
+  if (dbUser?.role !== 'ADMIN') {
     throw new TRPCError({ code: 'FORBIDDEN', message: 'Admin access required' });
   }
   return next({ ctx });
 });
 
-// Consultant procedure - requires a session with CONSULTANT or ADMIN role
-export const consultantProcedure = protectedProcedure.use(({ ctx, next }) => {
-  const user = ctx.session.user as any;
-  if (user.role !== 'CONSULTANT' && user.role !== 'ADMIN') {
-    throw new TRPCError({ code: 'FORBIDDEN', message: 'Consultant access required' });
+// Helper procedure - requires a session with HELPER or ADMIN role
+export const helperProcedure = protectedProcedure.use(async ({ ctx, next }) => {
+  const dbUser = await prisma.user.findUnique({ where: { id: ctx.session.user.id } });
+  if (dbUser?.role !== 'HELPER' && dbUser?.role !== 'ADMIN') {
+    throw new TRPCError({ code: 'FORBIDDEN', message: 'Helper access required' });
   }
   return next({ ctx });
 });

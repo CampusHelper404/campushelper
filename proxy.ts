@@ -20,7 +20,7 @@ export async function proxy(request: NextRequest) {
                 const data = await sessionRes.json()
                 const user = data?.user
                 if (user) {
-                    const dest = user.role === "CONSULTANT" ? "/dashboard" : "/student-dashboard"
+                    const dest = user.role === "HELPER" ? "/dashboard" : "/student-dashboard"
                     return NextResponse.redirect(new URL(dest, request.url))
                 }
             }
@@ -54,7 +54,7 @@ export async function proxy(request: NextRequest) {
                 const user = data?.user
                 if (user?.onboarded) {
                     // Already onboarded — redirect to appropriate dashboard
-                    const dest = user.role === "CONSULTANT" ? "/dashboard" : "/student-dashboard"
+                    const dest = user.role === "HELPER" ? "/dashboard" : "/student-dashboard"
                     return NextResponse.redirect(new URL(dest, request.url))
                 }
             }
@@ -75,9 +75,9 @@ export const config = {
         "/user-dashboard/:path*",
         "/student-dashboard/:path*",
         "/sessions/:path*",
-        "/student-requests/:path*",
+        "/helper-requests/:path*",
         "/my-requests/:path*",
-        "/find-consultants/:path*",
+        "/find-helpers/:path*",
         "/settings/:path*",
         "/onboarding/:path*",
         "/account/:path*",

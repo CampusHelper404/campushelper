@@ -184,7 +184,7 @@ export type CourseWhereInput = {
   departmentId?: Prisma.StringNullableFilter<"Course"> | string | null
   department?: Prisma.XOR<Prisma.DepartmentNullableScalarRelationFilter, Prisma.DepartmentWhereInput> | null
   requests?: Prisma.HelpRequestListRelationFilter
-  helpers?: Prisma.ConsultantProfileListRelationFilter
+  helpers?: Prisma.HelperProfileListRelationFilter
 }
 
 export type CourseOrderByWithRelationInput = {
@@ -195,7 +195,7 @@ export type CourseOrderByWithRelationInput = {
   departmentId?: Prisma.SortOrderInput | Prisma.SortOrder
   department?: Prisma.DepartmentOrderByWithRelationInput
   requests?: Prisma.HelpRequestOrderByRelationAggregateInput
-  helpers?: Prisma.ConsultantProfileOrderByRelationAggregateInput
+  helpers?: Prisma.HelperProfileOrderByRelationAggregateInput
 }
 
 export type CourseWhereUniqueInput = Prisma.AtLeast<{
@@ -209,7 +209,7 @@ export type CourseWhereUniqueInput = Prisma.AtLeast<{
   departmentId?: Prisma.StringNullableFilter<"Course"> | string | null
   department?: Prisma.XOR<Prisma.DepartmentNullableScalarRelationFilter, Prisma.DepartmentWhereInput> | null
   requests?: Prisma.HelpRequestListRelationFilter
-  helpers?: Prisma.ConsultantProfileListRelationFilter
+  helpers?: Prisma.HelperProfileListRelationFilter
 }, "id" | "code">
 
 export type CourseOrderByWithAggregationInput = {
@@ -241,7 +241,7 @@ export type CourseCreateInput = {
   description?: string | null
   department?: Prisma.DepartmentCreateNestedOneWithoutCoursesInput
   requests?: Prisma.HelpRequestCreateNestedManyWithoutCourseInput
-  helpers?: Prisma.ConsultantProfileCreateNestedManyWithoutExpertiseInput
+  helpers?: Prisma.HelperProfileCreateNestedManyWithoutExpertiseInput
 }
 
 export type CourseUncheckedCreateInput = {
@@ -251,7 +251,7 @@ export type CourseUncheckedCreateInput = {
   description?: string | null
   departmentId?: string | null
   requests?: Prisma.HelpRequestUncheckedCreateNestedManyWithoutCourseInput
-  helpers?: Prisma.ConsultantProfileUncheckedCreateNestedManyWithoutExpertiseInput
+  helpers?: Prisma.HelperProfileUncheckedCreateNestedManyWithoutExpertiseInput
 }
 
 export type CourseUpdateInput = {
@@ -261,7 +261,7 @@ export type CourseUpdateInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   department?: Prisma.DepartmentUpdateOneWithoutCoursesNestedInput
   requests?: Prisma.HelpRequestUpdateManyWithoutCourseNestedInput
-  helpers?: Prisma.ConsultantProfileUpdateManyWithoutExpertiseNestedInput
+  helpers?: Prisma.HelperProfileUpdateManyWithoutExpertiseNestedInput
 }
 
 export type CourseUncheckedUpdateInput = {
@@ -271,7 +271,7 @@ export type CourseUncheckedUpdateInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   requests?: Prisma.HelpRequestUncheckedUpdateManyWithoutCourseNestedInput
-  helpers?: Prisma.ConsultantProfileUncheckedUpdateManyWithoutExpertiseNestedInput
+  helpers?: Prisma.HelperProfileUncheckedUpdateManyWithoutExpertiseNestedInput
 }
 
 export type CourseCreateManyInput = {
@@ -438,7 +438,7 @@ export type CourseCreateWithoutDepartmentInput = {
   name: string
   description?: string | null
   requests?: Prisma.HelpRequestCreateNestedManyWithoutCourseInput
-  helpers?: Prisma.ConsultantProfileCreateNestedManyWithoutExpertiseInput
+  helpers?: Prisma.HelperProfileCreateNestedManyWithoutExpertiseInput
 }
 
 export type CourseUncheckedCreateWithoutDepartmentInput = {
@@ -447,7 +447,7 @@ export type CourseUncheckedCreateWithoutDepartmentInput = {
   name: string
   description?: string | null
   requests?: Prisma.HelpRequestUncheckedCreateNestedManyWithoutCourseInput
-  helpers?: Prisma.ConsultantProfileUncheckedCreateNestedManyWithoutExpertiseInput
+  helpers?: Prisma.HelperProfileUncheckedCreateNestedManyWithoutExpertiseInput
 }
 
 export type CourseCreateOrConnectWithoutDepartmentInput = {
@@ -493,7 +493,7 @@ export type CourseCreateWithoutRequestsInput = {
   name: string
   description?: string | null
   department?: Prisma.DepartmentCreateNestedOneWithoutCoursesInput
-  helpers?: Prisma.ConsultantProfileCreateNestedManyWithoutExpertiseInput
+  helpers?: Prisma.HelperProfileCreateNestedManyWithoutExpertiseInput
 }
 
 export type CourseUncheckedCreateWithoutRequestsInput = {
@@ -502,7 +502,7 @@ export type CourseUncheckedCreateWithoutRequestsInput = {
   name: string
   description?: string | null
   departmentId?: string | null
-  helpers?: Prisma.ConsultantProfileUncheckedCreateNestedManyWithoutExpertiseInput
+  helpers?: Prisma.HelperProfileUncheckedCreateNestedManyWithoutExpertiseInput
 }
 
 export type CourseCreateOrConnectWithoutRequestsInput = {
@@ -527,7 +527,7 @@ export type CourseUpdateWithoutRequestsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   department?: Prisma.DepartmentUpdateOneWithoutCoursesNestedInput
-  helpers?: Prisma.ConsultantProfileUpdateManyWithoutExpertiseNestedInput
+  helpers?: Prisma.HelperProfileUpdateManyWithoutExpertiseNestedInput
 }
 
 export type CourseUncheckedUpdateWithoutRequestsInput = {
@@ -536,7 +536,7 @@ export type CourseUncheckedUpdateWithoutRequestsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  helpers?: Prisma.ConsultantProfileUncheckedUpdateManyWithoutExpertiseNestedInput
+  helpers?: Prisma.HelperProfileUncheckedUpdateManyWithoutExpertiseNestedInput
 }
 
 export type CourseCreateWithoutHelpersInput = {
@@ -591,7 +591,7 @@ export type CourseUpdateWithoutDepartmentInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   requests?: Prisma.HelpRequestUpdateManyWithoutCourseNestedInput
-  helpers?: Prisma.ConsultantProfileUpdateManyWithoutExpertiseNestedInput
+  helpers?: Prisma.HelperProfileUpdateManyWithoutExpertiseNestedInput
 }
 
 export type CourseUncheckedUpdateWithoutDepartmentInput = {
@@ -600,7 +600,7 @@ export type CourseUncheckedUpdateWithoutDepartmentInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   requests?: Prisma.HelpRequestUncheckedUpdateManyWithoutCourseNestedInput
-  helpers?: Prisma.ConsultantProfileUncheckedUpdateManyWithoutExpertiseNestedInput
+  helpers?: Prisma.HelperProfileUncheckedUpdateManyWithoutExpertiseNestedInput
 }
 
 export type CourseUncheckedUpdateManyWithoutDepartmentInput = {
@@ -672,7 +672,7 @@ export type CourseCountOutputTypeCountRequestsArgs<ExtArgs extends runtime.Types
  * CourseCountOutputType without action
  */
 export type CourseCountOutputTypeCountHelpersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.ConsultantProfileWhereInput
+  where?: Prisma.HelperProfileWhereInput
 }
 
 
@@ -733,7 +733,7 @@ export type $CoursePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
   objects: {
     department: Prisma.$DepartmentPayload<ExtArgs> | null
     requests: Prisma.$HelpRequestPayload<ExtArgs>[]
-    helpers: Prisma.$ConsultantProfilePayload<ExtArgs>[]
+    helpers: Prisma.$HelperProfilePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1137,7 +1137,7 @@ export interface Prisma__CourseClient<T, Null = never, ExtArgs extends runtime.T
   readonly [Symbol.toStringTag]: "PrismaPromise"
   department<T extends Prisma.Course$departmentArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Course$departmentArgs<ExtArgs>>): Prisma.Prisma__DepartmentClient<runtime.Types.Result.GetResult<Prisma.$DepartmentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   requests<T extends Prisma.Course$requestsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Course$requestsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$HelpRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  helpers<T extends Prisma.Course$helpersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Course$helpersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ConsultantProfilePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  helpers<T extends Prisma.Course$helpersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Course$helpersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$HelperProfilePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1615,23 +1615,23 @@ export type Course$requestsArgs<ExtArgs extends runtime.Types.Extensions.Interna
  */
 export type Course$helpersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the ConsultantProfile
+   * Select specific fields to fetch from the HelperProfile
    */
-  select?: Prisma.ConsultantProfileSelect<ExtArgs> | null
+  select?: Prisma.HelperProfileSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the ConsultantProfile
+   * Omit specific fields from the HelperProfile
    */
-  omit?: Prisma.ConsultantProfileOmit<ExtArgs> | null
+  omit?: Prisma.HelperProfileOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.ConsultantProfileInclude<ExtArgs> | null
-  where?: Prisma.ConsultantProfileWhereInput
-  orderBy?: Prisma.ConsultantProfileOrderByWithRelationInput | Prisma.ConsultantProfileOrderByWithRelationInput[]
-  cursor?: Prisma.ConsultantProfileWhereUniqueInput
+  include?: Prisma.HelperProfileInclude<ExtArgs> | null
+  where?: Prisma.HelperProfileWhereInput
+  orderBy?: Prisma.HelperProfileOrderByWithRelationInput | Prisma.HelperProfileOrderByWithRelationInput[]
+  cursor?: Prisma.HelperProfileWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.ConsultantProfileScalarFieldEnum | Prisma.ConsultantProfileScalarFieldEnum[]
+  distinct?: Prisma.HelperProfileScalarFieldEnum | Prisma.HelperProfileScalarFieldEnum[]
 }
 
 /**

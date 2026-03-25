@@ -1,6 +1,6 @@
-# Nienalabs Starter Kit
+# CampusHelper
 
-This is a [Next.js](https://nextjs.org) starter kit designed for developers who want to use **Better Auth + Better Auth UI + Prisma + Shadcn + TRPC**. This template saves you time on authentication setup and TRPC backend configuration  so you can focus on building your product without worrying about boilerplates.
+CampusHelper is a platform designed to connect students with peer helpers on campus. This project uses **Better Auth + Prisma + Shadcn + TRPC** for a modern, type-safe development experience.
 
 ## Getting Started
 

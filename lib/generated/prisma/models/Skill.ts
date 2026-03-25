@@ -158,13 +158,13 @@ export type SkillWhereInput = {
   NOT?: Prisma.SkillWhereInput | Prisma.SkillWhereInput[]
   id?: Prisma.StringFilter<"Skill"> | string
   name?: Prisma.StringFilter<"Skill"> | string
-  profiles?: Prisma.ConsultantProfileListRelationFilter
+  profiles?: Prisma.HelperProfileListRelationFilter
 }
 
 export type SkillOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  profiles?: Prisma.ConsultantProfileOrderByRelationAggregateInput
+  profiles?: Prisma.HelperProfileOrderByRelationAggregateInput
 }
 
 export type SkillWhereUniqueInput = Prisma.AtLeast<{
@@ -173,7 +173,7 @@ export type SkillWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.SkillWhereInput | Prisma.SkillWhereInput[]
   OR?: Prisma.SkillWhereInput[]
   NOT?: Prisma.SkillWhereInput | Prisma.SkillWhereInput[]
-  profiles?: Prisma.ConsultantProfileListRelationFilter
+  profiles?: Prisma.HelperProfileListRelationFilter
 }, "id" | "name">
 
 export type SkillOrderByWithAggregationInput = {
@@ -195,25 +195,25 @@ export type SkillScalarWhereWithAggregatesInput = {
 export type SkillCreateInput = {
   id?: string
   name: string
-  profiles?: Prisma.ConsultantProfileCreateNestedManyWithoutSkillsInput
+  profiles?: Prisma.HelperProfileCreateNestedManyWithoutSkillsInput
 }
 
 export type SkillUncheckedCreateInput = {
   id?: string
   name: string
-  profiles?: Prisma.ConsultantProfileUncheckedCreateNestedManyWithoutSkillsInput
+  profiles?: Prisma.HelperProfileUncheckedCreateNestedManyWithoutSkillsInput
 }
 
 export type SkillUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  profiles?: Prisma.ConsultantProfileUpdateManyWithoutSkillsNestedInput
+  profiles?: Prisma.HelperProfileUpdateManyWithoutSkillsNestedInput
 }
 
 export type SkillUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  profiles?: Prisma.ConsultantProfileUncheckedUpdateManyWithoutSkillsNestedInput
+  profiles?: Prisma.HelperProfileUncheckedUpdateManyWithoutSkillsNestedInput
 }
 
 export type SkillCreateManyInput = {
@@ -375,7 +375,7 @@ export type SkillCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extens
  * SkillCountOutputType without action
  */
 export type SkillCountOutputTypeCountProfilesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.ConsultantProfileWhereInput
+  where?: Prisma.HelperProfileWhereInput
 }
 
 
@@ -412,7 +412,7 @@ export type SkillIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
 export type $SkillPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Skill"
   objects: {
-    profiles: Prisma.$ConsultantProfilePayload<ExtArgs>[]
+    profiles: Prisma.$HelperProfilePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -811,7 +811,7 @@ readonly fields: SkillFieldRefs;
  */
 export interface Prisma__SkillClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  profiles<T extends Prisma.Skill$profilesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Skill$profilesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ConsultantProfilePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  profiles<T extends Prisma.Skill$profilesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Skill$profilesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$HelperProfilePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1235,23 +1235,23 @@ export type SkillDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Interna
  */
 export type Skill$profilesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the ConsultantProfile
+   * Select specific fields to fetch from the HelperProfile
    */
-  select?: Prisma.ConsultantProfileSelect<ExtArgs> | null
+  select?: Prisma.HelperProfileSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the ConsultantProfile
+   * Omit specific fields from the HelperProfile
    */
-  omit?: Prisma.ConsultantProfileOmit<ExtArgs> | null
+  omit?: Prisma.HelperProfileOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.ConsultantProfileInclude<ExtArgs> | null
-  where?: Prisma.ConsultantProfileWhereInput
-  orderBy?: Prisma.ConsultantProfileOrderByWithRelationInput | Prisma.ConsultantProfileOrderByWithRelationInput[]
-  cursor?: Prisma.ConsultantProfileWhereUniqueInput
+  include?: Prisma.HelperProfileInclude<ExtArgs> | null
+  where?: Prisma.HelperProfileWhereInput
+  orderBy?: Prisma.HelperProfileOrderByWithRelationInput | Prisma.HelperProfileOrderByWithRelationInput[]
+  cursor?: Prisma.HelperProfileWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.ConsultantProfileScalarFieldEnum | Prisma.ConsultantProfileScalarFieldEnum[]
+  distinct?: Prisma.HelperProfileScalarFieldEnum | Prisma.HelperProfileScalarFieldEnum[]
 }
 
 /**

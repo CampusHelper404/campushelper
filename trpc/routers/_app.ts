@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { TRPCError } from '@trpc/server';
-import { adminProcedure, baseProcedure, consultantProcedure, createTRPCRouter, protectedProcedure } from '../init';
+import { adminProcedure, baseProcedure, helperProcedure, createTRPCRouter, protectedProcedure } from '../init';
 import { prisma } from '@/lib/prisma';
 import { HelpRequestStatus, SessionStatus, UserRole } from '@/lib/generated/prisma/client';
 
@@ -29,7 +29,8 @@ export const appRouter = createTRPCRouter({
     me: protectedProcedure
       .query(async ({ ctx }) => {
         return await prisma.user.findUnique({
-          where: { id: ctx.session.user.id }
+          where: { id: ctx.session.user.id },
+          include: { helperProfile: true }
         });
       }),
 
@@ -54,10 +55,10 @@ export const appRouter = createTRPCRouter({
         });
       }),
 
-    becomeConsultant: protectedProcedure
+    becomeHelper: protectedProcedure
       .mutation(async ({ ctx }) => {
         // Create profile if doesn't exist
-        const profile = await prisma.consultantProfile.upsert({
+        const profile = await prisma.helperProfile.upsert({
           where: { userId: ctx.session.user.id },
           update: { verificationStatus: 'PENDING' },
           create: {
@@ -66,7 +67,7 @@ export const appRouter = createTRPCRouter({
           }
         });
 
-        // Note: We deliberately do NOT update the user role to 'CONSULTANT' here anymore.
+        // Note: We deliberately do NOT update the user role to 'HELPER' here anymore.
         // They must remain a STUDENT until an admin approves them via the verification queue.
         return profile;
       }),
@@ -91,7 +92,7 @@ export const appRouter = createTRPCRouter({
   courses: createTRPCRouter({
     list: baseProcedure
       .query(async () => {
-        return await prisma.course.findMany();
+        return await prisma.course.findMany({ orderBy: { code: 'asc' } });
       }),
 
     create: adminProcedure
@@ -101,6 +102,20 @@ export const appRouter = createTRPCRouter({
           data: input,
         });
       }),
+
+    delete: adminProcedure
+      .input(z.object({ id: z.string() }))
+      .mutation(async ({ input }) => {
+        await prisma.course.delete({ where: { id: input.id } });
+        return { success: true };
+      }),
+
+    update: adminProcedure
+      .input(z.object({ id: z.string(), code: z.string(), name: z.string(), description: z.string().optional() }))
+      .mutation(async ({ input }) => {
+        const { id, ...data } = input;
+        return await prisma.course.update({ where: { id }, data });
+      }),
   }),
 
   // ── Help Requests ──────────────────────────────────────────────────────────
@@ -109,6 +124,7 @@ export const appRouter = createTRPCRouter({
       .input(z.object({
         status: z.nativeEnum(HelpRequestStatus).optional(),
         studentId: z.string().optional(),
+        helperId: z.string().optional(),
         courseId: z.string().optional(),
       }).optional())
       .query(async ({ input }) => {
@@ -116,6 +132,7 @@ export const appRouter = createTRPCRouter({
           where: {
             status: input?.status,
             studentId: input?.studentId,
+            acceptedById: input?.helperId,
             courseId: input?.courseId,
           },
           include: {
@@ -167,25 +184,32 @@ export const appRouter = createTRPCRouter({
         if (!request) throw new TRPCError({ code: 'NOT_FOUND' });
 
         // Logic: Students can cancel their own. Admins can do anything. 
-        // Consultants can accept/decline if they aren't the student.
-        const isAdmin = (ctx.session.user as any).role === 'ADMIN';
-        const isOwner = request.studentId === ctx.session.user.id;
-        const isConsultant = (ctx.session.user as any).role === 'CONSULTANT';
+        // Helpers can accept/decline if they aren't the student.
+        const dbUser = await prisma.user.findUnique({ where: { id: ctx.session.user.id } });
+        if (!dbUser) throw new TRPCError({ code: 'UNAUTHORIZED' });
 
-        if (!isAdmin && !isOwner && !isConsultant) {
-          throw new TRPCError({ code: 'FORBIDDEN', message: 'Not authorized to update this request' });
+        const isAdmin = dbUser.role === 'ADMIN';
+        const isOwner = request.studentId === dbUser.id;
+        const isHelper = dbUser.role === 'HELPER';
+
+        // Role-based state transitions
+        if (isAdmin) {
+          // Admins can do anything
+        } else if (isHelper && (input.status === 'ACCEPTED' || input.status === 'DECLINED' || input.status === 'COMPLETED')) {
+          // Helpers can accept, decline, or complete requests
+        } else if (isOwner && input.status === 'CANCELLED') {
+          // Students can only cancel their own requests
+        } else {
+          throw new TRPCError({ code: 'FORBIDDEN', message: 'Not authorized to perform this action' });
         }
 
-        if (isOwner && input.status !== 'CANCELLED' && !isAdmin) {
-          throw new TRPCError({ code: 'FORBIDDEN', message: 'Students can only cancel their requests' });
-        }
-
-        if (isConsultant && input.status === 'ACCEPTED') {
+        if (isHelper && input.status === 'ACCEPTED') {
+          // When a helper accepts, assign them to the request
           return await prisma.helpRequest.update({
             where: { id: input.id },
             data: { 
               status: input.status,
-              acceptedById: ctx.session.user.id
+              acceptedById: dbUser.id
             },
           });
         }
@@ -201,14 +225,14 @@ export const appRouter = createTRPCRouter({
   sessions: createTRPCRouter({
     list: baseProcedure
       .input(z.object({
-        consultantId: z.string().optional(),
+        helperId: z.string().optional(),
         studentId: z.string().optional(),
         status: z.nativeEnum(SessionStatus).optional(),
       }).optional())
       .query(async ({ input }) => {
         return await prisma.academicSession.findMany({
           where: {
-            consultantId: input?.consultantId,
+            helperId: input?.helperId,
             studentId: input?.studentId,
             status: input?.status,
           },
@@ -217,7 +241,7 @@ export const appRouter = createTRPCRouter({
               include: { course: true }
             },
             student: true,
-            consultant: true,
+            helper: true,
           },
         });
       }),
@@ -232,7 +256,7 @@ export const appRouter = createTRPCRouter({
               include: { course: true }
             },
             student: true,
-            consultant: true,
+            helper: true,
           },
         });
         if (!session) throw new TRPCError({ code: 'NOT_FOUND', message: 'Session not found' });
@@ -243,7 +267,7 @@ export const appRouter = createTRPCRouter({
       .input(z.object({
         requestId: z.string(),
         studentId: z.string(),
-        consultantId: z.string(),
+        helperId: z.string(),
         startTime: z.date(),
         endTime: z.date().optional(),
         meetingLink: z.string().optional(),
@@ -264,7 +288,7 @@ export const appRouter = createTRPCRouter({
         const session = await prisma.academicSession.findUnique({ where: { id: input.id } });
         if (!session) throw new TRPCError({ code: 'NOT_FOUND' });
 
-        const isParticipant = session.studentId === ctx.session.user.id || session.consultantId === ctx.session.user.id;
+        const isParticipant = session.studentId === ctx.session.user.id || session.helperId === ctx.session.user.id;
         const isAdmin = (ctx.session.user as any).role === 'ADMIN';
 
         if (!isParticipant && !isAdmin) {
@@ -283,8 +307,9 @@ export const appRouter = createTRPCRouter({
     list: baseProcedure
       .input(z.object({ courseId: z.string().optional() }).optional())
       .query(async ({ input }) => {
-        return await prisma.consultantProfile.findMany({
+        return await prisma.helperProfile.findMany({
           where: {
+            verificationStatus: 'APPROVED',
             expertise: input?.courseId ? { some: { id: input.courseId } } : undefined,
           },
           include: {
@@ -294,18 +319,59 @@ export const appRouter = createTRPCRouter({
         });
       }),
 
-    setCourses: consultantProcedure
-      .input(z.object({ consultantId: z.string(), courseIds: z.array(z.string()) }))
+    getProfile: baseProcedure
+      .input(z.object({ userId: z.string() }))
+      .query(async ({ input }) => {
+        const profile = await prisma.helperProfile.findUnique({
+          where: { userId: input.userId },
+          include: {
+            user: true,
+            expertise: true,
+          },
+        });
+        if (!profile) throw new TRPCError({ code: 'NOT_FOUND' });
+        return profile;
+      }),
+
+    updateProfile: helperProcedure
+      .input(z.object({
+        headline: z.string().min(1).max(100),
+        bio: z.string().min(10).max(1000),
+        hourlyRate: z.number().min(0),
+        courseIds: z.array(z.string()),
+      }))
       .mutation(async ({ input, ctx }) => {
-        const profile = await prisma.consultantProfile.findUnique({ where: { id: input.consultantId } });
+        const profile = await prisma.helperProfile.findUnique({ 
+            where: { userId: ctx.session.user.id } 
+        });
+        if (!profile) throw new TRPCError({ code: 'NOT_FOUND' });
+
+        return await prisma.helperProfile.update({
+          where: { userId: ctx.session.user.id },
+          data: {
+            headline: input.headline,
+            bio: input.bio,
+            hourlyRate: input.hourlyRate,
+            completedProfile: true,
+            expertise: {
+              set: input.courseIds.map(id => ({ id })),
+            },
+          },
+        });
+      }),
+
+    setCourses: helperProcedure
+      .input(z.object({ helperId: z.string(), courseIds: z.array(z.string()) }))
+      .mutation(async ({ input, ctx }) => {
+        const profile = await prisma.helperProfile.findUnique({ where: { id: input.helperId } });
         if (!profile) throw new TRPCError({ code: 'NOT_FOUND' });
         
         if (profile.userId !== ctx.session.user.id && (ctx.session.user as any).role !== 'ADMIN') {
           throw new TRPCError({ code: 'FORBIDDEN' });
         }
 
-        return await prisma.consultantProfile.update({
-          where: { id: input.consultantId },
+        return await prisma.helperProfile.update({
+          where: { id: input.helperId },
           data: {
             expertise: {
               set: input.courseIds.map(id => ({ id })),
@@ -318,16 +384,16 @@ export const appRouter = createTRPCRouter({
   // ── Availability ───────────────────────────────────────────────────────────
   availability: createTRPCRouter({
     list: baseProcedure
-      .input(z.object({ consultantId: z.string() }))
+      .input(z.object({ helperId: z.string() }))
       .query(async ({ input }) => {
         return await prisma.availabilitySlot.findMany({
-          where: { consultantId: input.consultantId },
+          where: { helperId: input.helperId },
         });
       }),
 
     create: protectedProcedure
       .input(z.object({
-        consultantId: z.string(),
+        helperId: z.string(),
         weekday: z.number().min(0).max(6).optional(),
         startTime: z.string(),
         endTime: z.string(),
@@ -340,16 +406,16 @@ export const appRouter = createTRPCRouter({
         });
       }),
 
-    delete: consultantProcedure
+    delete: helperProcedure
       .input(z.object({ id: z.string() }))
       .mutation(async ({ input, ctx }) => {
         const slot = await prisma.availabilitySlot.findUnique({
           where: { id: input.id },
-          include: { consultant: true }
+          include: { helper: true }
         });
         if (!slot) throw new TRPCError({ code: 'NOT_FOUND' });
 
-        if (slot.consultant.userId !== ctx.session.user.id && (ctx.session.user as any).role !== 'ADMIN') {
+        if (slot.helper.userId !== ctx.session.user.id && (ctx.session.user as any).role !== 'ADMIN') {
           throw new TRPCError({ code: 'FORBIDDEN' });
         }
 
@@ -451,7 +517,7 @@ export const appRouter = createTRPCRouter({
             session: {
               OR: [
                 { studentId: input.userId },
-                { consultantId: input.userId },
+                { helperId: input.userId },
               ],
             },
           },
@@ -459,7 +525,7 @@ export const appRouter = createTRPCRouter({
             session: {
               include: {
                 student: true,
-                consultant: true,
+                helper: true,
                 request: { include: { course: true } },
               },
             },
@@ -509,14 +575,14 @@ export const appRouter = createTRPCRouter({
     list: protectedProcedure
       .input(z.object({
         studentId: z.string().optional(),
-        consultantId: z.string().optional(),
+        helperId: z.string().optional(),
         status: z.string().optional(),
       }).optional())
       .query(async ({ input }) => {
         return await prisma.payment.findMany({
           where: {
             studentId: input?.studentId,
-            consultantId: input?.consultantId,
+            helperId: input?.helperId,
             status: input?.status,
           },
           include: {
@@ -533,7 +599,7 @@ export const appRouter = createTRPCRouter({
       .input(z.object({
         sessionId: z.string(),
         studentId: z.string(),
-        consultantId: z.string(),
+        helperId: z.string(),
         amountCents: z.number().positive(),
         currency: z.string().length(3).optional(),
         status: z.string().optional(),
@@ -551,7 +617,7 @@ export const appRouter = createTRPCRouter({
   verification: createTRPCRouter({
     submit: protectedProcedure
       .mutation(async ({ ctx }) => {
-        return await prisma.consultantProfile.upsert({
+        return await prisma.helperProfile.upsert({
           where: { userId: ctx.session.user.id },
           update: { verificationStatus: 'PENDING' },
           create: {
@@ -568,20 +634,32 @@ export const appRouter = createTRPCRouter({
         transcriptUrl: z.string().optional(),
       }))
       .mutation(async ({ input, ctx }) => {
-        // Create or update verification request
-        return await prisma.verificationRequest.create({
+        // 1. Create the verification request for admin review
+        const request = await prisma.verificationRequest.create({
           data: {
             ...input,
             userId: ctx.session.user.id,
             status: 'PENDING',
           },
         });
+
+        // 2. Ensuring HelperProfile exists so they show up in searches (as Pending)
+        await prisma.helperProfile.upsert({
+          where: { userId: ctx.session.user.id },
+          update: { verificationStatus: 'PENDING' },
+          create: {
+            userId: ctx.session.user.id,
+            verificationStatus: 'PENDING',
+          }
+        });
+
+        return request;
       }),
 
     list: adminProcedure
       .input(z.object({ status: z.string().optional() }))
       .query(async ({ input }) => {
-        return await prisma.consultantProfile.findMany({
+        return await prisma.helperProfile.findMany({
           where: { verificationStatus: input.status },
           include: { user: true },
         });
@@ -594,7 +672,7 @@ export const appRouter = createTRPCRouter({
         rejectionReason: z.string().optional(),
       }))
       .mutation(async ({ input }) => {
-        return await prisma.consultantProfile.update({
+        return await prisma.helperProfile.update({
           where: { id: input.id },
           data: {
             verificationStatus: input.status,
@@ -710,6 +788,50 @@ export const appRouter = createTRPCRouter({
           return await prisma.skill.create({ data: input });
         }),
     }),
+  }),
+  // ── Verification Queue ────────────────────────────────────────────────────
+  verificationQueue: createTRPCRouter({
+    list: adminProcedure
+      .input(z.object({ status: z.string().optional() }).optional())
+      .query(async ({ input }) => {
+        return await prisma.verificationRequest.findMany({
+          where: input?.status ? { status: input.status } : undefined,
+          include: { user: true },
+          orderBy: { createdAt: 'desc' },
+        });
+      }),
+
+    review: adminProcedure
+      .input(z.object({
+        id: z.string(),
+        status: z.enum(['APPROVED', 'REJECTED']),
+        reviewerNote: z.string().optional(),
+      }))
+      .mutation(async ({ input }) => {
+        const req = await prisma.verificationRequest.update({
+          where: { id: input.id },
+          data: { status: input.status, reviewerNote: input.reviewerNote, reviewedAt: new Date() },
+          include: { user: true },
+        });
+        // If approved, promote user to HELPER role and update profile
+        if (input.status === 'APPROVED') {
+          await prisma.user.update({
+            where: { id: req.userId },
+            data: { role: 'HELPER' },
+          });
+
+          // Ensure HelperProfile exists and is approved
+          await prisma.helperProfile.upsert({
+            where: { userId: req.userId },
+            update: { verificationStatus: 'APPROVED' },
+            create: {
+              userId: req.userId,
+              verificationStatus: 'APPROVED',
+            }
+          });
+        }
+        return req;
+      }),
   }),
 });
 

@@ -3,6 +3,9 @@
 import { useEffect, useState, useRef } from "react"
 import Link from "next/link"
 import Image from "next/image"
+import { useRouter } from "next/navigation"
+import { authClient } from "@/lib/auth-client"
+import { trpc } from "@/trpc/client"
 
 export default function LandingPage() {
     const [scrolled, setScrolled] = useState(false)
@@ -11,9 +14,29 @@ export default function LandingPage() {
     const imgTopRef = useRef<HTMLDivElement>(null)
     const imgBottomRef = useRef<HTMLDivElement>(null)
 
+    const router = useRouter()
+    const { data: session } = authClient.useSession()
+
+    const { data: user, isLoading: isLoadingUser } = trpc.users.me.useQuery(undefined, {
+        enabled: !!session
+    })
+
+    // Redirect based on role if logged in
+    useEffect(() => {
+        if (!isLoadingUser && user) {
+            if (user.role === 'ADMIN') {
+                router.push("/admin")
+            } else if (user.role === 'HELPER') {
+                router.push("/dashboard")
+            } else {
+                router.push("/student-dashboard")
+            }
+        }
+    }, [user, isLoadingUser, router])
+
     // Animated Counters State
     const [studentsCount, setStudentsCount] = useState(0)
-    const [consultantsCount, setConsultantsCount] = useState(0)
+    const [helpersCount, setHelpersCount] = useState(0)
     const [successRate, setSuccessRate] = useState(0)
     const statsRef = useRef<HTMLDivElement>(null)
 
@@ -70,7 +93,7 @@ export default function LandingPage() {
             (entries) => {
                 if (entries[0].isIntersecting) {
                     animateValue(setStudentsCount, 1000)
-                    animateValue(setConsultantsCount, 500)
+                    animateValue(setHelpersCount, 500)
                     animateValue(setSuccessRate, 95)
                     observer.disconnect()
                 }
@@ -146,7 +169,7 @@ export default function LandingPage() {
                             <h1 className="hero-title">Campus Helper</h1>
 
                             <p className="hero-subtitle about-reveal revealed">
-                                Connect with academic consultants and get the help you need for your courses
+                                Connect with academic helpers and get the help you need for your courses
                             </p>
 
                             <div className="stats about-reveal revealed" ref={statsRef}>
@@ -155,8 +178,8 @@ export default function LandingPage() {
                                     <span className="stat-label">Students</span>
                                 </div>
                                 <div className="stat-item">
-                                    <span className="stat-number">{consultantsCount}+</span>
-                                    <span className="stat-label">Consultants</span>
+                                    <span className="stat-number">{helpersCount}+</span>
+                                    <span className="stat-label">Helpers</span>
                                 </div>
                                 <div className="stat-item">
                                     <span className="stat-number">{successRate}%</span>
@@ -172,7 +195,7 @@ export default function LandingPage() {
                         <div className="hero-images">
                             <div className="image-card image-card-top" ref={imgTopRef}>
                                 <Image
-                                    src="/online-learning.svg"
+                                    src="/hero-student.png"
                                     alt="Student learning online with academic resources and grading tools"
                                     width={400}
                                     height={300}
@@ -181,8 +204,8 @@ export default function LandingPage() {
                             </div>
                             <div className="image-card image-card-bottom" ref={imgBottomRef}>
                                 <Image
-                                    src="/consultant.svg"
-                                    alt="Academic consultant presenting educational material on a whiteboard"
+                                    src="/hero-helper.png"
+                                    alt="Academic helper presenting educational material on a whiteboard"
                                     width={400}
                                     height={300}
                                     priority

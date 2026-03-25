@@ -1,6 +1,9 @@
 import Link from "next/link"
 import { LoginForm } from "@/components/auth/login-form"
 import { SignupForm } from "@/components/auth/signup-form"
+import { auth } from "@/lib/auth"
+import { headers } from "next/headers"
+import { redirect } from "next/navigation"
 import "../auth.css"
 
 export const dynamicParams = false
@@ -21,6 +24,14 @@ export default async function AuthPage({
     params: Promise<{ path: string }>
 }) {
     const { path } = await params
+
+    const session = await auth.api.getSession({
+        headers: await headers()
+    })
+
+    if (session) {
+        redirect("/student-dashboard")
+    }
 
     const renderForm = () => {
         switch (path) {

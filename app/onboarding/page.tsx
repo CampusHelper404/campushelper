@@ -74,7 +74,7 @@ export default function OnboardingPage() {
                         <div className="ob-cards">
                             {[
                                 { num: 1, src: "/post a help request.svg", title: "Post a Help Request", desc: "Describe the course or topic you need help with and submit your request." },
-                                { num: 2, src: "/connect with a consultant.svg", title: "Connect with a Consultant", desc: "Browse available consultants, chat with them and choose who can assist you." },
+                                { num: 2, src: "/connect with a helper.svg", title: "Connect with a Helper", desc: "Browse available helpers, chat with them and choose who can assist you." },
                                 { num: 3, src: "/start a session.svg", title: "Start a Session", desc: "Collaborate in real-time and get the support you need to succeed." },
                             ].map(card => (
                                 <div className="ob-card" key={card.num}>

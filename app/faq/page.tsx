@@ -12,13 +12,13 @@ const faqs = [
     },
     {
         id: 2,
-        question: "How do I become a consultant?",
-        answer: "To become a consultant, register on the platform and select the 'Become a Consultant' option. You'll need to provide your academic credentials, areas of expertise, and available schedule. Once reviewed, you'll be approved to start helping students."
+        question: "How do I become a helper?",
+        answer: "To become a helper, register on the platform and select the 'Become a Helper' option. You'll need to provide your academic credentials, areas of expertise, and available schedule. Once reviewed, you'll be approved to start helping students."
     },
     {
         id: 3,
         question: "How are the sessions conducted?",
-        answer: "Sessions can be conducted either in-person on campus or online through the platform's built-in video and chat tools. Students and consultants agree on the format when scheduling. Each session typically lasts between 30 to 60 minutes."
+        answer: "Sessions can be conducted either in-person on campus or online through the platform's built-in video and chat tools. Students and helpers agree on the format when scheduling. Each session typically lasts between 30 to 60 minutes."
     },
     {
         id: 4,

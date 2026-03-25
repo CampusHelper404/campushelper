@@ -58,7 +58,7 @@ export const ModelName = {
   HelpRequest: 'HelpRequest',
   AcademicSession: 'AcademicSession',
   Review: 'Review',
-  ConsultantProfile: 'ConsultantProfile',
+  HelperProfile: 'HelperProfile',
   AnalyticsEvent: 'AnalyticsEvent',
   AvailabilitySlot: 'AvailabilitySlot',
   VerificationRequest: 'VerificationRequest',
@@ -154,7 +154,7 @@ export const AcademicSessionScalarFieldEnum = {
   id: 'id',
   requestId: 'requestId',
   studentId: 'studentId',
-  consultantId: 'consultantId',
+  helperId: 'helperId',
   startTime: 'startTime',
   endTime: 'endTime',
   status: 'status',
@@ -178,16 +178,19 @@ export const ReviewScalarFieldEnum = {
 export type ReviewScalarFieldEnum = (typeof ReviewScalarFieldEnum)[keyof typeof ReviewScalarFieldEnum]
 
 
-export const ConsultantProfileScalarFieldEnum = {
+export const HelperProfileScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   bio: 'bio',
+  headline: 'headline',
+  hourlyRate: 'hourlyRate',
+  completedProfile: 'completedProfile',
   rating: 'rating',
   verificationStatus: 'verificationStatus',
   rejectionReason: 'rejectionReason'
 } as const
 
-export type ConsultantProfileScalarFieldEnum = (typeof ConsultantProfileScalarFieldEnum)[keyof typeof ConsultantProfileScalarFieldEnum]
+export type HelperProfileScalarFieldEnum = (typeof HelperProfileScalarFieldEnum)[keyof typeof HelperProfileScalarFieldEnum]
 
 
 export const AnalyticsEventScalarFieldEnum = {
@@ -205,7 +208,7 @@ export type AnalyticsEventScalarFieldEnum = (typeof AnalyticsEventScalarFieldEnu
 
 export const AvailabilitySlotScalarFieldEnum = {
   id: 'id',
-  consultantId: 'consultantId',
+  helperId: 'helperId',
   weekday: 'weekday',
   startTime: 'startTime',
   endTime: 'endTime',
@@ -320,7 +323,7 @@ export const PaymentScalarFieldEnum = {
   id: 'id',
   sessionId: 'sessionId',
   studentId: 'studentId',
-  consultantId: 'consultantId',
+  helperId: 'helperId',
   amountCents: 'amountCents',
   currency: 'currency',
   status: 'status',

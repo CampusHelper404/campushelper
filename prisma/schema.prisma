@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client"
   output   = "../lib/generated/prisma"
@@ -13,51 +7,44 @@ datasource db {
   provider = "postgresql"
 }
 
-enum UserRole {
-  STUDENT
-  CONSULTANT
-  ADMIN
-}
-
 model User {
-  id            String    @id
-  name          String
-  email         String
-  emailVerified Boolean   @default(false)
-  image         String?
-  role          UserRole  @default(STUDENT)
-  onboarded     Boolean   @default(false)
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  sessions      Session[]
-  accounts      Account[]
-  requests      HelpRequest[]     @relation("StudentRequests")
-  studentSessions AcademicSession[] @relation("StudentSessions")
-  consultantSessions AcademicSession[] @relation("ConsultantSessions")
-  consultantProfile ConsultantProfile?
-  sentMessages      Message[]           @relation("SentMessages")
-  receivedMessages  Message[]           @relation("ReceivedMessages")
-  notifications     Notification[]
-  analyticsEvents   AnalyticsEvent[]
-  reportsCreated    Report[]            @relation("ReportedBy")
-  reportsAbout      Report[]            @relation("ReportedAbout")
-  auditLogs         AuditLog[]
-  acceptedRequests HelpRequest[]    @relation("AcceptedRequests")
-  verificationReqs  VerificationRequest[]
+  id               String                @id
+  name             String
+  email            String                @unique
+  emailVerified    Boolean               @default(false)
+  image            String?
+  role             UserRole              @default(STUDENT)
+  onboarded        Boolean               @default(false)
+  createdAt        DateTime              @default(now())
+  updatedAt        DateTime              @updatedAt
+  helperSessions   AcademicSession[]     @relation("HelperSessions")
+  studentSessions  AcademicSession[]     @relation("StudentSessions")
+  analyticsEvents  AnalyticsEvent[]
+  auditLogs        AuditLog[]
+  acceptedRequests HelpRequest[]         @relation("AcceptedRequests")
+  requests         HelpRequest[]         @relation("StudentRequests")
+  helperProfile    HelperProfile?
+  receivedMessages Message[]             @relation("ReceivedMessages")
+  sentMessages     Message[]             @relation("SentMessages")
+  notifications    Notification[]
+  reportsAbout     Report[]              @relation("ReportedAbout")
+  reportsCreated   Report[]              @relation("ReportedBy")
+  verificationReqs VerificationRequest[]
+  accounts         Account[]
+  sessions         Session[]
 
-  @@unique([email])
   @@map("user")
 }
 
 model Course {
-  id          String        @id @default(cuid())
-  code        String        @unique
-  name        String
-  description String?
+  id           String          @id @default(cuid())
+  code         String          @unique
+  name         String
+  description  String?
   departmentId String?
-  department  Department?       @relation(fields: [departmentId], references: [id])
-  requests    HelpRequest[]
-  helpers     ConsultantProfile[]
+  department   Department?     @relation(fields: [departmentId], references: [id])
+  requests     HelpRequest[]
+  helpers      HelperProfile[] @relation("CourseToHelperProfile")
 }
 
 model Department {
@@ -68,220 +55,206 @@ model Department {
 }
 
 model Skill {
-  id          String              @id @default(cuid())
-  name        String              @unique
-  profiles    ConsultantProfile[]
-}
-
-enum HelpRequestStatus {
-  PENDING
-  ACCEPTED
-  DECLINED
-  CANCELLED
-  COMPLETED
+  id       String          @id @default(cuid())
+  name     String          @unique
+  profiles HelperProfile[] @relation("HelperProfileToSkill")
 }
 
 model HelpRequest {
-  id             String            @id @default(cuid())
-  studentId      String
-  student        User              @relation("StudentRequests", fields: [studentId], references: [id])
-  courseId       String?
-  course         Course?           @relation(fields: [courseId], references: [id])
-  title          String
-  description    String?
-  status         HelpRequestStatus @default(PENDING)
-  preferredDate  DateTime?
-  preferredTime  String?
-  acceptedById   String?
-  acceptedBy     User?             @relation("AcceptedRequests", fields: [acceptedById], references: [id])
-  createdAt      DateTime          @default(now())
-  updatedAt      DateTime          @updatedAt
-  sessions       AcademicSession[]
-  attachments    Attachment[]
-}
-
-enum SessionStatus {
-  UPCOMING
-  IN_PROGRESS
-  COMPLETED
-  CANCELLED
-  NO_SHOW
+  id            String            @id @default(cuid())
+  studentId     String
+  courseId      String?
+  title         String
+  description   String?
+  status        HelpRequestStatus @default(PENDING)
+  preferredDate DateTime?
+  preferredTime String?
+  acceptedById  String?
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+  sessions      AcademicSession[]
+  attachments   Attachment[]
+  acceptedBy    User?             @relation("AcceptedRequests", fields: [acceptedById], references: [id])
+  course        Course?           @relation(fields: [courseId], references: [id])
+  student       User              @relation("StudentRequests", fields: [studentId], references: [id])
 }
 
 model AcademicSession {
-  id            String        @id @default(cuid())
-  requestId     String
-  request       HelpRequest   @relation(fields: [requestId], references: [id])
-  studentId     String
-  student       User          @relation("StudentSessions", fields: [studentId], references: [id])
-  consultantId  String
-  consultant    User          @relation("ConsultantSessions", fields: [consultantId], references: [id])
-  startTime     DateTime
-  endTime       DateTime?
-  status        SessionStatus @default(UPCOMING)
-  meetingLink   String?
-  notes         String?
-  createdAt     DateTime      @default(now())
-  updatedAt     DateTime          @updatedAt
-  review        Review?
-  payment       Payment?
-  reports       Report[]
+  id          String        @id @default(cuid())
+  requestId   String
+  studentId   String
+  helperId    String
+  startTime   DateTime
+  endTime     DateTime?
+  status      SessionStatus @default(UPCOMING)
+  meetingLink String?
+  notes       String?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  helper      User          @relation("HelperSessions", fields: [helperId], references: [id])
+  request     HelpRequest   @relation(fields: [requestId], references: [id])
+  student     User          @relation("StudentSessions", fields: [studentId], references: [id])
+  payment     Payment?
+  reports     Report[]
+  review      Review?
 }
 
 model Review {
-  id           String          @id @default(cuid())
-  sessionId    String          @unique
-  session      AcademicSession @relation(fields: [sessionId], references: [id])
-  rating       Int
-  comment      String?
-  createdAt    DateTime        @default(now())
+  id        String          @id @default(cuid())
+  sessionId String          @unique
+  rating    Int
+  comment   String?
+  createdAt DateTime        @default(now())
+  session   AcademicSession @relation(fields: [sessionId], references: [id])
 }
 
-model ConsultantProfile {
-  id                String   @id @default(cuid())
-  userId            String   @unique
-  user              User     @relation(fields: [userId], references: [id])
-  bio               String?
-  expertise         Course[]
-  skills            Skill[]
-  rating            Float    @default(0)
-  availability      AvailabilitySlot[]
-  verificationStatus String   @default("PENDING") // PENDING, APPROVED, REJECTED
-  rejectionReason   String?
+model HelperProfile {
+  id                 String             @id @default(cuid())
+  userId             String             @unique
+  bio                String?
+  headline           String?
+  hourlyRate         Float?
+  completedProfile   Boolean            @default(false)
+  rating             Float              @default(0)
+  verificationStatus String             @default("PENDING")
+  rejectionReason    String?
+  availability       AvailabilitySlot[]
+  user               User               @relation(fields: [userId], references: [id])
+  expertise          Course[]           @relation("CourseToHelperProfile")
+  skills             Skill[]            @relation("HelperProfileToSkill")
 }
 
 model AnalyticsEvent {
-  id            String   @id @default(cuid())
-  eventType     String
-  userId        String?
-  user          User?    @relation(fields: [userId], references: [id])
-  sessionId     String?
-  requestId     String?
-  metadata      Json?
-  timestamp     DateTime @default(now())
+  id        String   @id @default(cuid())
+  eventType String
+  userId    String?
+  sessionId String?
+  requestId String?
+  metadata  Json?
+  timestamp DateTime @default(now())
+  user      User?    @relation(fields: [userId], references: [id])
 }
 
 model AvailabilitySlot {
-  id            String            @id @default(cuid())
-  consultantId  String
-  consultant    ConsultantProfile @relation(fields: [consultantId], references: [id])
-  weekday       Int?              // 0-6 for recurring
-  startTime     String            // "HH:mm"
-  endTime       String            // "HH:mm"
-  specificDate  DateTime?         // For one-off availability
-  isRecurring   Boolean           @default(true)
-  createdAt     DateTime          @default(now())
+  id           String        @id @default(cuid())
+  helperId     String
+  weekday      Int?
+  startTime    String
+  endTime      String
+  specificDate DateTime?
+  isRecurring  Boolean       @default(true)
+  createdAt    DateTime      @default(now())
+  helper       HelperProfile @relation(fields: [helperId], references: [id])
 }
 
 model VerificationRequest {
-  id              String             @id @default(cuid())
-  userId          String
-  user            User               @relation(fields: [userId], references: [id])
-  idFrontUrl      String?
-  idBackUrl       String?
-  transcriptUrl   String?
-  status          String             @default("PENDING") // PENDING, APPROVED, REJECTED
-  reviewerNote    String?
-  reviewedAt      DateTime?
-  createdAt       DateTime           @default(now())
+  id            String    @id @default(cuid())
+  userId        String
+  idFrontUrl    String?
+  idBackUrl     String?
+  transcriptUrl String?
+  status        String    @default("PENDING")
+  reviewerNote  String?
+  reviewedAt    DateTime?
+  createdAt     DateTime  @default(now())
+  user          User      @relation(fields: [userId], references: [id])
 }
 
 model Report {
-  id              String             @id @default(cuid())
-  reporterId      String
-  reporter        User               @relation("ReportedBy", fields: [reporterId], references: [id])
-  reportedUserId  String?
-  reportedUser    User?              @relation("ReportedAbout", fields: [reportedUserId], references: [id])
-  sessionId       String?
-  session         AcademicSession?   @relation(fields: [sessionId], references: [id])
-  type            String             // HARASSMENT, NO_SHOW, QUALITY, OTHER
-  description     String
-  status          String             @default("OPEN") // OPEN, INVESTIGATING, RESOLVED, DISMISSED
-  adminNote       String?
-  createdAt       DateTime           @default(now())
+  id             String           @id @default(cuid())
+  reporterId     String
+  reportedUserId String?
+  sessionId      String?
+  type           String
+  description    String
+  status         String           @default("OPEN")
+  adminNote      String?
+  createdAt      DateTime         @default(now())
+  reportedUser   User?            @relation("ReportedAbout", fields: [reportedUserId], references: [id])
+  reporter       User             @relation("ReportedBy", fields: [reporterId], references: [id])
+  session        AcademicSession? @relation(fields: [sessionId], references: [id])
 }
 
 model Announcement {
-  id          String   @id @default(cuid())
-  title       String
-  content     String
-  targetRole  UserRole?
-  isActive    Boolean  @default(true)
-  expiresAt   DateTime?
-  createdAt   DateTime @default(now())
+  id         String    @id @default(cuid())
+  title      String
+  content    String
+  targetRole UserRole?
+  isActive   Boolean   @default(true)
+  expiresAt  DateTime?
+  createdAt  DateTime  @default(now())
 }
 
 model Attachment {
-  id          String   @id @default(cuid())
-  messageId   String?
-  message     Message? @relation(fields: [messageId], references: [id])
-  requestId   String?
-  request     HelpRequest? @relation(fields: [requestId], references: [id])
-  fileName    String
-  fileUrl     String
-  fileType    String
-  fileSize    Int
-  createdAt   DateTime @default(now())
+  id        String       @id @default(cuid())
+  messageId String?
+  requestId String?
+  fileName  String
+  fileUrl   String
+  fileType  String
+  fileSize  Int
+  createdAt DateTime     @default(now())
+  message   Message?     @relation(fields: [messageId], references: [id])
+  request   HelpRequest? @relation(fields: [requestId], references: [id])
 }
 
 model AuditLog {
-  id          String   @id @default(cuid())
-  userId      String
-  user        User     @relation(fields: [userId], references: [id])
-  action      String
-  targetType  String
-  targetId    String
-  changes     Json?
-  timestamp   DateTime @default(now())
+  id         String   @id @default(cuid())
+  userId     String
+  action     String
+  targetType String
+  targetId   String
+  changes    Json?
+  timestamp  DateTime @default(now())
+  user       User     @relation(fields: [userId], references: [id])
 }
 
 model Message {
-  id            String    @id @default(cuid())
-  requestId     String?
-  sessionId     String?
-  senderId      String
-  sender        User      @relation("SentMessages", fields: [senderId], references: [id])
-  recipientId   String
-  recipient     User      @relation("ReceivedMessages", fields: [recipientId], references: [id])
-  content       String
-  sentAt        DateTime  @default(now())
-  readAt        DateTime?
-  attachments   Attachment[]
+  id          String       @id @default(cuid())
+  requestId   String?
+  sessionId   String?
+  senderId    String
+  recipientId String
+  content     String
+  sentAt      DateTime     @default(now())
+  readAt      DateTime?
+  attachments Attachment[]
+  recipient   User         @relation("ReceivedMessages", fields: [recipientId], references: [id])
+  sender      User         @relation("SentMessages", fields: [senderId], references: [id])
 }
 
 model Notification {
-  id        String   @id @default(cuid())
-  userId    String
-  user      User     @relation(fields: [userId], references: [id])
-  type      String
-  title     String?
-  body      String
-  data      Json?
-  isRead    Boolean  @default(false)
-  sentAt    DateTime @default(now())
-  readAt    DateTime?
+  id     String    @id @default(cuid())
+  userId String
+  type   String
+  title  String?
+  body   String
+  data   Json?
+  isRead Boolean   @default(false)
+  sentAt DateTime  @default(now())
+  readAt DateTime?
+  user   User      @relation(fields: [userId], references: [id])
 }
 
 model Payment {
-  id                String   @id @default(cuid())
-  sessionId         String   @unique
-  session           AcademicSession @relation(fields: [sessionId], references: [id])
+  id                String          @id @default(cuid())
+  sessionId         String          @unique
   studentId         String
-  consultantId      String
+  helperId          String
   amountCents       Int
-  currency          String   @default("USD")
-  status            String   @default("PENDING")
+  currency          String          @default("USD")
+  status            String          @default("PENDING")
   provider          String?
   providerPaymentId String?
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+  session           AcademicSession @relation(fields: [sessionId], references: [id])
 }
-
 
 model Session {
   id        String   @id
   expiresAt DateTime
-  token     String
+  token     String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   ipAddress String?
@@ -289,7 +262,6 @@ model Session {
   userId    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@unique([token])
   @@index([userId])
   @@map("session")
 }
@@ -299,7 +271,6 @@ model Account {
   accountId             String
   providerId            String
   userId                String
-  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   accessToken           String?
   refreshToken          String?
   idToken               String?
@@ -309,6 +280,7 @@ model Account {
   password              String?
   createdAt             DateTime  @default(now())
   updatedAt             DateTime  @updatedAt
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
   @@map("account")
@@ -324,4 +296,26 @@ model Verification {
 
   @@index([identifier])
   @@map("verification")
+}
+
+enum UserRole {
+  STUDENT
+  HELPER
+  ADMIN
+}
+
+enum HelpRequestStatus {
+  PENDING
+  ACCEPTED
+  DECLINED
+  CANCELLED
+  COMPLETED
+}
+
+enum SessionStatus {
+  UPCOMING
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+  NO_SHOW
 }

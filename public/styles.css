@@ -1831,9 +1831,6 @@ img {
     .signup-ellipse .ellipse-bg {
         width: 230px;
     }
-<<<<<<< HEAD
-}
-=======
 }
 
 /* ========================================
@@ -2273,8 +2270,8 @@ img {
     color: var(--color-primary);
 }
 
-/* Find Consultants Search Bar */
-.dash-search-consultants {
+/* Find Helpers Search Bar */
+.dash-search-helpers {
     display: flex;
     align-items: center;
     gap: 10px;
@@ -2286,17 +2283,17 @@ img {
     transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
 }
 
-.dash-search-consultants:focus-within {
+.dash-search-helpers:focus-within {
     border-color: var(--color-primary);
     box-shadow: 0 0 0 3px rgba(26, 138, 138, 0.1);
 }
 
-.dash-search-consultants .dash-search-icon {
+.dash-search-helpers .dash-search-icon {
     color: var(--color-text-light);
     flex-shrink: 0;
 }
 
-.dash-search-consultants .dash-search-input {
+.dash-search-helpers .dash-search-input {
     border: none;
     outline: none;
     background: transparent;
@@ -2307,7 +2304,7 @@ img {
     width: 100%;
 }
 
-.dash-search-consultants .dash-search-input::placeholder {
+.dash-search-helpers .dash-search-input::placeholder {
     color: var(--color-text-light);
     font-weight: 500;
 }
@@ -2542,11 +2539,11 @@ img {
 }
 
 /* ========================================
-   Find Consultants Page
+   Find Helpers Page
    ======================================== */
 
-/* Banner override for find consultants */
-.fc-banner {
+/* Banner override for find helpers */
+.fh-banner {
     background: #b0d3d3;
     border-radius: var(--radius-lg);
     padding: 32px 36px;
@@ -2557,17 +2554,17 @@ img {
     animation: fadeInUp 0.6s ease forwards;
 }
 
-.fc-banner .dash-welcome-image img {
+.fh-banner .dash-welcome-image img {
     max-height: 200px;
 }
 
 /* Search Section */
-.fc-search-section {
+.fh-search-section {
     animation: fadeInUp 0.5s ease 0.1s forwards;
     opacity: 0;
 }
 
-.fc-search-bar {
+.fh-search-bar {
     display: flex;
     align-items: center;
     gap: 12px;
@@ -2578,17 +2575,17 @@ img {
     transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
 }
 
-.fc-search-bar:focus-within {
+.fh-search-bar:focus-within {
     border-color: var(--color-primary);
     box-shadow: 0 0 0 3px rgba(26, 138, 138, 0.1);
 }
 
-.fc-search-icon {
+.fh-search-icon {
     color: var(--color-text-light);
     flex-shrink: 0;
 }
 
-.fc-search-input {
+.fh-search-input {
     border: none;
     outline: none;
     background: transparent;
@@ -2599,13 +2596,13 @@ img {
     width: 100%;
 }
 
-.fc-search-input::placeholder {
+.fh-search-input::placeholder {
     color: var(--color-text-light);
     font-weight: 500;
 }
 
-/* Consultant Cards Grid */
-.fc-grid {
+/* Helper Cards Grid */
+.fh-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 20px;
@@ -2613,8 +2610,8 @@ img {
     opacity: 0;
 }
 
-/* Individual Consultant Card */
-.fc-card {
+/* Individual Helper Card */
+.fh-card {
     background: #b8cfd6;
     border-radius: var(--radius-md);
     padding: 24px 22px;
@@ -2627,20 +2624,20 @@ img {
     transition: transform var(--transition-fast), box-shadow var(--transition-fast);
 }
 
-.fc-card:hover {
+.fh-card:hover {
     transform: translateY(-4px);
     box-shadow: 0 8px 28px rgba(26, 35, 50, 0.12);
 }
 
 /* Card Header (Avatar + Name) */
-.fc-card-header {
+.fh-card-header {
     display: flex;
     align-items: center;
     gap: 12px;
     width: 100%;
 }
 
-.fc-avatar {
+.fh-avatar {
     width: 46px;
     height: 46px;
     min-width: 46px;
@@ -2653,7 +2650,7 @@ img {
     flex-shrink: 0;
 }
 
-.fc-name {
+.fh-name {
     font-size: 0.95rem;
     font-weight: 700;
     color: var(--color-dark);
@@ -2661,7 +2658,7 @@ img {
 }
 
 /* Subject */
-.fc-subject {
+.fh-subject {
     font-size: 0.88rem;
     color: var(--color-text);
     font-weight: 500;
@@ -2669,7 +2666,7 @@ img {
 }
 
 /* View Profile Button */
-.fc-view-btn {
+.fh-view-btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -2688,53 +2685,53 @@ img {
     letter-spacing: 0.01em;
 }
 
-.fc-view-btn:hover {
+.fh-view-btn:hover {
     background: var(--color-btn-hover);
     transform: translateY(-2px);
     box-shadow: 0 4px 16px rgba(26, 35, 50, 0.25);
 }
 
-.fc-view-btn:active {
+.fh-view-btn:active {
     transform: translateY(0);
     box-shadow: 0 2px 8px rgba(26, 35, 50, 0.2);
 }
 
 /* ========================================
-   Find Consultants - Responsive Design
+   Find Helpers - Responsive Design
    ======================================== */
 @media (max-width: 1024px) {
-    .fc-grid {
+    .fh-grid {
         grid-template-columns: repeat(2, 1fr);
     }
 }
 
 @media (max-width: 768px) {
-    .fc-banner {
+    .fh-banner {
         grid-template-columns: 1fr;
         padding: 26px 24px;
         text-align: center;
     }
 
-    .fc-card-header {
+    .fh-card-header {
         justify-content: center;
     }
 
-    .fc-name {
+    .fh-name {
         text-align: center;
     }
 
-    .fc-grid {
+    .fh-grid {
         grid-template-columns: 1fr;
         gap: 16px;
     }
 }
 
 @media (max-width: 480px) {
-    .fc-card {
+    .fh-card {
         padding: 20px 18px;
     }
 
-    .fc-view-btn {
+    .fh-view-btn {
         padding: 11px 20px;
         font-size: 0.85rem;
     }
@@ -2847,14 +2844,14 @@ img {
     color: var(--color-text-light);
 }
 
-/* Consultant cell */
-.mr-consultant {
+/* Helper cell */
+.mr-helper {
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
-.mr-consultant-avatar {
+.mr-helper-avatar {
     width: 36px;
     height: 36px;
     min-width: 36px;
@@ -2867,7 +2864,7 @@ img {
     flex-shrink: 0;
 }
 
-.mr-consultant-name {
+.mr-helper-name {
     font-size: 0.9rem;
     font-weight: 600;
     color: var(--color-dark);
@@ -2922,7 +2919,7 @@ img {
         font-size: 0.82rem;
     }
 
-    .mr-consultant-name {
+    .mr-helper-name {
         font-size: 0.82rem;
     }
 
@@ -2939,13 +2936,13 @@ img {
         font-size: 0.78rem;
     }
 
-    .mr-consultant-avatar {
+    .mr-helper-avatar {
         width: 30px;
         height: 30px;
         min-width: 30px;
     }
 
-    .mr-consultant-avatar svg {
+    .mr-helper-avatar svg {
         width: 18px;
         height: 18px;
     }
@@ -4253,4 +4250,3 @@ img {
         width: 100%;
     }
 }
->>>>>>> ce44d6b (Add settings page and update dashboard)

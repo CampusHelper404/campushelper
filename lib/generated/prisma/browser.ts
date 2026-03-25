@@ -53,10 +53,10 @@ export type AcademicSession = Prisma.AcademicSessionModel
  */
 export type Review = Prisma.ReviewModel
 /**
- * Model ConsultantProfile
+ * Model HelperProfile
  * 
  */
-export type ConsultantProfile = Prisma.ConsultantProfileModel
+export type HelperProfile = Prisma.HelperProfileModel
 /**
  * Model AnalyticsEvent
  * 

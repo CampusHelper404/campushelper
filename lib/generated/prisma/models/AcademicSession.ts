@@ -28,7 +28,7 @@ export type AcademicSessionMinAggregateOutputType = {
   id: string | null
   requestId: string | null
   studentId: string | null
-  consultantId: string | null
+  helperId: string | null
   startTime: Date | null
   endTime: Date | null
   status: $Enums.SessionStatus | null
@@ -42,7 +42,7 @@ export type AcademicSessionMaxAggregateOutputType = {
   id: string | null
   requestId: string | null
   studentId: string | null
-  consultantId: string | null
+  helperId: string | null
   startTime: Date | null
   endTime: Date | null
   status: $Enums.SessionStatus | null
@@ -56,7 +56,7 @@ export type AcademicSessionCountAggregateOutputType = {
   id: number
   requestId: number
   studentId: number
-  consultantId: number
+  helperId: number
   startTime: number
   endTime: number
   status: number
@@ -72,7 +72,7 @@ export type AcademicSessionMinAggregateInputType = {
   id?: true
   requestId?: true
   studentId?: true
-  consultantId?: true
+  helperId?: true
   startTime?: true
   endTime?: true
   status?: true
@@ -86,7 +86,7 @@ export type AcademicSessionMaxAggregateInputType = {
   id?: true
   requestId?: true
   studentId?: true
-  consultantId?: true
+  helperId?: true
   startTime?: true
   endTime?: true
   status?: true
@@ -100,7 +100,7 @@ export type AcademicSessionCountAggregateInputType = {
   id?: true
   requestId?: true
   studentId?: true
-  consultantId?: true
+  helperId?: true
   startTime?: true
   endTime?: true
   status?: true
@@ -187,7 +187,7 @@ export type AcademicSessionGroupByOutputType = {
   id: string
   requestId: string
   studentId: string
-  consultantId: string
+  helperId: string
   startTime: Date
   endTime: Date | null
   status: $Enums.SessionStatus
@@ -222,7 +222,7 @@ export type AcademicSessionWhereInput = {
   id?: Prisma.StringFilter<"AcademicSession"> | string
   requestId?: Prisma.StringFilter<"AcademicSession"> | string
   studentId?: Prisma.StringFilter<"AcademicSession"> | string
-  consultantId?: Prisma.StringFilter<"AcademicSession"> | string
+  helperId?: Prisma.StringFilter<"AcademicSession"> | string
   startTime?: Prisma.DateTimeFilter<"AcademicSession"> | Date | string
   endTime?: Prisma.DateTimeNullableFilter<"AcademicSession"> | Date | string | null
   status?: Prisma.EnumSessionStatusFilter<"AcademicSession"> | $Enums.SessionStatus
@@ -230,19 +230,19 @@ export type AcademicSessionWhereInput = {
   notes?: Prisma.StringNullableFilter<"AcademicSession"> | string | null
   createdAt?: Prisma.DateTimeFilter<"AcademicSession"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"AcademicSession"> | Date | string
+  helper?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   request?: Prisma.XOR<Prisma.HelpRequestScalarRelationFilter, Prisma.HelpRequestWhereInput>
   student?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-  consultant?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-  review?: Prisma.XOR<Prisma.ReviewNullableScalarRelationFilter, Prisma.ReviewWhereInput> | null
   payment?: Prisma.XOR<Prisma.PaymentNullableScalarRelationFilter, Prisma.PaymentWhereInput> | null
   reports?: Prisma.ReportListRelationFilter
+  review?: Prisma.XOR<Prisma.ReviewNullableScalarRelationFilter, Prisma.ReviewWhereInput> | null
 }
 
 export type AcademicSessionOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   requestId?: Prisma.SortOrder
   studentId?: Prisma.SortOrder
-  consultantId?: Prisma.SortOrder
+  helperId?: Prisma.SortOrder
   startTime?: Prisma.SortOrder
   endTime?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -250,22 +250,22 @@ export type AcademicSessionOrderByWithRelationInput = {
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  helper?: Prisma.UserOrderByWithRelationInput
   request?: Prisma.HelpRequestOrderByWithRelationInput
   student?: Prisma.UserOrderByWithRelationInput
-  consultant?: Prisma.UserOrderByWithRelationInput
-  review?: Prisma.ReviewOrderByWithRelationInput
   payment?: Prisma.PaymentOrderByWithRelationInput
   reports?: Prisma.ReportOrderByRelationAggregateInput
+  review?: Prisma.ReviewOrderByWithRelationInput
 }
 
 export type AcademicSessionWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  requestId?: string
   AND?: Prisma.AcademicSessionWhereInput | Prisma.AcademicSessionWhereInput[]
   OR?: Prisma.AcademicSessionWhereInput[]
   NOT?: Prisma.AcademicSessionWhereInput | Prisma.AcademicSessionWhereInput[]
+  requestId?: Prisma.StringFilter<"AcademicSession"> | string
   studentId?: Prisma.StringFilter<"AcademicSession"> | string
-  consultantId?: Prisma.StringFilter<"AcademicSession"> | string
+  helperId?: Prisma.StringFilter<"AcademicSession"> | string
   startTime?: Prisma.DateTimeFilter<"AcademicSession"> | Date | string
   endTime?: Prisma.DateTimeNullableFilter<"AcademicSession"> | Date | string | null
   status?: Prisma.EnumSessionStatusFilter<"AcademicSession"> | $Enums.SessionStatus
@@ -273,19 +273,19 @@ export type AcademicSessionWhereUniqueInput = Prisma.AtLeast<{
   notes?: Prisma.StringNullableFilter<"AcademicSession"> | string | null
   createdAt?: Prisma.DateTimeFilter<"AcademicSession"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"AcademicSession"> | Date | string
+  helper?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   request?: Prisma.XOR<Prisma.HelpRequestScalarRelationFilter, Prisma.HelpRequestWhereInput>
   student?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-  consultant?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-  review?: Prisma.XOR<Prisma.ReviewNullableScalarRelationFilter, Prisma.ReviewWhereInput> | null
   payment?: Prisma.XOR<Prisma.PaymentNullableScalarRelationFilter, Prisma.PaymentWhereInput> | null
   reports?: Prisma.ReportListRelationFilter
-}, "id" | "requestId">
+  review?: Prisma.XOR<Prisma.ReviewNullableScalarRelationFilter, Prisma.ReviewWhereInput> | null
+}, "id">
 
 export type AcademicSessionOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   requestId?: Prisma.SortOrder
   studentId?: Prisma.SortOrder
-  consultantId?: Prisma.SortOrder
+  helperId?: Prisma.SortOrder
   startTime?: Prisma.SortOrder
   endTime?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -305,7 +305,7 @@ export type AcademicSessionScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"AcademicSession"> | string
   requestId?: Prisma.StringWithAggregatesFilter<"AcademicSession"> | string
   studentId?: Prisma.StringWithAggregatesFilter<"AcademicSession"> | string
-  consultantId?: Prisma.StringWithAggregatesFilter<"AcademicSession"> | string
+  helperId?: Prisma.StringWithAggregatesFilter<"AcademicSession"> | string
   startTime?: Prisma.DateTimeWithAggregatesFilter<"AcademicSession"> | Date | string
   endTime?: Prisma.DateTimeNullableWithAggregatesFilter<"AcademicSession"> | Date | string | null
   status?: Prisma.EnumSessionStatusWithAggregatesFilter<"AcademicSession"> | $Enums.SessionStatus
@@ -324,19 +324,19 @@ export type AcademicSessionCreateInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  helper: Prisma.UserCreateNestedOneWithoutHelperSessionsInput
   request: Prisma.HelpRequestCreateNestedOneWithoutSessionsInput
   student: Prisma.UserCreateNestedOneWithoutStudentSessionsInput
-  consultant: Prisma.UserCreateNestedOneWithoutConsultantSessionsInput
-  review?: Prisma.ReviewCreateNestedOneWithoutSessionInput
   payment?: Prisma.PaymentCreateNestedOneWithoutSessionInput
   reports?: Prisma.ReportCreateNestedManyWithoutSessionInput
+  review?: Prisma.ReviewCreateNestedOneWithoutSessionInput
 }
 
 export type AcademicSessionUncheckedCreateInput = {
   id?: string
   requestId: string
   studentId: string
-  consultantId: string
+  helperId: string
   startTime: Date | string
   endTime?: Date | string | null
   status?: $Enums.SessionStatus
@@ -344,9 +344,9 @@ export type AcademicSessionUncheckedCreateInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  review?: Prisma.ReviewUncheckedCreateNestedOneWithoutSessionInput
   payment?: Prisma.PaymentUncheckedCreateNestedOneWithoutSessionInput
   reports?: Prisma.ReportUncheckedCreateNestedManyWithoutSessionInput
+  review?: Prisma.ReviewUncheckedCreateNestedOneWithoutSessionInput
 }
 
 export type AcademicSessionUpdateInput = {
@@ -358,19 +358,19 @@ export type AcademicSessionUpdateInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  helper?: Prisma.UserUpdateOneRequiredWithoutHelperSessionsNestedInput
   request?: Prisma.HelpRequestUpdateOneRequiredWithoutSessionsNestedInput
   student?: Prisma.UserUpdateOneRequiredWithoutStudentSessionsNestedInput
-  consultant?: Prisma.UserUpdateOneRequiredWithoutConsultantSessionsNestedInput
-  review?: Prisma.ReviewUpdateOneWithoutSessionNestedInput
   payment?: Prisma.PaymentUpdateOneWithoutSessionNestedInput
   reports?: Prisma.ReportUpdateManyWithoutSessionNestedInput
+  review?: Prisma.ReviewUpdateOneWithoutSessionNestedInput
 }
 
 export type AcademicSessionUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   requestId?: Prisma.StringFieldUpdateOperationsInput | string
   studentId?: Prisma.StringFieldUpdateOperationsInput | string
-  consultantId?: Prisma.StringFieldUpdateOperationsInput | string
+  helperId?: Prisma.StringFieldUpdateOperationsInput | string
   startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumSessionStatusFieldUpdateOperationsInput | $Enums.SessionStatus
@@ -378,16 +378,16 @@ export type AcademicSessionUncheckedUpdateInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  review?: Prisma.ReviewUncheckedUpdateOneWithoutSessionNestedInput
   payment?: Prisma.PaymentUncheckedUpdateOneWithoutSessionNestedInput
   reports?: Prisma.ReportUncheckedUpdateManyWithoutSessionNestedInput
+  review?: Prisma.ReviewUncheckedUpdateOneWithoutSessionNestedInput
 }
 
 export type AcademicSessionCreateManyInput = {
   id?: string
   requestId: string
   studentId: string
-  consultantId: string
+  helperId: string
   startTime: Date | string
   endTime?: Date | string | null
   status?: $Enums.SessionStatus
@@ -412,7 +412,7 @@ export type AcademicSessionUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   requestId?: Prisma.StringFieldUpdateOperationsInput | string
   studentId?: Prisma.StringFieldUpdateOperationsInput | string
-  consultantId?: Prisma.StringFieldUpdateOperationsInput | string
+  helperId?: Prisma.StringFieldUpdateOperationsInput | string
   startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumSessionStatusFieldUpdateOperationsInput | $Enums.SessionStatus
@@ -436,7 +436,7 @@ export type AcademicSessionCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   requestId?: Prisma.SortOrder
   studentId?: Prisma.SortOrder
-  consultantId?: Prisma.SortOrder
+  helperId?: Prisma.SortOrder
   startTime?: Prisma.SortOrder
   endTime?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -450,7 +450,7 @@ export type AcademicSessionMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   requestId?: Prisma.SortOrder
   studentId?: Prisma.SortOrder
-  consultantId?: Prisma.SortOrder
+  helperId?: Prisma.SortOrder
   startTime?: Prisma.SortOrder
   endTime?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -464,7 +464,7 @@ export type AcademicSessionMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   requestId?: Prisma.SortOrder
   studentId?: Prisma.SortOrder
-  consultantId?: Prisma.SortOrder
+  helperId?: Prisma.SortOrder
   startTime?: Prisma.SortOrder
   endTime?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -484,6 +484,13 @@ export type AcademicSessionNullableScalarRelationFilter = {
   isNot?: Prisma.AcademicSessionWhereInput | null
 }
 
+export type AcademicSessionCreateNestedManyWithoutHelperInput = {
+  create?: Prisma.XOR<Prisma.AcademicSessionCreateWithoutHelperInput, Prisma.AcademicSessionUncheckedCreateWithoutHelperInput> | Prisma.AcademicSessionCreateWithoutHelperInput[] | Prisma.AcademicSessionUncheckedCreateWithoutHelperInput[]
+  connectOrCreate?: Prisma.AcademicSessionCreateOrConnectWithoutHelperInput | Prisma.AcademicSessionCreateOrConnectWithoutHelperInput[]
+  createMany?: Prisma.AcademicSessionCreateManyHelperInputEnvelope
+  connect?: Prisma.AcademicSessionWhereUniqueInput | Prisma.AcademicSessionWhereUniqueInput[]
+}
+
 export type AcademicSessionCreateNestedManyWithoutStudentInput = {
   create?: Prisma.XOR<Prisma.AcademicSessionCreateWithoutStudentInput, Prisma.AcademicSessionUncheckedCreateWithoutStudentInput> | Prisma.AcademicSessionCreateWithoutStudentInput[] | Prisma.AcademicSessionUncheckedCreateWithoutStudentInput[]
   connectOrCreate?: Prisma.AcademicSessionCreateOrConnectWithoutStudentInput | Prisma.AcademicSessionCreateOrConnectWithoutStudentInput[]
@@ -491,10 +498,10 @@ export type AcademicSessionCreateNestedManyWithoutStudentInput = {
   connect?: Prisma.AcademicSessionWhereUniqueInput | Prisma.AcademicSessionWhereUniqueInput[]
 }
 
-export type AcademicSessionCreateNestedManyWithoutConsultantInput = {
-  create?: Prisma.XOR<Prisma.AcademicSessionCreateWithoutConsultantInput, Prisma.AcademicSessionUncheckedCreateWithoutConsultantInput> | Prisma.AcademicSessionCreateWithoutConsultantInput[] | Prisma.AcademicSessionUncheckedCreateWithoutConsultantInput[]
-  connectOrCreate?: Prisma.AcademicSessionCreateOrConnectWithoutConsultantInput | Prisma.AcademicSessionCreateOrConnectWithoutConsultantInput[]
-  createMany?: Prisma.AcademicSessionCreateManyConsultantInputEnvelope
+export type AcademicSessionUncheckedCreateNestedManyWithoutHelperInput = {
+  create?: Prisma.XOR<Prisma.AcademicSessionCreateWithoutHelperInput, Prisma.AcademicSessionUncheckedCreateWithoutHelperInput> | Prisma.AcademicSessionCreateWithoutHelperInput[] | Prisma.AcademicSessionUncheckedCreateWithoutHelperInput[]
+  connectOrCreate?: Prisma.AcademicSessionCreateOrConnectWithoutHelperInput | Prisma.AcademicSessionCreateOrConnectWithoutHelperInput[]
+  createMany?: Prisma.AcademicSessionCreateManyHelperInputEnvelope
   connect?: Prisma.AcademicSessionWhereUniqueInput | Prisma.AcademicSessionWhereUniqueInput[]
 }
 
@@ -505,11 +512,18 @@ export type AcademicSessionUncheckedCreateNestedManyWithoutStudentInput = {
   connect?: Prisma.AcademicSessionWhereUniqueInput | Prisma.AcademicSessionWhereUniqueInput[]
 }
 
-export type AcademicSessionUncheckedCreateNestedManyWithoutConsultantInput = {
-  create?: Prisma.XOR<Prisma.AcademicSessionCreateWithoutConsultantInput, Prisma.AcademicSessionUncheckedCreateWithoutConsultantInput> | Prisma.AcademicSessionCreateWithoutConsultantInput[] | Prisma.AcademicSessionUncheckedCreateWithoutConsultantInput[]
-  connectOrCreate?: Prisma.AcademicSessionCreateOrConnectWithoutConsultantInput | Prisma.AcademicSessionCreateOrConnectWithoutConsultantInput[]
-  createMany?: Prisma.AcademicSessionCreateManyConsultantInputEnvelope
+export type AcademicSessionUpdateManyWithoutHelperNestedInput = {
+  create?: Prisma.XOR<Prisma.AcademicSessionCreateWithoutHelperInput, Prisma.AcademicSessionUncheckedCreateWithoutHelperInput> | Prisma.AcademicSessionCreateWithoutHelperInput[] | Prisma.AcademicSessionUncheckedCreateWithoutHelperInput[]
+  connectOrCreate?: Prisma.AcademicSessionCreateOrConnectWithoutHelperInput | Prisma.AcademicSessionCreateOrConnectWithoutHelperInput[]
+  upsert?: Prisma.AcademicSessionUpsertWithWhereUniqueWithoutHelperInput | Prisma.AcademicSessionUpsertWithWhereUniqueWithoutHelperInput[]
+  createMany?: Prisma.AcademicSessionCreateManyHelperInputEnvelope
+  set?: Prisma.AcademicSessionWhereUniqueInput | Prisma.AcademicSessionWhereUniqueInput[]
+  disconnect?: Prisma.AcademicSessionWhereUniqueInput | Prisma.AcademicSessionWhereUniqueInput[]
+  delete?: Prisma.AcademicSessionWhereUniqueInput | Prisma.AcademicSessionWhereUniqueInput[]
   connect?: Prisma.AcademicSessionWhereUniqueInput | Prisma.AcademicSessionWhereUniqueInput[]
+  update?: Prisma.AcademicSessionUpdateWithWhereUniqueWithoutHelperInput | Prisma.AcademicSessionUpdateWithWhereUniqueWithoutHelperInput[]
+  updateMany?: Prisma.AcademicSessionUpdateManyWithWhereWithoutHelperInput | Prisma.AcademicSessionUpdateManyWithWhereWithoutHelperInput[]
+  deleteMany?: Prisma.AcademicSessionScalarWhereInput | Prisma.AcademicSessionScalarWhereInput[]
 }
 
 export type AcademicSessionUpdateManyWithoutStudentNestedInput = {
@@ -526,17 +540,17 @@ export type AcademicSessionUpdateManyWithoutStudentNestedInput = {
   deleteMany?: Prisma.AcademicSessionScalarWhereInput | Prisma.AcademicSessionScalarWhereInput[]
 }
 
-export type AcademicSessionUpdateManyWithoutConsultantNestedInput = {
-  create?: Prisma.XOR<Prisma.AcademicSessionCreateWithoutConsultantInput, Prisma.AcademicSessionUncheckedCreateWithoutConsultantInput> | Prisma.AcademicSessionCreateWithoutConsultantInput[] | Prisma.AcademicSessionUncheckedCreateWithoutConsultantInput[]
-  connectOrCreate?: Prisma.AcademicSessionCreateOrConnectWithoutConsultantInput | Prisma.AcademicSessionCreateOrConnectWithoutConsultantInput[]
-  upsert?: Prisma.AcademicSessionUpsertWithWhereUniqueWithoutConsultantInput | Prisma.AcademicSessionUpsertWithWhereUniqueWithoutConsultantInput[]
-  createMany?: Prisma.AcademicSessionCreateManyConsultantInputEnvelope
+export type AcademicSessionUncheckedUpdateManyWithoutHelperNestedInput = {
+  create?: Prisma.XOR<Prisma.AcademicSessionCreateWithoutHelperInput, Prisma.AcademicSessionUncheckedCreateWithoutHelperInput> | Prisma.AcademicSessionCreateWithoutHelperInput[] | Prisma.AcademicSessionUncheckedCreateWithoutHelperInput[]
+  connectOrCreate?: Prisma.AcademicSessionCreateOrConnectWithoutHelperInput | Prisma.AcademicSessionCreateOrConnectWithoutHelperInput[]
+  upsert?: Prisma.AcademicSessionUpsertWithWhereUniqueWithoutHelperInput | Prisma.AcademicSessionUpsertWithWhereUniqueWithoutHelperInput[]
+  createMany?: Prisma.AcademicSessionCreateManyHelperInputEnvelope
   set?: Prisma.AcademicSessionWhereUniqueInput | Prisma.AcademicSessionWhereUniqueInput[]
   disconnect?: Prisma.AcademicSessionWhereUniqueInput | Prisma.AcademicSessionWhereUniqueInput[]
   delete?: Prisma.AcademicSessionWhereUniqueInput | Prisma.AcademicSessionWhereUniqueInput[]
   connect?: Prisma.AcademicSessionWhereUniqueInput | Prisma.AcademicSessionWhereUniqueInput[]
-  update?: Prisma.AcademicSessionUpdateWithWhereUniqueWithoutConsultantInput | Prisma.AcademicSessionUpdateWithWhereUniqueWithoutConsultantInput[]
-  updateMany?: Prisma.AcademicSessionUpdateManyWithWhereWithoutConsultantInput | Prisma.AcademicSessionUpdateManyWithWhereWithoutConsultantInput[]
+  update?: Prisma.AcademicSessionUpdateWithWhereUniqueWithoutHelperInput | Prisma.AcademicSessionUpdateWithWhereUniqueWithoutHelperInput[]
+  updateMany?: Prisma.AcademicSessionUpdateManyWithWhereWithoutHelperInput | Prisma.AcademicSessionUpdateManyWithWhereWithoutHelperInput[]
   deleteMany?: Prisma.AcademicSessionScalarWhereInput | Prisma.AcademicSessionScalarWhereInput[]
 }
 
@@ -551,20 +565,6 @@ export type AcademicSessionUncheckedUpdateManyWithoutStudentNestedInput = {
   connect?: Prisma.AcademicSessionWhereUniqueInput | Prisma.AcademicSessionWhereUniqueInput[]
   update?: Prisma.AcademicSessionUpdateWithWhereUniqueWithoutStudentInput | Prisma.AcademicSessionUpdateWithWhereUniqueWithoutStudentInput[]
   updateMany?: Prisma.AcademicSessionUpdateManyWithWhereWithoutStudentInput | Prisma.AcademicSessionUpdateManyWithWhereWithoutStudentInput[]
-  deleteMany?: Prisma.AcademicSessionScalarWhereInput | Prisma.AcademicSessionScalarWhereInput[]
-}
-
-export type AcademicSessionUncheckedUpdateManyWithoutConsultantNestedInput = {
-  create?: Prisma.XOR<Prisma.AcademicSessionCreateWithoutConsultantInput, Prisma.AcademicSessionUncheckedCreateWithoutConsultantInput> | Prisma.AcademicSessionCreateWithoutConsultantInput[] | Prisma.AcademicSessionUncheckedCreateWithoutConsultantInput[]
-  connectOrCreate?: Prisma.AcademicSessionCreateOrConnectWithoutConsultantInput | Prisma.AcademicSessionCreateOrConnectWithoutConsultantInput[]
-  upsert?: Prisma.AcademicSessionUpsertWithWhereUniqueWithoutConsultantInput | Prisma.AcademicSessionUpsertWithWhereUniqueWithoutConsultantInput[]
-  createMany?: Prisma.AcademicSessionCreateManyConsultantInputEnvelope
-  set?: Prisma.AcademicSessionWhereUniqueInput | Prisma.AcademicSessionWhereUniqueInput[]
-  disconnect?: Prisma.AcademicSessionWhereUniqueInput | Prisma.AcademicSessionWhereUniqueInput[]
-  delete?: Prisma.AcademicSessionWhereUniqueInput | Prisma.AcademicSessionWhereUniqueInput[]
-  connect?: Prisma.AcademicSessionWhereUniqueInput | Prisma.AcademicSessionWhereUniqueInput[]
-  update?: Prisma.AcademicSessionUpdateWithWhereUniqueWithoutConsultantInput | Prisma.AcademicSessionUpdateWithWhereUniqueWithoutConsultantInput[]
-  updateMany?: Prisma.AcademicSessionUpdateManyWithWhereWithoutConsultantInput | Prisma.AcademicSessionUpdateManyWithWhereWithoutConsultantInput[]
   deleteMany?: Prisma.AcademicSessionScalarWhereInput | Prisma.AcademicSessionScalarWhereInput[]
 }
 
@@ -658,7 +658,7 @@ export type AcademicSessionUpdateOneRequiredWithoutPaymentNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.AcademicSessionUpdateToOneWithWhereWithoutPaymentInput, Prisma.AcademicSessionUpdateWithoutPaymentInput>, Prisma.AcademicSessionUncheckedUpdateWithoutPaymentInput>
 }
 
-export type AcademicSessionCreateWithoutStudentInput = {
+export type AcademicSessionCreateWithoutHelperInput = {
   id?: string
   startTime: Date | string
   endTime?: Date | string | null
@@ -668,16 +668,16 @@ export type AcademicSessionCreateWithoutStudentInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   request: Prisma.HelpRequestCreateNestedOneWithoutSessionsInput
-  consultant: Prisma.UserCreateNestedOneWithoutConsultantSessionsInput
-  review?: Prisma.ReviewCreateNestedOneWithoutSessionInput
+  student: Prisma.UserCreateNestedOneWithoutStudentSessionsInput
   payment?: Prisma.PaymentCreateNestedOneWithoutSessionInput
   reports?: Prisma.ReportCreateNestedManyWithoutSessionInput
+  review?: Prisma.ReviewCreateNestedOneWithoutSessionInput
 }
 
-export type AcademicSessionUncheckedCreateWithoutStudentInput = {
+export type AcademicSessionUncheckedCreateWithoutHelperInput = {
   id?: string
   requestId: string
-  consultantId: string
+  studentId: string
   startTime: Date | string
   endTime?: Date | string | null
   status?: $Enums.SessionStatus
@@ -685,9 +685,51 @@ export type AcademicSessionUncheckedCreateWithoutStudentInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  review?: Prisma.ReviewUncheckedCreateNestedOneWithoutSessionInput
   payment?: Prisma.PaymentUncheckedCreateNestedOneWithoutSessionInput
   reports?: Prisma.ReportUncheckedCreateNestedManyWithoutSessionInput
+  review?: Prisma.ReviewUncheckedCreateNestedOneWithoutSessionInput
+}
+
+export type AcademicSessionCreateOrConnectWithoutHelperInput = {
+  where: Prisma.AcademicSessionWhereUniqueInput
+  create: Prisma.XOR<Prisma.AcademicSessionCreateWithoutHelperInput, Prisma.AcademicSessionUncheckedCreateWithoutHelperInput>
+}
+
+export type AcademicSessionCreateManyHelperInputEnvelope = {
+  data: Prisma.AcademicSessionCreateManyHelperInput | Prisma.AcademicSessionCreateManyHelperInput[]
+  skipDuplicates?: boolean
+}
+
+export type AcademicSessionCreateWithoutStudentInput = {
+  id?: string
+  startTime: Date | string
+  endTime?: Date | string | null
+  status?: $Enums.SessionStatus
+  meetingLink?: string | null
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  helper: Prisma.UserCreateNestedOneWithoutHelperSessionsInput
+  request: Prisma.HelpRequestCreateNestedOneWithoutSessionsInput
+  payment?: Prisma.PaymentCreateNestedOneWithoutSessionInput
+  reports?: Prisma.ReportCreateNestedManyWithoutSessionInput
+  review?: Prisma.ReviewCreateNestedOneWithoutSessionInput
+}
+
+export type AcademicSessionUncheckedCreateWithoutStudentInput = {
+  id?: string
+  requestId: string
+  helperId: string
+  startTime: Date | string
+  endTime?: Date | string | null
+  status?: $Enums.SessionStatus
+  meetingLink?: string | null
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  payment?: Prisma.PaymentUncheckedCreateNestedOneWithoutSessionInput
+  reports?: Prisma.ReportUncheckedCreateNestedManyWithoutSessionInput
+  review?: Prisma.ReviewUncheckedCreateNestedOneWithoutSessionInput
 }
 
 export type AcademicSessionCreateOrConnectWithoutStudentInput = {
@@ -700,46 +742,37 @@ export type AcademicSessionCreateManyStudentInputEnvelope = {
   skipDuplicates?: boolean
 }
 
-export type AcademicSessionCreateWithoutConsultantInput = {
-  id?: string
-  startTime: Date | string
-  endTime?: Date | string | null
-  status?: $Enums.SessionStatus
-  meetingLink?: string | null
-  notes?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  request: Prisma.HelpRequestCreateNestedOneWithoutSessionsInput
-  student: Prisma.UserCreateNestedOneWithoutStudentSessionsInput
-  review?: Prisma.ReviewCreateNestedOneWithoutSessionInput
-  payment?: Prisma.PaymentCreateNestedOneWithoutSessionInput
-  reports?: Prisma.ReportCreateNestedManyWithoutSessionInput
-}
-
-export type AcademicSessionUncheckedCreateWithoutConsultantInput = {
-  id?: string
-  requestId: string
-  studentId: string
-  startTime: Date | string
-  endTime?: Date | string | null
-  status?: $Enums.SessionStatus
-  meetingLink?: string | null
-  notes?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  review?: Prisma.ReviewUncheckedCreateNestedOneWithoutSessionInput
-  payment?: Prisma.PaymentUncheckedCreateNestedOneWithoutSessionInput
-  reports?: Prisma.ReportUncheckedCreateNestedManyWithoutSessionInput
-}
-
-export type AcademicSessionCreateOrConnectWithoutConsultantInput = {
+export type AcademicSessionUpsertWithWhereUniqueWithoutHelperInput = {
   where: Prisma.AcademicSessionWhereUniqueInput
-  create: Prisma.XOR<Prisma.AcademicSessionCreateWithoutConsultantInput, Prisma.AcademicSessionUncheckedCreateWithoutConsultantInput>
+  update: Prisma.XOR<Prisma.AcademicSessionUpdateWithoutHelperInput, Prisma.AcademicSessionUncheckedUpdateWithoutHelperInput>
+  create: Prisma.XOR<Prisma.AcademicSessionCreateWithoutHelperInput, Prisma.AcademicSessionUncheckedCreateWithoutHelperInput>
 }
 
-export type AcademicSessionCreateManyConsultantInputEnvelope = {
-  data: Prisma.AcademicSessionCreateManyConsultantInput | Prisma.AcademicSessionCreateManyConsultantInput[]
-  skipDuplicates?: boolean
+export type AcademicSessionUpdateWithWhereUniqueWithoutHelperInput = {
+  where: Prisma.AcademicSessionWhereUniqueInput
+  data: Prisma.XOR<Prisma.AcademicSessionUpdateWithoutHelperInput, Prisma.AcademicSessionUncheckedUpdateWithoutHelperInput>
+}
+
+export type AcademicSessionUpdateManyWithWhereWithoutHelperInput = {
+  where: Prisma.AcademicSessionScalarWhereInput
+  data: Prisma.XOR<Prisma.AcademicSessionUpdateManyMutationInput, Prisma.AcademicSessionUncheckedUpdateManyWithoutHelperInput>
+}
+
+export type AcademicSessionScalarWhereInput = {
+  AND?: Prisma.AcademicSessionScalarWhereInput | Prisma.AcademicSessionScalarWhereInput[]
+  OR?: Prisma.AcademicSessionScalarWhereInput[]
+  NOT?: Prisma.AcademicSessionScalarWhereInput | Prisma.AcademicSessionScalarWhereInput[]
+  id?: Prisma.StringFilter<"AcademicSession"> | string
+  requestId?: Prisma.StringFilter<"AcademicSession"> | string
+  studentId?: Prisma.StringFilter<"AcademicSession"> | string
+  helperId?: Prisma.StringFilter<"AcademicSession"> | string
+  startTime?: Prisma.DateTimeFilter<"AcademicSession"> | Date | string
+  endTime?: Prisma.DateTimeNullableFilter<"AcademicSession"> | Date | string | null
+  status?: Prisma.EnumSessionStatusFilter<"AcademicSession"> | $Enums.SessionStatus
+  meetingLink?: Prisma.StringNullableFilter<"AcademicSession"> | string | null
+  notes?: Prisma.StringNullableFilter<"AcademicSession"> | string | null
+  createdAt?: Prisma.DateTimeFilter<"AcademicSession"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"AcademicSession"> | Date | string
 }
 
 export type AcademicSessionUpsertWithWhereUniqueWithoutStudentInput = {
@@ -758,39 +791,6 @@ export type AcademicSessionUpdateManyWithWhereWithoutStudentInput = {
   data: Prisma.XOR<Prisma.AcademicSessionUpdateManyMutationInput, Prisma.AcademicSessionUncheckedUpdateManyWithoutStudentInput>
 }
 
-export type AcademicSessionScalarWhereInput = {
-  AND?: Prisma.AcademicSessionScalarWhereInput | Prisma.AcademicSessionScalarWhereInput[]
-  OR?: Prisma.AcademicSessionScalarWhereInput[]
-  NOT?: Prisma.AcademicSessionScalarWhereInput | Prisma.AcademicSessionScalarWhereInput[]
-  id?: Prisma.StringFilter<"AcademicSession"> | string
-  requestId?: Prisma.StringFilter<"AcademicSession"> | string
-  studentId?: Prisma.StringFilter<"AcademicSession"> | string
-  consultantId?: Prisma.StringFilter<"AcademicSession"> | string
-  startTime?: Prisma.DateTimeFilter<"AcademicSession"> | Date | string
-  endTime?: Prisma.DateTimeNullableFilter<"AcademicSession"> | Date | string | null
-  status?: Prisma.EnumSessionStatusFilter<"AcademicSession"> | $Enums.SessionStatus
-  meetingLink?: Prisma.StringNullableFilter<"AcademicSession"> | string | null
-  notes?: Prisma.StringNullableFilter<"AcademicSession"> | string | null
-  createdAt?: Prisma.DateTimeFilter<"AcademicSession"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"AcademicSession"> | Date | string
-}
-
-export type AcademicSessionUpsertWithWhereUniqueWithoutConsultantInput = {
-  where: Prisma.AcademicSessionWhereUniqueInput
-  update: Prisma.XOR<Prisma.AcademicSessionUpdateWithoutConsultantInput, Prisma.AcademicSessionUncheckedUpdateWithoutConsultantInput>
-  create: Prisma.XOR<Prisma.AcademicSessionCreateWithoutConsultantInput, Prisma.AcademicSessionUncheckedCreateWithoutConsultantInput>
-}
-
-export type AcademicSessionUpdateWithWhereUniqueWithoutConsultantInput = {
-  where: Prisma.AcademicSessionWhereUniqueInput
-  data: Prisma.XOR<Prisma.AcademicSessionUpdateWithoutConsultantInput, Prisma.AcademicSessionUncheckedUpdateWithoutConsultantInput>
-}
-
-export type AcademicSessionUpdateManyWithWhereWithoutConsultantInput = {
-  where: Prisma.AcademicSessionScalarWhereInput
-  data: Prisma.XOR<Prisma.AcademicSessionUpdateManyMutationInput, Prisma.AcademicSessionUncheckedUpdateManyWithoutConsultantInput>
-}
-
 export type AcademicSessionCreateWithoutRequestInput = {
   id?: string
   startTime: Date | string
@@ -800,17 +800,17 @@ export type AcademicSessionCreateWithoutRequestInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  helper: Prisma.UserCreateNestedOneWithoutHelperSessionsInput
   student: Prisma.UserCreateNestedOneWithoutStudentSessionsInput
-  consultant: Prisma.UserCreateNestedOneWithoutConsultantSessionsInput
-  review?: Prisma.ReviewCreateNestedOneWithoutSessionInput
   payment?: Prisma.PaymentCreateNestedOneWithoutSessionInput
   reports?: Prisma.ReportCreateNestedManyWithoutSessionInput
+  review?: Prisma.ReviewCreateNestedOneWithoutSessionInput
 }
 
 export type AcademicSessionUncheckedCreateWithoutRequestInput = {
   id?: string
   studentId: string
-  consultantId: string
+  helperId: string
   startTime: Date | string
   endTime?: Date | string | null
   status?: $Enums.SessionStatus
@@ -818,9 +818,9 @@ export type AcademicSessionUncheckedCreateWithoutRequestInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  review?: Prisma.ReviewUncheckedCreateNestedOneWithoutSessionInput
   payment?: Prisma.PaymentUncheckedCreateNestedOneWithoutSessionInput
   reports?: Prisma.ReportUncheckedCreateNestedManyWithoutSessionInput
+  review?: Prisma.ReviewUncheckedCreateNestedOneWithoutSessionInput
 }
 
 export type AcademicSessionCreateOrConnectWithoutRequestInput = {
@@ -858,9 +858,9 @@ export type AcademicSessionCreateWithoutReviewInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  helper: Prisma.UserCreateNestedOneWithoutHelperSessionsInput
   request: Prisma.HelpRequestCreateNestedOneWithoutSessionsInput
   student: Prisma.UserCreateNestedOneWithoutStudentSessionsInput
-  consultant: Prisma.UserCreateNestedOneWithoutConsultantSessionsInput
   payment?: Prisma.PaymentCreateNestedOneWithoutSessionInput
   reports?: Prisma.ReportCreateNestedManyWithoutSessionInput
 }
@@ -869,7 +869,7 @@ export type AcademicSessionUncheckedCreateWithoutReviewInput = {
   id?: string
   requestId: string
   studentId: string
-  consultantId: string
+  helperId: string
   startTime: Date | string
   endTime?: Date | string | null
   status?: $Enums.SessionStatus
@@ -906,9 +906,9 @@ export type AcademicSessionUpdateWithoutReviewInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  helper?: Prisma.UserUpdateOneRequiredWithoutHelperSessionsNestedInput
   request?: Prisma.HelpRequestUpdateOneRequiredWithoutSessionsNestedInput
   student?: Prisma.UserUpdateOneRequiredWithoutStudentSessionsNestedInput
-  consultant?: Prisma.UserUpdateOneRequiredWithoutConsultantSessionsNestedInput
   payment?: Prisma.PaymentUpdateOneWithoutSessionNestedInput
   reports?: Prisma.ReportUpdateManyWithoutSessionNestedInput
 }
@@ -917,7 +917,7 @@ export type AcademicSessionUncheckedUpdateWithoutReviewInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   requestId?: Prisma.StringFieldUpdateOperationsInput | string
   studentId?: Prisma.StringFieldUpdateOperationsInput | string
-  consultantId?: Prisma.StringFieldUpdateOperationsInput | string
+  helperId?: Prisma.StringFieldUpdateOperationsInput | string
   startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumSessionStatusFieldUpdateOperationsInput | $Enums.SessionStatus
@@ -938,18 +938,18 @@ export type AcademicSessionCreateWithoutReportsInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  helper: Prisma.UserCreateNestedOneWithoutHelperSessionsInput
   request: Prisma.HelpRequestCreateNestedOneWithoutSessionsInput
   student: Prisma.UserCreateNestedOneWithoutStudentSessionsInput
-  consultant: Prisma.UserCreateNestedOneWithoutConsultantSessionsInput
-  review?: Prisma.ReviewCreateNestedOneWithoutSessionInput
   payment?: Prisma.PaymentCreateNestedOneWithoutSessionInput
+  review?: Prisma.ReviewCreateNestedOneWithoutSessionInput
 }
 
 export type AcademicSessionUncheckedCreateWithoutReportsInput = {
   id?: string
   requestId: string
   studentId: string
-  consultantId: string
+  helperId: string
   startTime: Date | string
   endTime?: Date | string | null
   status?: $Enums.SessionStatus
@@ -957,8 +957,8 @@ export type AcademicSessionUncheckedCreateWithoutReportsInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  review?: Prisma.ReviewUncheckedCreateNestedOneWithoutSessionInput
   payment?: Prisma.PaymentUncheckedCreateNestedOneWithoutSessionInput
+  review?: Prisma.ReviewUncheckedCreateNestedOneWithoutSessionInput
 }
 
 export type AcademicSessionCreateOrConnectWithoutReportsInput = {
@@ -986,18 +986,18 @@ export type AcademicSessionUpdateWithoutReportsInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  helper?: Prisma.UserUpdateOneRequiredWithoutHelperSessionsNestedInput
   request?: Prisma.HelpRequestUpdateOneRequiredWithoutSessionsNestedInput
   student?: Prisma.UserUpdateOneRequiredWithoutStudentSessionsNestedInput
-  consultant?: Prisma.UserUpdateOneRequiredWithoutConsultantSessionsNestedInput
-  review?: Prisma.ReviewUpdateOneWithoutSessionNestedInput
   payment?: Prisma.PaymentUpdateOneWithoutSessionNestedInput
+  review?: Prisma.ReviewUpdateOneWithoutSessionNestedInput
 }
 
 export type AcademicSessionUncheckedUpdateWithoutReportsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   requestId?: Prisma.StringFieldUpdateOperationsInput | string
   studentId?: Prisma.StringFieldUpdateOperationsInput | string
-  consultantId?: Prisma.StringFieldUpdateOperationsInput | string
+  helperId?: Prisma.StringFieldUpdateOperationsInput | string
   startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumSessionStatusFieldUpdateOperationsInput | $Enums.SessionStatus
@@ -1005,8 +1005,8 @@ export type AcademicSessionUncheckedUpdateWithoutReportsInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  review?: Prisma.ReviewUncheckedUpdateOneWithoutSessionNestedInput
   payment?: Prisma.PaymentUncheckedUpdateOneWithoutSessionNestedInput
+  review?: Prisma.ReviewUncheckedUpdateOneWithoutSessionNestedInput
 }
 
 export type AcademicSessionCreateWithoutPaymentInput = {
@@ -1018,18 +1018,18 @@ export type AcademicSessionCreateWithoutPaymentInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  helper: Prisma.UserCreateNestedOneWithoutHelperSessionsInput
   request: Prisma.HelpRequestCreateNestedOneWithoutSessionsInput
   student: Prisma.UserCreateNestedOneWithoutStudentSessionsInput
-  consultant: Prisma.UserCreateNestedOneWithoutConsultantSessionsInput
-  review?: Prisma.ReviewCreateNestedOneWithoutSessionInput
   reports?: Prisma.ReportCreateNestedManyWithoutSessionInput
+  review?: Prisma.ReviewCreateNestedOneWithoutSessionInput
 }
 
 export type AcademicSessionUncheckedCreateWithoutPaymentInput = {
   id?: string
   requestId: string
   studentId: string
-  consultantId: string
+  helperId: string
   startTime: Date | string
   endTime?: Date | string | null
   status?: $Enums.SessionStatus
@@ -1037,8 +1037,8 @@ export type AcademicSessionUncheckedCreateWithoutPaymentInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  review?: Prisma.ReviewUncheckedCreateNestedOneWithoutSessionInput
   reports?: Prisma.ReportUncheckedCreateNestedManyWithoutSessionInput
+  review?: Prisma.ReviewUncheckedCreateNestedOneWithoutSessionInput
 }
 
 export type AcademicSessionCreateOrConnectWithoutPaymentInput = {
@@ -1066,18 +1066,18 @@ export type AcademicSessionUpdateWithoutPaymentInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  helper?: Prisma.UserUpdateOneRequiredWithoutHelperSessionsNestedInput
   request?: Prisma.HelpRequestUpdateOneRequiredWithoutSessionsNestedInput
   student?: Prisma.UserUpdateOneRequiredWithoutStudentSessionsNestedInput
-  consultant?: Prisma.UserUpdateOneRequiredWithoutConsultantSessionsNestedInput
-  review?: Prisma.ReviewUpdateOneWithoutSessionNestedInput
   reports?: Prisma.ReportUpdateManyWithoutSessionNestedInput
+  review?: Prisma.ReviewUpdateOneWithoutSessionNestedInput
 }
 
 export type AcademicSessionUncheckedUpdateWithoutPaymentInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   requestId?: Prisma.StringFieldUpdateOperationsInput | string
   studentId?: Prisma.StringFieldUpdateOperationsInput | string
-  consultantId?: Prisma.StringFieldUpdateOperationsInput | string
+  helperId?: Prisma.StringFieldUpdateOperationsInput | string
   startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumSessionStatusFieldUpdateOperationsInput | $Enums.SessionStatus
@@ -1085,24 +1085,11 @@ export type AcademicSessionUncheckedUpdateWithoutPaymentInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  review?: Prisma.ReviewUncheckedUpdateOneWithoutSessionNestedInput
   reports?: Prisma.ReportUncheckedUpdateManyWithoutSessionNestedInput
+  review?: Prisma.ReviewUncheckedUpdateOneWithoutSessionNestedInput
 }
 
-export type AcademicSessionCreateManyStudentInput = {
-  id?: string
-  requestId: string
-  consultantId: string
-  startTime: Date | string
-  endTime?: Date | string | null
-  status?: $Enums.SessionStatus
-  meetingLink?: string | null
-  notes?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-}
-
-export type AcademicSessionCreateManyConsultantInput = {
+export type AcademicSessionCreateManyHelperInput = {
   id?: string
   requestId: string
   studentId: string
@@ -1115,52 +1102,20 @@ export type AcademicSessionCreateManyConsultantInput = {
   updatedAt?: Date | string
 }
 
-export type AcademicSessionUpdateWithoutStudentInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  endTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  status?: Prisma.EnumSessionStatusFieldUpdateOperationsInput | $Enums.SessionStatus
-  meetingLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  request?: Prisma.HelpRequestUpdateOneRequiredWithoutSessionsNestedInput
-  consultant?: Prisma.UserUpdateOneRequiredWithoutConsultantSessionsNestedInput
-  review?: Prisma.ReviewUpdateOneWithoutSessionNestedInput
-  payment?: Prisma.PaymentUpdateOneWithoutSessionNestedInput
-  reports?: Prisma.ReportUpdateManyWithoutSessionNestedInput
+export type AcademicSessionCreateManyStudentInput = {
+  id?: string
+  requestId: string
+  helperId: string
+  startTime: Date | string
+  endTime?: Date | string | null
+  status?: $Enums.SessionStatus
+  meetingLink?: string | null
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
-export type AcademicSessionUncheckedUpdateWithoutStudentInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  requestId?: Prisma.StringFieldUpdateOperationsInput | string
-  consultantId?: Prisma.StringFieldUpdateOperationsInput | string
-  startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  endTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  status?: Prisma.EnumSessionStatusFieldUpdateOperationsInput | $Enums.SessionStatus
-  meetingLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  review?: Prisma.ReviewUncheckedUpdateOneWithoutSessionNestedInput
-  payment?: Prisma.PaymentUncheckedUpdateOneWithoutSessionNestedInput
-  reports?: Prisma.ReportUncheckedUpdateManyWithoutSessionNestedInput
-}
-
-export type AcademicSessionUncheckedUpdateManyWithoutStudentInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  requestId?: Prisma.StringFieldUpdateOperationsInput | string
-  consultantId?: Prisma.StringFieldUpdateOperationsInput | string
-  startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  endTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  status?: Prisma.EnumSessionStatusFieldUpdateOperationsInput | $Enums.SessionStatus
-  meetingLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type AcademicSessionUpdateWithoutConsultantInput = {
+export type AcademicSessionUpdateWithoutHelperInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1171,12 +1126,12 @@ export type AcademicSessionUpdateWithoutConsultantInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   request?: Prisma.HelpRequestUpdateOneRequiredWithoutSessionsNestedInput
   student?: Prisma.UserUpdateOneRequiredWithoutStudentSessionsNestedInput
-  review?: Prisma.ReviewUpdateOneWithoutSessionNestedInput
   payment?: Prisma.PaymentUpdateOneWithoutSessionNestedInput
   reports?: Prisma.ReportUpdateManyWithoutSessionNestedInput
+  review?: Prisma.ReviewUpdateOneWithoutSessionNestedInput
 }
 
-export type AcademicSessionUncheckedUpdateWithoutConsultantInput = {
+export type AcademicSessionUncheckedUpdateWithoutHelperInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   requestId?: Prisma.StringFieldUpdateOperationsInput | string
   studentId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1187,15 +1142,60 @@ export type AcademicSessionUncheckedUpdateWithoutConsultantInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  review?: Prisma.ReviewUncheckedUpdateOneWithoutSessionNestedInput
   payment?: Prisma.PaymentUncheckedUpdateOneWithoutSessionNestedInput
   reports?: Prisma.ReportUncheckedUpdateManyWithoutSessionNestedInput
+  review?: Prisma.ReviewUncheckedUpdateOneWithoutSessionNestedInput
 }
 
-export type AcademicSessionUncheckedUpdateManyWithoutConsultantInput = {
+export type AcademicSessionUncheckedUpdateManyWithoutHelperInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   requestId?: Prisma.StringFieldUpdateOperationsInput | string
   studentId?: Prisma.StringFieldUpdateOperationsInput | string
+  startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumSessionStatusFieldUpdateOperationsInput | $Enums.SessionStatus
+  meetingLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type AcademicSessionUpdateWithoutStudentInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumSessionStatusFieldUpdateOperationsInput | $Enums.SessionStatus
+  meetingLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  helper?: Prisma.UserUpdateOneRequiredWithoutHelperSessionsNestedInput
+  request?: Prisma.HelpRequestUpdateOneRequiredWithoutSessionsNestedInput
+  payment?: Prisma.PaymentUpdateOneWithoutSessionNestedInput
+  reports?: Prisma.ReportUpdateManyWithoutSessionNestedInput
+  review?: Prisma.ReviewUpdateOneWithoutSessionNestedInput
+}
+
+export type AcademicSessionUncheckedUpdateWithoutStudentInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  requestId?: Prisma.StringFieldUpdateOperationsInput | string
+  helperId?: Prisma.StringFieldUpdateOperationsInput | string
+  startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumSessionStatusFieldUpdateOperationsInput | $Enums.SessionStatus
+  meetingLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  payment?: Prisma.PaymentUncheckedUpdateOneWithoutSessionNestedInput
+  reports?: Prisma.ReportUncheckedUpdateManyWithoutSessionNestedInput
+  review?: Prisma.ReviewUncheckedUpdateOneWithoutSessionNestedInput
+}
+
+export type AcademicSessionUncheckedUpdateManyWithoutStudentInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  requestId?: Prisma.StringFieldUpdateOperationsInput | string
+  helperId?: Prisma.StringFieldUpdateOperationsInput | string
   startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumSessionStatusFieldUpdateOperationsInput | $Enums.SessionStatus
@@ -1208,7 +1208,7 @@ export type AcademicSessionUncheckedUpdateManyWithoutConsultantInput = {
 export type AcademicSessionCreateManyRequestInput = {
   id?: string
   studentId: string
-  consultantId: string
+  helperId: string
   startTime: Date | string
   endTime?: Date | string | null
   status?: $Enums.SessionStatus
@@ -1227,17 +1227,17 @@ export type AcademicSessionUpdateWithoutRequestInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  helper?: Prisma.UserUpdateOneRequiredWithoutHelperSessionsNestedInput
   student?: Prisma.UserUpdateOneRequiredWithoutStudentSessionsNestedInput
-  consultant?: Prisma.UserUpdateOneRequiredWithoutConsultantSessionsNestedInput
-  review?: Prisma.ReviewUpdateOneWithoutSessionNestedInput
   payment?: Prisma.PaymentUpdateOneWithoutSessionNestedInput
   reports?: Prisma.ReportUpdateManyWithoutSessionNestedInput
+  review?: Prisma.ReviewUpdateOneWithoutSessionNestedInput
 }
 
 export type AcademicSessionUncheckedUpdateWithoutRequestInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   studentId?: Prisma.StringFieldUpdateOperationsInput | string
-  consultantId?: Prisma.StringFieldUpdateOperationsInput | string
+  helperId?: Prisma.StringFieldUpdateOperationsInput | string
   startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumSessionStatusFieldUpdateOperationsInput | $Enums.SessionStatus
@@ -1245,15 +1245,15 @@ export type AcademicSessionUncheckedUpdateWithoutRequestInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  review?: Prisma.ReviewUncheckedUpdateOneWithoutSessionNestedInput
   payment?: Prisma.PaymentUncheckedUpdateOneWithoutSessionNestedInput
   reports?: Prisma.ReportUncheckedUpdateManyWithoutSessionNestedInput
+  review?: Prisma.ReviewUncheckedUpdateOneWithoutSessionNestedInput
 }
 
 export type AcademicSessionUncheckedUpdateManyWithoutRequestInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   studentId?: Prisma.StringFieldUpdateOperationsInput | string
-  consultantId?: Prisma.StringFieldUpdateOperationsInput | string
+  helperId?: Prisma.StringFieldUpdateOperationsInput | string
   startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumSessionStatusFieldUpdateOperationsInput | $Enums.SessionStatus
@@ -1298,7 +1298,7 @@ export type AcademicSessionSelect<ExtArgs extends runtime.Types.Extensions.Inter
   id?: boolean
   requestId?: boolean
   studentId?: boolean
-  consultantId?: boolean
+  helperId?: boolean
   startTime?: boolean
   endTime?: boolean
   status?: boolean
@@ -1306,12 +1306,12 @@ export type AcademicSessionSelect<ExtArgs extends runtime.Types.Extensions.Inter
   notes?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  helper?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   request?: boolean | Prisma.HelpRequestDefaultArgs<ExtArgs>
   student?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  consultant?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  review?: boolean | Prisma.AcademicSession$reviewArgs<ExtArgs>
   payment?: boolean | Prisma.AcademicSession$paymentArgs<ExtArgs>
   reports?: boolean | Prisma.AcademicSession$reportsArgs<ExtArgs>
+  review?: boolean | Prisma.AcademicSession$reviewArgs<ExtArgs>
   _count?: boolean | Prisma.AcademicSessionCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["academicSession"]>
 
@@ -1319,7 +1319,7 @@ export type AcademicSessionSelectCreateManyAndReturn<ExtArgs extends runtime.Typ
   id?: boolean
   requestId?: boolean
   studentId?: boolean
-  consultantId?: boolean
+  helperId?: boolean
   startTime?: boolean
   endTime?: boolean
   status?: boolean
@@ -1327,16 +1327,16 @@ export type AcademicSessionSelectCreateManyAndReturn<ExtArgs extends runtime.Typ
   notes?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  helper?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   request?: boolean | Prisma.HelpRequestDefaultArgs<ExtArgs>
   student?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  consultant?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["academicSession"]>
 
 export type AcademicSessionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   requestId?: boolean
   studentId?: boolean
-  consultantId?: boolean
+  helperId?: boolean
   startTime?: boolean
   endTime?: boolean
   status?: boolean
@@ -1344,16 +1344,16 @@ export type AcademicSessionSelectUpdateManyAndReturn<ExtArgs extends runtime.Typ
   notes?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  helper?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   request?: boolean | Prisma.HelpRequestDefaultArgs<ExtArgs>
   student?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  consultant?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["academicSession"]>
 
 export type AcademicSessionSelectScalar = {
   id?: boolean
   requestId?: boolean
   studentId?: boolean
-  consultantId?: boolean
+  helperId?: boolean
   startTime?: boolean
   endTime?: boolean
   status?: boolean
@@ -1363,42 +1363,42 @@ export type AcademicSessionSelectScalar = {
   updatedAt?: boolean
 }
 
-export type AcademicSessionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "requestId" | "studentId" | "consultantId" | "startTime" | "endTime" | "status" | "meetingLink" | "notes" | "createdAt" | "updatedAt", ExtArgs["result"]["academicSession"]>
+export type AcademicSessionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "requestId" | "studentId" | "helperId" | "startTime" | "endTime" | "status" | "meetingLink" | "notes" | "createdAt" | "updatedAt", ExtArgs["result"]["academicSession"]>
 export type AcademicSessionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  helper?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   request?: boolean | Prisma.HelpRequestDefaultArgs<ExtArgs>
   student?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  consultant?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  review?: boolean | Prisma.AcademicSession$reviewArgs<ExtArgs>
   payment?: boolean | Prisma.AcademicSession$paymentArgs<ExtArgs>
   reports?: boolean | Prisma.AcademicSession$reportsArgs<ExtArgs>
+  review?: boolean | Prisma.AcademicSession$reviewArgs<ExtArgs>
   _count?: boolean | Prisma.AcademicSessionCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type AcademicSessionIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  helper?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   request?: boolean | Prisma.HelpRequestDefaultArgs<ExtArgs>
   student?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  consultant?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 export type AcademicSessionIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  helper?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   request?: boolean | Prisma.HelpRequestDefaultArgs<ExtArgs>
   student?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  consultant?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 
 export type $AcademicSessionPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "AcademicSession"
   objects: {
+    helper: Prisma.$UserPayload<ExtArgs>
     request: Prisma.$HelpRequestPayload<ExtArgs>
     student: Prisma.$UserPayload<ExtArgs>
-    consultant: Prisma.$UserPayload<ExtArgs>
-    review: Prisma.$ReviewPayload<ExtArgs> | null
     payment: Prisma.$PaymentPayload<ExtArgs> | null
     reports: Prisma.$ReportPayload<ExtArgs>[]
+    review: Prisma.$ReviewPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     requestId: string
     studentId: string
-    consultantId: string
+    helperId: string
     startTime: Date
     endTime: Date | null
     status: $Enums.SessionStatus
@@ -1800,12 +1800,12 @@ readonly fields: AcademicSessionFieldRefs;
  */
 export interface Prisma__AcademicSessionClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  helper<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   request<T extends Prisma.HelpRequestDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.HelpRequestDefaultArgs<ExtArgs>>): Prisma.Prisma__HelpRequestClient<runtime.Types.Result.GetResult<Prisma.$HelpRequestPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   student<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  consultant<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  review<T extends Prisma.AcademicSession$reviewArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AcademicSession$reviewArgs<ExtArgs>>): Prisma.Prisma__ReviewClient<runtime.Types.Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   payment<T extends Prisma.AcademicSession$paymentArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AcademicSession$paymentArgs<ExtArgs>>): Prisma.Prisma__PaymentClient<runtime.Types.Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   reports<T extends Prisma.AcademicSession$reportsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AcademicSession$reportsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  review<T extends Prisma.AcademicSession$reviewArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AcademicSession$reviewArgs<ExtArgs>>): Prisma.Prisma__ReviewClient<runtime.Types.Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1838,7 +1838,7 @@ export interface AcademicSessionFieldRefs {
   readonly id: Prisma.FieldRef<"AcademicSession", 'String'>
   readonly requestId: Prisma.FieldRef<"AcademicSession", 'String'>
   readonly studentId: Prisma.FieldRef<"AcademicSession", 'String'>
-  readonly consultantId: Prisma.FieldRef<"AcademicSession", 'String'>
+  readonly helperId: Prisma.FieldRef<"AcademicSession", 'String'>
   readonly startTime: Prisma.FieldRef<"AcademicSession", 'DateTime'>
   readonly endTime: Prisma.FieldRef<"AcademicSession", 'DateTime'>
   readonly status: Prisma.FieldRef<"AcademicSession", 'SessionStatus'>
@@ -2242,25 +2242,6 @@ export type AcademicSessionDeleteManyArgs<ExtArgs extends runtime.Types.Extensio
 }
 
 /**
- * AcademicSession.review
- */
-export type AcademicSession$reviewArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Review
-   */
-  select?: Prisma.ReviewSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Review
-   */
-  omit?: Prisma.ReviewOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ReviewInclude<ExtArgs> | null
-  where?: Prisma.ReviewWhereInput
-}
-
-/**
  * AcademicSession.payment
  */
 export type AcademicSession$paymentArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2301,6 +2282,25 @@ export type AcademicSession$reportsArgs<ExtArgs extends runtime.Types.Extensions
   take?: number
   skip?: number
   distinct?: Prisma.ReportScalarFieldEnum | Prisma.ReportScalarFieldEnum[]
+}
+
+/**
+ * AcademicSession.review
+ */
+export type AcademicSession$reviewArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Review
+   */
+  select?: Prisma.ReviewSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Review
+   */
+  omit?: Prisma.ReviewOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ReviewInclude<ExtArgs> | null
+  where?: Prisma.ReviewWhereInput
 }
 
 /**

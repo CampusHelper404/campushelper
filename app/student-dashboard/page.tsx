@@ -6,214 +6,336 @@ import Image from "next/image"
 import Link from "next/link"
 import { trpc } from "@/trpc/client"
 import StudentNavbar from "@/components/dashboard/StudentNavbar"
-import { MessageSquare, CheckCircle, Search, HelpCircle, User } from "lucide-react"
+import LoadingDashboard from "@/components/dashboard/LoadingDashboard"
+import { MessageSquare, CheckCircle, Search, HelpCircle, User, ArrowUpRight, Clock, Star, TrendingUp, CalendarDays } from "lucide-react"
 import "../dashboard/dashboard.css"
 
 export default function StudentDashboardPage() {
-    const [showAllRequests, setShowAllRequests] = useState(false)
     const router = useRouter()
-
-    // ── tRPC Data Fetching ───────────────────────────────────────────────────
-    const { data: user } = trpc.users.me.useQuery()
+    const { data: user, isLoading: isLoadingUser } = trpc.users.me.useQuery()
     const { data: requests, isLoading: isLoadingRequests } = trpc.helpRequests.list.useQuery({ studentId: user?.id }, { enabled: !!user?.id })
     const { data: sessions, isLoading: isLoadingSessions } = trpc.sessions.list.useQuery({ studentId: user?.id }, { enabled: !!user?.id })
     const { data: notifications } = trpc.notifications.list.useQuery({ unreadOnly: true })
-    const { data: helpers } = trpc.helpers.list.useQuery()
+    const { data: helpers, isLoading: isLoadingHelpers } = trpc.helpers.list.useQuery()
 
     const openRequestsCount = requests?.filter((r: any) => r.status === 'PENDING').length || 0
     const completedSessionsCount = sessions?.filter((s: any) => s.status === 'COMPLETED').length || 0
     const unreadNotifCount = notifications?.length || 0
-    const consultantCount = helpers?.filter((h: any) => h.verificationStatus === 'APPROVED').length || helpers?.length || 0
-    
-    // ── Role Guard ───────────────────────────────────────────────────────────
-    useEffect(() => {
-        if (user && user.role === 'CONSULTANT') {
-            router.push("/dashboard")
-        }
-    }, [user, router])
+    const helperCount = helpers?.filter((h: any) => h.verificationStatus === 'APPROVED').length || helpers?.length || 0
 
-    const visibleRequests = showAllRequests ? requests : requests?.slice(0, 2)
+    // Role Guard
+    useEffect(() => {
+        if (!isLoadingUser && user) {
+            if (user.role === 'ADMIN') router.push("/admin")
+            else if (user.role === 'HELPER') router.push("/dashboard")
+        }
+    }, [user, isLoadingUser, router])
+
+    if (isLoadingUser || (user && (user.role === 'ADMIN' || user.role === 'HELPER'))) {
+        return <LoadingDashboard />
+    }
+
+    const recentRequests = requests?.slice(0, 3) || []
+    const upcomingSessions = sessions?.filter((s: any) => s.status === 'UPCOMING').slice(0, 3) || []
 
     return (
-        <div className="dash-wrapper" style={{ background: '#f0f4f5', minHeight: '100vh', paddingTop: '70px' }}>
+        <div className="dash-wrapper" style={{ background: 'var(--bg-color)', minHeight: '100vh' }}>
             <StudentNavbar />
 
-            <main className="dash-main" style={{ maxWidth: '1100px', margin: '0 auto', padding: '2rem' }}>
+            <main className="dash-main" style={{ 
+                maxWidth: '1200px', 
+                margin: '0 auto', 
+                padding: '3rem 1.5rem',
+                fontFamily: "'Plus Jakarta Sans', sans-serif"
+            }}>
                 
-                {/* Welcome Banner */}
-                <section className="dash-welcome" style={{ 
-                    background: '#9ad1d4', 
-                    borderRadius: '12px', 
-                    padding: '2.5rem', 
-                    display: 'flex', 
-                    justifyContent: 'space-between', 
-                    alignItems: 'center',
-                    marginBottom: '2rem',
-                    position: 'relative',
-                    overflow: 'hidden'
-                }}>
-                    <div style={{ maxWidth: '450px', zIndex: 1 }}>
-                        <div style={{ fontSize: '0.8rem', fontWeight: 800, color: 'var(--accent-main)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.5rem' }}>
-                            Student Dashboard
+                {/* ── Premium Welcome Header ── */}
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '2.5rem', animation: 'fadeInUp 0.5s ease-out' }}>
+                    <div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+                            <span style={{ 
+                                background: 'rgba(0, 126, 167, 0.1)', 
+                                color: 'var(--primary)', 
+                                padding: '4px 12px', 
+                                borderRadius: 'var(--radius-pill)', 
+                                fontSize: '0.75rem', 
+                                fontWeight: 800, 
+                                textTransform: 'uppercase', 
+                                letterSpacing: '0.05em' 
+                            }}>
+                                Student Portal
+                            </span>
+                            <span style={{ color: 'var(--text-muted)', fontSize: '0.85rem', fontWeight: 600 }}>
+                                {new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
+                            </span>
                         </div>
-                        <h1 style={{ fontSize: '1.75rem', fontWeight: 700, margin: 0, color: '#003249' }}>
-                            Welcome Back, {user?.name?.split(" ")[0] || "User"}!
+                        <h1 style={{ fontSize: '2.5rem', fontWeight: 800, color: 'var(--text-main)', letterSpacing: '-0.03em', margin: 0 }}>
+                            Welcome back{!isLoadingUser && user?.name ? `, ${user.name.split(" ")[0]}` : ''}.
                         </h1>
-                        <p style={{ fontSize: '1.05rem', color: '#003249', marginTop: '0.75rem', opacity: 0.9 }}>
-                            Post requests, track your progress, and manage your help sessions.
-                        </p>
                     </div>
-                    <div style={{ position: 'relative', width: '380px', height: '180px' }}>
-                        <Image 
-                            src="/user dashboard.svg" 
-                            alt="Dashboard Illustration" 
-                            fill 
-                            style={{ objectFit: 'contain' }} 
-                        />
-                    </div>
-                </section>
-
-                {/* Stats Row */}
-                <section style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1.25rem', marginBottom: '2rem' }}>
-                    <div style={{ background: '#9ad1d4', borderRadius: '12px', padding: '1.5rem', textAlign: 'center' }}>
-                        <div style={{ fontSize: '0.9rem', fontWeight: 600, color: '#003249', marginBottom: '0.5rem' }}>Open Requests</div>
-                        <div style={{ fontSize: '1.75rem', fontWeight: 800, color: '#003249' }}>{openRequestsCount}</div>
-                    </div>
-                    <div style={{ background: '#9ad1d4', borderRadius: '12px', padding: '1.5rem', textAlign: 'center' }}>
-                        <div style={{ fontSize: '0.9rem', fontWeight: 600, color: '#003249', marginBottom: '0.5rem' }}>Consultants</div>
-                        <div style={{ fontSize: '1.75rem', fontWeight: 800, color: '#003249' }}>{consultantCount}</div>
-                    </div>
-                    <div style={{ background: '#9ad1d4', borderRadius: '12px', padding: '1.5rem', textAlign: 'center', position: 'relative' }}>
-                        <MessageSquare size={18} style={{ position: 'absolute', left: '12px', top: '12px', color: '#003249' }} />
-                        <div style={{ fontSize: '0.9rem', fontWeight: 600, color: '#003249', marginBottom: '0.5rem' }}>New Messages</div>
-                        <div style={{ fontSize: '1.75rem', fontWeight: 800, color: '#003249' }}>{unreadNotifCount}</div>
-                    </div>
-                    <div style={{ background: '#9ad1d4', borderRadius: '12px', padding: '1.5rem', textAlign: 'center', position: 'relative' }}>
-                        <CheckCircle size={18} style={{ position: 'absolute', left: '12px', top: '12px', color: '#003249' }} />
-                        <div style={{ fontSize: '0.9rem', fontWeight: 600, color: '#003249', marginBottom: '0.5rem' }}>Completed Sessions</div>
-                        <div style={{ fontSize: '1.75rem', fontWeight: 800, color: '#003249' }}>{completedSessionsCount}</div>
-                    </div>
-                </section>
-
-                {/* Middle Row: Quick Actions + Upcoming Sessions */}
-                <div style={{ display: 'grid', gridTemplateColumns: '1.1fr 1fr', gap: '1.25rem', marginBottom: '2rem' }}>
-                    
-                    {/* Quick Actions */}
-                    <div style={{ background: '#ccdbdc', borderRadius: '12px', padding: '1.5rem' }}>
-                        <h2 style={{ fontSize: '1rem', fontWeight: 700, marginBottom: '1.25rem', color: '#003249' }}>Quick Actions</h2>
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-                            <Link href="/my-requests" style={{ 
-                                background: '#fff', 
-                                padding: '1.25rem', 
-                                borderRadius: '10px', 
-                                display: 'flex', 
-                                alignItems: 'center', 
-                                gap: '12px', 
-                                textDecoration: 'none',
-                                color: '#003249',
-                                fontWeight: 600,
-                                boxShadow: '0 2px 4px rgba(0,0,0,0.02)'
-                            }}>
-                                <HelpCircle size={32} />
-                                <span>New Request</span>
-                            </Link>
-                            <Link href="/find-consultants" style={{ 
-                                background: '#fff', 
-                                padding: '1.25rem', 
-                                borderRadius: '10px', 
-                                display: 'flex', 
-                                alignItems: 'center', 
-                                gap: '12px', 
-                                textDecoration: 'none',
-                                color: '#003249',
-                                fontWeight: 600,
-                                boxShadow: '0 2px 4px rgba(0,0,0,0.02)'
-                            }}>
-                                <Search size={32} />
-                                <span>Find consultants</span>
-                            </Link>
-                        </div>
-                    </div>
-
-                    {/* Upcoming Sessions */}
-                    <div style={{ background: '#ccdbdc', borderRadius: '12px', padding: '1.5rem' }}>
-                        <h2 style={{ fontSize: '1rem', fontWeight: 700, marginBottom: '1.25rem', color: '#003249' }}>Upcoming Sessions</h2>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                            {sessions?.filter((s: any) => s.status === 'UPCOMING').length === 0 ? (
-                                <p style={{ fontSize: '0.9rem', opacity: 0.7 }}>No upcoming sessions.</p>
-                            ) : (
-                                sessions?.filter((s: any) => s.status === 'UPCOMING').map((s: any) => (
-                                    <div key={s.id} style={{ 
-                                        background: '#fff', 
-                                        padding: '1rem', 
-                                        borderRadius: '10px', 
-                                        display: 'flex', 
-                                        alignItems: 'center', 
-                                        justifyContent: 'space-between'
-                                    }}>
-                                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                                            <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: '#003249', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
-                                                <User size={24} />
-                                            </div>
-                                            <div>
-                                                <div style={{ fontWeight: 700, fontSize: '0.95rem' }}>{s.consultant?.name || "Consultant"}</div>
-                                                <div style={{ fontSize: '0.8rem', opacity: 0.8 }}>{s.request?.course?.name || "General Help"}</div>
-                                            </div>
-                                        </div>
-                                        <div style={{ fontWeight: 600, fontSize: '0.9rem' }}>
-                                            {new Date(s.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                                        </div>
-                                    </div>
-                                ))
-                            )}
-                        </div>
-                    </div>
+                    <Link href="/my-requests" style={{
+                        background: 'var(--primary)',
+                        color: 'white',
+                        padding: '12px 24px',
+                        borderRadius: 'var(--radius-pill)',
+                        textDecoration: 'none',
+                        fontWeight: 700,
+                        fontSize: '0.9rem',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '8px',
+                        boxShadow: 'var(--shadow-glow)',
+                        transition: 'var(--transition)'
+                    }} 
+                    onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 12px 24px rgba(0, 126, 167, 0.25)' }}
+                    onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'var(--shadow-glow)' }}
+                    >
+                        New Request <ArrowUpRight size={18} />
+                    </Link>
                 </div>
 
-                {/* Latest Requests */}
-                <section style={{ background: '#ccdbdc', borderRadius: '12px', padding: '1.5rem' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
-                        <h2 style={{ fontSize: '1rem', fontWeight: 700, color: '#003249' }}>Latest Requests</h2>
-                        <Link href="/my-requests" style={{ color: '#007ea7', textDecoration: 'none', fontWeight: 600, fontSize: '0.9rem' }}>
-                            View All Requests ›
-                        </Link>
-                    </div>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                        {visibleRequests?.map((r: any) => (
-                            <div key={r.id} style={{ 
-                                background: '#fff', 
-                                padding: '1rem 1.5rem', 
-                                borderRadius: '10px', 
-                                display: 'flex', 
-                                alignItems: 'center', 
-                                justifyContent: 'space-between'
-                            }}>
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-                                    <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: '#003249', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                        <User size={30} />
+                {/* ── Bento Box Grid Layout ── */}
+                <div style={{ 
+                    display: 'grid', 
+                    gridTemplateColumns: 'repeat(12, 1fr)', 
+                    gap: '1.5rem',
+                    animation: 'fadeInUp 0.6s ease-out'
+                }}>
+
+                    {/* Left Column: Big Stats & Sessions */}
+                    <div style={{ gridColumn: 'span 8', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                        
+                        {/* 4-Stat Row */}
+                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1.5rem' }}>
+                            {[
+                                { title: "Open Requests", value: isLoadingRequests ? '-' : openRequestsCount, icon: HelpCircle, color: '#f59e0b', bg: '#fef3c7' },
+                                { title: "New Messages", value: unreadNotifCount, icon: MessageSquare, color: '#8b5cf6', bg: '#ede9fe' },
+                                { title: "Active Helpers", value: isLoadingHelpers ? '-' : helperCount, icon: Star, color: '#10b981', bg: '#d1fae5' },
+                                { title: "Completed", value: isLoadingSessions ? '-' : completedSessionsCount, icon: CheckCircle, color: '#0ea5e9', bg: '#e0f2fe' }
+                            ].map((stat, i) => (
+                                <div key={i} style={{ 
+                                    background: 'var(--card-bg)', 
+                                    padding: '1.5rem', 
+                                    borderRadius: 'var(--radius-lg)', 
+                                    boxShadow: 'var(--shadow-sm)',
+                                    border: '1px solid var(--border-color)',
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    justifyContent: 'space-between',
+                                    transition: 'var(--transition)'
+                                }}
+                                onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = 'var(--shadow-md)' }}
+                                onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'var(--shadow-sm)' }}
+                                >
+                                    <div style={{ width: '40px', height: '40px', borderRadius: '12px', background: stat.bg, color: stat.color, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1rem' }}>
+                                        <stat.icon size={20} />
                                     </div>
                                     <div>
-                                        <div style={{ fontWeight: 700, fontSize: '1rem' }}>{r.title}</div>
-                                        <div style={{ fontSize: '0.85rem', opacity: 0.8 }}>{r.course?.name || "General Help"}</div>
+                                        <div style={{ fontSize: '1.75rem', fontWeight: 800, color: 'var(--text-main)', lineHeight: 1.1 }}>{stat.value}</div>
+                                        <div style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-muted)', marginTop: '4px' }}>{stat.title}</div>
                                     </div>
                                 </div>
-                                <div style={{ 
-                                    background: r.status === 'ACCEPTED' ? '#007ea7' : '#007ea7', // The mockup shows teal for both mostly
-                                    color: '#fff',
-                                    padding: '6px 20px',
-                                    borderRadius: '4px',
-                                    fontSize: '0.85rem',
-                                    fontWeight: 600,
-                                    width: '120px',
-                                    textAlign: 'center'
-                                }}>
-                                    {r.status === 'ACCEPTED' ? 'Approved' : 'Pending'}
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </section>
+                            ))}
+                        </div>
 
+                        {/* Recent Requests Bento Card */}
+                        <div style={{ 
+                            background: 'var(--card-bg)', 
+                            borderRadius: 'var(--radius-lg)', 
+                            padding: '2rem',
+                            boxShadow: 'var(--shadow-md)',
+                            border: '1px solid var(--border-color)',
+                            flex: 1
+                        }}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+                                <h2 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-main)', margin: 0 }}>Recent Requests</h2>
+                                <Link href="/my-requests" style={{ color: 'var(--primary)', fontWeight: 700, fontSize: '0.85rem', textDecoration: 'none' }}>View All →</Link>
+                            </div>
+                            
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                                {recentRequests.length === 0 ? (
+                                    <div style={{ padding: '3rem', textAlign: 'center', color: 'var(--text-muted)', background: '#f8fafc', borderRadius: '12px' }}>
+                                        <HelpCircle size={32} style={{ opacity: 0.3, margin: '0 auto 1rem' }} />
+                                        <div style={{ fontWeight: 600 }}>No recent requests found</div>
+                                        <div style={{ fontSize: '0.85rem', marginTop: '4px' }}>Create one to get help from a peer.</div>
+                                    </div>
+                                ) : (
+                                    recentRequests.map((r: any) => (
+                                        <div key={r.id} style={{
+                                            display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                                            padding: '1.25rem', background: '#f8fafc', borderRadius: '14px',
+                                            border: '1px solid rgba(0,0,0,0.03)', transition: 'var(--transition)'
+                                        }}
+                                        onMouseEnter={(e) => { e.currentTarget.style.background = '#f1f5f9' }}
+                                        onMouseLeave={(e) => { e.currentTarget.style.background = '#f8fafc' }}
+                                        >
+                                            <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                                                <div style={{ width: '48px', height: '48px', borderRadius: '14px', background: 'var(--header-bg)', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: '1.1rem' }}>
+                                                    {r.course?.name?.slice(0, 2).toUpperCase() || "GH"}
+                                                </div>
+                                                <div>
+                                                    <div style={{ fontWeight: 800, fontSize: '1.05rem', color: 'var(--text-main)', marginBottom: '2px' }}>{r.title}</div>
+                                                    <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: 500 }}>
+                                                        {new Date(r.createdAt).toLocaleDateString()} • {r.course?.name || "General"}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div style={{
+                                                background: r.status === 'PENDING' ? '#fef3c7' : '#d1fae5',
+                                                color: r.status === 'PENDING' ? '#d97706' : '#059669',
+                                                padding: '6px 14px',
+                                                borderRadius: 'var(--radius-pill)',
+                                                fontSize: '0.75rem',
+                                                fontWeight: 800,
+                                                letterSpacing: '0.05em'
+                                            }}>
+                                                {r.status}
+                                            </div>
+                                        </div>
+                                    ))
+                                )}
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Right Column: Profile & Upcoming */}
+                    <div style={{ gridColumn: 'span 4', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                        
+                        {/* Glassy Hero Widget */}
+                        <div style={{
+                            background: 'var(--header-bg)',
+                            borderRadius: 'var(--radius-lg)',
+                            padding: '2.5rem 2rem',
+                            color: 'white',
+                            position: 'relative',
+                            overflow: 'hidden',
+                            boxShadow: 'var(--shadow-lg)',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            textAlign: 'center'
+                        }}>
+                            <div style={{ position: 'absolute', top: '-50%', left: '-50%', width: '200%', height: '200%', background: 'radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 60%)', animation: 'float 8s infinite linear', pointerEvents: 'none' }} />
+                            
+                            <div style={{ width: '80px', height: '80px', borderRadius: '50%', background: 'rgba(255,255,255,0.2)', backdropFilter: 'blur(10px)', border: '2px solid rgba(255,255,255,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: '2rem', marginBottom: '1rem', boxShadow: '0 8px 16px rgba(0,0,0,0.1)' }}>
+                                {!isLoadingUser && user?.name ? user.name[0].toUpperCase() : '👤'}
+                            </div>
+                            
+                            <h3 style={{ fontSize: '1.35rem', fontWeight: 800, marginBottom: '6px' }}>Ready to learn?</h3>
+                            <p style={{ fontSize: '0.9rem', color: 'rgba(255,255,255,0.8)', fontWeight: 500, lineHeight: 1.5, marginBottom: '1.5rem' }}>
+                                Find top-rated peer helpers on campus and ace your next exam.
+                            </p>
+                            
+                            <Link href="/find-helpers" style={{
+                                width: '100%',
+                                background: 'white',
+                                color: 'var(--primary)',
+                                padding: '12px',
+                                borderRadius: 'var(--radius-pill)',
+                                textDecoration: 'none',
+                                fontWeight: 800,
+                                fontSize: '0.9rem',
+                                transition: 'all 0.2s',
+                                boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
+                            }}
+                            onMouseEnter={(e) => { e.currentTarget.style.transform = 'scale(1.02)' }}
+                            onMouseLeave={(e) => { e.currentTarget.style.transform = 'scale(1)' }}
+                            >
+                                Browse Helpers
+                            </Link>
+                        </div>
+
+                        {/* Become a Helper CTA Card */}
+                        <div style={{
+                            background: '#fef3c7',
+                            borderRadius: 'var(--radius-lg)',
+                            padding: '2rem',
+                            border: '1px solid #fde68a',
+                            boxShadow: 'var(--shadow-sm)',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            gap: '1rem',
+                            animation: 'fadeInUp 0.8s ease-out'
+                        }}
+                        onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = 'var(--shadow-md)' }}
+                        onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'var(--shadow-sm)' }}
+                        >
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                                <div style={{ background: '#f59e0b', color: 'white', padding: '8px', borderRadius: '10px' }}>
+                                    <Star size={20} fill="currentColor" />
+                                </div>
+                                <h3 style={{ margin: 0, fontSize: '1.15rem', fontWeight: 800, color: '#92400e' }}>Earn While Helping</h3>
+                            </div>
+                            <div style={{ position: 'relative', height: '120px', width: '100%', margin: '0.5rem 0' }}>
+                                <Image src="/hero-helper.png" alt="Helper" fill style={{ objectFit: 'contain' }} />
+                            </div>
+                            <p style={{ margin: 0, fontSize: '0.85rem', color: '#b45309', fontWeight: 600, lineHeight: 1.5 }}>
+                                Are you an expert in a course? Join our helper network and earn extra cash!
+                            </p>
+                            <Link href="/become-helper" style={{
+                                width: '100%',
+                                background: '#f59e0b',
+                                color: 'white',
+                                padding: '10px',
+                                borderRadius: 'var(--radius-pill)',
+                                textDecoration: 'none',
+                                fontWeight: 800,
+                                fontSize: '0.85rem',
+                                textAlign: 'center',
+                                transition: 'all 0.2s',
+                                boxShadow: '0 4px 12px rgba(245, 158, 11, 0.2)'
+                            }}>
+                                Apply Now
+                            </Link>
+                        </div>
+
+                        {/* Upcoming Sessions */}
+                        <div style={{ 
+                            background: 'var(--card-bg)', 
+                            borderRadius: 'var(--radius-lg)', 
+                            padding: '2rem',
+                            boxShadow: 'var(--shadow-md)',
+                            border: '1px solid var(--border-color)',
+                            flex: 1
+                        }}>
+                            <div style={{ display: 'flex', gap: '8px', alignItems: 'center', marginBottom: '1.5rem' }}>
+                                <Clock size={20} color="var(--primary)" />
+                                <h2 style={{ fontSize: '1.15rem', fontWeight: 800, color: 'var(--text-main)', margin: 0 }}>Upcoming</h2>
+                            </div>
+
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                                {upcomingSessions.length === 0 ? (
+                                    <div style={{ padding: '2rem 1rem', textAlign: 'center', color: 'var(--text-muted)' }}>
+                                        <p style={{ fontSize: '0.9rem', fontWeight: 500 }}>No upcoming sessions scheduled.</p>
+                                    </div>
+                                ) : (
+                                    upcomingSessions.map((s: any) => (
+                                        <div key={s.id} style={{
+                                            padding: '1rem', background: '#f8fafc', borderRadius: '12px',
+                                            borderLeft: '4px solid var(--primary)', display: 'flex', gap: '12px'
+                                        }}>
+                                            <div style={{ background: 'rgba(0,126,167,0.1)', color: 'var(--primary)', padding: '8px', borderRadius: '8px', height: 'fit-content' }}>
+                                                <CalendarDays size={18} />
+                                            </div>
+                                            <div>
+                                                <div style={{ fontWeight: 800, fontSize: '0.95rem', color: 'var(--text-main)', marginBottom: '2px' }}>
+                                                    {s.request?.course?.name || "Mentorship"}
+                                                </div>
+                                                <div style={{ fontSize: '0.8rem', color: 'var(--primary)', fontWeight: 700, marginBottom: '4px' }}>
+                                                    With {s.helper?.name}
+                                                </div>
+                                                <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 600 }}>
+                                                    {new Date(s.startTime).toLocaleString([], { dateStyle: 'short', timeStyle: 'short' })}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))
+                                )}
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
             </main>
         </div>
     )

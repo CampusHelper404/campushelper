@@ -391,7 +391,7 @@ export const ModelName = {
   HelpRequest: 'HelpRequest',
   AcademicSession: 'AcademicSession',
   Review: 'Review',
-  ConsultantProfile: 'ConsultantProfile',
+  HelperProfile: 'HelperProfile',
   AnalyticsEvent: 'AnalyticsEvent',
   AvailabilitySlot: 'AvailabilitySlot',
   VerificationRequest: 'VerificationRequest',
@@ -420,7 +420,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "course" | "department" | "skill" | "helpRequest" | "academicSession" | "review" | "consultantProfile" | "analyticsEvent" | "availabilitySlot" | "verificationRequest" | "report" | "announcement" | "attachment" | "auditLog" | "message" | "notification" | "payment" | "session" | "account" | "verification"
+    modelProps: "user" | "course" | "department" | "skill" | "helpRequest" | "academicSession" | "review" | "helperProfile" | "analyticsEvent" | "availabilitySlot" | "verificationRequest" | "report" | "announcement" | "attachment" | "auditLog" | "message" | "notification" | "payment" | "session" | "account" | "verification"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -942,77 +942,77 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    ConsultantProfile: {
-      payload: Prisma.$ConsultantProfilePayload<ExtArgs>
-      fields: Prisma.ConsultantProfileFieldRefs
+    HelperProfile: {
+      payload: Prisma.$HelperProfilePayload<ExtArgs>
+      fields: Prisma.HelperProfileFieldRefs
       operations: {
         findUnique: {
-          args: Prisma.ConsultantProfileFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsultantProfilePayload> | null
+          args: Prisma.HelperProfileFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HelperProfilePayload> | null
         }
         findUniqueOrThrow: {
-          args: Prisma.ConsultantProfileFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsultantProfilePayload>
+          args: Prisma.HelperProfileFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HelperProfilePayload>
         }
         findFirst: {
-          args: Prisma.ConsultantProfileFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsultantProfilePayload> | null
+          args: Prisma.HelperProfileFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HelperProfilePayload> | null
         }
         findFirstOrThrow: {
-          args: Prisma.ConsultantProfileFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsultantProfilePayload>
+          args: Prisma.HelperProfileFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HelperProfilePayload>
         }
         findMany: {
-          args: Prisma.ConsultantProfileFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsultantProfilePayload>[]
+          args: Prisma.HelperProfileFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HelperProfilePayload>[]
         }
         create: {
-          args: Prisma.ConsultantProfileCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsultantProfilePayload>
+          args: Prisma.HelperProfileCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HelperProfilePayload>
         }
         createMany: {
-          args: Prisma.ConsultantProfileCreateManyArgs<ExtArgs>
+          args: Prisma.HelperProfileCreateManyArgs<ExtArgs>
           result: BatchPayload
         }
         createManyAndReturn: {
-          args: Prisma.ConsultantProfileCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsultantProfilePayload>[]
+          args: Prisma.HelperProfileCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HelperProfilePayload>[]
         }
         delete: {
-          args: Prisma.ConsultantProfileDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsultantProfilePayload>
+          args: Prisma.HelperProfileDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HelperProfilePayload>
         }
         update: {
-          args: Prisma.ConsultantProfileUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsultantProfilePayload>
+          args: Prisma.HelperProfileUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HelperProfilePayload>
         }
         deleteMany: {
-          args: Prisma.ConsultantProfileDeleteManyArgs<ExtArgs>
+          args: Prisma.HelperProfileDeleteManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateMany: {
-          args: Prisma.ConsultantProfileUpdateManyArgs<ExtArgs>
+          args: Prisma.HelperProfileUpdateManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateManyAndReturn: {
-          args: Prisma.ConsultantProfileUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsultantProfilePayload>[]
+          args: Prisma.HelperProfileUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HelperProfilePayload>[]
         }
         upsert: {
-          args: Prisma.ConsultantProfileUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsultantProfilePayload>
+          args: Prisma.HelperProfileUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HelperProfilePayload>
         }
         aggregate: {
-          args: Prisma.ConsultantProfileAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateConsultantProfile>
+          args: Prisma.HelperProfileAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateHelperProfile>
         }
         groupBy: {
-          args: Prisma.ConsultantProfileGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.ConsultantProfileGroupByOutputType>[]
+          args: Prisma.HelperProfileGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.HelperProfileGroupByOutputType>[]
         }
         count: {
-          args: Prisma.ConsultantProfileCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.ConsultantProfileCountAggregateOutputType> | number
+          args: Prisma.HelperProfileCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.HelperProfileCountAggregateOutputType> | number
         }
       }
     }
@@ -2081,7 +2081,7 @@ export const AcademicSessionScalarFieldEnum = {
   id: 'id',
   requestId: 'requestId',
   studentId: 'studentId',
-  consultantId: 'consultantId',
+  helperId: 'helperId',
   startTime: 'startTime',
   endTime: 'endTime',
   status: 'status',
@@ -2105,16 +2105,19 @@ export const ReviewScalarFieldEnum = {
 export type ReviewScalarFieldEnum = (typeof ReviewScalarFieldEnum)[keyof typeof ReviewScalarFieldEnum]
 
 
-export const ConsultantProfileScalarFieldEnum = {
+export const HelperProfileScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   bio: 'bio',
+  headline: 'headline',
+  hourlyRate: 'hourlyRate',
+  completedProfile: 'completedProfile',
   rating: 'rating',
   verificationStatus: 'verificationStatus',
   rejectionReason: 'rejectionReason'
 } as const
 
-export type ConsultantProfileScalarFieldEnum = (typeof ConsultantProfileScalarFieldEnum)[keyof typeof ConsultantProfileScalarFieldEnum]
+export type HelperProfileScalarFieldEnum = (typeof HelperProfileScalarFieldEnum)[keyof typeof HelperProfileScalarFieldEnum]
 
 
 export const AnalyticsEventScalarFieldEnum = {
@@ -2132,7 +2135,7 @@ export type AnalyticsEventScalarFieldEnum = (typeof AnalyticsEventScalarFieldEnu
 
 export const AvailabilitySlotScalarFieldEnum = {
   id: 'id',
-  consultantId: 'consultantId',
+  helperId: 'helperId',
   weekday: 'weekday',
   startTime: 'startTime',
   endTime: 'endTime',
@@ -2247,7 +2250,7 @@ export const PaymentScalarFieldEnum = {
   id: 'id',
   sessionId: 'sessionId',
   studentId: 'studentId',
-  consultantId: 'consultantId',
+  helperId: 'helperId',
   amountCents: 'amountCents',
   currency: 'currency',
   status: 'status',
@@ -2572,7 +2575,7 @@ export type GlobalOmitConfig = {
   helpRequest?: Prisma.HelpRequestOmit
   academicSession?: Prisma.AcademicSessionOmit
   review?: Prisma.ReviewOmit
-  consultantProfile?: Prisma.ConsultantProfileOmit
+  helperProfile?: Prisma.HelperProfileOmit
   analyticsEvent?: Prisma.AnalyticsEventOmit
   availabilitySlot?: Prisma.AvailabilitySlotOmit
   verificationRequest?: Prisma.VerificationRequestOmit

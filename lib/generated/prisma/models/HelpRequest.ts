@@ -230,11 +230,11 @@ export type HelpRequestWhereInput = {
   acceptedById?: Prisma.StringNullableFilter<"HelpRequest"> | string | null
   createdAt?: Prisma.DateTimeFilter<"HelpRequest"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"HelpRequest"> | Date | string
-  student?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-  course?: Prisma.XOR<Prisma.CourseNullableScalarRelationFilter, Prisma.CourseWhereInput> | null
-  acceptedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   sessions?: Prisma.AcademicSessionListRelationFilter
   attachments?: Prisma.AttachmentListRelationFilter
+  acceptedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  course?: Prisma.XOR<Prisma.CourseNullableScalarRelationFilter, Prisma.CourseWhereInput> | null
+  student?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }
 
 export type HelpRequestOrderByWithRelationInput = {
@@ -249,11 +249,11 @@ export type HelpRequestOrderByWithRelationInput = {
   acceptedById?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  student?: Prisma.UserOrderByWithRelationInput
-  course?: Prisma.CourseOrderByWithRelationInput
-  acceptedBy?: Prisma.UserOrderByWithRelationInput
   sessions?: Prisma.AcademicSessionOrderByRelationAggregateInput
   attachments?: Prisma.AttachmentOrderByRelationAggregateInput
+  acceptedBy?: Prisma.UserOrderByWithRelationInput
+  course?: Prisma.CourseOrderByWithRelationInput
+  student?: Prisma.UserOrderByWithRelationInput
 }
 
 export type HelpRequestWhereUniqueInput = Prisma.AtLeast<{
@@ -271,11 +271,11 @@ export type HelpRequestWhereUniqueInput = Prisma.AtLeast<{
   acceptedById?: Prisma.StringNullableFilter<"HelpRequest"> | string | null
   createdAt?: Prisma.DateTimeFilter<"HelpRequest"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"HelpRequest"> | Date | string
-  student?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-  course?: Prisma.XOR<Prisma.CourseNullableScalarRelationFilter, Prisma.CourseWhereInput> | null
-  acceptedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   sessions?: Prisma.AcademicSessionListRelationFilter
   attachments?: Prisma.AttachmentListRelationFilter
+  acceptedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  course?: Prisma.XOR<Prisma.CourseNullableScalarRelationFilter, Prisma.CourseWhereInput> | null
+  student?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }, "id">
 
 export type HelpRequestOrderByWithAggregationInput = {
@@ -321,11 +321,11 @@ export type HelpRequestCreateInput = {
   preferredTime?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  student: Prisma.UserCreateNestedOneWithoutRequestsInput
-  course?: Prisma.CourseCreateNestedOneWithoutRequestsInput
-  acceptedBy?: Prisma.UserCreateNestedOneWithoutAcceptedRequestsInput
   sessions?: Prisma.AcademicSessionCreateNestedManyWithoutRequestInput
   attachments?: Prisma.AttachmentCreateNestedManyWithoutRequestInput
+  acceptedBy?: Prisma.UserCreateNestedOneWithoutAcceptedRequestsInput
+  course?: Prisma.CourseCreateNestedOneWithoutRequestsInput
+  student: Prisma.UserCreateNestedOneWithoutRequestsInput
 }
 
 export type HelpRequestUncheckedCreateInput = {
@@ -353,11 +353,11 @@ export type HelpRequestUpdateInput = {
   preferredTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  student?: Prisma.UserUpdateOneRequiredWithoutRequestsNestedInput
-  course?: Prisma.CourseUpdateOneWithoutRequestsNestedInput
-  acceptedBy?: Prisma.UserUpdateOneWithoutAcceptedRequestsNestedInput
   sessions?: Prisma.AcademicSessionUpdateManyWithoutRequestNestedInput
   attachments?: Prisma.AttachmentUpdateManyWithoutRequestNestedInput
+  acceptedBy?: Prisma.UserUpdateOneWithoutAcceptedRequestsNestedInput
+  course?: Prisma.CourseUpdateOneWithoutRequestsNestedInput
+  student?: Prisma.UserUpdateOneRequiredWithoutRequestsNestedInput
 }
 
 export type HelpRequestUncheckedUpdateInput = {
@@ -477,13 +477,6 @@ export type HelpRequestNullableScalarRelationFilter = {
   isNot?: Prisma.HelpRequestWhereInput | null
 }
 
-export type HelpRequestCreateNestedManyWithoutStudentInput = {
-  create?: Prisma.XOR<Prisma.HelpRequestCreateWithoutStudentInput, Prisma.HelpRequestUncheckedCreateWithoutStudentInput> | Prisma.HelpRequestCreateWithoutStudentInput[] | Prisma.HelpRequestUncheckedCreateWithoutStudentInput[]
-  connectOrCreate?: Prisma.HelpRequestCreateOrConnectWithoutStudentInput | Prisma.HelpRequestCreateOrConnectWithoutStudentInput[]
-  createMany?: Prisma.HelpRequestCreateManyStudentInputEnvelope
-  connect?: Prisma.HelpRequestWhereUniqueInput | Prisma.HelpRequestWhereUniqueInput[]
-}
-
 export type HelpRequestCreateNestedManyWithoutAcceptedByInput = {
   create?: Prisma.XOR<Prisma.HelpRequestCreateWithoutAcceptedByInput, Prisma.HelpRequestUncheckedCreateWithoutAcceptedByInput> | Prisma.HelpRequestCreateWithoutAcceptedByInput[] | Prisma.HelpRequestUncheckedCreateWithoutAcceptedByInput[]
   connectOrCreate?: Prisma.HelpRequestCreateOrConnectWithoutAcceptedByInput | Prisma.HelpRequestCreateOrConnectWithoutAcceptedByInput[]
@@ -491,7 +484,7 @@ export type HelpRequestCreateNestedManyWithoutAcceptedByInput = {
   connect?: Prisma.HelpRequestWhereUniqueInput | Prisma.HelpRequestWhereUniqueInput[]
 }
 
-export type HelpRequestUncheckedCreateNestedManyWithoutStudentInput = {
+export type HelpRequestCreateNestedManyWithoutStudentInput = {
   create?: Prisma.XOR<Prisma.HelpRequestCreateWithoutStudentInput, Prisma.HelpRequestUncheckedCreateWithoutStudentInput> | Prisma.HelpRequestCreateWithoutStudentInput[] | Prisma.HelpRequestUncheckedCreateWithoutStudentInput[]
   connectOrCreate?: Prisma.HelpRequestCreateOrConnectWithoutStudentInput | Prisma.HelpRequestCreateOrConnectWithoutStudentInput[]
   createMany?: Prisma.HelpRequestCreateManyStudentInputEnvelope
@@ -505,18 +498,11 @@ export type HelpRequestUncheckedCreateNestedManyWithoutAcceptedByInput = {
   connect?: Prisma.HelpRequestWhereUniqueInput | Prisma.HelpRequestWhereUniqueInput[]
 }
 
-export type HelpRequestUpdateManyWithoutStudentNestedInput = {
+export type HelpRequestUncheckedCreateNestedManyWithoutStudentInput = {
   create?: Prisma.XOR<Prisma.HelpRequestCreateWithoutStudentInput, Prisma.HelpRequestUncheckedCreateWithoutStudentInput> | Prisma.HelpRequestCreateWithoutStudentInput[] | Prisma.HelpRequestUncheckedCreateWithoutStudentInput[]
   connectOrCreate?: Prisma.HelpRequestCreateOrConnectWithoutStudentInput | Prisma.HelpRequestCreateOrConnectWithoutStudentInput[]
-  upsert?: Prisma.HelpRequestUpsertWithWhereUniqueWithoutStudentInput | Prisma.HelpRequestUpsertWithWhereUniqueWithoutStudentInput[]
   createMany?: Prisma.HelpRequestCreateManyStudentInputEnvelope
-  set?: Prisma.HelpRequestWhereUniqueInput | Prisma.HelpRequestWhereUniqueInput[]
-  disconnect?: Prisma.HelpRequestWhereUniqueInput | Prisma.HelpRequestWhereUniqueInput[]
-  delete?: Prisma.HelpRequestWhereUniqueInput | Prisma.HelpRequestWhereUniqueInput[]
   connect?: Prisma.HelpRequestWhereUniqueInput | Prisma.HelpRequestWhereUniqueInput[]
-  update?: Prisma.HelpRequestUpdateWithWhereUniqueWithoutStudentInput | Prisma.HelpRequestUpdateWithWhereUniqueWithoutStudentInput[]
-  updateMany?: Prisma.HelpRequestUpdateManyWithWhereWithoutStudentInput | Prisma.HelpRequestUpdateManyWithWhereWithoutStudentInput[]
-  deleteMany?: Prisma.HelpRequestScalarWhereInput | Prisma.HelpRequestScalarWhereInput[]
 }
 
 export type HelpRequestUpdateManyWithoutAcceptedByNestedInput = {
@@ -533,7 +519,7 @@ export type HelpRequestUpdateManyWithoutAcceptedByNestedInput = {
   deleteMany?: Prisma.HelpRequestScalarWhereInput | Prisma.HelpRequestScalarWhereInput[]
 }
 
-export type HelpRequestUncheckedUpdateManyWithoutStudentNestedInput = {
+export type HelpRequestUpdateManyWithoutStudentNestedInput = {
   create?: Prisma.XOR<Prisma.HelpRequestCreateWithoutStudentInput, Prisma.HelpRequestUncheckedCreateWithoutStudentInput> | Prisma.HelpRequestCreateWithoutStudentInput[] | Prisma.HelpRequestUncheckedCreateWithoutStudentInput[]
   connectOrCreate?: Prisma.HelpRequestCreateOrConnectWithoutStudentInput | Prisma.HelpRequestCreateOrConnectWithoutStudentInput[]
   upsert?: Prisma.HelpRequestUpsertWithWhereUniqueWithoutStudentInput | Prisma.HelpRequestUpsertWithWhereUniqueWithoutStudentInput[]
@@ -558,6 +544,20 @@ export type HelpRequestUncheckedUpdateManyWithoutAcceptedByNestedInput = {
   connect?: Prisma.HelpRequestWhereUniqueInput | Prisma.HelpRequestWhereUniqueInput[]
   update?: Prisma.HelpRequestUpdateWithWhereUniqueWithoutAcceptedByInput | Prisma.HelpRequestUpdateWithWhereUniqueWithoutAcceptedByInput[]
   updateMany?: Prisma.HelpRequestUpdateManyWithWhereWithoutAcceptedByInput | Prisma.HelpRequestUpdateManyWithWhereWithoutAcceptedByInput[]
+  deleteMany?: Prisma.HelpRequestScalarWhereInput | Prisma.HelpRequestScalarWhereInput[]
+}
+
+export type HelpRequestUncheckedUpdateManyWithoutStudentNestedInput = {
+  create?: Prisma.XOR<Prisma.HelpRequestCreateWithoutStudentInput, Prisma.HelpRequestUncheckedCreateWithoutStudentInput> | Prisma.HelpRequestCreateWithoutStudentInput[] | Prisma.HelpRequestUncheckedCreateWithoutStudentInput[]
+  connectOrCreate?: Prisma.HelpRequestCreateOrConnectWithoutStudentInput | Prisma.HelpRequestCreateOrConnectWithoutStudentInput[]
+  upsert?: Prisma.HelpRequestUpsertWithWhereUniqueWithoutStudentInput | Prisma.HelpRequestUpsertWithWhereUniqueWithoutStudentInput[]
+  createMany?: Prisma.HelpRequestCreateManyStudentInputEnvelope
+  set?: Prisma.HelpRequestWhereUniqueInput | Prisma.HelpRequestWhereUniqueInput[]
+  disconnect?: Prisma.HelpRequestWhereUniqueInput | Prisma.HelpRequestWhereUniqueInput[]
+  delete?: Prisma.HelpRequestWhereUniqueInput | Prisma.HelpRequestWhereUniqueInput[]
+  connect?: Prisma.HelpRequestWhereUniqueInput | Prisma.HelpRequestWhereUniqueInput[]
+  update?: Prisma.HelpRequestUpdateWithWhereUniqueWithoutStudentInput | Prisma.HelpRequestUpdateWithWhereUniqueWithoutStudentInput[]
+  updateMany?: Prisma.HelpRequestUpdateManyWithWhereWithoutStudentInput | Prisma.HelpRequestUpdateManyWithWhereWithoutStudentInput[]
   deleteMany?: Prisma.HelpRequestScalarWhereInput | Prisma.HelpRequestScalarWhereInput[]
 }
 
@@ -641,46 +641,6 @@ export type HelpRequestUpdateOneWithoutAttachmentsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.HelpRequestUpdateToOneWithWhereWithoutAttachmentsInput, Prisma.HelpRequestUpdateWithoutAttachmentsInput>, Prisma.HelpRequestUncheckedUpdateWithoutAttachmentsInput>
 }
 
-export type HelpRequestCreateWithoutStudentInput = {
-  id?: string
-  title: string
-  description?: string | null
-  status?: $Enums.HelpRequestStatus
-  preferredDate?: Date | string | null
-  preferredTime?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  course?: Prisma.CourseCreateNestedOneWithoutRequestsInput
-  acceptedBy?: Prisma.UserCreateNestedOneWithoutAcceptedRequestsInput
-  sessions?: Prisma.AcademicSessionCreateNestedManyWithoutRequestInput
-  attachments?: Prisma.AttachmentCreateNestedManyWithoutRequestInput
-}
-
-export type HelpRequestUncheckedCreateWithoutStudentInput = {
-  id?: string
-  courseId?: string | null
-  title: string
-  description?: string | null
-  status?: $Enums.HelpRequestStatus
-  preferredDate?: Date | string | null
-  preferredTime?: string | null
-  acceptedById?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  sessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutRequestInput
-  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutRequestInput
-}
-
-export type HelpRequestCreateOrConnectWithoutStudentInput = {
-  where: Prisma.HelpRequestWhereUniqueInput
-  create: Prisma.XOR<Prisma.HelpRequestCreateWithoutStudentInput, Prisma.HelpRequestUncheckedCreateWithoutStudentInput>
-}
-
-export type HelpRequestCreateManyStudentInputEnvelope = {
-  data: Prisma.HelpRequestCreateManyStudentInput | Prisma.HelpRequestCreateManyStudentInput[]
-  skipDuplicates?: boolean
-}
-
 export type HelpRequestCreateWithoutAcceptedByInput = {
   id?: string
   title: string
@@ -690,10 +650,10 @@ export type HelpRequestCreateWithoutAcceptedByInput = {
   preferredTime?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  student: Prisma.UserCreateNestedOneWithoutRequestsInput
-  course?: Prisma.CourseCreateNestedOneWithoutRequestsInput
   sessions?: Prisma.AcademicSessionCreateNestedManyWithoutRequestInput
   attachments?: Prisma.AttachmentCreateNestedManyWithoutRequestInput
+  course?: Prisma.CourseCreateNestedOneWithoutRequestsInput
+  student: Prisma.UserCreateNestedOneWithoutRequestsInput
 }
 
 export type HelpRequestUncheckedCreateWithoutAcceptedByInput = {
@@ -721,20 +681,60 @@ export type HelpRequestCreateManyAcceptedByInputEnvelope = {
   skipDuplicates?: boolean
 }
 
-export type HelpRequestUpsertWithWhereUniqueWithoutStudentInput = {
+export type HelpRequestCreateWithoutStudentInput = {
+  id?: string
+  title: string
+  description?: string | null
+  status?: $Enums.HelpRequestStatus
+  preferredDate?: Date | string | null
+  preferredTime?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.AcademicSessionCreateNestedManyWithoutRequestInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutRequestInput
+  acceptedBy?: Prisma.UserCreateNestedOneWithoutAcceptedRequestsInput
+  course?: Prisma.CourseCreateNestedOneWithoutRequestsInput
+}
+
+export type HelpRequestUncheckedCreateWithoutStudentInput = {
+  id?: string
+  courseId?: string | null
+  title: string
+  description?: string | null
+  status?: $Enums.HelpRequestStatus
+  preferredDate?: Date | string | null
+  preferredTime?: string | null
+  acceptedById?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutRequestInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutRequestInput
+}
+
+export type HelpRequestCreateOrConnectWithoutStudentInput = {
   where: Prisma.HelpRequestWhereUniqueInput
-  update: Prisma.XOR<Prisma.HelpRequestUpdateWithoutStudentInput, Prisma.HelpRequestUncheckedUpdateWithoutStudentInput>
   create: Prisma.XOR<Prisma.HelpRequestCreateWithoutStudentInput, Prisma.HelpRequestUncheckedCreateWithoutStudentInput>
 }
 
-export type HelpRequestUpdateWithWhereUniqueWithoutStudentInput = {
-  where: Prisma.HelpRequestWhereUniqueInput
-  data: Prisma.XOR<Prisma.HelpRequestUpdateWithoutStudentInput, Prisma.HelpRequestUncheckedUpdateWithoutStudentInput>
+export type HelpRequestCreateManyStudentInputEnvelope = {
+  data: Prisma.HelpRequestCreateManyStudentInput | Prisma.HelpRequestCreateManyStudentInput[]
+  skipDuplicates?: boolean
 }
 
-export type HelpRequestUpdateManyWithWhereWithoutStudentInput = {
+export type HelpRequestUpsertWithWhereUniqueWithoutAcceptedByInput = {
+  where: Prisma.HelpRequestWhereUniqueInput
+  update: Prisma.XOR<Prisma.HelpRequestUpdateWithoutAcceptedByInput, Prisma.HelpRequestUncheckedUpdateWithoutAcceptedByInput>
+  create: Prisma.XOR<Prisma.HelpRequestCreateWithoutAcceptedByInput, Prisma.HelpRequestUncheckedCreateWithoutAcceptedByInput>
+}
+
+export type HelpRequestUpdateWithWhereUniqueWithoutAcceptedByInput = {
+  where: Prisma.HelpRequestWhereUniqueInput
+  data: Prisma.XOR<Prisma.HelpRequestUpdateWithoutAcceptedByInput, Prisma.HelpRequestUncheckedUpdateWithoutAcceptedByInput>
+}
+
+export type HelpRequestUpdateManyWithWhereWithoutAcceptedByInput = {
   where: Prisma.HelpRequestScalarWhereInput
-  data: Prisma.XOR<Prisma.HelpRequestUpdateManyMutationInput, Prisma.HelpRequestUncheckedUpdateManyWithoutStudentInput>
+  data: Prisma.XOR<Prisma.HelpRequestUpdateManyMutationInput, Prisma.HelpRequestUncheckedUpdateManyWithoutAcceptedByInput>
 }
 
 export type HelpRequestScalarWhereInput = {
@@ -754,20 +754,20 @@ export type HelpRequestScalarWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"HelpRequest"> | Date | string
 }
 
-export type HelpRequestUpsertWithWhereUniqueWithoutAcceptedByInput = {
+export type HelpRequestUpsertWithWhereUniqueWithoutStudentInput = {
   where: Prisma.HelpRequestWhereUniqueInput
-  update: Prisma.XOR<Prisma.HelpRequestUpdateWithoutAcceptedByInput, Prisma.HelpRequestUncheckedUpdateWithoutAcceptedByInput>
-  create: Prisma.XOR<Prisma.HelpRequestCreateWithoutAcceptedByInput, Prisma.HelpRequestUncheckedCreateWithoutAcceptedByInput>
+  update: Prisma.XOR<Prisma.HelpRequestUpdateWithoutStudentInput, Prisma.HelpRequestUncheckedUpdateWithoutStudentInput>
+  create: Prisma.XOR<Prisma.HelpRequestCreateWithoutStudentInput, Prisma.HelpRequestUncheckedCreateWithoutStudentInput>
 }
 
-export type HelpRequestUpdateWithWhereUniqueWithoutAcceptedByInput = {
+export type HelpRequestUpdateWithWhereUniqueWithoutStudentInput = {
   where: Prisma.HelpRequestWhereUniqueInput
-  data: Prisma.XOR<Prisma.HelpRequestUpdateWithoutAcceptedByInput, Prisma.HelpRequestUncheckedUpdateWithoutAcceptedByInput>
+  data: Prisma.XOR<Prisma.HelpRequestUpdateWithoutStudentInput, Prisma.HelpRequestUncheckedUpdateWithoutStudentInput>
 }
 
-export type HelpRequestUpdateManyWithWhereWithoutAcceptedByInput = {
+export type HelpRequestUpdateManyWithWhereWithoutStudentInput = {
   where: Prisma.HelpRequestScalarWhereInput
-  data: Prisma.XOR<Prisma.HelpRequestUpdateManyMutationInput, Prisma.HelpRequestUncheckedUpdateManyWithoutAcceptedByInput>
+  data: Prisma.XOR<Prisma.HelpRequestUpdateManyMutationInput, Prisma.HelpRequestUncheckedUpdateManyWithoutStudentInput>
 }
 
 export type HelpRequestCreateWithoutCourseInput = {
@@ -779,10 +779,10 @@ export type HelpRequestCreateWithoutCourseInput = {
   preferredTime?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  student: Prisma.UserCreateNestedOneWithoutRequestsInput
-  acceptedBy?: Prisma.UserCreateNestedOneWithoutAcceptedRequestsInput
   sessions?: Prisma.AcademicSessionCreateNestedManyWithoutRequestInput
   attachments?: Prisma.AttachmentCreateNestedManyWithoutRequestInput
+  acceptedBy?: Prisma.UserCreateNestedOneWithoutAcceptedRequestsInput
+  student: Prisma.UserCreateNestedOneWithoutRequestsInput
 }
 
 export type HelpRequestUncheckedCreateWithoutCourseInput = {
@@ -835,10 +835,10 @@ export type HelpRequestCreateWithoutSessionsInput = {
   preferredTime?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  student: Prisma.UserCreateNestedOneWithoutRequestsInput
-  course?: Prisma.CourseCreateNestedOneWithoutRequestsInput
-  acceptedBy?: Prisma.UserCreateNestedOneWithoutAcceptedRequestsInput
   attachments?: Prisma.AttachmentCreateNestedManyWithoutRequestInput
+  acceptedBy?: Prisma.UserCreateNestedOneWithoutAcceptedRequestsInput
+  course?: Prisma.CourseCreateNestedOneWithoutRequestsInput
+  student: Prisma.UserCreateNestedOneWithoutRequestsInput
 }
 
 export type HelpRequestUncheckedCreateWithoutSessionsInput = {
@@ -881,10 +881,10 @@ export type HelpRequestUpdateWithoutSessionsInput = {
   preferredTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  student?: Prisma.UserUpdateOneRequiredWithoutRequestsNestedInput
-  course?: Prisma.CourseUpdateOneWithoutRequestsNestedInput
-  acceptedBy?: Prisma.UserUpdateOneWithoutAcceptedRequestsNestedInput
   attachments?: Prisma.AttachmentUpdateManyWithoutRequestNestedInput
+  acceptedBy?: Prisma.UserUpdateOneWithoutAcceptedRequestsNestedInput
+  course?: Prisma.CourseUpdateOneWithoutRequestsNestedInput
+  student?: Prisma.UserUpdateOneRequiredWithoutRequestsNestedInput
 }
 
 export type HelpRequestUncheckedUpdateWithoutSessionsInput = {
@@ -911,10 +911,10 @@ export type HelpRequestCreateWithoutAttachmentsInput = {
   preferredTime?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  student: Prisma.UserCreateNestedOneWithoutRequestsInput
-  course?: Prisma.CourseCreateNestedOneWithoutRequestsInput
-  acceptedBy?: Prisma.UserCreateNestedOneWithoutAcceptedRequestsInput
   sessions?: Prisma.AcademicSessionCreateNestedManyWithoutRequestInput
+  acceptedBy?: Prisma.UserCreateNestedOneWithoutAcceptedRequestsInput
+  course?: Prisma.CourseCreateNestedOneWithoutRequestsInput
+  student: Prisma.UserCreateNestedOneWithoutRequestsInput
 }
 
 export type HelpRequestUncheckedCreateWithoutAttachmentsInput = {
@@ -957,10 +957,10 @@ export type HelpRequestUpdateWithoutAttachmentsInput = {
   preferredTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  student?: Prisma.UserUpdateOneRequiredWithoutRequestsNestedInput
-  course?: Prisma.CourseUpdateOneWithoutRequestsNestedInput
-  acceptedBy?: Prisma.UserUpdateOneWithoutAcceptedRequestsNestedInput
   sessions?: Prisma.AcademicSessionUpdateManyWithoutRequestNestedInput
+  acceptedBy?: Prisma.UserUpdateOneWithoutAcceptedRequestsNestedInput
+  course?: Prisma.CourseUpdateOneWithoutRequestsNestedInput
+  student?: Prisma.UserUpdateOneRequiredWithoutRequestsNestedInput
 }
 
 export type HelpRequestUncheckedUpdateWithoutAttachmentsInput = {
@@ -978,19 +978,6 @@ export type HelpRequestUncheckedUpdateWithoutAttachmentsInput = {
   sessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutRequestNestedInput
 }
 
-export type HelpRequestCreateManyStudentInput = {
-  id?: string
-  courseId?: string | null
-  title: string
-  description?: string | null
-  status?: $Enums.HelpRequestStatus
-  preferredDate?: Date | string | null
-  preferredTime?: string | null
-  acceptedById?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-}
-
 export type HelpRequestCreateManyAcceptedByInput = {
   id?: string
   studentId: string
@@ -1004,47 +991,17 @@ export type HelpRequestCreateManyAcceptedByInput = {
   updatedAt?: Date | string
 }
 
-export type HelpRequestUpdateWithoutStudentInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  title?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumHelpRequestStatusFieldUpdateOperationsInput | $Enums.HelpRequestStatus
-  preferredDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  preferredTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  course?: Prisma.CourseUpdateOneWithoutRequestsNestedInput
-  acceptedBy?: Prisma.UserUpdateOneWithoutAcceptedRequestsNestedInput
-  sessions?: Prisma.AcademicSessionUpdateManyWithoutRequestNestedInput
-  attachments?: Prisma.AttachmentUpdateManyWithoutRequestNestedInput
-}
-
-export type HelpRequestUncheckedUpdateWithoutStudentInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  courseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  title?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumHelpRequestStatusFieldUpdateOperationsInput | $Enums.HelpRequestStatus
-  preferredDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  preferredTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  acceptedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  sessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutRequestNestedInput
-  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutRequestNestedInput
-}
-
-export type HelpRequestUncheckedUpdateManyWithoutStudentInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  courseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  title?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumHelpRequestStatusFieldUpdateOperationsInput | $Enums.HelpRequestStatus
-  preferredDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  preferredTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  acceptedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+export type HelpRequestCreateManyStudentInput = {
+  id?: string
+  courseId?: string | null
+  title: string
+  description?: string | null
+  status?: $Enums.HelpRequestStatus
+  preferredDate?: Date | string | null
+  preferredTime?: string | null
+  acceptedById?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type HelpRequestUpdateWithoutAcceptedByInput = {
@@ -1056,10 +1013,10 @@ export type HelpRequestUpdateWithoutAcceptedByInput = {
   preferredTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  student?: Prisma.UserUpdateOneRequiredWithoutRequestsNestedInput
-  course?: Prisma.CourseUpdateOneWithoutRequestsNestedInput
   sessions?: Prisma.AcademicSessionUpdateManyWithoutRequestNestedInput
   attachments?: Prisma.AttachmentUpdateManyWithoutRequestNestedInput
+  course?: Prisma.CourseUpdateOneWithoutRequestsNestedInput
+  student?: Prisma.UserUpdateOneRequiredWithoutRequestsNestedInput
 }
 
 export type HelpRequestUncheckedUpdateWithoutAcceptedByInput = {
@@ -1090,6 +1047,49 @@ export type HelpRequestUncheckedUpdateManyWithoutAcceptedByInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
+export type HelpRequestUpdateWithoutStudentInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumHelpRequestStatusFieldUpdateOperationsInput | $Enums.HelpRequestStatus
+  preferredDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  preferredTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.AcademicSessionUpdateManyWithoutRequestNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutRequestNestedInput
+  acceptedBy?: Prisma.UserUpdateOneWithoutAcceptedRequestsNestedInput
+  course?: Prisma.CourseUpdateOneWithoutRequestsNestedInput
+}
+
+export type HelpRequestUncheckedUpdateWithoutStudentInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  courseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumHelpRequestStatusFieldUpdateOperationsInput | $Enums.HelpRequestStatus
+  preferredDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  preferredTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  acceptedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutRequestNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutRequestNestedInput
+}
+
+export type HelpRequestUncheckedUpdateManyWithoutStudentInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  courseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumHelpRequestStatusFieldUpdateOperationsInput | $Enums.HelpRequestStatus
+  preferredDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  preferredTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  acceptedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
 export type HelpRequestCreateManyCourseInput = {
   id?: string
   studentId: string
@@ -1112,10 +1112,10 @@ export type HelpRequestUpdateWithoutCourseInput = {
   preferredTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  student?: Prisma.UserUpdateOneRequiredWithoutRequestsNestedInput
-  acceptedBy?: Prisma.UserUpdateOneWithoutAcceptedRequestsNestedInput
   sessions?: Prisma.AcademicSessionUpdateManyWithoutRequestNestedInput
   attachments?: Prisma.AttachmentUpdateManyWithoutRequestNestedInput
+  acceptedBy?: Prisma.UserUpdateOneWithoutAcceptedRequestsNestedInput
+  student?: Prisma.UserUpdateOneRequiredWithoutRequestsNestedInput
 }
 
 export type HelpRequestUncheckedUpdateWithoutCourseInput = {
@@ -1198,11 +1198,11 @@ export type HelpRequestSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   acceptedById?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  student?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  course?: boolean | Prisma.HelpRequest$courseArgs<ExtArgs>
-  acceptedBy?: boolean | Prisma.HelpRequest$acceptedByArgs<ExtArgs>
   sessions?: boolean | Prisma.HelpRequest$sessionsArgs<ExtArgs>
   attachments?: boolean | Prisma.HelpRequest$attachmentsArgs<ExtArgs>
+  acceptedBy?: boolean | Prisma.HelpRequest$acceptedByArgs<ExtArgs>
+  course?: boolean | Prisma.HelpRequest$courseArgs<ExtArgs>
+  student?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.HelpRequestCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["helpRequest"]>
 
@@ -1218,9 +1218,9 @@ export type HelpRequestSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   acceptedById?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  student?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  course?: boolean | Prisma.HelpRequest$courseArgs<ExtArgs>
   acceptedBy?: boolean | Prisma.HelpRequest$acceptedByArgs<ExtArgs>
+  course?: boolean | Prisma.HelpRequest$courseArgs<ExtArgs>
+  student?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["helpRequest"]>
 
 export type HelpRequestSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1235,9 +1235,9 @@ export type HelpRequestSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   acceptedById?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  student?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  course?: boolean | Prisma.HelpRequest$courseArgs<ExtArgs>
   acceptedBy?: boolean | Prisma.HelpRequest$acceptedByArgs<ExtArgs>
+  course?: boolean | Prisma.HelpRequest$courseArgs<ExtArgs>
+  student?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["helpRequest"]>
 
 export type HelpRequestSelectScalar = {
@@ -1256,32 +1256,32 @@ export type HelpRequestSelectScalar = {
 
 export type HelpRequestOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "studentId" | "courseId" | "title" | "description" | "status" | "preferredDate" | "preferredTime" | "acceptedById" | "createdAt" | "updatedAt", ExtArgs["result"]["helpRequest"]>
 export type HelpRequestInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  student?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  course?: boolean | Prisma.HelpRequest$courseArgs<ExtArgs>
-  acceptedBy?: boolean | Prisma.HelpRequest$acceptedByArgs<ExtArgs>
   sessions?: boolean | Prisma.HelpRequest$sessionsArgs<ExtArgs>
   attachments?: boolean | Prisma.HelpRequest$attachmentsArgs<ExtArgs>
+  acceptedBy?: boolean | Prisma.HelpRequest$acceptedByArgs<ExtArgs>
+  course?: boolean | Prisma.HelpRequest$courseArgs<ExtArgs>
+  student?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.HelpRequestCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type HelpRequestIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  student?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  course?: boolean | Prisma.HelpRequest$courseArgs<ExtArgs>
   acceptedBy?: boolean | Prisma.HelpRequest$acceptedByArgs<ExtArgs>
+  course?: boolean | Prisma.HelpRequest$courseArgs<ExtArgs>
+  student?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 export type HelpRequestIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  student?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  course?: boolean | Prisma.HelpRequest$courseArgs<ExtArgs>
   acceptedBy?: boolean | Prisma.HelpRequest$acceptedByArgs<ExtArgs>
+  course?: boolean | Prisma.HelpRequest$courseArgs<ExtArgs>
+  student?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 
 export type $HelpRequestPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "HelpRequest"
   objects: {
-    student: Prisma.$UserPayload<ExtArgs>
-    course: Prisma.$CoursePayload<ExtArgs> | null
-    acceptedBy: Prisma.$UserPayload<ExtArgs> | null
     sessions: Prisma.$AcademicSessionPayload<ExtArgs>[]
     attachments: Prisma.$AttachmentPayload<ExtArgs>[]
+    acceptedBy: Prisma.$UserPayload<ExtArgs> | null
+    course: Prisma.$CoursePayload<ExtArgs> | null
+    student: Prisma.$UserPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1689,11 +1689,11 @@ readonly fields: HelpRequestFieldRefs;
  */
 export interface Prisma__HelpRequestClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  student<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  course<T extends Prisma.HelpRequest$courseArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.HelpRequest$courseArgs<ExtArgs>>): Prisma.Prisma__CourseClient<runtime.Types.Result.GetResult<Prisma.$CoursePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  acceptedBy<T extends Prisma.HelpRequest$acceptedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.HelpRequest$acceptedByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   sessions<T extends Prisma.HelpRequest$sessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.HelpRequest$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AcademicSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   attachments<T extends Prisma.HelpRequest$attachmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.HelpRequest$attachmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AttachmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  acceptedBy<T extends Prisma.HelpRequest$acceptedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.HelpRequest$acceptedByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  course<T extends Prisma.HelpRequest$courseArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.HelpRequest$courseArgs<ExtArgs>>): Prisma.Prisma__CourseClient<runtime.Types.Result.GetResult<Prisma.$CoursePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  student<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2130,44 +2130,6 @@ export type HelpRequestDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.I
 }
 
 /**
- * HelpRequest.course
- */
-export type HelpRequest$courseArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Course
-   */
-  select?: Prisma.CourseSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Course
-   */
-  omit?: Prisma.CourseOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.CourseInclude<ExtArgs> | null
-  where?: Prisma.CourseWhereInput
-}
-
-/**
- * HelpRequest.acceptedBy
- */
-export type HelpRequest$acceptedByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the User
-   */
-  select?: Prisma.UserSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the User
-   */
-  omit?: Prisma.UserOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.UserInclude<ExtArgs> | null
-  where?: Prisma.UserWhereInput
-}
-
-/**
  * HelpRequest.sessions
  */
 export type HelpRequest$sessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2213,6 +2175,44 @@ export type HelpRequest$attachmentsArgs<ExtArgs extends runtime.Types.Extensions
   take?: number
   skip?: number
   distinct?: Prisma.AttachmentScalarFieldEnum | Prisma.AttachmentScalarFieldEnum[]
+}
+
+/**
+ * HelpRequest.acceptedBy
+ */
+export type HelpRequest$acceptedByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
+}
+
+/**
+ * HelpRequest.course
+ */
+export type HelpRequest$courseArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Course
+   */
+  select?: Prisma.CourseSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Course
+   */
+  omit?: Prisma.CourseOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CourseInclude<ExtArgs> | null
+  where?: Prisma.CourseWhereInput
 }
 
 /**
