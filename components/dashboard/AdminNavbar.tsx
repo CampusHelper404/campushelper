@@ -5,7 +5,7 @@ import { usePathname, useRouter } from "next/navigation"
 import { useState } from "react"
 import { trpc } from "@/trpc/client"
 import { authClient } from "@/lib/auth-client"
-import { LayoutDashboard, Users, ShieldCheck, ClipboardList, CalendarDays, LogOut, BookOpen, Menu, X } from "lucide-react"
+import { LayoutDashboard, Users, ShieldCheck, ClipboardList, CalendarDays, LogOut, BookOpen, Menu, X, Settings } from "lucide-react"
 
 const navLinks = [
     { name: "Overview", href: "/admin", icon: LayoutDashboard },
@@ -84,14 +84,17 @@ export default function AdminNavbar() {
 
                 {/* User + Actions */}
                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexShrink: 0 }}>
-                    <div style={{
-                        width: '34px', height: '34px', borderRadius: '50%',
-                        background: 'rgba(0,126,167,0.5)', color: 'var(--chart-3)',
-                        display: 'flex', alignItems: 'center', justifyContent: 'center',
-                        fontWeight: 800, fontSize: '0.75rem',
-                    }}>
-                        {user?.name?.split(" ").map(n => n[0]).join("").toUpperCase().slice(0, 2) || "A"}
-                    </div>
+                    <Link href="/settings" style={{ textDecoration: 'none' }}>
+                        <div style={{
+                            width: '34px', height: '34px', borderRadius: '50%',
+                            background: 'rgba(0,126,167,0.5)', color: 'var(--chart-3)',
+                            display: 'flex', alignItems: 'center', justifyContent: 'center',
+                            fontWeight: 800, fontSize: '0.75rem',
+                            cursor: 'pointer', transition: 'all 0.15s'
+                        }}>
+                            {user?.name?.split(" ").map(n => n[0]).join("").toUpperCase().slice(0, 2) || "A"}
+                        </div>
+                    </Link>
                     <button onClick={handleSignOut} className="ch-admin-nav-links" style={{
                         display: 'flex', alignItems: 'center', gap: '6px',
                         background: 'rgba(255,255,255,0.07)',
@@ -141,6 +144,16 @@ export default function AdminNavbar() {
                         )
                     })}
                     <li style={{ borderTop: '1px solid rgba(255,255,255,0.1)', marginTop: '8px', paddingTop: '8px' }}>
+                        <Link href="/settings" onClick={() => setMobileOpen(false)} style={{
+                            display: 'flex', alignItems: 'center', gap: '10px',
+                            padding: '12px 16px', borderRadius: '10px',
+                            textDecoration: 'none', fontSize: '0.9rem',
+                            fontWeight: 700, color: 'white',
+                            background: 'rgba(255,255,255,0.05)',
+                            marginBottom: '4px'
+                        }}>
+                            <Settings size={16} /> Settings
+                        </Link>
                         <button onClick={handleSignOut} style={{
                             width: '100%', textAlign: 'left', padding: '12px 16px',
                             borderRadius: '10px', border: 'none', background: 'rgba(255,80,80,0.15)',
