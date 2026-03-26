@@ -32,6 +32,9 @@ export type AcademicSessionMinAggregateOutputType = {
   startTime: Date | null
   endTime: Date | null
   status: $Enums.SessionStatus | null
+  payoutStatus: string | null
+  isDisputed: boolean | null
+  adminReviewNote: string | null
   meetingLink: string | null
   notes: string | null
   createdAt: Date | null
@@ -46,6 +49,9 @@ export type AcademicSessionMaxAggregateOutputType = {
   startTime: Date | null
   endTime: Date | null
   status: $Enums.SessionStatus | null
+  payoutStatus: string | null
+  isDisputed: boolean | null
+  adminReviewNote: string | null
   meetingLink: string | null
   notes: string | null
   createdAt: Date | null
@@ -60,6 +66,9 @@ export type AcademicSessionCountAggregateOutputType = {
   startTime: number
   endTime: number
   status: number
+  payoutStatus: number
+  isDisputed: number
+  adminReviewNote: number
   meetingLink: number
   notes: number
   createdAt: number
@@ -76,6 +85,9 @@ export type AcademicSessionMinAggregateInputType = {
   startTime?: true
   endTime?: true
   status?: true
+  payoutStatus?: true
+  isDisputed?: true
+  adminReviewNote?: true
   meetingLink?: true
   notes?: true
   createdAt?: true
@@ -90,6 +102,9 @@ export type AcademicSessionMaxAggregateInputType = {
   startTime?: true
   endTime?: true
   status?: true
+  payoutStatus?: true
+  isDisputed?: true
+  adminReviewNote?: true
   meetingLink?: true
   notes?: true
   createdAt?: true
@@ -104,6 +119,9 @@ export type AcademicSessionCountAggregateInputType = {
   startTime?: true
   endTime?: true
   status?: true
+  payoutStatus?: true
+  isDisputed?: true
+  adminReviewNote?: true
   meetingLink?: true
   notes?: true
   createdAt?: true
@@ -191,6 +209,9 @@ export type AcademicSessionGroupByOutputType = {
   startTime: Date
   endTime: Date | null
   status: $Enums.SessionStatus
+  payoutStatus: string
+  isDisputed: boolean
+  adminReviewNote: string | null
   meetingLink: string | null
   notes: string | null
   createdAt: Date
@@ -226,10 +247,14 @@ export type AcademicSessionWhereInput = {
   startTime?: Prisma.DateTimeFilter<"AcademicSession"> | Date | string
   endTime?: Prisma.DateTimeNullableFilter<"AcademicSession"> | Date | string | null
   status?: Prisma.EnumSessionStatusFilter<"AcademicSession"> | $Enums.SessionStatus
+  payoutStatus?: Prisma.StringFilter<"AcademicSession"> | string
+  isDisputed?: Prisma.BoolFilter<"AcademicSession"> | boolean
+  adminReviewNote?: Prisma.StringNullableFilter<"AcademicSession"> | string | null
   meetingLink?: Prisma.StringNullableFilter<"AcademicSession"> | string | null
   notes?: Prisma.StringNullableFilter<"AcademicSession"> | string | null
   createdAt?: Prisma.DateTimeFilter<"AcademicSession"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"AcademicSession"> | Date | string
+  joinLogs?: Prisma.SessionJoinLogListRelationFilter
   helper?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   request?: Prisma.XOR<Prisma.HelpRequestScalarRelationFilter, Prisma.HelpRequestWhereInput>
   student?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -246,10 +271,14 @@ export type AcademicSessionOrderByWithRelationInput = {
   startTime?: Prisma.SortOrder
   endTime?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
+  payoutStatus?: Prisma.SortOrder
+  isDisputed?: Prisma.SortOrder
+  adminReviewNote?: Prisma.SortOrderInput | Prisma.SortOrder
   meetingLink?: Prisma.SortOrderInput | Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  joinLogs?: Prisma.SessionJoinLogOrderByRelationAggregateInput
   helper?: Prisma.UserOrderByWithRelationInput
   request?: Prisma.HelpRequestOrderByWithRelationInput
   student?: Prisma.UserOrderByWithRelationInput
@@ -269,10 +298,14 @@ export type AcademicSessionWhereUniqueInput = Prisma.AtLeast<{
   startTime?: Prisma.DateTimeFilter<"AcademicSession"> | Date | string
   endTime?: Prisma.DateTimeNullableFilter<"AcademicSession"> | Date | string | null
   status?: Prisma.EnumSessionStatusFilter<"AcademicSession"> | $Enums.SessionStatus
+  payoutStatus?: Prisma.StringFilter<"AcademicSession"> | string
+  isDisputed?: Prisma.BoolFilter<"AcademicSession"> | boolean
+  adminReviewNote?: Prisma.StringNullableFilter<"AcademicSession"> | string | null
   meetingLink?: Prisma.StringNullableFilter<"AcademicSession"> | string | null
   notes?: Prisma.StringNullableFilter<"AcademicSession"> | string | null
   createdAt?: Prisma.DateTimeFilter<"AcademicSession"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"AcademicSession"> | Date | string
+  joinLogs?: Prisma.SessionJoinLogListRelationFilter
   helper?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   request?: Prisma.XOR<Prisma.HelpRequestScalarRelationFilter, Prisma.HelpRequestWhereInput>
   student?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -289,6 +322,9 @@ export type AcademicSessionOrderByWithAggregationInput = {
   startTime?: Prisma.SortOrder
   endTime?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
+  payoutStatus?: Prisma.SortOrder
+  isDisputed?: Prisma.SortOrder
+  adminReviewNote?: Prisma.SortOrderInput | Prisma.SortOrder
   meetingLink?: Prisma.SortOrderInput | Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -309,6 +345,9 @@ export type AcademicSessionScalarWhereWithAggregatesInput = {
   startTime?: Prisma.DateTimeWithAggregatesFilter<"AcademicSession"> | Date | string
   endTime?: Prisma.DateTimeNullableWithAggregatesFilter<"AcademicSession"> | Date | string | null
   status?: Prisma.EnumSessionStatusWithAggregatesFilter<"AcademicSession"> | $Enums.SessionStatus
+  payoutStatus?: Prisma.StringWithAggregatesFilter<"AcademicSession"> | string
+  isDisputed?: Prisma.BoolWithAggregatesFilter<"AcademicSession"> | boolean
+  adminReviewNote?: Prisma.StringNullableWithAggregatesFilter<"AcademicSession"> | string | null
   meetingLink?: Prisma.StringNullableWithAggregatesFilter<"AcademicSession"> | string | null
   notes?: Prisma.StringNullableWithAggregatesFilter<"AcademicSession"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"AcademicSession"> | Date | string
@@ -320,10 +359,14 @@ export type AcademicSessionCreateInput = {
   startTime: Date | string
   endTime?: Date | string | null
   status?: $Enums.SessionStatus
+  payoutStatus?: string
+  isDisputed?: boolean
+  adminReviewNote?: string | null
   meetingLink?: string | null
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  joinLogs?: Prisma.SessionJoinLogCreateNestedManyWithoutSessionInput
   helper: Prisma.UserCreateNestedOneWithoutHelperSessionsInput
   request: Prisma.HelpRequestCreateNestedOneWithoutSessionsInput
   student: Prisma.UserCreateNestedOneWithoutStudentSessionsInput
@@ -340,10 +383,14 @@ export type AcademicSessionUncheckedCreateInput = {
   startTime: Date | string
   endTime?: Date | string | null
   status?: $Enums.SessionStatus
+  payoutStatus?: string
+  isDisputed?: boolean
+  adminReviewNote?: string | null
   meetingLink?: string | null
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  joinLogs?: Prisma.SessionJoinLogUncheckedCreateNestedManyWithoutSessionInput
   payment?: Prisma.PaymentUncheckedCreateNestedOneWithoutSessionInput
   reports?: Prisma.ReportUncheckedCreateNestedManyWithoutSessionInput
   review?: Prisma.ReviewUncheckedCreateNestedOneWithoutSessionInput
@@ -354,10 +401,14 @@ export type AcademicSessionUpdateInput = {
   startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumSessionStatusFieldUpdateOperationsInput | $Enums.SessionStatus
+  payoutStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  isDisputed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  adminReviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   meetingLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  joinLogs?: Prisma.SessionJoinLogUpdateManyWithoutSessionNestedInput
   helper?: Prisma.UserUpdateOneRequiredWithoutHelperSessionsNestedInput
   request?: Prisma.HelpRequestUpdateOneRequiredWithoutSessionsNestedInput
   student?: Prisma.UserUpdateOneRequiredWithoutStudentSessionsNestedInput
@@ -374,10 +425,14 @@ export type AcademicSessionUncheckedUpdateInput = {
   startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumSessionStatusFieldUpdateOperationsInput | $Enums.SessionStatus
+  payoutStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  isDisputed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  adminReviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   meetingLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  joinLogs?: Prisma.SessionJoinLogUncheckedUpdateManyWithoutSessionNestedInput
   payment?: Prisma.PaymentUncheckedUpdateOneWithoutSessionNestedInput
   reports?: Prisma.ReportUncheckedUpdateManyWithoutSessionNestedInput
   review?: Prisma.ReviewUncheckedUpdateOneWithoutSessionNestedInput
@@ -391,6 +446,9 @@ export type AcademicSessionCreateManyInput = {
   startTime: Date | string
   endTime?: Date | string | null
   status?: $Enums.SessionStatus
+  payoutStatus?: string
+  isDisputed?: boolean
+  adminReviewNote?: string | null
   meetingLink?: string | null
   notes?: string | null
   createdAt?: Date | string
@@ -402,6 +460,9 @@ export type AcademicSessionUpdateManyMutationInput = {
   startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumSessionStatusFieldUpdateOperationsInput | $Enums.SessionStatus
+  payoutStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  isDisputed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  adminReviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   meetingLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -416,6 +477,9 @@ export type AcademicSessionUncheckedUpdateManyInput = {
   startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumSessionStatusFieldUpdateOperationsInput | $Enums.SessionStatus
+  payoutStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  isDisputed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  adminReviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   meetingLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -440,6 +504,9 @@ export type AcademicSessionCountOrderByAggregateInput = {
   startTime?: Prisma.SortOrder
   endTime?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  payoutStatus?: Prisma.SortOrder
+  isDisputed?: Prisma.SortOrder
+  adminReviewNote?: Prisma.SortOrder
   meetingLink?: Prisma.SortOrder
   notes?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -454,6 +521,9 @@ export type AcademicSessionMaxOrderByAggregateInput = {
   startTime?: Prisma.SortOrder
   endTime?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  payoutStatus?: Prisma.SortOrder
+  isDisputed?: Prisma.SortOrder
+  adminReviewNote?: Prisma.SortOrder
   meetingLink?: Prisma.SortOrder
   notes?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -468,6 +538,9 @@ export type AcademicSessionMinOrderByAggregateInput = {
   startTime?: Prisma.SortOrder
   endTime?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  payoutStatus?: Prisma.SortOrder
+  isDisputed?: Prisma.SortOrder
+  adminReviewNote?: Prisma.SortOrder
   meetingLink?: Prisma.SortOrder
   notes?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -658,15 +731,33 @@ export type AcademicSessionUpdateOneRequiredWithoutPaymentNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.AcademicSessionUpdateToOneWithWhereWithoutPaymentInput, Prisma.AcademicSessionUpdateWithoutPaymentInput>, Prisma.AcademicSessionUncheckedUpdateWithoutPaymentInput>
 }
 
+export type AcademicSessionCreateNestedOneWithoutJoinLogsInput = {
+  create?: Prisma.XOR<Prisma.AcademicSessionCreateWithoutJoinLogsInput, Prisma.AcademicSessionUncheckedCreateWithoutJoinLogsInput>
+  connectOrCreate?: Prisma.AcademicSessionCreateOrConnectWithoutJoinLogsInput
+  connect?: Prisma.AcademicSessionWhereUniqueInput
+}
+
+export type AcademicSessionUpdateOneRequiredWithoutJoinLogsNestedInput = {
+  create?: Prisma.XOR<Prisma.AcademicSessionCreateWithoutJoinLogsInput, Prisma.AcademicSessionUncheckedCreateWithoutJoinLogsInput>
+  connectOrCreate?: Prisma.AcademicSessionCreateOrConnectWithoutJoinLogsInput
+  upsert?: Prisma.AcademicSessionUpsertWithoutJoinLogsInput
+  connect?: Prisma.AcademicSessionWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AcademicSessionUpdateToOneWithWhereWithoutJoinLogsInput, Prisma.AcademicSessionUpdateWithoutJoinLogsInput>, Prisma.AcademicSessionUncheckedUpdateWithoutJoinLogsInput>
+}
+
 export type AcademicSessionCreateWithoutHelperInput = {
   id?: string
   startTime: Date | string
   endTime?: Date | string | null
   status?: $Enums.SessionStatus
+  payoutStatus?: string
+  isDisputed?: boolean
+  adminReviewNote?: string | null
   meetingLink?: string | null
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  joinLogs?: Prisma.SessionJoinLogCreateNestedManyWithoutSessionInput
   request: Prisma.HelpRequestCreateNestedOneWithoutSessionsInput
   student: Prisma.UserCreateNestedOneWithoutStudentSessionsInput
   payment?: Prisma.PaymentCreateNestedOneWithoutSessionInput
@@ -681,10 +772,14 @@ export type AcademicSessionUncheckedCreateWithoutHelperInput = {
   startTime: Date | string
   endTime?: Date | string | null
   status?: $Enums.SessionStatus
+  payoutStatus?: string
+  isDisputed?: boolean
+  adminReviewNote?: string | null
   meetingLink?: string | null
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  joinLogs?: Prisma.SessionJoinLogUncheckedCreateNestedManyWithoutSessionInput
   payment?: Prisma.PaymentUncheckedCreateNestedOneWithoutSessionInput
   reports?: Prisma.ReportUncheckedCreateNestedManyWithoutSessionInput
   review?: Prisma.ReviewUncheckedCreateNestedOneWithoutSessionInput
@@ -705,10 +800,14 @@ export type AcademicSessionCreateWithoutStudentInput = {
   startTime: Date | string
   endTime?: Date | string | null
   status?: $Enums.SessionStatus
+  payoutStatus?: string
+  isDisputed?: boolean
+  adminReviewNote?: string | null
   meetingLink?: string | null
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  joinLogs?: Prisma.SessionJoinLogCreateNestedManyWithoutSessionInput
   helper: Prisma.UserCreateNestedOneWithoutHelperSessionsInput
   request: Prisma.HelpRequestCreateNestedOneWithoutSessionsInput
   payment?: Prisma.PaymentCreateNestedOneWithoutSessionInput
@@ -723,10 +822,14 @@ export type AcademicSessionUncheckedCreateWithoutStudentInput = {
   startTime: Date | string
   endTime?: Date | string | null
   status?: $Enums.SessionStatus
+  payoutStatus?: string
+  isDisputed?: boolean
+  adminReviewNote?: string | null
   meetingLink?: string | null
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  joinLogs?: Prisma.SessionJoinLogUncheckedCreateNestedManyWithoutSessionInput
   payment?: Prisma.PaymentUncheckedCreateNestedOneWithoutSessionInput
   reports?: Prisma.ReportUncheckedCreateNestedManyWithoutSessionInput
   review?: Prisma.ReviewUncheckedCreateNestedOneWithoutSessionInput
@@ -769,6 +872,9 @@ export type AcademicSessionScalarWhereInput = {
   startTime?: Prisma.DateTimeFilter<"AcademicSession"> | Date | string
   endTime?: Prisma.DateTimeNullableFilter<"AcademicSession"> | Date | string | null
   status?: Prisma.EnumSessionStatusFilter<"AcademicSession"> | $Enums.SessionStatus
+  payoutStatus?: Prisma.StringFilter<"AcademicSession"> | string
+  isDisputed?: Prisma.BoolFilter<"AcademicSession"> | boolean
+  adminReviewNote?: Prisma.StringNullableFilter<"AcademicSession"> | string | null
   meetingLink?: Prisma.StringNullableFilter<"AcademicSession"> | string | null
   notes?: Prisma.StringNullableFilter<"AcademicSession"> | string | null
   createdAt?: Prisma.DateTimeFilter<"AcademicSession"> | Date | string
@@ -796,10 +902,14 @@ export type AcademicSessionCreateWithoutRequestInput = {
   startTime: Date | string
   endTime?: Date | string | null
   status?: $Enums.SessionStatus
+  payoutStatus?: string
+  isDisputed?: boolean
+  adminReviewNote?: string | null
   meetingLink?: string | null
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  joinLogs?: Prisma.SessionJoinLogCreateNestedManyWithoutSessionInput
   helper: Prisma.UserCreateNestedOneWithoutHelperSessionsInput
   student: Prisma.UserCreateNestedOneWithoutStudentSessionsInput
   payment?: Prisma.PaymentCreateNestedOneWithoutSessionInput
@@ -814,10 +924,14 @@ export type AcademicSessionUncheckedCreateWithoutRequestInput = {
   startTime: Date | string
   endTime?: Date | string | null
   status?: $Enums.SessionStatus
+  payoutStatus?: string
+  isDisputed?: boolean
+  adminReviewNote?: string | null
   meetingLink?: string | null
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  joinLogs?: Prisma.SessionJoinLogUncheckedCreateNestedManyWithoutSessionInput
   payment?: Prisma.PaymentUncheckedCreateNestedOneWithoutSessionInput
   reports?: Prisma.ReportUncheckedCreateNestedManyWithoutSessionInput
   review?: Prisma.ReviewUncheckedCreateNestedOneWithoutSessionInput
@@ -854,10 +968,14 @@ export type AcademicSessionCreateWithoutReviewInput = {
   startTime: Date | string
   endTime?: Date | string | null
   status?: $Enums.SessionStatus
+  payoutStatus?: string
+  isDisputed?: boolean
+  adminReviewNote?: string | null
   meetingLink?: string | null
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  joinLogs?: Prisma.SessionJoinLogCreateNestedManyWithoutSessionInput
   helper: Prisma.UserCreateNestedOneWithoutHelperSessionsInput
   request: Prisma.HelpRequestCreateNestedOneWithoutSessionsInput
   student: Prisma.UserCreateNestedOneWithoutStudentSessionsInput
@@ -873,10 +991,14 @@ export type AcademicSessionUncheckedCreateWithoutReviewInput = {
   startTime: Date | string
   endTime?: Date | string | null
   status?: $Enums.SessionStatus
+  payoutStatus?: string
+  isDisputed?: boolean
+  adminReviewNote?: string | null
   meetingLink?: string | null
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  joinLogs?: Prisma.SessionJoinLogUncheckedCreateNestedManyWithoutSessionInput
   payment?: Prisma.PaymentUncheckedCreateNestedOneWithoutSessionInput
   reports?: Prisma.ReportUncheckedCreateNestedManyWithoutSessionInput
 }
@@ -902,10 +1024,14 @@ export type AcademicSessionUpdateWithoutReviewInput = {
   startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumSessionStatusFieldUpdateOperationsInput | $Enums.SessionStatus
+  payoutStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  isDisputed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  adminReviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   meetingLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  joinLogs?: Prisma.SessionJoinLogUpdateManyWithoutSessionNestedInput
   helper?: Prisma.UserUpdateOneRequiredWithoutHelperSessionsNestedInput
   request?: Prisma.HelpRequestUpdateOneRequiredWithoutSessionsNestedInput
   student?: Prisma.UserUpdateOneRequiredWithoutStudentSessionsNestedInput
@@ -921,10 +1047,14 @@ export type AcademicSessionUncheckedUpdateWithoutReviewInput = {
   startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumSessionStatusFieldUpdateOperationsInput | $Enums.SessionStatus
+  payoutStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  isDisputed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  adminReviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   meetingLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  joinLogs?: Prisma.SessionJoinLogUncheckedUpdateManyWithoutSessionNestedInput
   payment?: Prisma.PaymentUncheckedUpdateOneWithoutSessionNestedInput
   reports?: Prisma.ReportUncheckedUpdateManyWithoutSessionNestedInput
 }
@@ -934,10 +1064,14 @@ export type AcademicSessionCreateWithoutReportsInput = {
   startTime: Date | string
   endTime?: Date | string | null
   status?: $Enums.SessionStatus
+  payoutStatus?: string
+  isDisputed?: boolean
+  adminReviewNote?: string | null
   meetingLink?: string | null
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  joinLogs?: Prisma.SessionJoinLogCreateNestedManyWithoutSessionInput
   helper: Prisma.UserCreateNestedOneWithoutHelperSessionsInput
   request: Prisma.HelpRequestCreateNestedOneWithoutSessionsInput
   student: Prisma.UserCreateNestedOneWithoutStudentSessionsInput
@@ -953,10 +1087,14 @@ export type AcademicSessionUncheckedCreateWithoutReportsInput = {
   startTime: Date | string
   endTime?: Date | string | null
   status?: $Enums.SessionStatus
+  payoutStatus?: string
+  isDisputed?: boolean
+  adminReviewNote?: string | null
   meetingLink?: string | null
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  joinLogs?: Prisma.SessionJoinLogUncheckedCreateNestedManyWithoutSessionInput
   payment?: Prisma.PaymentUncheckedCreateNestedOneWithoutSessionInput
   review?: Prisma.ReviewUncheckedCreateNestedOneWithoutSessionInput
 }
@@ -982,10 +1120,14 @@ export type AcademicSessionUpdateWithoutReportsInput = {
   startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumSessionStatusFieldUpdateOperationsInput | $Enums.SessionStatus
+  payoutStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  isDisputed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  adminReviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   meetingLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  joinLogs?: Prisma.SessionJoinLogUpdateManyWithoutSessionNestedInput
   helper?: Prisma.UserUpdateOneRequiredWithoutHelperSessionsNestedInput
   request?: Prisma.HelpRequestUpdateOneRequiredWithoutSessionsNestedInput
   student?: Prisma.UserUpdateOneRequiredWithoutStudentSessionsNestedInput
@@ -1001,10 +1143,14 @@ export type AcademicSessionUncheckedUpdateWithoutReportsInput = {
   startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumSessionStatusFieldUpdateOperationsInput | $Enums.SessionStatus
+  payoutStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  isDisputed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  adminReviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   meetingLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  joinLogs?: Prisma.SessionJoinLogUncheckedUpdateManyWithoutSessionNestedInput
   payment?: Prisma.PaymentUncheckedUpdateOneWithoutSessionNestedInput
   review?: Prisma.ReviewUncheckedUpdateOneWithoutSessionNestedInput
 }
@@ -1014,10 +1160,14 @@ export type AcademicSessionCreateWithoutPaymentInput = {
   startTime: Date | string
   endTime?: Date | string | null
   status?: $Enums.SessionStatus
+  payoutStatus?: string
+  isDisputed?: boolean
+  adminReviewNote?: string | null
   meetingLink?: string | null
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  joinLogs?: Prisma.SessionJoinLogCreateNestedManyWithoutSessionInput
   helper: Prisma.UserCreateNestedOneWithoutHelperSessionsInput
   request: Prisma.HelpRequestCreateNestedOneWithoutSessionsInput
   student: Prisma.UserCreateNestedOneWithoutStudentSessionsInput
@@ -1033,10 +1183,14 @@ export type AcademicSessionUncheckedCreateWithoutPaymentInput = {
   startTime: Date | string
   endTime?: Date | string | null
   status?: $Enums.SessionStatus
+  payoutStatus?: string
+  isDisputed?: boolean
+  adminReviewNote?: string | null
   meetingLink?: string | null
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  joinLogs?: Prisma.SessionJoinLogUncheckedCreateNestedManyWithoutSessionInput
   reports?: Prisma.ReportUncheckedCreateNestedManyWithoutSessionInput
   review?: Prisma.ReviewUncheckedCreateNestedOneWithoutSessionInput
 }
@@ -1062,10 +1216,14 @@ export type AcademicSessionUpdateWithoutPaymentInput = {
   startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumSessionStatusFieldUpdateOperationsInput | $Enums.SessionStatus
+  payoutStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  isDisputed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  adminReviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   meetingLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  joinLogs?: Prisma.SessionJoinLogUpdateManyWithoutSessionNestedInput
   helper?: Prisma.UserUpdateOneRequiredWithoutHelperSessionsNestedInput
   request?: Prisma.HelpRequestUpdateOneRequiredWithoutSessionsNestedInput
   student?: Prisma.UserUpdateOneRequiredWithoutStudentSessionsNestedInput
@@ -1081,10 +1239,110 @@ export type AcademicSessionUncheckedUpdateWithoutPaymentInput = {
   startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumSessionStatusFieldUpdateOperationsInput | $Enums.SessionStatus
+  payoutStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  isDisputed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  adminReviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   meetingLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  joinLogs?: Prisma.SessionJoinLogUncheckedUpdateManyWithoutSessionNestedInput
+  reports?: Prisma.ReportUncheckedUpdateManyWithoutSessionNestedInput
+  review?: Prisma.ReviewUncheckedUpdateOneWithoutSessionNestedInput
+}
+
+export type AcademicSessionCreateWithoutJoinLogsInput = {
+  id?: string
+  startTime: Date | string
+  endTime?: Date | string | null
+  status?: $Enums.SessionStatus
+  payoutStatus?: string
+  isDisputed?: boolean
+  adminReviewNote?: string | null
+  meetingLink?: string | null
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  helper: Prisma.UserCreateNestedOneWithoutHelperSessionsInput
+  request: Prisma.HelpRequestCreateNestedOneWithoutSessionsInput
+  student: Prisma.UserCreateNestedOneWithoutStudentSessionsInput
+  payment?: Prisma.PaymentCreateNestedOneWithoutSessionInput
+  reports?: Prisma.ReportCreateNestedManyWithoutSessionInput
+  review?: Prisma.ReviewCreateNestedOneWithoutSessionInput
+}
+
+export type AcademicSessionUncheckedCreateWithoutJoinLogsInput = {
+  id?: string
+  requestId: string
+  studentId: string
+  helperId: string
+  startTime: Date | string
+  endTime?: Date | string | null
+  status?: $Enums.SessionStatus
+  payoutStatus?: string
+  isDisputed?: boolean
+  adminReviewNote?: string | null
+  meetingLink?: string | null
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  payment?: Prisma.PaymentUncheckedCreateNestedOneWithoutSessionInput
+  reports?: Prisma.ReportUncheckedCreateNestedManyWithoutSessionInput
+  review?: Prisma.ReviewUncheckedCreateNestedOneWithoutSessionInput
+}
+
+export type AcademicSessionCreateOrConnectWithoutJoinLogsInput = {
+  where: Prisma.AcademicSessionWhereUniqueInput
+  create: Prisma.XOR<Prisma.AcademicSessionCreateWithoutJoinLogsInput, Prisma.AcademicSessionUncheckedCreateWithoutJoinLogsInput>
+}
+
+export type AcademicSessionUpsertWithoutJoinLogsInput = {
+  update: Prisma.XOR<Prisma.AcademicSessionUpdateWithoutJoinLogsInput, Prisma.AcademicSessionUncheckedUpdateWithoutJoinLogsInput>
+  create: Prisma.XOR<Prisma.AcademicSessionCreateWithoutJoinLogsInput, Prisma.AcademicSessionUncheckedCreateWithoutJoinLogsInput>
+  where?: Prisma.AcademicSessionWhereInput
+}
+
+export type AcademicSessionUpdateToOneWithWhereWithoutJoinLogsInput = {
+  where?: Prisma.AcademicSessionWhereInput
+  data: Prisma.XOR<Prisma.AcademicSessionUpdateWithoutJoinLogsInput, Prisma.AcademicSessionUncheckedUpdateWithoutJoinLogsInput>
+}
+
+export type AcademicSessionUpdateWithoutJoinLogsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumSessionStatusFieldUpdateOperationsInput | $Enums.SessionStatus
+  payoutStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  isDisputed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  adminReviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  meetingLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  helper?: Prisma.UserUpdateOneRequiredWithoutHelperSessionsNestedInput
+  request?: Prisma.HelpRequestUpdateOneRequiredWithoutSessionsNestedInput
+  student?: Prisma.UserUpdateOneRequiredWithoutStudentSessionsNestedInput
+  payment?: Prisma.PaymentUpdateOneWithoutSessionNestedInput
+  reports?: Prisma.ReportUpdateManyWithoutSessionNestedInput
+  review?: Prisma.ReviewUpdateOneWithoutSessionNestedInput
+}
+
+export type AcademicSessionUncheckedUpdateWithoutJoinLogsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  requestId?: Prisma.StringFieldUpdateOperationsInput | string
+  studentId?: Prisma.StringFieldUpdateOperationsInput | string
+  helperId?: Prisma.StringFieldUpdateOperationsInput | string
+  startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumSessionStatusFieldUpdateOperationsInput | $Enums.SessionStatus
+  payoutStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  isDisputed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  adminReviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  meetingLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  payment?: Prisma.PaymentUncheckedUpdateOneWithoutSessionNestedInput
   reports?: Prisma.ReportUncheckedUpdateManyWithoutSessionNestedInput
   review?: Prisma.ReviewUncheckedUpdateOneWithoutSessionNestedInput
 }
@@ -1096,6 +1354,9 @@ export type AcademicSessionCreateManyHelperInput = {
   startTime: Date | string
   endTime?: Date | string | null
   status?: $Enums.SessionStatus
+  payoutStatus?: string
+  isDisputed?: boolean
+  adminReviewNote?: string | null
   meetingLink?: string | null
   notes?: string | null
   createdAt?: Date | string
@@ -1109,6 +1370,9 @@ export type AcademicSessionCreateManyStudentInput = {
   startTime: Date | string
   endTime?: Date | string | null
   status?: $Enums.SessionStatus
+  payoutStatus?: string
+  isDisputed?: boolean
+  adminReviewNote?: string | null
   meetingLink?: string | null
   notes?: string | null
   createdAt?: Date | string
@@ -1120,10 +1384,14 @@ export type AcademicSessionUpdateWithoutHelperInput = {
   startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumSessionStatusFieldUpdateOperationsInput | $Enums.SessionStatus
+  payoutStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  isDisputed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  adminReviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   meetingLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  joinLogs?: Prisma.SessionJoinLogUpdateManyWithoutSessionNestedInput
   request?: Prisma.HelpRequestUpdateOneRequiredWithoutSessionsNestedInput
   student?: Prisma.UserUpdateOneRequiredWithoutStudentSessionsNestedInput
   payment?: Prisma.PaymentUpdateOneWithoutSessionNestedInput
@@ -1138,10 +1406,14 @@ export type AcademicSessionUncheckedUpdateWithoutHelperInput = {
   startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumSessionStatusFieldUpdateOperationsInput | $Enums.SessionStatus
+  payoutStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  isDisputed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  adminReviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   meetingLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  joinLogs?: Prisma.SessionJoinLogUncheckedUpdateManyWithoutSessionNestedInput
   payment?: Prisma.PaymentUncheckedUpdateOneWithoutSessionNestedInput
   reports?: Prisma.ReportUncheckedUpdateManyWithoutSessionNestedInput
   review?: Prisma.ReviewUncheckedUpdateOneWithoutSessionNestedInput
@@ -1154,6 +1426,9 @@ export type AcademicSessionUncheckedUpdateManyWithoutHelperInput = {
   startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumSessionStatusFieldUpdateOperationsInput | $Enums.SessionStatus
+  payoutStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  isDisputed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  adminReviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   meetingLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1165,10 +1440,14 @@ export type AcademicSessionUpdateWithoutStudentInput = {
   startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumSessionStatusFieldUpdateOperationsInput | $Enums.SessionStatus
+  payoutStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  isDisputed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  adminReviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   meetingLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  joinLogs?: Prisma.SessionJoinLogUpdateManyWithoutSessionNestedInput
   helper?: Prisma.UserUpdateOneRequiredWithoutHelperSessionsNestedInput
   request?: Prisma.HelpRequestUpdateOneRequiredWithoutSessionsNestedInput
   payment?: Prisma.PaymentUpdateOneWithoutSessionNestedInput
@@ -1183,10 +1462,14 @@ export type AcademicSessionUncheckedUpdateWithoutStudentInput = {
   startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumSessionStatusFieldUpdateOperationsInput | $Enums.SessionStatus
+  payoutStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  isDisputed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  adminReviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   meetingLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  joinLogs?: Prisma.SessionJoinLogUncheckedUpdateManyWithoutSessionNestedInput
   payment?: Prisma.PaymentUncheckedUpdateOneWithoutSessionNestedInput
   reports?: Prisma.ReportUncheckedUpdateManyWithoutSessionNestedInput
   review?: Prisma.ReviewUncheckedUpdateOneWithoutSessionNestedInput
@@ -1199,6 +1482,9 @@ export type AcademicSessionUncheckedUpdateManyWithoutStudentInput = {
   startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumSessionStatusFieldUpdateOperationsInput | $Enums.SessionStatus
+  payoutStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  isDisputed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  adminReviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   meetingLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1212,6 +1498,9 @@ export type AcademicSessionCreateManyRequestInput = {
   startTime: Date | string
   endTime?: Date | string | null
   status?: $Enums.SessionStatus
+  payoutStatus?: string
+  isDisputed?: boolean
+  adminReviewNote?: string | null
   meetingLink?: string | null
   notes?: string | null
   createdAt?: Date | string
@@ -1223,10 +1512,14 @@ export type AcademicSessionUpdateWithoutRequestInput = {
   startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumSessionStatusFieldUpdateOperationsInput | $Enums.SessionStatus
+  payoutStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  isDisputed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  adminReviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   meetingLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  joinLogs?: Prisma.SessionJoinLogUpdateManyWithoutSessionNestedInput
   helper?: Prisma.UserUpdateOneRequiredWithoutHelperSessionsNestedInput
   student?: Prisma.UserUpdateOneRequiredWithoutStudentSessionsNestedInput
   payment?: Prisma.PaymentUpdateOneWithoutSessionNestedInput
@@ -1241,10 +1534,14 @@ export type AcademicSessionUncheckedUpdateWithoutRequestInput = {
   startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumSessionStatusFieldUpdateOperationsInput | $Enums.SessionStatus
+  payoutStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  isDisputed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  adminReviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   meetingLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  joinLogs?: Prisma.SessionJoinLogUncheckedUpdateManyWithoutSessionNestedInput
   payment?: Prisma.PaymentUncheckedUpdateOneWithoutSessionNestedInput
   reports?: Prisma.ReportUncheckedUpdateManyWithoutSessionNestedInput
   review?: Prisma.ReviewUncheckedUpdateOneWithoutSessionNestedInput
@@ -1257,6 +1554,9 @@ export type AcademicSessionUncheckedUpdateManyWithoutRequestInput = {
   startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumSessionStatusFieldUpdateOperationsInput | $Enums.SessionStatus
+  payoutStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  isDisputed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  adminReviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   meetingLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1269,10 +1569,12 @@ export type AcademicSessionUncheckedUpdateManyWithoutRequestInput = {
  */
 
 export type AcademicSessionCountOutputType = {
+  joinLogs: number
   reports: number
 }
 
 export type AcademicSessionCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  joinLogs?: boolean | AcademicSessionCountOutputTypeCountJoinLogsArgs
   reports?: boolean | AcademicSessionCountOutputTypeCountReportsArgs
 }
 
@@ -1284,6 +1586,13 @@ export type AcademicSessionCountOutputTypeDefaultArgs<ExtArgs extends runtime.Ty
    * Select specific fields to fetch from the AcademicSessionCountOutputType
    */
   select?: Prisma.AcademicSessionCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * AcademicSessionCountOutputType without action
+ */
+export type AcademicSessionCountOutputTypeCountJoinLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SessionJoinLogWhereInput
 }
 
 /**
@@ -1302,10 +1611,14 @@ export type AcademicSessionSelect<ExtArgs extends runtime.Types.Extensions.Inter
   startTime?: boolean
   endTime?: boolean
   status?: boolean
+  payoutStatus?: boolean
+  isDisputed?: boolean
+  adminReviewNote?: boolean
   meetingLink?: boolean
   notes?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  joinLogs?: boolean | Prisma.AcademicSession$joinLogsArgs<ExtArgs>
   helper?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   request?: boolean | Prisma.HelpRequestDefaultArgs<ExtArgs>
   student?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -1323,6 +1636,9 @@ export type AcademicSessionSelectCreateManyAndReturn<ExtArgs extends runtime.Typ
   startTime?: boolean
   endTime?: boolean
   status?: boolean
+  payoutStatus?: boolean
+  isDisputed?: boolean
+  adminReviewNote?: boolean
   meetingLink?: boolean
   notes?: boolean
   createdAt?: boolean
@@ -1340,6 +1656,9 @@ export type AcademicSessionSelectUpdateManyAndReturn<ExtArgs extends runtime.Typ
   startTime?: boolean
   endTime?: boolean
   status?: boolean
+  payoutStatus?: boolean
+  isDisputed?: boolean
+  adminReviewNote?: boolean
   meetingLink?: boolean
   notes?: boolean
   createdAt?: boolean
@@ -1357,14 +1676,18 @@ export type AcademicSessionSelectScalar = {
   startTime?: boolean
   endTime?: boolean
   status?: boolean
+  payoutStatus?: boolean
+  isDisputed?: boolean
+  adminReviewNote?: boolean
   meetingLink?: boolean
   notes?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type AcademicSessionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "requestId" | "studentId" | "helperId" | "startTime" | "endTime" | "status" | "meetingLink" | "notes" | "createdAt" | "updatedAt", ExtArgs["result"]["academicSession"]>
+export type AcademicSessionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "requestId" | "studentId" | "helperId" | "startTime" | "endTime" | "status" | "payoutStatus" | "isDisputed" | "adminReviewNote" | "meetingLink" | "notes" | "createdAt" | "updatedAt", ExtArgs["result"]["academicSession"]>
 export type AcademicSessionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  joinLogs?: boolean | Prisma.AcademicSession$joinLogsArgs<ExtArgs>
   helper?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   request?: boolean | Prisma.HelpRequestDefaultArgs<ExtArgs>
   student?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -1387,6 +1710,7 @@ export type AcademicSessionIncludeUpdateManyAndReturn<ExtArgs extends runtime.Ty
 export type $AcademicSessionPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "AcademicSession"
   objects: {
+    joinLogs: Prisma.$SessionJoinLogPayload<ExtArgs>[]
     helper: Prisma.$UserPayload<ExtArgs>
     request: Prisma.$HelpRequestPayload<ExtArgs>
     student: Prisma.$UserPayload<ExtArgs>
@@ -1402,6 +1726,9 @@ export type $AcademicSessionPayload<ExtArgs extends runtime.Types.Extensions.Int
     startTime: Date
     endTime: Date | null
     status: $Enums.SessionStatus
+    payoutStatus: string
+    isDisputed: boolean
+    adminReviewNote: string | null
     meetingLink: string | null
     notes: string | null
     createdAt: Date
@@ -1800,6 +2127,7 @@ readonly fields: AcademicSessionFieldRefs;
  */
 export interface Prisma__AcademicSessionClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  joinLogs<T extends Prisma.AcademicSession$joinLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AcademicSession$joinLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SessionJoinLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   helper<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   request<T extends Prisma.HelpRequestDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.HelpRequestDefaultArgs<ExtArgs>>): Prisma.Prisma__HelpRequestClient<runtime.Types.Result.GetResult<Prisma.$HelpRequestPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   student<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
@@ -1842,6 +2170,9 @@ export interface AcademicSessionFieldRefs {
   readonly startTime: Prisma.FieldRef<"AcademicSession", 'DateTime'>
   readonly endTime: Prisma.FieldRef<"AcademicSession", 'DateTime'>
   readonly status: Prisma.FieldRef<"AcademicSession", 'SessionStatus'>
+  readonly payoutStatus: Prisma.FieldRef<"AcademicSession", 'String'>
+  readonly isDisputed: Prisma.FieldRef<"AcademicSession", 'Boolean'>
+  readonly adminReviewNote: Prisma.FieldRef<"AcademicSession", 'String'>
   readonly meetingLink: Prisma.FieldRef<"AcademicSession", 'String'>
   readonly notes: Prisma.FieldRef<"AcademicSession", 'String'>
   readonly createdAt: Prisma.FieldRef<"AcademicSession", 'DateTime'>
@@ -2239,6 +2570,30 @@ export type AcademicSessionDeleteManyArgs<ExtArgs extends runtime.Types.Extensio
    * Limit how many AcademicSessions to delete.
    */
   limit?: number
+}
+
+/**
+ * AcademicSession.joinLogs
+ */
+export type AcademicSession$joinLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the SessionJoinLog
+   */
+  select?: Prisma.SessionJoinLogSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the SessionJoinLog
+   */
+  omit?: Prisma.SessionJoinLogOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SessionJoinLogInclude<ExtArgs> | null
+  where?: Prisma.SessionJoinLogWhereInput
+  orderBy?: Prisma.SessionJoinLogOrderByWithRelationInput | Prisma.SessionJoinLogOrderByWithRelationInput[]
+  cursor?: Prisma.SessionJoinLogWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.SessionJoinLogScalarFieldEnum | Prisma.SessionJoinLogScalarFieldEnum[]
 }
 
 /**

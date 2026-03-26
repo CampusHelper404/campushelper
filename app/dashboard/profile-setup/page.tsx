@@ -27,7 +27,7 @@ export default function ProfileSetupPage() {
   }
 
   return (
-    <div className="dash-wrapper" style={{ minHeight: '100vh', fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+    <div className="dash-wrapper" style={{ minHeight: '100vh', fontFamily: 'var(--font-plus-jakarta-sans), sans-serif' }}>
       <HelperNavbar />
 
       <main style={{ maxWidth: '1100px', margin: '0 auto', padding: '2.5rem 1.5rem 4rem', display: 'flex', flexDirection: 'column', gap: '0' }}>
@@ -107,7 +107,7 @@ export default function ProfileSetupPage() {
                   <div key={i} style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
                     <div style={{
                       width: '28px', height: '28px', borderRadius: '50%',
-                      background: 'rgba(0, 126, 167, 0.1)',
+                      background: 'color-mix(in srgb, var(--primary) 10%, transparent)',
                       color: 'var(--btn-bg)',
                       display: 'flex', alignItems: 'center', justifyContent: 'center',
                       flexShrink: 0
@@ -125,10 +125,10 @@ export default function ProfileSetupPage() {
 
             {/* Tip Card */}
             <div style={{
-              background: 'rgba(0, 126, 167, 0.06)',
+              background: 'color-mix(in srgb, var(--primary) 6%, transparent)',
               borderRadius: 'var(--radius-md)',
               padding: '1.25rem',
-              border: '1px solid rgba(0, 126, 167, 0.12)',
+              border: '1px solid color-mix(in srgb, var(--primary) 12%, transparent)',
             }}>
               <div style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--btn-bg)', marginBottom: '6px', display: 'flex', alignItems: 'center', gap: '6px' }}>
                 <ArrowRight size={14} /> Pro Tip

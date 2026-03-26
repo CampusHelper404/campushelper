@@ -29,11 +29,13 @@ export type AggregateHelperProfile = {
 export type HelperProfileAvgAggregateOutputType = {
   hourlyRate: number | null
   rating: number | null
+  balance: number | null
 }
 
 export type HelperProfileSumAggregateOutputType = {
   hourlyRate: number | null
   rating: number | null
+  balance: number | null
 }
 
 export type HelperProfileMinAggregateOutputType = {
@@ -46,6 +48,7 @@ export type HelperProfileMinAggregateOutputType = {
   rating: number | null
   verificationStatus: string | null
   rejectionReason: string | null
+  balance: number | null
 }
 
 export type HelperProfileMaxAggregateOutputType = {
@@ -58,6 +61,7 @@ export type HelperProfileMaxAggregateOutputType = {
   rating: number | null
   verificationStatus: string | null
   rejectionReason: string | null
+  balance: number | null
 }
 
 export type HelperProfileCountAggregateOutputType = {
@@ -70,6 +74,7 @@ export type HelperProfileCountAggregateOutputType = {
   rating: number
   verificationStatus: number
   rejectionReason: number
+  balance: number
   _all: number
 }
 
@@ -77,11 +82,13 @@ export type HelperProfileCountAggregateOutputType = {
 export type HelperProfileAvgAggregateInputType = {
   hourlyRate?: true
   rating?: true
+  balance?: true
 }
 
 export type HelperProfileSumAggregateInputType = {
   hourlyRate?: true
   rating?: true
+  balance?: true
 }
 
 export type HelperProfileMinAggregateInputType = {
@@ -94,6 +101,7 @@ export type HelperProfileMinAggregateInputType = {
   rating?: true
   verificationStatus?: true
   rejectionReason?: true
+  balance?: true
 }
 
 export type HelperProfileMaxAggregateInputType = {
@@ -106,6 +114,7 @@ export type HelperProfileMaxAggregateInputType = {
   rating?: true
   verificationStatus?: true
   rejectionReason?: true
+  balance?: true
 }
 
 export type HelperProfileCountAggregateInputType = {
@@ -118,6 +127,7 @@ export type HelperProfileCountAggregateInputType = {
   rating?: true
   verificationStatus?: true
   rejectionReason?: true
+  balance?: true
   _all?: true
 }
 
@@ -217,6 +227,7 @@ export type HelperProfileGroupByOutputType = {
   rating: number
   verificationStatus: string
   rejectionReason: string | null
+  balance: number
   _count: HelperProfileCountAggregateOutputType | null
   _avg: HelperProfileAvgAggregateOutputType | null
   _sum: HelperProfileSumAggregateOutputType | null
@@ -252,6 +263,7 @@ export type HelperProfileWhereInput = {
   rating?: Prisma.FloatFilter<"HelperProfile"> | number
   verificationStatus?: Prisma.StringFilter<"HelperProfile"> | string
   rejectionReason?: Prisma.StringNullableFilter<"HelperProfile"> | string | null
+  balance?: Prisma.FloatFilter<"HelperProfile"> | number
   availability?: Prisma.AvailabilitySlotListRelationFilter
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   expertise?: Prisma.CourseListRelationFilter
@@ -268,6 +280,7 @@ export type HelperProfileOrderByWithRelationInput = {
   rating?: Prisma.SortOrder
   verificationStatus?: Prisma.SortOrder
   rejectionReason?: Prisma.SortOrderInput | Prisma.SortOrder
+  balance?: Prisma.SortOrder
   availability?: Prisma.AvailabilitySlotOrderByRelationAggregateInput
   user?: Prisma.UserOrderByWithRelationInput
   expertise?: Prisma.CourseOrderByRelationAggregateInput
@@ -287,6 +300,7 @@ export type HelperProfileWhereUniqueInput = Prisma.AtLeast<{
   rating?: Prisma.FloatFilter<"HelperProfile"> | number
   verificationStatus?: Prisma.StringFilter<"HelperProfile"> | string
   rejectionReason?: Prisma.StringNullableFilter<"HelperProfile"> | string | null
+  balance?: Prisma.FloatFilter<"HelperProfile"> | number
   availability?: Prisma.AvailabilitySlotListRelationFilter
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   expertise?: Prisma.CourseListRelationFilter
@@ -303,6 +317,7 @@ export type HelperProfileOrderByWithAggregationInput = {
   rating?: Prisma.SortOrder
   verificationStatus?: Prisma.SortOrder
   rejectionReason?: Prisma.SortOrderInput | Prisma.SortOrder
+  balance?: Prisma.SortOrder
   _count?: Prisma.HelperProfileCountOrderByAggregateInput
   _avg?: Prisma.HelperProfileAvgOrderByAggregateInput
   _max?: Prisma.HelperProfileMaxOrderByAggregateInput
@@ -323,6 +338,7 @@ export type HelperProfileScalarWhereWithAggregatesInput = {
   rating?: Prisma.FloatWithAggregatesFilter<"HelperProfile"> | number
   verificationStatus?: Prisma.StringWithAggregatesFilter<"HelperProfile"> | string
   rejectionReason?: Prisma.StringNullableWithAggregatesFilter<"HelperProfile"> | string | null
+  balance?: Prisma.FloatWithAggregatesFilter<"HelperProfile"> | number
 }
 
 export type HelperProfileCreateInput = {
@@ -334,6 +350,7 @@ export type HelperProfileCreateInput = {
   rating?: number
   verificationStatus?: string
   rejectionReason?: string | null
+  balance?: number
   availability?: Prisma.AvailabilitySlotCreateNestedManyWithoutHelperInput
   user: Prisma.UserCreateNestedOneWithoutHelperProfileInput
   expertise?: Prisma.CourseCreateNestedManyWithoutHelpersInput
@@ -350,6 +367,7 @@ export type HelperProfileUncheckedCreateInput = {
   rating?: number
   verificationStatus?: string
   rejectionReason?: string | null
+  balance?: number
   availability?: Prisma.AvailabilitySlotUncheckedCreateNestedManyWithoutHelperInput
   expertise?: Prisma.CourseUncheckedCreateNestedManyWithoutHelpersInput
   skills?: Prisma.SkillUncheckedCreateNestedManyWithoutProfilesInput
@@ -364,6 +382,7 @@ export type HelperProfileUpdateInput = {
   rating?: Prisma.FloatFieldUpdateOperationsInput | number
   verificationStatus?: Prisma.StringFieldUpdateOperationsInput | string
   rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  balance?: Prisma.FloatFieldUpdateOperationsInput | number
   availability?: Prisma.AvailabilitySlotUpdateManyWithoutHelperNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutHelperProfileNestedInput
   expertise?: Prisma.CourseUpdateManyWithoutHelpersNestedInput
@@ -380,6 +399,7 @@ export type HelperProfileUncheckedUpdateInput = {
   rating?: Prisma.FloatFieldUpdateOperationsInput | number
   verificationStatus?: Prisma.StringFieldUpdateOperationsInput | string
   rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  balance?: Prisma.FloatFieldUpdateOperationsInput | number
   availability?: Prisma.AvailabilitySlotUncheckedUpdateManyWithoutHelperNestedInput
   expertise?: Prisma.CourseUncheckedUpdateManyWithoutHelpersNestedInput
   skills?: Prisma.SkillUncheckedUpdateManyWithoutProfilesNestedInput
@@ -395,6 +415,7 @@ export type HelperProfileCreateManyInput = {
   rating?: number
   verificationStatus?: string
   rejectionReason?: string | null
+  balance?: number
 }
 
 export type HelperProfileUpdateManyMutationInput = {
@@ -406,6 +427,7 @@ export type HelperProfileUpdateManyMutationInput = {
   rating?: Prisma.FloatFieldUpdateOperationsInput | number
   verificationStatus?: Prisma.StringFieldUpdateOperationsInput | string
   rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  balance?: Prisma.FloatFieldUpdateOperationsInput | number
 }
 
 export type HelperProfileUncheckedUpdateManyInput = {
@@ -418,6 +440,7 @@ export type HelperProfileUncheckedUpdateManyInput = {
   rating?: Prisma.FloatFieldUpdateOperationsInput | number
   verificationStatus?: Prisma.StringFieldUpdateOperationsInput | string
   rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  balance?: Prisma.FloatFieldUpdateOperationsInput | number
 }
 
 export type HelperProfileNullableScalarRelationFilter = {
@@ -445,11 +468,13 @@ export type HelperProfileCountOrderByAggregateInput = {
   rating?: Prisma.SortOrder
   verificationStatus?: Prisma.SortOrder
   rejectionReason?: Prisma.SortOrder
+  balance?: Prisma.SortOrder
 }
 
 export type HelperProfileAvgOrderByAggregateInput = {
   hourlyRate?: Prisma.SortOrder
   rating?: Prisma.SortOrder
+  balance?: Prisma.SortOrder
 }
 
 export type HelperProfileMaxOrderByAggregateInput = {
@@ -462,6 +487,7 @@ export type HelperProfileMaxOrderByAggregateInput = {
   rating?: Prisma.SortOrder
   verificationStatus?: Prisma.SortOrder
   rejectionReason?: Prisma.SortOrder
+  balance?: Prisma.SortOrder
 }
 
 export type HelperProfileMinOrderByAggregateInput = {
@@ -474,11 +500,13 @@ export type HelperProfileMinOrderByAggregateInput = {
   rating?: Prisma.SortOrder
   verificationStatus?: Prisma.SortOrder
   rejectionReason?: Prisma.SortOrder
+  balance?: Prisma.SortOrder
 }
 
 export type HelperProfileSumOrderByAggregateInput = {
   hourlyRate?: Prisma.SortOrder
   rating?: Prisma.SortOrder
+  balance?: Prisma.SortOrder
 }
 
 export type HelperProfileScalarRelationFilter = {
@@ -633,6 +661,7 @@ export type HelperProfileCreateWithoutUserInput = {
   rating?: number
   verificationStatus?: string
   rejectionReason?: string | null
+  balance?: number
   availability?: Prisma.AvailabilitySlotCreateNestedManyWithoutHelperInput
   expertise?: Prisma.CourseCreateNestedManyWithoutHelpersInput
   skills?: Prisma.SkillCreateNestedManyWithoutProfilesInput
@@ -647,6 +676,7 @@ export type HelperProfileUncheckedCreateWithoutUserInput = {
   rating?: number
   verificationStatus?: string
   rejectionReason?: string | null
+  balance?: number
   availability?: Prisma.AvailabilitySlotUncheckedCreateNestedManyWithoutHelperInput
   expertise?: Prisma.CourseUncheckedCreateNestedManyWithoutHelpersInput
   skills?: Prisma.SkillUncheckedCreateNestedManyWithoutProfilesInput
@@ -677,6 +707,7 @@ export type HelperProfileUpdateWithoutUserInput = {
   rating?: Prisma.FloatFieldUpdateOperationsInput | number
   verificationStatus?: Prisma.StringFieldUpdateOperationsInput | string
   rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  balance?: Prisma.FloatFieldUpdateOperationsInput | number
   availability?: Prisma.AvailabilitySlotUpdateManyWithoutHelperNestedInput
   expertise?: Prisma.CourseUpdateManyWithoutHelpersNestedInput
   skills?: Prisma.SkillUpdateManyWithoutProfilesNestedInput
@@ -691,6 +722,7 @@ export type HelperProfileUncheckedUpdateWithoutUserInput = {
   rating?: Prisma.FloatFieldUpdateOperationsInput | number
   verificationStatus?: Prisma.StringFieldUpdateOperationsInput | string
   rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  balance?: Prisma.FloatFieldUpdateOperationsInput | number
   availability?: Prisma.AvailabilitySlotUncheckedUpdateManyWithoutHelperNestedInput
   expertise?: Prisma.CourseUncheckedUpdateManyWithoutHelpersNestedInput
   skills?: Prisma.SkillUncheckedUpdateManyWithoutProfilesNestedInput
@@ -705,6 +737,7 @@ export type HelperProfileCreateWithoutExpertiseInput = {
   rating?: number
   verificationStatus?: string
   rejectionReason?: string | null
+  balance?: number
   availability?: Prisma.AvailabilitySlotCreateNestedManyWithoutHelperInput
   user: Prisma.UserCreateNestedOneWithoutHelperProfileInput
   skills?: Prisma.SkillCreateNestedManyWithoutProfilesInput
@@ -720,6 +753,7 @@ export type HelperProfileUncheckedCreateWithoutExpertiseInput = {
   rating?: number
   verificationStatus?: string
   rejectionReason?: string | null
+  balance?: number
   availability?: Prisma.AvailabilitySlotUncheckedCreateNestedManyWithoutHelperInput
   skills?: Prisma.SkillUncheckedCreateNestedManyWithoutProfilesInput
 }
@@ -758,6 +792,7 @@ export type HelperProfileScalarWhereInput = {
   rating?: Prisma.FloatFilter<"HelperProfile"> | number
   verificationStatus?: Prisma.StringFilter<"HelperProfile"> | string
   rejectionReason?: Prisma.StringNullableFilter<"HelperProfile"> | string | null
+  balance?: Prisma.FloatFilter<"HelperProfile"> | number
 }
 
 export type HelperProfileCreateWithoutSkillsInput = {
@@ -769,6 +804,7 @@ export type HelperProfileCreateWithoutSkillsInput = {
   rating?: number
   verificationStatus?: string
   rejectionReason?: string | null
+  balance?: number
   availability?: Prisma.AvailabilitySlotCreateNestedManyWithoutHelperInput
   user: Prisma.UserCreateNestedOneWithoutHelperProfileInput
   expertise?: Prisma.CourseCreateNestedManyWithoutHelpersInput
@@ -784,6 +820,7 @@ export type HelperProfileUncheckedCreateWithoutSkillsInput = {
   rating?: number
   verificationStatus?: string
   rejectionReason?: string | null
+  balance?: number
   availability?: Prisma.AvailabilitySlotUncheckedCreateNestedManyWithoutHelperInput
   expertise?: Prisma.CourseUncheckedCreateNestedManyWithoutHelpersInput
 }
@@ -818,6 +855,7 @@ export type HelperProfileCreateWithoutAvailabilityInput = {
   rating?: number
   verificationStatus?: string
   rejectionReason?: string | null
+  balance?: number
   user: Prisma.UserCreateNestedOneWithoutHelperProfileInput
   expertise?: Prisma.CourseCreateNestedManyWithoutHelpersInput
   skills?: Prisma.SkillCreateNestedManyWithoutProfilesInput
@@ -833,6 +871,7 @@ export type HelperProfileUncheckedCreateWithoutAvailabilityInput = {
   rating?: number
   verificationStatus?: string
   rejectionReason?: string | null
+  balance?: number
   expertise?: Prisma.CourseUncheckedCreateNestedManyWithoutHelpersInput
   skills?: Prisma.SkillUncheckedCreateNestedManyWithoutProfilesInput
 }
@@ -862,6 +901,7 @@ export type HelperProfileUpdateWithoutAvailabilityInput = {
   rating?: Prisma.FloatFieldUpdateOperationsInput | number
   verificationStatus?: Prisma.StringFieldUpdateOperationsInput | string
   rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  balance?: Prisma.FloatFieldUpdateOperationsInput | number
   user?: Prisma.UserUpdateOneRequiredWithoutHelperProfileNestedInput
   expertise?: Prisma.CourseUpdateManyWithoutHelpersNestedInput
   skills?: Prisma.SkillUpdateManyWithoutProfilesNestedInput
@@ -877,6 +917,7 @@ export type HelperProfileUncheckedUpdateWithoutAvailabilityInput = {
   rating?: Prisma.FloatFieldUpdateOperationsInput | number
   verificationStatus?: Prisma.StringFieldUpdateOperationsInput | string
   rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  balance?: Prisma.FloatFieldUpdateOperationsInput | number
   expertise?: Prisma.CourseUncheckedUpdateManyWithoutHelpersNestedInput
   skills?: Prisma.SkillUncheckedUpdateManyWithoutProfilesNestedInput
 }
@@ -890,6 +931,7 @@ export type HelperProfileUpdateWithoutExpertiseInput = {
   rating?: Prisma.FloatFieldUpdateOperationsInput | number
   verificationStatus?: Prisma.StringFieldUpdateOperationsInput | string
   rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  balance?: Prisma.FloatFieldUpdateOperationsInput | number
   availability?: Prisma.AvailabilitySlotUpdateManyWithoutHelperNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutHelperProfileNestedInput
   skills?: Prisma.SkillUpdateManyWithoutProfilesNestedInput
@@ -905,6 +947,7 @@ export type HelperProfileUncheckedUpdateWithoutExpertiseInput = {
   rating?: Prisma.FloatFieldUpdateOperationsInput | number
   verificationStatus?: Prisma.StringFieldUpdateOperationsInput | string
   rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  balance?: Prisma.FloatFieldUpdateOperationsInput | number
   availability?: Prisma.AvailabilitySlotUncheckedUpdateManyWithoutHelperNestedInput
   skills?: Prisma.SkillUncheckedUpdateManyWithoutProfilesNestedInput
 }
@@ -919,6 +962,7 @@ export type HelperProfileUncheckedUpdateManyWithoutExpertiseInput = {
   rating?: Prisma.FloatFieldUpdateOperationsInput | number
   verificationStatus?: Prisma.StringFieldUpdateOperationsInput | string
   rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  balance?: Prisma.FloatFieldUpdateOperationsInput | number
 }
 
 export type HelperProfileUpdateWithoutSkillsInput = {
@@ -930,6 +974,7 @@ export type HelperProfileUpdateWithoutSkillsInput = {
   rating?: Prisma.FloatFieldUpdateOperationsInput | number
   verificationStatus?: Prisma.StringFieldUpdateOperationsInput | string
   rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  balance?: Prisma.FloatFieldUpdateOperationsInput | number
   availability?: Prisma.AvailabilitySlotUpdateManyWithoutHelperNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutHelperProfileNestedInput
   expertise?: Prisma.CourseUpdateManyWithoutHelpersNestedInput
@@ -945,6 +990,7 @@ export type HelperProfileUncheckedUpdateWithoutSkillsInput = {
   rating?: Prisma.FloatFieldUpdateOperationsInput | number
   verificationStatus?: Prisma.StringFieldUpdateOperationsInput | string
   rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  balance?: Prisma.FloatFieldUpdateOperationsInput | number
   availability?: Prisma.AvailabilitySlotUncheckedUpdateManyWithoutHelperNestedInput
   expertise?: Prisma.CourseUncheckedUpdateManyWithoutHelpersNestedInput
 }
@@ -959,6 +1005,7 @@ export type HelperProfileUncheckedUpdateManyWithoutSkillsInput = {
   rating?: Prisma.FloatFieldUpdateOperationsInput | number
   verificationStatus?: Prisma.StringFieldUpdateOperationsInput | string
   rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  balance?: Prisma.FloatFieldUpdateOperationsInput | number
 }
 
 
@@ -1020,6 +1067,7 @@ export type HelperProfileSelect<ExtArgs extends runtime.Types.Extensions.Interna
   rating?: boolean
   verificationStatus?: boolean
   rejectionReason?: boolean
+  balance?: boolean
   availability?: boolean | Prisma.HelperProfile$availabilityArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   expertise?: boolean | Prisma.HelperProfile$expertiseArgs<ExtArgs>
@@ -1037,6 +1085,7 @@ export type HelperProfileSelectCreateManyAndReturn<ExtArgs extends runtime.Types
   rating?: boolean
   verificationStatus?: boolean
   rejectionReason?: boolean
+  balance?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["helperProfile"]>
 
@@ -1050,6 +1099,7 @@ export type HelperProfileSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
   rating?: boolean
   verificationStatus?: boolean
   rejectionReason?: boolean
+  balance?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["helperProfile"]>
 
@@ -1063,9 +1113,10 @@ export type HelperProfileSelectScalar = {
   rating?: boolean
   verificationStatus?: boolean
   rejectionReason?: boolean
+  balance?: boolean
 }
 
-export type HelperProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "bio" | "headline" | "hourlyRate" | "completedProfile" | "rating" | "verificationStatus" | "rejectionReason", ExtArgs["result"]["helperProfile"]>
+export type HelperProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "bio" | "headline" | "hourlyRate" | "completedProfile" | "rating" | "verificationStatus" | "rejectionReason" | "balance", ExtArgs["result"]["helperProfile"]>
 export type HelperProfileInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   availability?: boolean | Prisma.HelperProfile$availabilityArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -1098,6 +1149,7 @@ export type $HelperProfilePayload<ExtArgs extends runtime.Types.Extensions.Inter
     rating: number
     verificationStatus: string
     rejectionReason: string | null
+    balance: number
   }, ExtArgs["result"]["helperProfile"]>
   composites: {}
 }
@@ -1534,6 +1586,7 @@ export interface HelperProfileFieldRefs {
   readonly rating: Prisma.FieldRef<"HelperProfile", 'Float'>
   readonly verificationStatus: Prisma.FieldRef<"HelperProfile", 'String'>
   readonly rejectionReason: Prisma.FieldRef<"HelperProfile", 'String'>
+  readonly balance: Prisma.FieldRef<"HelperProfile", 'Float'>
 }
     
 

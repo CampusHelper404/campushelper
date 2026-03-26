@@ -5,7 +5,10 @@ import { PrismaClient } from '@/lib/generated/prisma/client'
 
 const connectionString = process.env.DATABASE_URL!
 
-const pool = new Pool({ connectionString })
+const pool = new Pool({ 
+  connectionString,
+  ssl: process.env.NODE_ENV === "production" ? true : { rejectUnauthorized: false }
+})
 const adapter = new PrismaPg(pool)
 
 const prisma = new PrismaClient({ adapter })

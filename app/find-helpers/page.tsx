@@ -45,14 +45,14 @@ export default function FindHelpersPage() {
     return (
         <div className="dash-wrapper" style={{ background: 'var(--bg-color)', minHeight: '100vh' }}>
             <StudentNavbar />
-            <main style={{ maxWidth: '1200px', margin: '0 auto', padding: '3rem 1.5rem', fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+            <main className="ch-page-main" style={{ maxWidth: '1200px', margin: '0 auto', padding: '3rem 1.5rem', fontFamily: 'var(--font-plus-jakarta-sans), sans-serif' }}>
 
                 {/* ── Premium Welcome Header ── */}
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '2.5rem', animation: 'fadeInUp 0.5s ease-out' }}>
                     <div>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
                             <span style={{ 
-                                background: 'rgba(0, 126, 167, 0.1)', 
+                                background: 'color-mix(in srgb, var(--primary) 10%, transparent)', 
                                 color: 'var(--primary)', 
                                 padding: '4px 12px', 
                                 borderRadius: 'var(--radius-pill)', 
@@ -87,14 +87,14 @@ export default function FindHelpersPage() {
                                 padding: '14px 16px 14px 48px', 
                                 borderRadius: '16px', 
                                 border: '1px solid var(--border-color)', 
-                                background: '#fff', 
+                                background: 'var(--card)', 
                                 outline: 'none', 
                                 fontSize: '0.9rem', 
                                 fontWeight: 500,
                                 transition: 'var(--transition)',
                                 boxShadow: 'var(--shadow-sm)'
                             }}
-                            onFocus={e => { e.currentTarget.style.borderColor = 'var(--primary)'; e.currentTarget.style.boxShadow = '0 0 0 4px rgba(0, 126, 167, 0.1)' }}
+                            onFocus={e => { e.currentTarget.style.borderColor = 'var(--primary)'; e.currentTarget.style.boxShadow = '0 0 0 4px color-mix(in srgb, var(--primary) 10%, transparent)' }}
                             onBlur={e => { e.currentTarget.style.borderColor = 'var(--border-color)'; e.currentTarget.style.boxShadow = 'var(--shadow-sm)' }}
                         />
                     </div>
@@ -102,7 +102,7 @@ export default function FindHelpersPage() {
                         padding: '14px 20px', 
                         borderRadius: '16px', 
                         border: '1px solid var(--border-color)', 
-                        background: '#fff', 
+                        background: 'var(--card)', 
                         fontSize: '0.9rem', 
                         fontWeight: 600,
                         outline: 'none', 
@@ -135,9 +135,9 @@ export default function FindHelpersPage() {
                         <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', fontWeight: 500 }}>Try adjusting your search or course filters.</p>
                     </div>
                 ) : (
-                    <div style={{ 
+                    <div className="ch-helpers-grid" style={{ 
                         display: 'grid', 
-                        gridTemplateColumns: 'repeat(auto-fill, minmax(360px, 1fr))', 
+                        gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', 
                         gap: '2rem',
                         animation: 'fadeInUp 0.7s ease-out'
                     }}>
@@ -173,7 +173,7 @@ export default function FindHelpersPage() {
                                     <div style={{ 
                                         width: '72px', height: '72px', borderRadius: '20px', 
                                         background: 'var(--header-bg)', 
-                                        color: '#9ad1d4', 
+                                        color: 'var(--chart-3)', 
                                         display: 'flex', alignItems: 'center', justifyContent: 'center', 
                                         fontWeight: 800, fontSize: '1.5rem',
                                         boxShadow: '0 8px 16px rgba(0,0,0,0.1)'
@@ -203,8 +203,8 @@ export default function FindHelpersPage() {
                                     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '1.5rem' }}>
                                         {h.expertise?.slice(0, 3).map((e: any) => (
                                             <span key={e.id} style={{ 
-                                                background: '#f1f5f9', 
-                                                color: '#475569', 
+                                                background: 'var(--muted)', 
+                                                color: 'var(--muted-foreground)', 
                                                 padding: '6px 12px', 
                                                 borderRadius: '12px', 
                                                 fontSize: '0.75rem', 
@@ -245,7 +245,7 @@ export default function FindHelpersPage() {
                                         display: 'flex',
                                         alignItems: 'center',
                                         gap: '8px',
-                                        boxShadow: '0 4px 12px rgba(0, 126, 167, 0.2)'
+                                        boxShadow: '0 4px 12px color-mix(in srgb, var(--primary) 20%, transparent)'
                                     }}>
                                         View Profile <ArrowUpRight size={16} />
                                     </div>
@@ -262,7 +262,7 @@ export default function FindHelpersPage() {
                         onClose={() => setIsModalOpen(false)}
                         onBook={() => {
                             setIsModalOpen(false)
-                            router.push(`/become-helper?helperId=${selectedHelperId}`)
+                            router.push(`/book?helperId=${selectedHelperId}`)
                         }}
                     />
                 )}

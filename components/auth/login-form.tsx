@@ -15,16 +15,27 @@ export function LoginForm() {
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault()
         setIsLoading(true)
-        const { error } = await authClient.signIn.email({
+        const { data, error } = await authClient.signIn.email({
             email,
             password,
-            callbackURL: "/student-dashboard", // redirects to role-appropriate dashboard
         })
-        setIsLoading(false)
 
         if (error) {
+            setIsLoading(false)
             toast.error(error.message || "Failed to sign in")
+            return
         }
+
+        // Intercept log in and destroy session immediately if they are suspended
+        if ((data?.user as any)?.isSuspended) {
+            await authClient.signOut()
+            setIsLoading(false)
+            toast.error("Your account has been suspended by an administrator. Please contact support.")
+            return
+        }
+
+        // Only redirect if successful and not suspended
+        window.location.href = "/student-dashboard"
     }
 
     const loginWithGoogle = async () => {

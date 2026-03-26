@@ -404,7 +404,8 @@ export const ModelName = {
   Payment: 'Payment',
   Session: 'Session',
   Account: 'Account',
-  Verification: 'Verification'
+  Verification: 'Verification',
+  SessionJoinLog: 'SessionJoinLog'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -420,7 +421,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "course" | "department" | "skill" | "helpRequest" | "academicSession" | "review" | "helperProfile" | "analyticsEvent" | "availabilitySlot" | "verificationRequest" | "report" | "announcement" | "attachment" | "auditLog" | "message" | "notification" | "payment" | "session" | "account" | "verification"
+    modelProps: "user" | "course" | "department" | "skill" | "helpRequest" | "academicSession" | "review" | "helperProfile" | "analyticsEvent" | "availabilitySlot" | "verificationRequest" | "report" | "announcement" | "attachment" | "auditLog" | "message" | "notification" | "payment" | "session" | "account" | "verification" | "sessionJoinLog"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1978,6 +1979,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    SessionJoinLog: {
+      payload: Prisma.$SessionJoinLogPayload<ExtArgs>
+      fields: Prisma.SessionJoinLogFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SessionJoinLogFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SessionJoinLogPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SessionJoinLogFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SessionJoinLogPayload>
+        }
+        findFirst: {
+          args: Prisma.SessionJoinLogFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SessionJoinLogPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SessionJoinLogFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SessionJoinLogPayload>
+        }
+        findMany: {
+          args: Prisma.SessionJoinLogFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SessionJoinLogPayload>[]
+        }
+        create: {
+          args: Prisma.SessionJoinLogCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SessionJoinLogPayload>
+        }
+        createMany: {
+          args: Prisma.SessionJoinLogCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SessionJoinLogCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SessionJoinLogPayload>[]
+        }
+        delete: {
+          args: Prisma.SessionJoinLogDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SessionJoinLogPayload>
+        }
+        update: {
+          args: Prisma.SessionJoinLogUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SessionJoinLogPayload>
+        }
+        deleteMany: {
+          args: Prisma.SessionJoinLogDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SessionJoinLogUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SessionJoinLogUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SessionJoinLogPayload>[]
+        }
+        upsert: {
+          args: Prisma.SessionJoinLogUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SessionJoinLogPayload>
+        }
+        aggregate: {
+          args: Prisma.SessionJoinLogAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSessionJoinLog>
+        }
+        groupBy: {
+          args: Prisma.SessionJoinLogGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SessionJoinLogGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SessionJoinLogCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SessionJoinLogCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -2025,6 +2100,7 @@ export const UserScalarFieldEnum = {
   image: 'image',
   role: 'role',
   onboarded: 'onboarded',
+  isSuspended: 'isSuspended',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -2085,6 +2161,9 @@ export const AcademicSessionScalarFieldEnum = {
   startTime: 'startTime',
   endTime: 'endTime',
   status: 'status',
+  payoutStatus: 'payoutStatus',
+  isDisputed: 'isDisputed',
+  adminReviewNote: 'adminReviewNote',
   meetingLink: 'meetingLink',
   notes: 'notes',
   createdAt: 'createdAt',
@@ -2114,7 +2193,8 @@ export const HelperProfileScalarFieldEnum = {
   completedProfile: 'completedProfile',
   rating: 'rating',
   verificationStatus: 'verificationStatus',
-  rejectionReason: 'rejectionReason'
+  rejectionReason: 'rejectionReason',
+  balance: 'balance'
 } as const
 
 export type HelperProfileScalarFieldEnum = (typeof HelperProfileScalarFieldEnum)[keyof typeof HelperProfileScalarFieldEnum]
@@ -2306,6 +2386,16 @@ export const VerificationScalarFieldEnum = {
 } as const
 
 export type VerificationScalarFieldEnum = (typeof VerificationScalarFieldEnum)[keyof typeof VerificationScalarFieldEnum]
+
+
+export const SessionJoinLogScalarFieldEnum = {
+  id: 'id',
+  sessionId: 'sessionId',
+  userId: 'userId',
+  timestamp: 'timestamp'
+} as const
+
+export type SessionJoinLogScalarFieldEnum = (typeof SessionJoinLogScalarFieldEnum)[keyof typeof SessionJoinLogScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -2589,6 +2679,7 @@ export type GlobalOmitConfig = {
   session?: Prisma.SessionOmit
   account?: Prisma.AccountOmit
   verification?: Prisma.VerificationOmit
+  sessionJoinLog?: Prisma.SessionJoinLogOmit
 }
 
 /* Types for Logging */

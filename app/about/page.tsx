@@ -40,7 +40,7 @@ export default function AboutPage() {
     }, [])
 
     return (
-        <div style={{ backgroundColor: "#f0f4f5", minHeight: "100vh" }}>
+        <div style={{ backgroundColor: "var(--background)", minHeight: "100vh" }}>
             {/* Navigation */}
             <nav className={`navbar ${scrolled ? "scrolled" : ""}`} id="navbar">
                 <div className="nav-container">
@@ -85,28 +85,28 @@ export default function AboutPage() {
                 {/* Features Section */}
                 <section className="about-features" id="about-features" style={{ display: 'flex', justifyContent: 'center', padding: '0 2rem' }}>
                     <div className="about-features-container" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem', maxWidth: '1100px', width: '100%', marginTop: '-80px', position: 'relative', zIndex: 10 }}>
-                        <div className="feature-card about-reveal" style={{ background: 'white', borderRadius: '16px', padding: '2rem', boxShadow: '0 4px 20px rgba(0,50,73,0.08)', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', gap: '1rem' }}>
-                            <div className="feature-icon-wrapper" style={{ width: '64px', height: '64px', borderRadius: '50%', background: '#f0f4f5', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <div className="feature-card about-reveal" style={{ background: 'white', borderRadius: '16px', padding: '2rem', boxShadow: '0 4px 20px color-mix(in srgb, var(--foreground) 8%, transparent)', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', gap: '1rem' }}>
+                            <div className="feature-icon-wrapper" style={{ width: '64px', height: '64px', borderRadius: '50%', background: 'var(--background)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                                 <Image src="/smart organization.svg" alt="Smart Organization icon" width={32} height={32} />
                             </div>
-                            <h2 className="feature-title" style={{ fontSize: '1.1rem', fontWeight: 700, color: '#003249' }}>Smart Organization</h2>
-                            <p className="feature-description" style={{ fontSize: '0.9rem', color: '#4a6a7c', lineHeight: 1.6 }}>We help students manage timetables, tasks, and academic life with ease</p>
+                            <h2 className="feature-title" style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--foreground)' }}>Smart Organization</h2>
+                            <p className="feature-description" style={{ fontSize: '0.9rem', color: 'var(--muted-foreground)', lineHeight: 1.6 }}>We help students manage timetables, tasks, and academic life with ease</p>
                         </div>
 
-                        <div className="feature-card about-reveal" style={{ background: 'white', borderRadius: '16px', padding: '2rem', boxShadow: '0 4px 20px rgba(0,50,73,0.08)', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', gap: '1rem' }}>
+                        <div className="feature-card about-reveal" style={{ background: 'white', borderRadius: '16px', padding: '2rem', boxShadow: '0 4px 20px color-mix(in srgb, var(--foreground) 8%, transparent)', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', gap: '1rem' }}>
                             <div className="feature-icon-wrapper" style={{ width: '64px', height: '64px', borderRadius: '50%', background: '#e6f3f4', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                                 <Image src="/student collaboration.svg" alt="Student Collaboration icon" width={32} height={32} />
                             </div>
-                            <h2 className="feature-title" style={{ fontSize: '1.1rem', fontWeight: 700, color: '#003249' }}>Student Collaboration</h2>
-                            <p className="feature-description" style={{ fontSize: '0.9rem', color: '#4a6a7c', lineHeight: 1.6 }}>Connect with classmates, share notes and learn together in one space</p>
+                            <h2 className="feature-title" style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--foreground)' }}>Student Collaboration</h2>
+                            <p className="feature-description" style={{ fontSize: '0.9rem', color: 'var(--muted-foreground)', lineHeight: 1.6 }}>Connect with classmates, share notes and learn together in one space</p>
                         </div>
 
-                        <div className="feature-card about-reveal" style={{ background: 'white', borderRadius: '16px', padding: '2rem', boxShadow: '0 4px 20px rgba(0,50,73,0.08)', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', gap: '1rem' }}>
+                        <div className="feature-card about-reveal" style={{ background: 'white', borderRadius: '16px', padding: '2rem', boxShadow: '0 4px 20px color-mix(in srgb, var(--foreground) 8%, transparent)', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', gap: '1rem' }}>
                             <div className="feature-icon-wrapper" style={{ width: '64px', height: '64px', borderRadius: '50%', background: '#e0f0f2', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                                 <Image src="/academic support.svg" alt="Academic Support icon" width={32} height={32} />
                             </div>
-                            <h2 className="feature-title" style={{ fontSize: '1.1rem', fontWeight: 700, color: '#003249' }}>Academic Support</h2>
-                            <p className="feature-description" style={{ fontSize: '0.9rem', color: '#4a6a7c', lineHeight: 1.6 }}>Access study materials, reminders, and tools designed for student success.</p>
+                            <h2 className="feature-title" style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--foreground)' }}>Academic Support</h2>
+                            <p className="feature-description" style={{ fontSize: '0.9rem', color: 'var(--muted-foreground)', lineHeight: 1.6 }}>Access study materials, reminders, and tools designed for student success.</p>
                         </div>
                     </div>
                 </section>
@@ -115,8 +115,8 @@ export default function AboutPage() {
                 <section className="about-info-section about-info-gray about-reveal" style={{ padding: '5rem 2rem', background: '#f5f8f9', marginTop: '4rem' }}>
                     <div className="about-info-container" style={{ maxWidth: '1000px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'minmax(300px, 1fr) minmax(300px, 1.2fr)', gap: '4rem', alignItems: 'center' }}>
                         <div className="about-info-text" style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                            <h2 className="about-info-title" style={{ fontSize: '1.8rem', fontWeight: 800, color: '#003249', lineHeight: 1.2 }}>Who Can Use Campus Helper?</h2>
-                            <p className="about-info-description" style={{ fontSize: '1rem', color: '#4a6a7c', lineHeight: 1.7 }}>
+                            <h2 className="about-info-title" style={{ fontSize: '1.8rem', fontWeight: 800, color: 'var(--foreground)', lineHeight: 1.2 }}>Who Can Use Campus Helper?</h2>
+                            <p className="about-info-description" style={{ fontSize: '1rem', color: 'var(--muted-foreground)', lineHeight: 1.7 }}>
                                 Campus Helper is designed for university and college students who want to stay organized, share knowledge,
                                 and improve their academic performance.
                             </p>
@@ -131,8 +131,8 @@ export default function AboutPage() {
                 <section className="about-info-section about-reveal" style={{ padding: '5rem 2rem', background: 'white' }}>
                     <div className="about-info-container" style={{ maxWidth: '1000px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'minmax(300px, 1fr) minmax(300px, 1.2fr)', gap: '4rem', alignItems: 'center' }}>
                         <div className="about-info-text" style={{ display: 'flex', flexDirection: 'column', gap: '1rem', order: 1 }}>
-                            <h2 className="about-info-title" style={{ fontSize: '1.8rem', fontWeight: 800, color: '#003249', lineHeight: 1.2 }}>Growing With Students</h2>
-                            <p className="about-info-description" style={{ fontSize: '1rem', color: '#4a6a7c', lineHeight: 1.7 }}>
+                            <h2 className="about-info-title" style={{ fontSize: '1.8rem', fontWeight: 800, color: 'var(--foreground)', lineHeight: 1.2 }}>Growing With Students</h2>
+                            <p className="about-info-description" style={{ fontSize: '1rem', color: 'var(--muted-foreground)', lineHeight: 1.7 }}>
                                 We are continuously improving Campus Helper by adding new features based on student needs and feedback. Our
                                 platform grows as students grow
                             </p>
@@ -145,9 +145,9 @@ export default function AboutPage() {
             </main>
 
             {/* Footer */}
-            <footer className="about-footer" style={{ background: '#003249', color: 'white', padding: '4rem 2rem 2rem', textAlign: 'center' }}>
+            <footer className="about-footer" style={{ background: 'var(--foreground)', color: 'white', padding: '4rem 2rem 2rem', textAlign: 'center' }}>
                 <div className="about-footer-container" style={{ maxWidth: '800px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '2rem', alignItems: 'center' }}>
-                    <p className="about-footer-message" style={{ fontSize: '1.1rem', lineHeight: 1.6, color: '#ccdbdc', maxWidth: '600px' }}>
+                    <p className="about-footer-message" style={{ fontSize: '1.1rem', lineHeight: 1.6, color: 'var(--secondary)', maxWidth: '600px' }}>
                         Built for students, Campus Helper supports better organization, easier access to learning materials and
                         meaningful collaboration on campus
                     </p>

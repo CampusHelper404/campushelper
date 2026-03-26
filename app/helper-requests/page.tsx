@@ -14,12 +14,12 @@ const STATUS_COLORS: Record<string, { bg: string, color: string }> = {
     PENDING: { bg: '#fef3c7', color: '#d97706' },
     ACCEPTED: { bg: '#d1fae5', color: '#059669' },
     DECLINED: { bg: '#fee2e2', color: '#dc2626' },
-    CANCELLED: { bg: '#f1f5f9', color: '#64748b' },
+    CANCELLED: { bg: 'var(--muted)', color: 'var(--muted-foreground)' },
     COMPLETED: { bg: '#e0f2fe', color: '#0284c7' },
 }
 
 function StatusBadge({ status }: { status: string }) {
-    const s = STATUS_COLORS[status] || { bg: '#f1f5f9', color: '#64748b' }
+    const s = STATUS_COLORS[status] || { bg: 'var(--muted)', color: 'var(--muted-foreground)' }
     return <span style={{ background: s.bg, color: s.color, borderRadius: '20px', padding: '4px 12px', fontSize: '0.72rem', fontWeight: 800 }}>{status}</span>
 }
 
@@ -39,15 +39,15 @@ export default function HelperRequestsPage() {
     return (
         <div className="dash-wrapper" style={{ background: 'var(--bg-color)', minHeight: '100vh' }}>
             <HelperNavbar />
-            <main style={{ maxWidth: '1200px', margin: '0 auto', padding: '3rem 1.5rem', fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+            <main className="ch-page-main" style={{ maxWidth: '1200px', margin: '0 auto', padding: '3rem 1.5rem', fontFamily: 'var(--font-plus-jakarta-sans), sans-serif' }}>
 
                 {/* ── Premium Welcome Header ── */}
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '2.5rem', animation: 'fadeInUp 0.5s ease-out' }}>
+                <div className="sd-header-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '2.5rem', animation: 'fadeInUp 0.5s ease-out', gap: '1rem', flexWrap: 'wrap' }}>
                     <div>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
                             <span style={{ 
-                                background: 'rgba(0, 50, 73, 0.1)', 
-                                color: '#003249', 
+                                background: 'color-mix(in srgb, var(--foreground) 10%, transparent)', 
+                                color: 'var(--foreground)', 
                                 padding: '4px 12px', 
                                 borderRadius: 'var(--radius-pill)', 
                                 fontSize: '0.75rem', 
@@ -68,7 +68,7 @@ export default function HelperRequestsPage() {
                 </div>
 
                 {/* Tabs */}
-                <div style={{ display: 'flex', gap: '8px', marginBottom: '1.5rem', animation: 'fadeInUp 0.6s ease-out' }}>
+                <div style={{ display: 'flex', gap: '8px', marginBottom: '1.5rem', animation: 'fadeInUp 0.6s ease-out', flexWrap: 'wrap' }}>
                     {(['PENDING', 'ACCEPTED', 'ALL'] as TabType[]).map(t => (
                         <button key={t} onClick={() => setTab(t)} style={{
                             padding: '10px 24px', 
@@ -77,8 +77,8 @@ export default function HelperRequestsPage() {
                             cursor: 'pointer',
                             fontWeight: 700, 
                             fontSize: '0.85rem',
-                            background: tab === t ? 'var(--header-bg)' : '#fff',
-                            color: tab === t ? '#9ad1d4' : 'var(--text-muted)',
+                            background: tab === t ? 'var(--header-bg)' : 'var(--card)',
+                            color: tab === t ? 'var(--chart-3)' : 'var(--text-muted)',
                             boxShadow: tab === t ? 'var(--shadow-md)' : 'var(--shadow-sm)',
                             transition: 'var(--transition)',
                         }}>{t}</button>
@@ -116,7 +116,7 @@ export default function HelperRequestsPage() {
                                 <div style={{ flex: 1, display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
                                     <div style={{ 
                                         width: '64px', height: '64px', borderRadius: '18px', 
-                                        background: '#f1f5f9', 
+                                        background: 'var(--muted)', 
                                         color: 'var(--primary)', 
                                         display: 'flex', alignItems: 'center', justifyContent: 'center', 
                                         fontWeight: 800, fontSize: '1.25rem'

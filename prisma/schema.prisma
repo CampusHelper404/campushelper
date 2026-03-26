@@ -15,10 +15,12 @@ model User {
   image            String?
   role             UserRole              @default(STUDENT)
   onboarded        Boolean               @default(false)
+  isSuspended      Boolean               @default(false)
   createdAt        DateTime              @default(now())
   updatedAt        DateTime              @updatedAt
   helperSessions   AcademicSession[]     @relation("HelperSessions")
   studentSessions  AcademicSession[]     @relation("StudentSessions")
+  joinLogs         SessionJoinLog[]
   analyticsEvents  AnalyticsEvent[]
   auditLogs        AuditLog[]
   acceptedRequests HelpRequest[]         @relation("AcceptedRequests")
@@ -86,9 +88,13 @@ model AcademicSession {
   helperId    String
   startTime   DateTime
   endTime     DateTime?
-  status      SessionStatus @default(UPCOMING)
-  meetingLink String?
+  status          SessionStatus @default(UPCOMING)
+  payoutStatus    String        @default("NONE")
+  isDisputed      Boolean       @default(false)
+  adminReviewNote String?
+  meetingLink     String?
   notes       String?
+  joinLogs    SessionJoinLog[]
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt
   helper      User          @relation("HelperSessions", fields: [helperId], references: [id])
@@ -118,6 +124,7 @@ model HelperProfile {
   rating             Float              @default(0)
   verificationStatus String             @default("PENDING")
   rejectionReason    String?
+  balance            Float              @default(0)
   availability       AvailabilitySlot[]
   user               User               @relation(fields: [userId], references: [id])
   expertise          Course[]           @relation("CourseToHelperProfile")
@@ -318,4 +325,14 @@ enum SessionStatus {
   COMPLETED
   CANCELLED
   NO_SHOW
+  AWAITING_CONFIRMATION
+}
+
+model SessionJoinLog {
+  id        String   @id @default(cuid())
+  sessionId String
+  userId    String
+  timestamp DateTime @default(now())
+  session   AcademicSession @relation(fields: [sessionId], references: [id])
+  user      User            @relation(fields: [userId], references: [id])
 }

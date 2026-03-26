@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { TRPCError } from '@trpc/server';
+import { paystack } from '@/lib/paystack';
 import { adminProcedure, baseProcedure, helperProcedure, createTRPCRouter, protectedProcedure } from '../init';
 import { prisma } from '@/lib/prisma';
 import { HelpRequestStatus, SessionStatus, UserRole } from '@/lib/generated/prisma/client';
@@ -10,7 +11,6 @@ function err(e: unknown) {
 
 export const appRouter = createTRPCRouter({
   // ── Auth ───────────────────────────────────────────────────────────────────
-  // Note: Most auth is handled directly by better-auth, but we keep these for compatibility
   auth: createTRPCRouter({
     me: protectedProcedure
       .query(async ({ ctx }) => {
@@ -19,7 +19,6 @@ export const appRouter = createTRPCRouter({
 
     logout: baseProcedure
       .mutation(() => {
-        // Sign out is handled by the better-auth client
         return { success: true };
       }),
   }),
@@ -30,7 +29,11 @@ export const appRouter = createTRPCRouter({
       .query(async ({ ctx }) => {
         return await prisma.user.findUnique({
           where: { id: ctx.session.user.id },
-          include: { helperProfile: true }
+          include: { 
+            helperProfile: true,
+            studentSessions: { include: { payment: true } },
+            helperSessions: { include: { payment: true } },
+          }
         });
       }),
 
@@ -38,7 +41,6 @@ export const appRouter = createTRPCRouter({
       .input(z.object({
         name: z.string().optional(),
         image: z.string().optional(),
-        // role is removed to prevent self-escalation
       }))
       .mutation(async ({ input, ctx }) => {
         return await prisma.user.update({
@@ -57,7 +59,6 @@ export const appRouter = createTRPCRouter({
 
     becomeHelper: protectedProcedure
       .mutation(async ({ ctx }) => {
-        // Create profile if doesn't exist
         const profile = await prisma.helperProfile.upsert({
           where: { userId: ctx.session.user.id },
           update: { verificationStatus: 'PENDING' },
@@ -66,9 +67,6 @@ export const appRouter = createTRPCRouter({
             verificationStatus: 'PENDING',
           }
         });
-
-        // Note: We deliberately do NOT update the user role to 'HELPER' here anymore.
-        // They must remain a STUDENT until an admin approves them via the verification queue.
         return profile;
       }),
 
@@ -85,6 +83,30 @@ export const appRouter = createTRPCRouter({
     list: adminProcedure
       .query(async () => {
         return await prisma.user.findMany();
+      }),
+
+    updateUserAdmin: adminProcedure
+      .input(z.object({
+        id: z.string(),
+        role: z.nativeEnum(UserRole).optional(),
+        isSuspended: z.boolean().optional(),
+      }))
+      .mutation(async ({ input }) => {
+        const updatedUser = await prisma.user.update({
+          where: { id: input.id },
+          data: {
+            role: input.role,
+            isSuspended: input.isSuspended,
+          },
+        });
+
+        if (input.isSuspended === true) {
+            await prisma.session.deleteMany({
+                where: { userId: input.id }
+            });
+        }
+
+        return updatedUser;
       }),
   }),
 
@@ -164,14 +186,32 @@ export const appRouter = createTRPCRouter({
         description: z.string().optional(),
         preferredDate: z.date().optional(),
         preferredTime: z.string().optional(),
+        acceptedById: z.string().optional(),
       }))
       .mutation(async ({ input, ctx }) => {
-        return await prisma.helpRequest.create({
+        const request = await prisma.helpRequest.create({
           data: {
             ...input,
             studentId: ctx.session.user.id,
+            status: input.acceptedById ? 'ACCEPTED' : 'PENDING',
           },
         });
+
+        // 🚀 Auto-create session for direct bookings
+        if (input.acceptedById) {
+             await prisma.academicSession.create({
+                 data: {
+                     requestId: request.id,
+                     studentId: ctx.session.user.id,
+                     helperId: input.acceptedById,
+                     startTime: input.preferredDate || new Date(),
+                     status: 'UPCOMING',
+                     notes: input.description,
+                 }
+             });
+        }
+
+        return request;
       }),
 
     updateStatus: protectedProcedure
@@ -183,8 +223,6 @@ export const appRouter = createTRPCRouter({
         const request = await prisma.helpRequest.findUnique({ where: { id: input.id } });
         if (!request) throw new TRPCError({ code: 'NOT_FOUND' });
 
-        // Logic: Students can cancel their own. Admins can do anything. 
-        // Helpers can accept/decline if they aren't the student.
         const dbUser = await prisma.user.findUnique({ where: { id: ctx.session.user.id } });
         if (!dbUser) throw new TRPCError({ code: 'UNAUTHORIZED' });
 
@@ -192,19 +230,14 @@ export const appRouter = createTRPCRouter({
         const isOwner = request.studentId === dbUser.id;
         const isHelper = dbUser.role === 'HELPER';
 
-        // Role-based state transitions
         if (isAdmin) {
-          // Admins can do anything
         } else if (isHelper && (input.status === 'ACCEPTED' || input.status === 'DECLINED' || input.status === 'COMPLETED')) {
-          // Helpers can accept, decline, or complete requests
         } else if (isOwner && input.status === 'CANCELLED') {
-          // Students can only cancel their own requests
         } else {
           throw new TRPCError({ code: 'FORBIDDEN', message: 'Not authorized to perform this action' });
         }
 
         if (isHelper && input.status === 'ACCEPTED') {
-          // When a helper accepts, assign them to the request
           return await prisma.helpRequest.update({
             where: { id: input.id },
             data: { 
@@ -223,7 +256,7 @@ export const appRouter = createTRPCRouter({
 
   // ── Sessions ───────────────────────────────────────────────────────────────
   sessions: createTRPCRouter({
-    list: baseProcedure
+    list: protectedProcedure
       .input(z.object({
         helperId: z.string().optional(),
         studentId: z.string().optional(),
@@ -242,6 +275,7 @@ export const appRouter = createTRPCRouter({
             },
             student: true,
             helper: true,
+            payment: true,
           },
         });
       }),
@@ -257,6 +291,7 @@ export const appRouter = createTRPCRouter({
             },
             student: true,
             helper: true,
+            payment: true,
           },
         });
         if (!session) throw new TRPCError({ code: 'NOT_FOUND', message: 'Session not found' });
@@ -279,25 +314,78 @@ export const appRouter = createTRPCRouter({
         });
       }),
 
+    trackJoin: protectedProcedure
+      .input(z.object({ sessionId: z.string() }))
+      .mutation(async ({ input, ctx }) => {
+        return await prisma.sessionJoinLog.create({
+          data: {
+            sessionId: input.sessionId,
+            userId: ctx.session.user.id,
+          },
+        });
+      }),
+
     updateStatus: protectedProcedure
       .input(z.object({
         id: z.string(),
         status: z.nativeEnum(SessionStatus),
+        adminNote: z.string().optional(),
       }))
       .mutation(async ({ input, ctx }) => {
-        const session = await prisma.academicSession.findUnique({ where: { id: input.id } });
-        if (!session) throw new TRPCError({ code: 'NOT_FOUND' });
+        const session = await prisma.academicSession.findUnique({
+             where: { id: input.id },
+             include: { payment: true }
+        });
+        if (!session) throw new TRPCError({ code: 'NOT_FOUND', message: 'Session not found' });
 
-        const isParticipant = session.studentId === ctx.session.user.id || session.helperId === ctx.session.user.id;
+        const isUserParticipant = session.studentId === ctx.session.user.id || session.helperId === ctx.session.user.id;
         const isAdmin = (ctx.session.user as any).role === 'ADMIN';
 
-        if (!isParticipant && !isAdmin) {
+        if (!isUserParticipant && !isAdmin) {
           throw new TRPCError({ code: 'FORBIDDEN', message: 'Not authorized' });
+        }
+
+        const isHelper = session.helperId === ctx.session.user.id;
+        const isStudent = session.studentId === ctx.session.user.id;
+
+        if (input.status === 'COMPLETED') {
+           if (isHelper && !isAdmin) {
+             return await prisma.academicSession.update({
+               where: { id: input.id },
+               data: { status: 'AWAITING_CONFIRMATION' },
+             });
+           }
+           
+           if (isStudent || isAdmin) {
+             if (session.payoutStatus !== 'RELEASED' && session.payment?.status === 'HELD') {
+                await prisma.$transaction([
+                    prisma.academicSession.update({
+                        where: { id: input.id },
+                        data: { status: 'COMPLETED', payoutStatus: 'RELEASED' },
+                    }),
+                    prisma.helperProfile.update({
+                        where: { userId: session.helperId },
+                        data: { balance: { increment: session.payment.amountCents / 100 } },
+                    })
+                ]);
+                return { success: true };
+             }
+           }
+        }
+
+        if (input.status === 'CANCELLED' && isStudent && session.payment?.status === 'HELD') {
+             return await prisma.academicSession.update({
+               where: { id: input.id },
+               data: { isDisputed: true, adminReviewNote: input.adminNote || 'Disputed by student' },
+             });
         }
 
         return await prisma.academicSession.update({
           where: { id: input.id },
-          data: { status: input.status },
+          data: { 
+            status: input.status,
+            adminReviewNote: input.adminNote
+          },
         });
       }),
   }),
@@ -337,18 +425,26 @@ export const appRouter = createTRPCRouter({
       .input(z.object({
         headline: z.string().min(1).max(100),
         bio: z.string().min(10).max(1000),
-        hourlyRate: z.number().min(0),
+        hourlyRate: z.number().min(10).max(50),
         courseIds: z.array(z.string()),
       }))
       .mutation(async ({ input, ctx }) => {
-        const profile = await prisma.helperProfile.findUnique({ 
-            where: { userId: ctx.session.user.id } 
-        });
-        if (!profile) throw new TRPCError({ code: 'NOT_FOUND' });
+        const userId = ctx.session.user.id;
 
-        return await prisma.helperProfile.update({
-          where: { userId: ctx.session.user.id },
-          data: {
+        return await prisma.helperProfile.upsert({
+          where: { userId },
+          create: {
+            userId,
+            headline: input.headline,
+            bio: input.bio,
+            hourlyRate: input.hourlyRate,
+            completedProfile: true,
+            expertise: {
+              connect: input.courseIds.map(id => ({ id })),
+            },
+            verificationStatus: 'APPROVED', // Since they have helper role to be here
+          },
+          update: {
             headline: input.headline,
             bio: input.bio,
             hourlyRate: input.hourlyRate,
@@ -462,8 +558,6 @@ export const appRouter = createTRPCRouter({
     listConversations: protectedProcedure
       .query(async ({ ctx }) => {
         const userId = ctx.session.user.id;
-        
-        // Get all messages where user is sender or recipient
         const messages = await prisma.message.findMany({
           where: {
             OR: [{ senderId: userId }, { recipientId: userId }],
@@ -475,18 +569,23 @@ export const appRouter = createTRPCRouter({
           orderBy: { sentAt: 'desc' },
         });
 
-        const conversationsMap = new Map<string, { partner: any, lastMessage: any }>();
-        
+        const conversationsMap = new Map<string, { partner: any, lastMessage: any, unreadCount: number }>();
         for (const msg of messages) {
           const partnerId = msg.senderId === userId ? msg.recipientId : msg.senderId;
+          const isUnread = msg.recipientId === userId && msg.readAt === null;
+
           if (!conversationsMap.has(partnerId)) {
             conversationsMap.set(partnerId, {
               partner: msg.senderId === userId ? msg.recipient : msg.sender,
               lastMessage: msg,
+              unreadCount: isUnread ? 1 : 0,
             });
+          } else {
+            if (isUnread) {
+                conversationsMap.get(partnerId)!.unreadCount += 1;
+            }
           }
         }
-
         return Array.from(conversationsMap.values());
       }),
 
@@ -498,16 +597,53 @@ export const appRouter = createTRPCRouter({
         content: z.string().min(1),
       }))
       .mutation(async ({ input, ctx }) => {
+        const userId = ctx.session.user.id;
+        const isAdmin = (ctx.session.user as any).role === 'ADMIN';
+
+        if (!isAdmin) {
+          const securedSession = await prisma.academicSession.findFirst({
+            where: {
+              OR: [
+                { studentId: userId, helperId: input.recipientId },
+                { studentId: input.recipientId, helperId: userId },
+              ],
+              payment: { status: { in: ['HELD', 'RELEASED'] } }
+            }
+          });
+
+          if (!securedSession) {
+             throw new TRPCError({ 
+               code: 'FORBIDDEN', 
+               message: 'Messaging is only unlocked for secured current/past sessions.' 
+             });
+          }
+        }
+
         return await prisma.message.create({
           data: {
             ...input,
-            senderId: ctx.session.user.id,
+            senderId: userId,
+          },
+        });
+      }),
+
+    markAsRead: protectedProcedure
+      .input(z.object({ partnerId: z.string() }))
+      .mutation(async ({ input, ctx }) => {
+        return await prisma.message.updateMany({
+          where: {
+            senderId: input.partnerId,
+            recipientId: ctx.session.user.id,
+            readAt: null,
+          },
+          data: {
+            readAt: new Date(),
           },
         });
       }),
   }),
 
-  // ── Reviews ────────────────────────────────────────────────────────────────
+  // ── Reviews ───────────────────────────────────────────────────────────────
   reviews: createTRPCRouter({
     list: protectedProcedure
       .input(z.object({ userId: z.string() }))
@@ -595,21 +731,124 @@ export const appRouter = createTRPCRouter({
         });
       }),
 
-    create: protectedProcedure
+    initialize: protectedProcedure
       .input(z.object({
         sessionId: z.string(),
-        studentId: z.string(),
-        helperId: z.string(),
-        amountCents: z.number().positive(),
-        currency: z.string().length(3).optional(),
-        status: z.string().optional(),
-        provider: z.string().optional(),
-        providerPaymentId: z.string().optional(),
       }))
-      .mutation(async ({ input }) => {
-        return await prisma.payment.create({
-          data: input,
+      .mutation(async ({ input, ctx }) => {
+        const session = await prisma.academicSession.findUnique({
+          where: { id: input.sessionId },
+          include: { 
+            student: true,
+            helper: true,
+            request: true
+          }
         });
+
+        if (!session) throw new TRPCError({ code: 'NOT_FOUND' });
+        if (session.studentId !== ctx.session.user.id) {
+          throw new TRPCError({ code: 'FORBIDDEN', message: 'Only the student can pay' });
+        }
+
+        const helperProfile = await prisma.helperProfile.findUnique({
+          where: { userId: session.helperId }
+        });
+
+        if (!helperProfile || !helperProfile.hourlyRate) {
+          throw new TRPCError({ code: 'BAD_REQUEST', message: 'Helper rate not set' });
+        }
+
+        const amountCents = Math.round(helperProfile.hourlyRate * 100);
+
+        const paystackRes = await paystack.initializeTransaction(
+          session.student.email,
+          amountCents,
+          { sessionId: session.id }
+        );
+
+        await prisma.payment.upsert({
+          where: { sessionId: session.id },
+          create: {
+            sessionId: session.id,
+            studentId: session.studentId,
+            helperId: session.helperId,
+            amountCents: amountCents,
+            status: 'PENDING',
+            provider: 'PAYSTACK',
+            providerPaymentId: paystackRes.data.reference
+          },
+          update: {
+            status: 'PENDING',
+            providerPaymentId: paystackRes.data.reference
+          }
+        });
+
+        return { checkoutUrl: paystackRes.data.authorization_url };
+      }),
+
+    verify: protectedProcedure
+      .input(z.object({ reference: z.string() }))
+      .mutation(async ({ input }) => {
+        const verifyRes = await paystack.verifyTransaction(input.reference);
+        if (verifyRes.data.status !== 'success') {
+          throw new TRPCError({ code: 'BAD_REQUEST', message: 'Payment verification failed' });
+        }
+
+        const sessionId = verifyRes.data.metadata?.sessionId;
+        if (!sessionId) throw new TRPCError({ code: 'BAD_REQUEST', message: 'No sessionId in metadata' });
+
+        const session = await prisma.academicSession.findUnique({
+          where: { id: sessionId },
+          include: { payment: true }
+        });
+
+        if (!session) throw new TRPCError({ code: 'NOT_FOUND' });
+
+        // Idempotency: skip if already processed
+        if (session.payment?.status === 'HELD' || session.payment?.status === 'RELEASED') {
+          return { success: true, alreadyProcessed: true };
+        }
+
+        // Generate meeting link
+        const meetingLink = `https://meet.google.com/campus-${sessionId.slice(-8)}`;
+
+        await prisma.$transaction([
+          prisma.payment.update({
+            where: { sessionId },
+            data: { status: "HELD", providerPaymentId: input.reference },
+          }),
+          prisma.academicSession.update({
+            where: { id: sessionId },
+            data: { meetingLink },
+          }),
+          prisma.message.create({
+            data: {
+              senderId: session.helperId,
+              recipientId: session.studentId,
+              content: `📢 Session Secured! Here is our meeting link: ${meetingLink}`,
+              sessionId: sessionId
+            }
+          }),
+          prisma.notification.create({
+            data: {
+              userId: session.helperId,
+              type: "SESSION_SECURED",
+              title: "New Booking Paid",
+              body: `Student has paid and secured the session. Meeting link: ${meetingLink}`,
+            }
+          }),
+          // 🆕 Notification to Student
+          prisma.notification.create({
+            data: {
+              userId: session.studentId,
+              type: "PAYMENT_SUCCESS",
+              title: "Payment Confirmed",
+              body: `Your payment was successful and the session is now active. Meeting link: ${meetingLink}`,
+            }
+          })
+        ]);
+
+        return { success: true };
       }),
   }),
 
@@ -634,7 +873,6 @@ export const appRouter = createTRPCRouter({
         transcriptUrl: z.string().optional(),
       }))
       .mutation(async ({ input, ctx }) => {
-        // 1. Create the verification request for admin review
         const request = await prisma.verificationRequest.create({
           data: {
             ...input,
@@ -643,7 +881,6 @@ export const appRouter = createTRPCRouter({
           },
         });
 
-        // 2. Ensuring HelperProfile exists so they show up in searches (as Pending)
         await prisma.helperProfile.upsert({
           where: { userId: ctx.session.user.id },
           update: { verificationStatus: 'PENDING' },
@@ -789,6 +1026,7 @@ export const appRouter = createTRPCRouter({
         }),
     }),
   }),
+
   // ── Verification Queue ────────────────────────────────────────────────────
   verificationQueue: createTRPCRouter({
     list: adminProcedure
@@ -813,14 +1051,12 @@ export const appRouter = createTRPCRouter({
           data: { status: input.status, reviewerNote: input.reviewerNote, reviewedAt: new Date() },
           include: { user: true },
         });
-        // If approved, promote user to HELPER role and update profile
         if (input.status === 'APPROVED') {
           await prisma.user.update({
             where: { id: req.userId },
             data: { role: 'HELPER' },
           });
 
-          // Ensure HelperProfile exists and is approved
           await prisma.helperProfile.upsert({
             where: { userId: req.userId },
             update: { verificationStatus: 'APPROVED' },
@@ -833,6 +1069,7 @@ export const appRouter = createTRPCRouter({
         return req;
       }),
   }),
+
 });
 
 export type AppRouter = typeof appRouter;

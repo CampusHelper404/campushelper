@@ -12,7 +12,7 @@ import { cn } from "@/lib/utils"
 const profileSchema = z.object({
   headline: z.string().min(1, "Headline is required").max(100),
   bio: z.string().min(10, "Bio must be at least 10 characters").max(1000),
-  hourlyRate: z.number().min(0, "Rate cannot be negative"),
+  hourlyRate: z.number().min(10, "Minimum rate is 10 GHS/hr").max(50, "Maximum rate is 50 GHS/hr"),
   courseIds: z.array(z.string()).min(1, "Select at least one course"),
 })
 
@@ -70,7 +70,7 @@ const sectionHeaderStyle: React.CSSProperties = {
   fontSize: '0.85rem',
   fontWeight: 700,
   color: 'var(--btn-bg)',
-  background: 'rgba(0, 126, 167, 0.04)',
+  background: 'color-mix(in srgb, var(--primary) 4%, transparent)',
 }
 
 export function ProfileSetupForm({ onSuccess, initialData }: ProfileSetupFormProps) {
@@ -138,7 +138,7 @@ export function ProfileSetupForm({ onSuccess, initialData }: ProfileSetupFormPro
               {...form.register("headline")}
             />
             {form.formState.errors.headline && (
-              <p style={{ color: '#e11d48', fontSize: '0.78rem', marginTop: '6px', fontWeight: 600 }}>{form.formState.errors.headline.message}</p>
+              <p style={{ color: 'var(--destructive)', fontSize: '0.78rem', marginTop: '6px', fontWeight: 600 }}>{form.formState.errors.headline.message}</p>
             )}
           </div>
 
@@ -154,8 +154,10 @@ export function ProfileSetupForm({ onSuccess, initialData }: ProfileSetupFormPro
                 {...form.register("hourlyRate", { valueAsNumber: true })}
               />
             </div>
-            {form.formState.errors.hourlyRate && (
-              <p style={{ color: '#e11d48', fontSize: '0.78rem', marginTop: '6px', fontWeight: 600 }}>{form.formState.errors.hourlyRate.message}</p>
+            {form.formState.errors.hourlyRate ? (
+              <p style={{ color: 'var(--destructive)', fontSize: '0.78rem', marginTop: '6px', fontWeight: 600 }}>{form.formState.errors.hourlyRate.message}</p>
+            ) : (
+              <p style={{ color: 'var(--text-muted)', fontSize: '0.75rem', marginTop: '6px' }}>Recommended: 10 - 50 GHS per hour</p>
             )}
           </div>
 
@@ -178,7 +180,7 @@ export function ProfileSetupForm({ onSuccess, initialData }: ProfileSetupFormPro
 
           <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '8px' }}>
             {form.formState.errors.bio
-              ? <p style={{ color: '#e11d48', fontSize: '0.78rem', fontWeight: 600 }}>{form.formState.errors.bio.message}</p>
+              ? <p style={{ color: 'var(--destructive)', fontSize: '0.78rem', fontWeight: 600 }}>{form.formState.errors.bio.message}</p>
               : <p style={{ color: 'var(--text-muted)', fontSize: '0.78rem' }}>Be detailed — students read this before booking.</p>
             }
             <p style={{ color: 'var(--text-muted)', fontSize: '0.78rem', flexShrink: 0 }}>{bioValue.length}/1000</p>
@@ -200,7 +202,7 @@ export function ProfileSetupForm({ onSuccess, initialData }: ProfileSetupFormPro
               value={searchTerm}
               onChange={e => setSearchTerm(e.target.value)}
               style={{ ...inputStyle, paddingLeft: '42px' }}
-              onFocus={e => { e.currentTarget.style.borderColor = 'var(--btn-bg)'; e.currentTarget.style.boxShadow = '0 0 0 3px rgba(0, 126, 167, 0.08)' }}
+              onFocus={e => { e.currentTarget.style.borderColor = 'var(--btn-bg)'; e.currentTarget.style.boxShadow = '0 0 0 3px color-mix(in srgb, var(--primary) 8%, transparent)' }}
               onBlur={e => { e.currentTarget.style.borderColor = 'var(--border-color)'; e.currentTarget.style.boxShadow = 'none' }}
             />
           </div>
@@ -230,7 +232,7 @@ export function ProfileSetupForm({ onSuccess, initialData }: ProfileSetupFormPro
                         borderRadius: '10px',
                         cursor: 'pointer',
                         border: `1.5px solid ${isSelected ? 'var(--btn-bg)' : 'transparent'}`,
-                        background: isSelected ? 'rgba(0, 126, 167, 0.08)' : 'var(--card-bg)',
+                        background: isSelected ? 'color-mix(in srgb, var(--primary) 8%, transparent)' : 'var(--card-bg)',
                         transition: 'all 0.2s',
                       }}
                     >
@@ -268,13 +270,13 @@ export function ProfileSetupForm({ onSuccess, initialData }: ProfileSetupFormPro
                         display: 'inline-flex',
                         alignItems: 'center',
                         gap: '6px',
-                        background: 'rgba(0, 126, 167, 0.1)',
+                        background: 'color-mix(in srgb, var(--primary) 10%, transparent)',
                         color: 'var(--btn-bg)',
                         padding: '5px 12px',
                         borderRadius: '9999px',
                         fontSize: '0.78rem',
                         fontWeight: 700,
-                        border: '1px solid rgba(0, 126, 167, 0.2)',
+                        border: '1px solid color-mix(in srgb, var(--primary) 20%, transparent)',
                       }}
                     >
                       {course.code}
@@ -290,7 +292,7 @@ export function ProfileSetupForm({ onSuccess, initialData }: ProfileSetupFormPro
             </div>
           )}
           {form.formState.errors.courseIds && (
-            <p style={{ color: '#e11d48', fontSize: '0.78rem', marginTop: '8px', fontWeight: 600 }}>{form.formState.errors.courseIds.message}</p>
+            <p style={{ color: 'var(--destructive)', fontSize: '0.78rem', marginTop: '8px', fontWeight: 600 }}>{form.formState.errors.courseIds.message}</p>
           )}
         </div>
       </div>
@@ -315,7 +317,7 @@ export function ProfileSetupForm({ onSuccess, initialData }: ProfileSetupFormPro
           alignItems: 'center',
           justifyContent: 'center',
           gap: '8px',
-          boxShadow: '0 8px 20px rgba(0, 126, 167, 0.25)',
+          boxShadow: '0 8px 20px color-mix(in srgb, var(--primary) 25%, transparent)',
           fontFamily: "'Plus Jakarta Sans', sans-serif",
         }}
         onMouseEnter={e => { if (!updateProfile.isPending) { e.currentTarget.style.background = 'var(--btn-bg-hover)'; e.currentTarget.style.transform = 'translateY(-2px)' } }}

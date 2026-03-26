@@ -1,5 +1,6 @@
 "use client"
 
+import { useRouter } from "next/navigation"
 import { trpc } from "@/trpc/client"
 import { toast } from "sonner"
 import { Dialog, DialogContent } from "@/components/ui/dialog"
@@ -16,6 +17,7 @@ interface HelperProfileModalProps {
 }
 
 export function HelperProfileModal({ helperId, isOpen, onClose, onBook }: HelperProfileModalProps) {
+  const router = useRouter()
   const { data: helper, isLoading } = trpc.helpers.getProfile.useQuery(
     { userId: helperId },
     { enabled: isOpen && !!helperId }
@@ -47,7 +49,7 @@ export function HelperProfileModal({ helperId, isOpen, onClose, onBook }: Helper
           {/* Header Info (Avatar, Name, Rate) */}
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 pb-8 border-b border-[var(--border-color)]">
             <div className="flex items-center gap-5">
-              <div className="w-[84px] h-[84px] rounded-[20px] bg-[var(--header-bg)] border border-[rgba(0,126,167,0.15)] flex items-center justify-center text-3xl font-extrabold text-[#9ad1d4] shadow-sm flex-shrink-0">
+              <div className="w-[84px] h-[84px] rounded-[20px] bg-[var(--header-bg)] border border-[color-mix(in srgb, var(--primary) 15%, transparent)] flex items-center justify-center text-3xl font-extrabold text-[var(--chart-3)] shadow-sm flex-shrink-0">
                 {helper.user?.name ? getInitials(helper.user.name) : <User size={36} />}
               </div>
               <div>
@@ -59,7 +61,7 @@ export function HelperProfileModal({ helperId, isOpen, onClose, onBook }: Helper
                 </div>
                 <p className="text-[var(--primary)] font-bold text-sm mb-2">{helper.headline || "Verified Expert"}</p>
                 <div className="flex items-center gap-3 text-[var(--text-muted)] text-xs font-semibold">
-                  <div className="flex items-center gap-1.5 bg-[#fff8e6] text-[#b45309] px-2 py-0.5 rounded-md">
+                  <div className="flex items-center gap-1.5 bg-[color-mix(in srgb, #f59e0b 10%, var(--background))] text-[#b45309] px-2 py-0.5 rounded-md">
                     <Star size={12} className="fill-[#f59e0b] text-[#f59e0b]" />
                     <span>5.0</span>
                   </div>
@@ -71,7 +73,7 @@ export function HelperProfileModal({ helperId, isOpen, onClose, onBook }: Helper
               </div>
             </div>
             
-            <div className="text-left md:text-right bg-[#f8fafc] p-4 rounded-[16px] border border-[var(--border-color)]">
+            <div className="text-left md:text-right bg-[var(--sidebar)] p-4 rounded-[16px] border border-[var(--border-color)]">
               <div className="text-[var(--text-muted)] text-[0.65rem] font-extrabold uppercase tracking-widest mb-1">Hourly Rate</div>
               <div className="text-2xl font-black text-[var(--text-main)] flex items-baseline md:justify-end gap-1">
                 <span className="text-[var(--primary)] text-lg">₵</span>
@@ -102,7 +104,7 @@ export function HelperProfileModal({ helperId, isOpen, onClose, onBook }: Helper
                     key={course.id} 
                     className="bg-[var(--card-bg)] border border-[var(--border-color)] text-[var(--text-main)] p-3 rounded-[14px] flex items-center gap-3 shadow-sm hover:border-[var(--primary)] hover:shadow-md transition-all cursor-default group"
                   >
-                    <div className="w-8 h-8 rounded-[10px] bg-[rgba(0,126,167,0.08)] text-[var(--primary)] flex items-center justify-center group-hover:bg-[var(--primary)] group-hover:text-white transition-colors">
+                    <div className="w-8 h-8 rounded-[10px] bg-[color-mix(in srgb, var(--primary) 8%, transparent)] text-[var(--primary)] flex items-center justify-center group-hover:bg-[var(--primary)] group-hover:text-white transition-colors">
                       <BookOpen size={16} />
                     </div>
                     <div>
@@ -122,7 +124,7 @@ export function HelperProfileModal({ helperId, isOpen, onClose, onBook }: Helper
           {/* Actions */}
           <div className="flex gap-4 pt-4 border-t border-[var(--border-color)]">
             <button 
-              className="flex-1 bg-[var(--btn-bg)] hover:bg-[var(--btn-bg-hover)] text-white font-extrabold h-[56px] rounded-[16px] shadow-[0_8px_20px_rgba(0,126,167,0.25)] hover:shadow-[0_12px_24px_rgba(0,126,167,0.35)] hover:-translate-y-0.5 transition-all outline-none flex items-center justify-center gap-2"
+              className="flex-1 bg-[var(--btn-bg)] hover:bg-[var(--btn-bg-hover)] text-white font-extrabold h-[56px] rounded-[16px] shadow-[0_8px_20px_color-mix(in srgb, var(--primary) 25%, transparent)] hover:shadow-[0_12px_24px_color-mix(in srgb, var(--primary) 35%, transparent)] hover:-translate-y-0.5 transition-all outline-none flex items-center justify-center gap-2"
               onClick={onBook}
             >
               Book Session Now
@@ -130,7 +132,7 @@ export function HelperProfileModal({ helperId, isOpen, onClose, onBook }: Helper
             </button>
             <button 
               className="px-6 border border-[var(--border-color)] bg-[var(--card-bg)] hover:bg-[var(--bg-color)] text-[var(--text-muted)] hover:text-[var(--text-main)] h-[56px] rounded-[16px] shadow-sm transition-all outline-none flex items-center justify-center"
-              onClick={() => toast.info("Messaging feature coming soon!")}
+              onClick={() => router.push(`/messages?userId=${helperId}`)}
             >
               <MessageSquare size={22} />
             </button>

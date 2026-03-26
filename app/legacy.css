@@ -22,9 +22,9 @@
     --color-btn-hover: #005f7e;
     --color-signup-border: #003249;
 
-    --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    --font-display: 'Inter', sans-serif;
-    /* Modernized to Inter for a cleaner look */
+    --font-primary: var(--font-plus-jakarta-sans), -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-display: var(--font-instrument-serif), serif;
+    /* Updated to Editorial Premium style: Instrument Serif & Plus Jakarta Sans */
 
     --radius-sm: 8px;
     --radius-md: 14px;
@@ -1832,3 +1832,51 @@ img {
         width: 230px;
     }
 }
+
+/* ========================================
+   Dark Mode Overrides
+   ======================================== */
+.dark {
+    --color-primary: #80ced7;
+    --color-primary-light: #9ad1d4;
+    --color-primary-dark: #ccdbdc;
+    --color-dark: #e2eaeb;
+    --color-dark-navy: #f0f4f5;
+    --color-text: #dce8ea;
+    --color-text-light: #94a3b8;
+    --color-bg: #001a26;
+    --color-bg-hero: #002536;
+    --color-white: #003249;
+    --color-border: #004d6e;
+    --color-badge-bg: #80ced7;
+    --color-badge-text: #003249;
+    --color-stat-number: #80ced7;
+    --color-btn-bg: #007ea7;
+    --color-btn-text: #ffffff;
+    --color-btn-hover: #009dc0;
+    --color-signup-border: #80ced7;
+    --glass-bg: rgba(0, 50, 73, 0.6);
+    --glass-border: rgba(0, 77, 110, 0.5);
+}
+
+.dark body {
+    color: var(--color-text);
+    background-color: var(--color-bg);
+}
+
+.dark .about-footer {
+    background: #000e14;
+}
+
+.dark .about-info-gray {
+    background: #002030;
+}
+
+.dark .feature-icon-wrapper {
+    background: #003249;
+}
+
+.dark .image-card {
+    background: #003249;
+    border-color: #004d6e;
+}

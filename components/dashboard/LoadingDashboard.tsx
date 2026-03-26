@@ -11,16 +11,16 @@ export default function LoadingDashboard() {
             flexDirection: 'column',
             alignItems: 'center', 
             justifyContent: 'center', 
-            background: '#f8fafc',
+            background: 'var(--sidebar)',
             fontFamily: "'Plus Jakarta Sans', sans-serif"
         }}>
             <div style={{
                 padding: '3rem',
                 borderRadius: '24px',
-                background: 'rgba(255, 255, 255, 0.7)',
+                background: 'color-mix(in srgb, var(--card) 70%, transparent)',
                 backdropFilter: 'blur(10px)',
-                border: '1px solid rgba(255, 255, 255, 0.8)',
-                boxShadow: '0 20px 40px rgba(0, 50, 73, 0.05)',
+                border: '1px solid color-mix(in srgb, var(--card) 80%, transparent)',
+                boxShadow: '0 20px 40px color-mix(in srgb, var(--foreground) 5%, transparent)',
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
@@ -28,7 +28,7 @@ export default function LoadingDashboard() {
                 animation: 'fadeIn 0.5s ease-out'
             }}>
                 <div style={{ position: 'relative' }}>
-                    <Loader2 size={48} className="animate-spin" style={{ color: '#007ea7' }} />
+                    <Loader2 size={48} className="animate-spin" style={{ color: 'var(--primary)' }} />
                     <div style={{ 
                         position: 'absolute', 
                         top: '50%', 
@@ -36,15 +36,15 @@ export default function LoadingDashboard() {
                         transform: 'translate(-50%, -50%)',
                         width: '8px',
                         height: '8px',
-                        background: '#003249',
+                        background: 'var(--foreground)',
                         borderRadius: '50%'
                     }} />
                 </div>
                 <div style={{ textAlign: 'center' }}>
-                    <h3 style={{ margin: 0, fontSize: '1.25rem', fontWeight: 800, color: '#003249', letterSpacing: '-0.02em' }}>
-                        Campus<span style={{ color: '#007ea7' }}>Helper</span>
+                    <h3 style={{ margin: 0, fontSize: '1.25rem', fontWeight: 800, color: 'var(--foreground)', letterSpacing: '-0.02em' }}>
+                        Campus<span style={{ color: 'var(--primary)' }}>Helper</span>
                     </h3>
-                    <p style={{ margin: '4px 0 0', fontSize: '0.85rem', color: '#64748b', fontWeight: 600 }}>
+                    <p style={{ margin: '4px 0 0', fontSize: '0.85rem', color: 'var(--muted-foreground)', fontWeight: 600 }}>
                         Securing your session...
                     </p>
                 </div>

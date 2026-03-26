@@ -17,7 +17,7 @@ export default function TermsPage() {
     }, [])
 
     return (
-        <div style={{ backgroundColor: "#f0f4f5", minHeight: "100vh" }}>
+        <div style={{ backgroundColor: "var(--background)", minHeight: "100vh" }}>
             {/* Navigation (Matches Landing & About) */}
             <nav className={`navbar ${scrolled ? "scrolled" : ""}`} id="navbar">
                 <div className="nav-container">
@@ -48,18 +48,18 @@ export default function TermsPage() {
             <main style={{ paddingTop: '120px', paddingBottom: '5rem', display: 'flex', justifyContent: 'center' }}>
                 <div style={{
                     maxWidth: '800px', width: '100%', margin: '0 1.5rem',
-                    background: '#fff', padding: '3rem 4rem', borderRadius: '24px',
-                    boxShadow: '0 12px 32px rgba(0,50,73,0.06)', border: '1px solid #ccdbdc'
+                    background: 'var(--card)', padding: '3rem 4rem', borderRadius: '24px',
+                    boxShadow: '0 12px 32px color-mix(in srgb, var(--foreground) 6%, transparent)', border: '1px solid var(--secondary)'
                 }}>
                     
-                    <div style={{ marginBottom: '2.5rem', borderBottom: '2px solid #f0f4f5', paddingBottom: '2rem' }}>
-                        <div style={{ fontSize: '0.85rem', fontWeight: 800, color: '#007ea7', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.5rem' }}>
+                    <div style={{ marginBottom: '2.5rem', borderBottom: '2px solid var(--background)', paddingBottom: '2rem' }}>
+                        <div style={{ fontSize: '0.85rem', fontWeight: 800, color: 'var(--primary)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.5rem' }}>
                             Legal
                         </div>
-                        <h1 style={{ fontSize: '2.5rem', fontWeight: 950, color: '#003249', marginBottom: '0.5rem', letterSpacing: '-0.04em', lineHeight: 1.1 }}>
+                        <h1 style={{ fontSize: '2.5rem', fontWeight: 950, color: 'var(--foreground)', marginBottom: '0.5rem', letterSpacing: '-0.04em', lineHeight: 1.1 }}>
                             Terms of Service
                         </h1>
-                        <p style={{ color: '#64748b', fontWeight: 600 }}>Last updated: January 14, 2026</p>
+                        <p style={{ color: 'var(--muted-foreground)', fontWeight: 600 }}>Last updated: January 14, 2026</p>
                     </div>
 
                     <div className="legal-content">
@@ -118,7 +118,7 @@ export default function TermsPage() {
                 .legal-content h2 {
                     font-size: 1.5rem;
                     font-weight: 800;
-                    color: #003249;
+                    color: var(--foreground);
                     margin-top: 2.5rem;
                     margin-bottom: 1rem;
                     letter-spacing: -0.02em;
@@ -126,7 +126,7 @@ export default function TermsPage() {
                 .legal-content p {
                     font-size: 1.05rem;
                     line-height: 1.7;
-                    color: #4a6a7c;
+                    color: var(--muted-foreground);
                     margin-bottom: 1.25rem;
                 }
                 .legal-content p:last-child {

@@ -42,19 +42,19 @@ export default function StudentDashboardPage() {
         <div className="dash-wrapper" style={{ background: 'var(--bg-color)', minHeight: '100vh' }}>
             <StudentNavbar />
 
-            <main className="dash-main" style={{ 
+            <main className="ch-page-main" style={{ 
                 maxWidth: '1200px', 
                 margin: '0 auto', 
                 padding: '3rem 1.5rem',
-                fontFamily: "'Plus Jakarta Sans', sans-serif"
+                fontFamily: 'var(--font-plus-jakarta-sans), sans-serif'
             }}>
                 
                 {/* ── Premium Welcome Header ── */}
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '2.5rem', animation: 'fadeInUp 0.5s ease-out' }}>
+                <div className="sd-header-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '2.5rem', animation: 'fadeInUp 0.5s ease-out', gap: '1rem', flexWrap: 'wrap' }}>
                     <div>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px', flexWrap: 'wrap' }}>
                             <span style={{ 
-                                background: 'rgba(0, 126, 167, 0.1)', 
+                                background: 'color-mix(in srgb, var(--primary) 10%, transparent)', 
                                 color: 'var(--primary)', 
                                 padding: '4px 12px', 
                                 borderRadius: 'var(--radius-pill)', 
@@ -69,7 +69,7 @@ export default function StudentDashboardPage() {
                                 {new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
                             </span>
                         </div>
-                        <h1 style={{ fontSize: '2.5rem', fontWeight: 800, color: 'var(--text-main)', letterSpacing: '-0.03em', margin: 0 }}>
+                        <h1 style={{ fontSize: 'clamp(1.5rem, 5vw, 2.5rem)', fontWeight: 800, color: 'var(--text-main)', letterSpacing: '-0.03em', margin: 0 }}>
                             Welcome back{!isLoadingUser && user?.name ? `, ${user.name.split(" ")[0]}` : ''}.
                         </h1>
                     </div>
@@ -85,28 +85,29 @@ export default function StudentDashboardPage() {
                         alignItems: 'center',
                         gap: '8px',
                         boxShadow: 'var(--shadow-glow)',
-                        transition: 'var(--transition)'
+                        transition: 'var(--transition)',
+                        whiteSpace: 'nowrap'
                     }} 
-                    onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 12px 24px rgba(0, 126, 167, 0.25)' }}
-                    onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'var(--shadow-glow)' }}
+                    onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-2px)' }}
+                    onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)' }}
                     >
                         New Request <ArrowUpRight size={18} />
                     </Link>
                 </div>
 
                 {/* ── Bento Box Grid Layout ── */}
-                <div style={{ 
+                <div className="sd-bento-grid" style={{ 
                     display: 'grid', 
-                    gridTemplateColumns: 'repeat(12, 1fr)', 
+                    gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr)', 
                     gap: '1.5rem',
                     animation: 'fadeInUp 0.6s ease-out'
                 }}>
 
                     {/* Left Column: Big Stats & Sessions */}
-                    <div style={{ gridColumn: 'span 8', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                    <div className="sd-left-col" style={{ gridColumn: 'span 8', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                         
                         {/* 4-Stat Row */}
-                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1.5rem' }}>
+                        <div className="sd-stats-row" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1.5rem' }}>
                             {[
                                 { title: "Open Requests", value: isLoadingRequests ? '-' : openRequestsCount, icon: HelpCircle, color: '#f59e0b', bg: '#fef3c7' },
                                 { title: "New Messages", value: unreadNotifCount, icon: MessageSquare, color: '#8b5cf6', bg: '#ede9fe' },
@@ -154,7 +155,7 @@ export default function StudentDashboardPage() {
                             
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                                 {recentRequests.length === 0 ? (
-                                    <div style={{ padding: '3rem', textAlign: 'center', color: 'var(--text-muted)', background: '#f8fafc', borderRadius: '12px' }}>
+                                    <div style={{ padding: '3rem', textAlign: 'center', color: 'var(--text-muted)', background: 'var(--sidebar)', borderRadius: '12px' }}>
                                         <HelpCircle size={32} style={{ opacity: 0.3, margin: '0 auto 1rem' }} />
                                         <div style={{ fontWeight: 600 }}>No recent requests found</div>
                                         <div style={{ fontSize: '0.85rem', marginTop: '4px' }}>Create one to get help from a peer.</div>
@@ -163,11 +164,11 @@ export default function StudentDashboardPage() {
                                     recentRequests.map((r: any) => (
                                         <div key={r.id} style={{
                                             display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-                                            padding: '1.25rem', background: '#f8fafc', borderRadius: '14px',
+                                            padding: '1.25rem', background: 'var(--sidebar)', borderRadius: '14px',
                                             border: '1px solid rgba(0,0,0,0.03)', transition: 'var(--transition)'
                                         }}
-                                        onMouseEnter={(e) => { e.currentTarget.style.background = '#f1f5f9' }}
-                                        onMouseLeave={(e) => { e.currentTarget.style.background = '#f8fafc' }}
+                                        onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--muted)' }}
+                                        onMouseLeave={(e) => { e.currentTarget.style.background = 'var(--sidebar)' }}
                                         >
                                             <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
                                                 <div style={{ width: '48px', height: '48px', borderRadius: '14px', background: 'var(--header-bg)', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: '1.1rem' }}>
@@ -199,7 +200,7 @@ export default function StudentDashboardPage() {
                     </div>
 
                     {/* Right Column: Profile & Upcoming */}
-                    <div style={{ gridColumn: 'span 4', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                    <div className="sd-right-col" style={{ gridColumn: 'span 4', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                         
                         {/* Glassy Hero Widget */}
                         <div style={{
@@ -215,14 +216,14 @@ export default function StudentDashboardPage() {
                             alignItems: 'center',
                             textAlign: 'center'
                         }}>
-                            <div style={{ position: 'absolute', top: '-50%', left: '-50%', width: '200%', height: '200%', background: 'radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 60%)', animation: 'float 8s infinite linear', pointerEvents: 'none' }} />
+                            <div style={{ position: 'absolute', top: '-50%', left: '-50%', width: '200%', height: '200%', background: 'radial-gradient(circle, color-mix(in srgb, var(--card) 15%, transparent) 0%, transparent 60%)', animation: 'float 8s infinite linear', pointerEvents: 'none' }} />
                             
-                            <div style={{ width: '80px', height: '80px', borderRadius: '50%', background: 'rgba(255,255,255,0.2)', backdropFilter: 'blur(10px)', border: '2px solid rgba(255,255,255,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: '2rem', marginBottom: '1rem', boxShadow: '0 8px 16px rgba(0,0,0,0.1)' }}>
+                            <div style={{ width: '80px', height: '80px', borderRadius: '50%', background: 'color-mix(in srgb, var(--card) 20%, transparent)', backdropFilter: 'blur(10px)', border: '2px solid color-mix(in srgb, var(--card) 30%, transparent)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: '2rem', marginBottom: '1rem', boxShadow: '0 8px 16px rgba(0,0,0,0.1)' }}>
                                 {!isLoadingUser && user?.name ? user.name[0].toUpperCase() : '👤'}
                             </div>
                             
                             <h3 style={{ fontSize: '1.35rem', fontWeight: 800, marginBottom: '6px' }}>Ready to learn?</h3>
-                            <p style={{ fontSize: '0.9rem', color: 'rgba(255,255,255,0.8)', fontWeight: 500, lineHeight: 1.5, marginBottom: '1.5rem' }}>
+                            <p style={{ fontSize: '0.9rem', color: 'color-mix(in srgb, var(--card) 80%, transparent)', fontWeight: 500, lineHeight: 1.5, marginBottom: '1.5rem' }}>
                                 Find top-rated peer helpers on campus and ace your next exam.
                             </p>
                             
@@ -311,10 +312,10 @@ export default function StudentDashboardPage() {
                                 ) : (
                                     upcomingSessions.map((s: any) => (
                                         <div key={s.id} style={{
-                                            padding: '1rem', background: '#f8fafc', borderRadius: '12px',
+                                            padding: '1rem', background: 'var(--sidebar)', borderRadius: '12px',
                                             borderLeft: '4px solid var(--primary)', display: 'flex', gap: '12px'
                                         }}>
-                                            <div style={{ background: 'rgba(0,126,167,0.1)', color: 'var(--primary)', padding: '8px', borderRadius: '8px', height: 'fit-content' }}>
+                                            <div style={{ background: 'color-mix(in srgb, var(--primary) 10%, transparent)', color: 'var(--primary)', padding: '8px', borderRadius: '8px', height: 'fit-content' }}>
                                                 <CalendarDays size={18} />
                                             </div>
                                             <div>

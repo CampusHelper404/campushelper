@@ -3,17 +3,23 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { TRPCProvider } from '@/trpc/client'
 import "./globals.css";
 import "./legacy.css";
+import "./mobile.css";
 import { Toaster } from "@/components/ui/sonner"
 import BetterAuthUIProvider from "@/providers/better-auth-ui-provider"
+import { ThemeProvider } from "@/components/theme-provider"
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+import { Plus_Jakarta_Sans, Instrument_Serif } from "next/font/google";
+
+const plusJakartaSans = Plus_Jakarta_Sans({
+  variable: "--font-plus-jakarta-sans",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const instrumentSerif = Instrument_Serif({
+  variable: "--font-instrument-serif",
   subsets: ["latin"],
+  weight: ["400"],
 });
 
 export const metadata: Metadata = {
@@ -30,10 +36,17 @@ export default function RootLayout({
     <TRPCProvider>
       <html lang="en">
         <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+          className={`${plusJakartaSans.variable} ${instrumentSerif.variable} antialiased`}
         >
-          <BetterAuthUIProvider>{children}</BetterAuthUIProvider>
-          <Toaster />
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <BetterAuthUIProvider>{children}</BetterAuthUIProvider>
+            <Toaster />
+          </ThemeProvider>
         </body>
       </html>
     </TRPCProvider>

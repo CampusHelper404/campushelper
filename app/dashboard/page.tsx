@@ -46,19 +46,18 @@ export default function DashboardPage() {
         <div className="dash-wrapper" style={{ background: 'var(--bg-color)', minHeight: '100vh' }}>
             <HelperNavbar />
 
-            <main className="dash-main" style={{ 
+            <main className="ch-page-main dash-main" style={{ 
                 maxWidth: '1200px', 
                 margin: '0 auto', 
-                padding: '3rem 1.5rem',
-                fontFamily: "'Plus Jakarta Sans', sans-serif"
+                fontFamily: 'var(--font-plus-jakarta-sans), sans-serif'
             }}>
                 
                 {/* ── Premium Welcome Header ── */}
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '2.5rem', animation: 'fadeInUp 0.5s ease-out' }}>
+                <div className="sd-header-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '2.5rem', flexWrap: 'wrap', gap: '1.5rem', animation: 'fadeInUp 0.5s ease-out' }}>
                     <div>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
                             <span style={{ 
-                                background: 'rgba(0, 126, 167, 0.1)', 
+                                background: 'color-mix(in srgb, var(--primary) 10%, transparent)', 
                                 color: 'var(--primary)', 
                                 padding: '4px 12px', 
                                 borderRadius: 'var(--radius-pill)', 
@@ -91,7 +90,7 @@ export default function DashboardPage() {
                         boxShadow: 'var(--shadow-glow)',
                         transition: 'var(--transition)'
                     }} 
-                    onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 12px 24px rgba(0, 126, 167, 0.25)' }}
+                    onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 12px 24px color-mix(in srgb, var(--primary) 25%, transparent)' }}
                     onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'var(--shadow-glow)' }}
                     >
                         View Requests <ArrowUpRight size={18} />
@@ -153,7 +152,7 @@ export default function DashboardPage() {
                                     textDecoration: 'none', 
                                     fontWeight: 800, 
                                     fontSize: '0.9rem',
-                                    boxShadow: '0 8px 16px rgba(0, 126, 167, 0.2)'
+                                    boxShadow: '0 8px 16px color-mix(in srgb, var(--primary) 20%, transparent)'
                                 }}>
                                     Complete Profile
                                 </Link>
@@ -163,7 +162,7 @@ export default function DashboardPage() {
                 )}
 
                 {/* ── Bento Box Grid Layout ── */}
-                <div style={{ 
+                <div className="sd-bento-grid" style={{ 
                     display: 'grid', 
                     gridTemplateColumns: 'repeat(12, 1fr)', 
                     gap: '1.5rem',
@@ -171,19 +170,19 @@ export default function DashboardPage() {
                 }}>
                     
                     {/* Left Column: Stats & Recent Requests */}
-                    <div style={{ gridColumn: 'span 8', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                    <div className="sd-span-8" style={{ gridColumn: 'span 8', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                         
                         {/* 4-Stat Row */}
-                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1.5rem' }}>
+                        <div className="sd-stats-row" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1.5rem' }}>
                             {[
-                                { title: "My Requests", value: isLoadingRequests ? '-' : requests?.length || 0, icon: ClipboardList, color: '#f59e0b', bg: '#fef3c7' },
-                                { title: "Notifications", value: unreadNotifCount, icon: MessageSquare, color: '#8b5cf6', bg: '#ede9fe' },
+                                { title: "Requests", value: isLoadingRequests ? '-' : requests?.length || 0, icon: ClipboardList, color: '#f59e0b', bg: '#fef3c7' },
+                                { title: "Earnings", value: isLoadingUser ? '-' : `₵${user?.helperProfile?.balance?.toFixed(2) || '0.00'}`, icon: TrendingUp, color: '#8b5cf6', bg: '#ede9fe' },
                                 { title: "Pending", value: openRequestsCount, icon: Clock, color: '#10b981', bg: '#d1fae5' },
-                                { title: "Completed", value: completedSessionsCount, icon: CheckCircle, color: '#0ea5e9', bg: '#e0f2fe' }
+                                { title: "Done", value: completedSessionsCount, icon: CheckCircle, color: '#0ea5e9', bg: '#e0f2fe' }
                             ].map((stat, i) => (
-                                <div key={i} style={{ 
+                                <div key={i} className="sd-stat-card" style={{ 
                                     background: 'var(--card-bg)', 
-                                    padding: '1.5rem', 
+                                    padding: '1.25rem', 
                                     borderRadius: 'var(--radius-lg)', 
                                     boxShadow: 'var(--shadow-sm)',
                                     border: '1px solid var(--border-color)',
@@ -225,7 +224,7 @@ export default function DashboardPage() {
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                                 {isLoadingRequests ? <div style={{ textAlign: 'center', padding: '2rem', color: 'var(--text-muted)' }}>Loading...</div> :
                                  visibleRequests?.length === 0 ? (
-                                    <div style={{ textAlign: 'center', padding: '3rem', background: '#f8fafc', borderRadius: '16px', border: '2px dashed #e2e8f0' }}>
+                                    <div style={{ textAlign: 'center', padding: '3rem', background: 'var(--sidebar)', borderRadius: '16px', border: '2px dashed var(--muted)' }}>
                                         <ClipboardList size={40} style={{ color: '#cbd5e1', marginBottom: '1rem' }} />
                                         <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', fontWeight: 600 }}>No requests found.</p>
                                     </div>
@@ -233,7 +232,7 @@ export default function DashboardPage() {
                                     visibleRequests?.map((r: any) => (
                                         <div key={r.id} style={{
                                             padding: '1.25rem',
-                                            background: '#f8fafc',
+                                            background: 'var(--sidebar)',
                                             borderRadius: '16px',
                                             display: 'flex',
                                             alignItems: 'center',
@@ -241,8 +240,8 @@ export default function DashboardPage() {
                                             transition: 'var(--transition)',
                                             border: '1px solid transparent'
                                         }}
-                                        onMouseEnter={(e) => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.borderColor = 'var(--border-color)'; e.currentTarget.style.boxShadow = 'var(--shadow-sm)' }}
-                                        onMouseLeave={(e) => { e.currentTarget.style.background = '#f8fafc'; e.currentTarget.style.borderColor = 'transparent'; e.currentTarget.style.boxShadow = 'none' }}
+                                        onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--card)'; e.currentTarget.style.borderColor = 'var(--border-color)'; e.currentTarget.style.boxShadow = 'var(--shadow-sm)' }}
+                                        onMouseLeave={(e) => { e.currentTarget.style.background = 'var(--sidebar)'; e.currentTarget.style.borderColor = 'transparent'; e.currentTarget.style.boxShadow = 'none' }}
                                         >
                                             <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
                                                 <div style={{ width: '40px', height: '40px', borderRadius: '12px', background: 'var(--primary)', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: '0.9rem' }}>
@@ -273,7 +272,7 @@ export default function DashboardPage() {
                     </div>
 
                     {/* Right Column: Profile & Scheduled */}
-                    <div style={{ gridColumn: 'span 4', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                    <div className="sd-span-4" style={{ gridColumn: 'span 4', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                         
                         {/* Quick Action Bento Card */}
                         <div style={{
@@ -289,14 +288,14 @@ export default function DashboardPage() {
                             alignItems: 'center',
                             textAlign: 'center'
                         }}>
-                            <div style={{ position: 'absolute', top: '-50%', left: '-50%', width: '200%', height: '200%', background: 'radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 60%)', animation: 'float 8s infinite linear', pointerEvents: 'none' }} />
+                            <div style={{ position: 'absolute', top: '-50%', left: '-50%', width: '200%', height: '200%', background: 'radial-gradient(circle, color-mix(in srgb, var(--card) 15%, transparent) 0%, transparent 60%)', animation: 'float 8s infinite linear', pointerEvents: 'none' }} />
                                                         
-                            <div style={{ width: '80px', height: '80px', borderRadius: '50%', background: 'rgba(255,255,255,0.2)', backdropFilter: 'blur(10px)', border: '2px solid rgba(255,255,255,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: '2rem', marginBottom: '1rem', boxShadow: '0 8px 16px rgba(0,0,0,0.1)' }}>
+                            <div style={{ width: '80px', height: '80px', borderRadius: '50%', background: 'color-mix(in srgb, var(--card) 20%, transparent)', backdropFilter: 'blur(10px)', border: '2px solid color-mix(in srgb, var(--card) 30%, transparent)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: '2rem', marginBottom: '1rem', boxShadow: '0 8px 16px rgba(0,0,0,0.1)' }}>
                                 {!isLoadingUser && user?.name ? user.name[0].toUpperCase() : '👤'}
                             </div>
                             
                             <h3 style={{ fontSize: '1.35rem', fontWeight: 800, marginBottom: '6px' }}>Helper Mode</h3>
-                            <p style={{ fontSize: '0.9rem', color: 'rgba(255,255,255,0.8)', fontWeight: 500, lineHeight: 1.5, marginBottom: '1.5rem' }}>
+                            <p style={{ fontSize: '0.9rem', color: 'color-mix(in srgb, var(--card) 80%, transparent)', fontWeight: 500, lineHeight: 1.5, marginBottom: '1.5rem' }}>
                                 Manage your requests and help students achieve their goals.
                             </p>
                             
@@ -341,10 +340,10 @@ export default function DashboardPage() {
                                 ) : (
                                     activeSessions.map((s: any) => (
                                         <div key={s.id} style={{
-                                            padding: '1rem', background: '#f8fafc', borderRadius: '12px',
+                                            padding: '1rem', background: 'var(--sidebar)', borderRadius: '12px',
                                             borderLeft: '4px solid var(--primary)', display: 'flex', gap: '12px'
                                         }}>
-                                            <div style={{ background: 'rgba(0,126,167,0.1)', color: 'var(--primary)', padding: '8px', borderRadius: '8px', height: 'fit-content' }}>
+                                            <div style={{ background: 'color-mix(in srgb, var(--primary) 10%, transparent)', color: 'var(--primary)', padding: '8px', borderRadius: '8px', height: 'fit-content' }}>
                                                 <TrendingUp size={18} />
                                             </div>
                                             <div>

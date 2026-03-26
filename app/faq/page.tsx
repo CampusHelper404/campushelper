@@ -58,7 +58,7 @@ export default function FAQPage() {
     })
 
     return (
-        <div style={{ backgroundColor: "#f0f4f5", minHeight: "100vh" }}>
+        <div style={{ backgroundColor: "var(--background)", minHeight: "100vh" }}>
             {/* Navigation (Matches Landing & About) */}
             <nav className={`navbar ${scrolled ? "scrolled" : ""}`} id="navbar">
                 <div className="nav-container">
@@ -91,9 +91,9 @@ export default function FAQPage() {
                 <section className="faq-hero" id="faq-hero" style={{ paddingTop: '100px', display: 'flex', justifyContent: 'center', paddingBottom: '4rem' }}>
                     <div className="faq-hero-container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '3rem', maxWidth: '1000px', width: '100%', padding: '0 2rem', flexWrap: 'wrap' }}>
                         
-                        <div className="faq-search-area" style={{ flex: '1 1 350px', background: 'white', padding: '2.5rem', borderRadius: '24px', boxShadow: '0 12px 32px rgba(0,50,73,0.06)' }}>
-                            <h1 style={{ fontSize: '2rem', color: '#003249', marginBottom: '1.5rem', fontWeight: 800 }}>How can we help?</h1>
-                            <div className="faq-search-box" style={{ display: 'flex', alignItems: 'center', background: '#f0f4f5', borderRadius: '12px', padding: '12px 16px', gap: '12px', border: '1px solid #ccdbdc', transition: 'box-shadow 0.2s ease', boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.02)' }}>
+                        <div className="faq-search-area" style={{ flex: '1 1 350px', background: 'white', padding: '2.5rem', borderRadius: '24px', boxShadow: '0 12px 32px color-mix(in srgb, var(--foreground) 6%, transparent)' }}>
+                            <h1 style={{ fontSize: '2rem', color: 'var(--foreground)', marginBottom: '1.5rem', fontWeight: 800 }}>How can we help?</h1>
+                            <div className="faq-search-box" style={{ display: 'flex', alignItems: 'center', background: 'var(--background)', borderRadius: '12px', padding: '12px 16px', gap: '12px', border: '1px solid var(--secondary)', transition: 'box-shadow 0.2s ease', boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.02)' }}>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5b8a9c" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                     <circle cx="11" cy="11" r="8"></circle>
                                     <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
@@ -102,7 +102,7 @@ export default function FAQPage() {
                                     type="text" 
                                     className="faq-search-input" 
                                     placeholder="Search FAQs" 
-                                    style={{ border: 'none', background: 'transparent', outline: 'none', width: '100%', fontSize: '1rem', color: '#003249' }}
+                                    style={{ border: 'none', background: 'transparent', outline: 'none', width: '100%', fontSize: '1rem', color: 'var(--foreground)' }}
                                     value={searchQuery}
                                     onChange={(e) => setSearchQuery(e.target.value)}
                                 />
@@ -110,7 +110,7 @@ export default function FAQPage() {
                         </div>
 
                         <div className="faq-hero-image" style={{ flex: '1 1 300px', display: 'flex', justifyContent: 'center' }}>
-                            <Image src="/faq.svg" alt="FAQ illustration" width={340} height={280} style={{ maxWidth: '100%', height: 'auto', filter: 'drop-shadow(0 12px 24px rgba(0,50,73,0.1))' }} />
+                            <Image src="/faq.svg" alt="FAQ illustration" width={340} height={280} style={{ maxWidth: '100%', height: 'auto', filter: 'drop-shadow(0 12px 24px color-mix(in srgb, var(--foreground) 10%, transparent))' }} />
                         </div>
 
                     </div>
@@ -121,7 +121,7 @@ export default function FAQPage() {
                     <div className="faq-container" style={{ maxWidth: '820px', width: '100%', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                         
                         {filteredFaqs.length === 0 ? (
-                            <div style={{ textAlign: 'center', padding: '3rem', color: '#5b8a9c', background: 'white', borderRadius: '16px', border: '1px solid #ccdbdc' }}>
+                            <div style={{ textAlign: 'center', padding: '3rem', color: '#5b8a9c', background: 'white', borderRadius: '16px', border: '1px solid var(--secondary)' }}>
                                 No results found for "{searchQuery}"
                             </div>
                         ) : (
@@ -134,10 +134,10 @@ export default function FAQPage() {
                                         style={{ 
                                             background: 'white', 
                                             borderRadius: '16px', 
-                                            border: '1px solid #ccdbdc', 
+                                            border: '1px solid var(--secondary)', 
                                             overflow: 'hidden',
                                             transition: 'all 0.3s ease',
-                                            boxShadow: isOpen ? '0 8px 24px rgba(0,50,73,0.08)' : '0 2px 8px rgba(0,50,73,0.03)' 
+                                            boxShadow: isOpen ? '0 8px 24px color-mix(in srgb, var(--foreground) 8%, transparent)' : '0 2px 8px color-mix(in srgb, var(--foreground) 3%, transparent)' 
                                         }}
                                     >
                                         <button 
@@ -155,7 +155,7 @@ export default function FAQPage() {
                                                 textAlign: 'left'
                                             }}
                                         >
-                                            <span style={{ fontSize: '1.05rem', fontWeight: 600, color: isOpen ? '#007ea7' : '#003249', paddingRight: '1rem', transition: 'color 0.2s ease' }}>
+                                            <span style={{ fontSize: '1.05rem', fontWeight: 600, color: isOpen ? 'var(--primary)' : 'var(--foreground)', paddingRight: '1rem', transition: 'color 0.2s ease' }}>
                                                 {faq.question}
                                             </span>
                                             <svg 
@@ -164,7 +164,7 @@ export default function FAQPage() {
                                                 height="22" 
                                                 viewBox="0 0 24 24" 
                                                 fill="none" 
-                                                stroke={isOpen ? '#007ea7' : '#5b8a9c'} 
+                                                stroke={isOpen ? 'var(--primary)' : '#5b8a9c'} 
                                                 strokeWidth="2.5" 
                                                 strokeLinecap="round" 
                                                 strokeLinejoin="round"
@@ -182,7 +182,7 @@ export default function FAQPage() {
                                                 overflow: 'hidden', 
                                                 transition: 'all 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
                                                 padding: isOpen ? '0 1.5rem 1.25rem' : '0 1.5rem',
-                                                color: '#4a6a7c',
+                                                color: 'var(--muted-foreground)',
                                                 lineHeight: 1.6,
                                                 fontSize: '0.95rem'
                                             }}
@@ -199,9 +199,9 @@ export default function FAQPage() {
             </main>
 
             {/* Footer */}
-            <footer className="about-footer" style={{ background: '#003249', color: 'white', padding: '4rem 2rem 2rem', textAlign: 'center' }}>
+            <footer className="about-footer" style={{ background: 'var(--foreground)', color: 'white', padding: '4rem 2rem 2rem', textAlign: 'center' }}>
                 <div className="about-footer-container" style={{ maxWidth: '800px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '2rem', alignItems: 'center' }}>
-                    <p className="about-footer-message" style={{ fontSize: '1.1rem', lineHeight: 1.6, color: '#ccdbdc', maxWidth: '600px' }}>
+                    <p className="about-footer-message" style={{ fontSize: '1.1rem', lineHeight: 1.6, color: 'var(--secondary)', maxWidth: '600px' }}>
                         Built for students, Campus Helper supports better organization, easier access to learning materials and
                         meaningful collaboration on campus
                     </p>

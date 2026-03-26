@@ -41,19 +41,19 @@ export default function AdminPage() {
         <div className="dash-wrapper" style={{ background: 'var(--bg-color)', minHeight: '100vh' }}>
             <AdminNavbar />
 
-            <main className="dash-main" style={{ 
+            <main className="ch-page-main" style={{ 
                 maxWidth: '1200px', 
                 margin: '0 auto', 
                 padding: '3rem 1.5rem',
-                fontFamily: "'Plus Jakarta Sans', sans-serif"
+                fontFamily: 'var(--font-plus-jakarta-sans), sans-serif'
             }}>
                 
                 {/* ── Premium Welcome Header ── */}
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '2.5rem', animation: 'fadeInUp 0.5s ease-out' }}>
+                <div className="sd-header-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '2.5rem', animation: 'fadeInUp 0.5s ease-out', gap: '1rem', flexWrap: 'wrap' }}>
                     <div>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
                             <span style={{ 
-                                background: 'rgba(0, 126, 167, 0.1)', 
+                                background: 'color-mix(in srgb, var(--primary) 10%, transparent)', 
                                 color: 'var(--primary)', 
                                 padding: '4px 12px', 
                                 borderRadius: 'var(--radius-pill)', 
@@ -86,7 +86,7 @@ export default function AdminPage() {
                         boxShadow: 'var(--shadow-glow)',
                         transition: 'var(--transition)'
                     }} 
-                    onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 12px 24px rgba(0, 126, 167, 0.25)' }}
+                    onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 12px 24px color-mix(in srgb, var(--primary) 25%, transparent)' }}
                     onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'var(--shadow-glow)' }}
                     >
                         Pending Verifications <ArrowUpRight size={18} />
@@ -94,18 +94,18 @@ export default function AdminPage() {
                 </div>
 
                 {/* ── Bento Box Grid Layout ── */}
-                <div style={{ 
+                <div className="sd-bento-grid" style={{ 
                     display: 'grid', 
-                    gridTemplateColumns: 'repeat(12, 1fr)', 
+                    gridTemplateColumns: 'minmax(0,1fr) minmax(0,1fr) minmax(0,1fr) minmax(0,1fr) minmax(0,1fr) minmax(0,1fr) minmax(0,1fr) minmax(0,1fr) minmax(0,1fr) minmax(0,1fr) minmax(0,1fr) minmax(0,1fr)', 
                     gap: '1.5rem',
                     animation: 'fadeInUp 0.6s ease-out'
                 }}>
                     
                     {/* Left Column: Stats & Recent Users */}
-                    <div style={{ gridColumn: 'span 8', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                    <div className="sd-left-col" style={{ gridColumn: 'span 8', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                         
                         {/* 4-Stat Row */}
-                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1.5rem' }}>
+                        <div className="sd-stats-row" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1.5rem' }}>
                             {[
                                 { title: "Total Users", value: allUsers?.length || 0, icon: Users, color: '#0ea5e9', bg: '#e0f2fe', href: '/admin/users' },
                                 { title: "Helpers", value: helpersCount, icon: TrendingUp, color: '#8b5cf6', bg: '#ede9fe', href: '/admin/users' },
@@ -156,7 +156,7 @@ export default function AdminPage() {
                             
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                                 {recentUsers.length === 0 ? (
-                                    <div style={{ textAlign: 'center', padding: '3rem', background: '#f8fafc', borderRadius: '16px', border: '2px dashed #e2e8f0' }}>
+                                    <div style={{ textAlign: 'center', padding: '3rem', background: 'var(--sidebar)', borderRadius: '16px', border: '2px dashed var(--muted)' }}>
                                         <Users size={40} style={{ color: '#cbd5e1', marginBottom: '1rem' }} />
                                         <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', fontWeight: 600 }}>No users found.</p>
                                     </div>
@@ -164,7 +164,7 @@ export default function AdminPage() {
                                     recentUsers.map((u: any) => (
                                         <div key={u.id} style={{
                                             padding: '1rem 1.25rem',
-                                            background: '#f8fafc',
+                                            background: 'var(--sidebar)',
                                             borderRadius: '16px',
                                             display: 'flex',
                                             alignItems: 'center',
@@ -172,11 +172,11 @@ export default function AdminPage() {
                                             transition: 'var(--transition)',
                                             border: '1px solid transparent'
                                         }}
-                                        onMouseEnter={(e) => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.borderColor = 'var(--border-color)'; e.currentTarget.style.boxShadow = 'var(--shadow-sm)' }}
-                                        onMouseLeave={(e) => { e.currentTarget.style.background = '#f8fafc'; e.currentTarget.style.borderColor = 'transparent'; e.currentTarget.style.boxShadow = 'none' }}
+                                        onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--card)'; e.currentTarget.style.borderColor = 'var(--border-color)'; e.currentTarget.style.boxShadow = 'var(--shadow-sm)' }}
+                                        onMouseLeave={(e) => { e.currentTarget.style.background = 'var(--sidebar)'; e.currentTarget.style.borderColor = 'transparent'; e.currentTarget.style.boxShadow = 'none' }}
                                         >
                                             <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                                                <div style={{ width: '40px', height: '40px', borderRadius: '12px', background: '#003249', color: '#9ad1d4', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: '0.85rem' }}>
+                                                <div style={{ width: '40px', height: '40px', borderRadius: '12px', background: 'var(--foreground)', color: 'var(--chart-3)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: '0.85rem' }}>
                                                     {getInitials(u.name || "U")}
                                                 </div>
                                                 <div>
@@ -193,7 +193,7 @@ export default function AdminPage() {
                     </div>
 
                     {/* Right Column: Actions & System Status */}
-                    <div style={{ gridColumn: 'span 4', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                    <div className="sd-right-col" style={{ gridColumn: 'span 4', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                         
                         {/* Quick Action Bento Card */}
                         <div style={{
@@ -209,14 +209,14 @@ export default function AdminPage() {
                             alignItems: 'center',
                             textAlign: 'center'
                         }}>
-                            <div style={{ position: 'absolute', top: '-50%', left: '-50%', width: '200%', height: '200%', background: 'radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 60%)', animation: 'float 8s infinite linear', pointerEvents: 'none' }} />
+                            <div style={{ position: 'absolute', top: '-50%', left: '-50%', width: '200%', height: '200%', background: 'radial-gradient(circle, color-mix(in srgb, var(--card) 15%, transparent) 0%, transparent 60%)', animation: 'float 8s infinite linear', pointerEvents: 'none' }} />
                                                         
-                            <div style={{ width: '64px', height: '64px', borderRadius: '18px', background: 'rgba(255,255,255,0.2)', backdropFilter: 'blur(10px)', border: '2px solid rgba(255,255,255,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, marginBottom: '1.25rem' }}>
+                            <div style={{ width: '64px', height: '64px', borderRadius: '18px', background: 'color-mix(in srgb, var(--card) 20%, transparent)', backdropFilter: 'blur(10px)', border: '2px solid color-mix(in srgb, var(--card) 30%, transparent)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, marginBottom: '1.25rem' }}>
                                 <ShieldCheck size={32} />
                             </div>
                             
                             <h3 style={{ fontSize: '1.35rem', fontWeight: 800, marginBottom: '6px' }}>System Admin</h3>
-                            <p style={{ fontSize: '0.9rem', color: 'rgba(255,255,255,0.8)', fontWeight: 500, lineHeight: 1.5, marginBottom: '1.5rem' }}>
+                            <p style={{ fontSize: '0.9rem', color: 'color-mix(in srgb, var(--card) 80%, transparent)', fontWeight: 500, lineHeight: 1.5, marginBottom: '1.5rem' }}>
                                 Manage platform verifications, user roles, and active help requests.
                             </p>
                             
@@ -228,8 +228,8 @@ export default function AdminPage() {
                                 ].map((link, idx) => (
                                     <Link key={idx} href={link.href} style={{
                                         width: '100%',
-                                        background: 'rgba(255,255,255,0.1)',
-                                        border: '1px solid rgba(255,255,255,0.2)',
+                                        background: 'color-mix(in srgb, var(--card) 10%, transparent)',
+                                        border: '1px solid color-mix(in srgb, var(--card) 20%, transparent)',
                                         color: 'white',
                                         padding: '10px',
                                         borderRadius: 'var(--radius-pill)',
@@ -239,7 +239,7 @@ export default function AdminPage() {
                                         transition: 'all 0.2s'
                                     }}
                                     onMouseEnter={(e) => { e.currentTarget.style.background = 'white'; e.currentTarget.style.color = 'var(--primary)' }}
-                                    onMouseLeave={(e) => { e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; e.currentTarget.style.color = 'white' }}
+                                    onMouseLeave={(e) => { e.currentTarget.style.background = 'color-mix(in srgb, var(--card) 10%, transparent)'; e.currentTarget.style.color = 'white' }}
                                     >
                                         {link.label}
                                     </Link>
@@ -279,9 +279,9 @@ export default function AdminPage() {
                                 <div style={{ 
                                     marginTop: '1rem',
                                     padding: '1.25rem',
-                                    background: 'rgba(0,126,167,0.05)',
+                                    background: 'color-mix(in srgb, var(--primary) 5%, transparent)',
                                     borderRadius: '16px',
-                                    border: '1px solid rgba(0,126,167,0.1)'
+                                    border: '1px solid color-mix(in srgb, var(--primary) 10%, transparent)'
                                 }}>
                                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--primary)', marginBottom: '4px' }}>
                                         <Bell size={16} />
@@ -307,7 +307,7 @@ function RoleBadge({ role }: { role: string }) {
         HELPER: { bg: '#d1fae5', color: '#059669' },
         STUDENT: { bg: '#e0f2fe', color: '#0284c7' },
     }
-    const s = map[role] || { bg: '#f1f5f9', color: '#64748b' }
+    const s = map[role] || { bg: 'var(--muted)', color: 'var(--muted-foreground)' }
     return (
         <span style={{ background: s.bg, color: s.color, borderRadius: 'var(--radius-pill)', padding: '4px 12px', fontSize: '0.7rem', fontWeight: 800, letterSpacing: '0.02em' }}>{role}</span>
     )

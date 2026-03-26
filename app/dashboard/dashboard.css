@@ -1,7 +1,5 @@
 /* Dashboard Styles — CampusHelper V2 Premium */
 
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
-
 :root {
     --bg-color: #f3f6f8; /* Softer cool gray for contrast */
     --header-bg: linear-gradient(135deg, #003249 0%, #007ea7 100%);
@@ -46,7 +44,7 @@
 .dash-wrapper {
     min-height: 100vh;
     background: var(--bg-color);
-    font-family: 'Inter', -apple-system, sans-serif;
+    font-family: var(--font-plus-jakarta-sans), sans-serif;
     color: var(--text-main);
 }
 
@@ -194,6 +192,21 @@
 .stat-value { font-size: 1.35rem; font-weight: 800; }
 
 /* ── Dashboard Grid ── */
+.sd-bento-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 1.5rem;
+}
+
+.sd-span-8 { grid-column: span 8; }
+.sd-span-4 { grid-column: span 4; }
+
+.sd-stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+}
+
 .dash-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -388,3 +401,85 @@
     .dash-welcome h1      { font-size: 1.4rem; }
     .dash-nav-links       { gap: 0.75rem; }
 }
+
+/* ── Dark Mode Overrides ── */
+.dark {
+    --bg-color: #001a26;
+    --header-bg: linear-gradient(135deg, #001220 0%, #004d6e 100%);
+    --card-bg: #003249;
+    --text-main: #dce8ea;
+    --text-muted: #94a3b8;
+    --btn-bg: #007ea7;
+    --btn-bg-hover: #009dc0;
+    --btn-text: #ffffff;
+    --white: #003249;
+    --accent-teal: #004d6e;
+    --accent-light: #005577;
+    --border-color: rgba(0, 126, 167, 0.15);
+}
+
+.dark .dash-wrapper {
+    background: var(--bg-color);
+    color: var(--text-main);
+}
+
+.dark .dash-nav {
+    background: rgba(0, 26, 38, 0.9);
+    border-bottom-color: rgba(0, 77, 110, 0.4);
+}
+
+.dark .section-box {
+    background: #002a3a;
+}
+
+.dark .section-box.light {
+    background: #002030;
+}
+
+.dark .action-btn {
+    background: #003249;
+    color: var(--text-main);
+}
+
+.dark .action-btn:hover {
+    background: #004060;
+}
+
+.dark .action-icon-circle {
+    background: #004d6e;
+}
+
+.dark .request-item {
+    background: #003249;
+}
+
+.dark .session-item {
+    background: #003249;
+}
+
+.dark .session-avatar {
+    background: #004d6e;
+    color: #dce8ea;
+}
+
+.dark .req-avatar {
+    background: #004d6e;
+}
+
+.dark .stat-card {
+    background: #004060;
+}
+
+.dark .stat-icon {
+    background: #002a3a;
+}
+
+.dark .req-btn.decline {
+    color: var(--text-main);
+    border-color: rgba(255,255,255,0.15);
+}
+
+.dark .req-btn.decline:hover {
+    background: rgba(255,255,255,0.06);
+}
+

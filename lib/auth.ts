@@ -1,7 +1,9 @@
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "@better-auth/prisma-adapter";
 import {prisma} from "@/lib/prisma"//your prisma instance
+import { Resend } from "resend";
 
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 
 
@@ -31,11 +33,39 @@ export const auth = betterAuth({
                 required: false,
                 defaultValue: false,
             },
+            isSuspended: {
+                type: "boolean",
+                required: false,
+                defaultValue: false,
+            },
         },
     },
     emailAndPassword: { 
     enabled: true, 
+    requireEmailVerification: true,
   }, 
+  emailVerification: {
+    sendOnSignUp: true,
+    sendVerificationEmail: async ({ user, url, token }, request) => {
+      console.log(`\n\n=== EMAIL VERIFICATION FOR ${user.email} ===\n`);
+      console.log(`Click this link to verify your email:\n${url}`);
+      console.log(`\n============================================\n\n`);
+      
+      if (process.env.RESEND_API_KEY) {
+        try {
+          await resend.emails.send({
+            // Ensure this verified domain matches your Resend account, or use onboarding@resend.dev for local testing to yourself
+            from: "Campus Helper <onboarding@resend.dev>",
+            to: user.email,
+            subject: "Verify your email address",
+            html: `<p>Hi ${user.name},</p><p>Welcome to Campus Helper! Please click <a href="${url}">here</a> to verify your email address.</p>`,
+          });
+        } catch (error) {
+          console.error("Failed to send verification email:", error);
+        }
+      }
+    },
+  },
   socialProviders: { 
     github: { 
       clientId: process.env.GITHUB_CLIENT_ID as string, 

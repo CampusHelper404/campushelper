@@ -2,8 +2,6 @@
    Onboarding — Modern Reconstructed Styles
    ───────────────────────────────────────── */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;0,14..32,800&display=swap');
-
 :root {
     --ob-primary:     #007ea7;
     --ob-primary-lt:  #80ced7;
@@ -23,7 +21,7 @@
     --ob-radius-lg:   24px;
     --ob-radius-pill: 9999px;
     --ob-transition:  0.28s cubic-bezier(0.4,0,0.2,1);
-    font-family: 'Inter', -apple-system, sans-serif;
+    font-family: var(--font-plus-jakarta-sans), -apple-system, sans-serif;
 }
 
 /* ── Keyframes ── */
@@ -439,14 +437,81 @@
 
 /* ── Responsive ── */
 @media (max-width: 768px) {
-    .ob-cards  { grid-template-columns: 1fr; max-width: 380px; margin: 0 auto 2rem; }
-    .ob-s2-wrap  { grid-template-columns: 1fr; }
+    .ob-page { padding-bottom: 2rem; }
+    .ob-topbar { padding: 1rem 0; }
+    .ob-cards { grid-template-columns: 1fr; max-width: 100%; gap: 1rem; }
+    .ob-card { padding: 1.5rem 1.25rem; }
+    .ob-card-img { height: 140px; }
+    .ob-s2-wrap { grid-template-columns: 1fr; gap: 1.5rem; }
     .ob-s2-header { grid-column: 1; }
-    .ob-s2-illustration img { max-height: 240px; }
-    .ob-s3-images { grid-template-columns: 1fr; }
-    .ob-s3-card { padding: 2rem 1.25rem; }
+    .ob-s2-illustration img { max-height: 200px; }
+    .ob-s3-images { grid-template-columns: 1fr; gap: 1rem; }
+    .ob-s3-card { padding: 2rem 1rem; }
+    .ob-s3-images img { max-height: 180px; }
 }
 
 @media (max-width: 480px) {
-    .ob-btn { padding: 13px 36px; font-size: 0.9rem; }
+    .ob-s1-title { font-size: 1.5rem; }
+    .ob-btn { padding: 14px 44px; font-size: 0.9rem; width: 100%; justify-content: center; }
 }
+
+/* ── Dark Mode Overrides ── */
+.dark {
+    --ob-primary: #80ced7;
+    --ob-primary-lt: #9ad1d4;
+    --ob-dark: #e2eaeb;
+    --ob-bg: #001a26;
+    --ob-accent: #004d6e;
+    --ob-white: #003249;
+    --ob-text: #dce8ea;
+    --ob-muted: #94a3b8;
+    --ob-border: rgba(0, 77, 110, 0.5);
+    --ob-glass: rgba(0, 50, 73, 0.55);
+    --ob-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+    --ob-shadow-md: 0 6px 20px rgba(0, 0, 0, 0.35);
+    --ob-shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.4);
+}
+
+.dark .ob-page {
+    background: linear-gradient(150deg, #001a26 0%, #00111a 40%, #002030 100%);
+}
+
+.dark .ob-card {
+    background: rgba(0, 50, 73, 0.7);
+    border-color: rgba(0, 77, 110, 0.5);
+}
+
+.dark .ob-card:hover {
+    background: rgba(0, 60, 85, 0.8);
+}
+
+.dark .ob-s2-panel {
+    background: rgba(0, 50, 73, 0.7);
+    border-color: rgba(0, 77, 110, 0.5);
+}
+
+.dark .ob-s2-step {
+    background: rgba(0, 50, 73, 0.55);
+    border-color: rgba(0, 77, 110, 0.4);
+}
+
+.dark .ob-s2-step:hover {
+    background: rgba(0, 60, 85, 0.75);
+}
+
+.dark .ob-s2-icon {
+    background: #002a3a;
+    border-color: #007ea7;
+}
+
+.dark .ob-s3-card {
+    background: rgba(0, 50, 73, 0.65);
+    border-color: rgba(0, 77, 110, 0.5);
+}
+
+.dark .ob-topbar-skip {
+    background: rgba(0, 50, 73, 0.55);
+    border-color: rgba(0, 77, 110, 0.5);
+    color: #94a3b8;
+}
+

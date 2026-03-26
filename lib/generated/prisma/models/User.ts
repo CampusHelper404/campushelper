@@ -32,6 +32,7 @@ export type UserMinAggregateOutputType = {
   image: string | null
   role: $Enums.UserRole | null
   onboarded: boolean | null
+  isSuspended: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -44,6 +45,7 @@ export type UserMaxAggregateOutputType = {
   image: string | null
   role: $Enums.UserRole | null
   onboarded: boolean | null
+  isSuspended: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -56,6 +58,7 @@ export type UserCountAggregateOutputType = {
   image: number
   role: number
   onboarded: number
+  isSuspended: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -70,6 +73,7 @@ export type UserMinAggregateInputType = {
   image?: true
   role?: true
   onboarded?: true
+  isSuspended?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -82,6 +86,7 @@ export type UserMaxAggregateInputType = {
   image?: true
   role?: true
   onboarded?: true
+  isSuspended?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -94,6 +99,7 @@ export type UserCountAggregateInputType = {
   image?: true
   role?: true
   onboarded?: true
+  isSuspended?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -179,6 +185,7 @@ export type UserGroupByOutputType = {
   image: string | null
   role: $Enums.UserRole
   onboarded: boolean
+  isSuspended: boolean
   createdAt: Date
   updatedAt: Date
   _count: UserCountAggregateOutputType | null
@@ -212,10 +219,12 @@ export type UserWhereInput = {
   image?: Prisma.StringNullableFilter<"User"> | string | null
   role?: Prisma.EnumUserRoleFilter<"User"> | $Enums.UserRole
   onboarded?: Prisma.BoolFilter<"User"> | boolean
+  isSuspended?: Prisma.BoolFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   helperSessions?: Prisma.AcademicSessionListRelationFilter
   studentSessions?: Prisma.AcademicSessionListRelationFilter
+  joinLogs?: Prisma.SessionJoinLogListRelationFilter
   analyticsEvents?: Prisma.AnalyticsEventListRelationFilter
   auditLogs?: Prisma.AuditLogListRelationFilter
   acceptedRequests?: Prisma.HelpRequestListRelationFilter
@@ -239,10 +248,12 @@ export type UserOrderByWithRelationInput = {
   image?: Prisma.SortOrderInput | Prisma.SortOrder
   role?: Prisma.SortOrder
   onboarded?: Prisma.SortOrder
+  isSuspended?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   helperSessions?: Prisma.AcademicSessionOrderByRelationAggregateInput
   studentSessions?: Prisma.AcademicSessionOrderByRelationAggregateInput
+  joinLogs?: Prisma.SessionJoinLogOrderByRelationAggregateInput
   analyticsEvents?: Prisma.AnalyticsEventOrderByRelationAggregateInput
   auditLogs?: Prisma.AuditLogOrderByRelationAggregateInput
   acceptedRequests?: Prisma.HelpRequestOrderByRelationAggregateInput
@@ -269,10 +280,12 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   image?: Prisma.StringNullableFilter<"User"> | string | null
   role?: Prisma.EnumUserRoleFilter<"User"> | $Enums.UserRole
   onboarded?: Prisma.BoolFilter<"User"> | boolean
+  isSuspended?: Prisma.BoolFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   helperSessions?: Prisma.AcademicSessionListRelationFilter
   studentSessions?: Prisma.AcademicSessionListRelationFilter
+  joinLogs?: Prisma.SessionJoinLogListRelationFilter
   analyticsEvents?: Prisma.AnalyticsEventListRelationFilter
   auditLogs?: Prisma.AuditLogListRelationFilter
   acceptedRequests?: Prisma.HelpRequestListRelationFilter
@@ -296,6 +309,7 @@ export type UserOrderByWithAggregationInput = {
   image?: Prisma.SortOrderInput | Prisma.SortOrder
   role?: Prisma.SortOrder
   onboarded?: Prisma.SortOrder
+  isSuspended?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
@@ -314,6 +328,7 @@ export type UserScalarWhereWithAggregatesInput = {
   image?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   role?: Prisma.EnumUserRoleWithAggregatesFilter<"User"> | $Enums.UserRole
   onboarded?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
+  isSuspended?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
 }
@@ -326,10 +341,12 @@ export type UserCreateInput = {
   image?: string | null
   role?: $Enums.UserRole
   onboarded?: boolean
+  isSuspended?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   helperSessions?: Prisma.AcademicSessionCreateNestedManyWithoutHelperInput
   studentSessions?: Prisma.AcademicSessionCreateNestedManyWithoutStudentInput
+  joinLogs?: Prisma.SessionJoinLogCreateNestedManyWithoutUserInput
   analyticsEvents?: Prisma.AnalyticsEventCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
   acceptedRequests?: Prisma.HelpRequestCreateNestedManyWithoutAcceptedByInput
@@ -353,10 +370,12 @@ export type UserUncheckedCreateInput = {
   image?: string | null
   role?: $Enums.UserRole
   onboarded?: boolean
+  isSuspended?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   helperSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutHelperInput
   studentSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutStudentInput
+  joinLogs?: Prisma.SessionJoinLogUncheckedCreateNestedManyWithoutUserInput
   analyticsEvents?: Prisma.AnalyticsEventUncheckedCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
   acceptedRequests?: Prisma.HelpRequestUncheckedCreateNestedManyWithoutAcceptedByInput
@@ -380,10 +399,12 @@ export type UserUpdateInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSuspended?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   helperSessions?: Prisma.AcademicSessionUpdateManyWithoutHelperNestedInput
   studentSessions?: Prisma.AcademicSessionUpdateManyWithoutStudentNestedInput
+  joinLogs?: Prisma.SessionJoinLogUpdateManyWithoutUserNestedInput
   analyticsEvents?: Prisma.AnalyticsEventUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
   acceptedRequests?: Prisma.HelpRequestUpdateManyWithoutAcceptedByNestedInput
@@ -407,10 +428,12 @@ export type UserUncheckedUpdateInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSuspended?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   helperSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutHelperNestedInput
   studentSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutStudentNestedInput
+  joinLogs?: Prisma.SessionJoinLogUncheckedUpdateManyWithoutUserNestedInput
   analyticsEvents?: Prisma.AnalyticsEventUncheckedUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
   acceptedRequests?: Prisma.HelpRequestUncheckedUpdateManyWithoutAcceptedByNestedInput
@@ -434,6 +457,7 @@ export type UserCreateManyInput = {
   image?: string | null
   role?: $Enums.UserRole
   onboarded?: boolean
+  isSuspended?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -446,6 +470,7 @@ export type UserUpdateManyMutationInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSuspended?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -458,6 +483,7 @@ export type UserUncheckedUpdateManyInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSuspended?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -470,6 +496,7 @@ export type UserCountOrderByAggregateInput = {
   image?: Prisma.SortOrder
   role?: Prisma.SortOrder
   onboarded?: Prisma.SortOrder
+  isSuspended?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -482,6 +509,7 @@ export type UserMaxOrderByAggregateInput = {
   image?: Prisma.SortOrder
   role?: Prisma.SortOrder
   onboarded?: Prisma.SortOrder
+  isSuspended?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -494,6 +522,7 @@ export type UserMinOrderByAggregateInput = {
   image?: Prisma.SortOrder
   role?: Prisma.SortOrder
   onboarded?: Prisma.SortOrder
+  isSuspended?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -744,6 +773,20 @@ export type UserUpdateOneRequiredWithoutAccountsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAccountsInput, Prisma.UserUpdateWithoutAccountsInput>, Prisma.UserUncheckedUpdateWithoutAccountsInput>
 }
 
+export type UserCreateNestedOneWithoutJoinLogsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutJoinLogsInput, Prisma.UserUncheckedCreateWithoutJoinLogsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutJoinLogsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutJoinLogsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutJoinLogsInput, Prisma.UserUncheckedCreateWithoutJoinLogsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutJoinLogsInput
+  upsert?: Prisma.UserUpsertWithoutJoinLogsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutJoinLogsInput, Prisma.UserUpdateWithoutJoinLogsInput>, Prisma.UserUncheckedUpdateWithoutJoinLogsInput>
+}
+
 export type UserCreateWithoutAcceptedRequestsInput = {
   id: string
   name: string
@@ -752,10 +795,12 @@ export type UserCreateWithoutAcceptedRequestsInput = {
   image?: string | null
   role?: $Enums.UserRole
   onboarded?: boolean
+  isSuspended?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   helperSessions?: Prisma.AcademicSessionCreateNestedManyWithoutHelperInput
   studentSessions?: Prisma.AcademicSessionCreateNestedManyWithoutStudentInput
+  joinLogs?: Prisma.SessionJoinLogCreateNestedManyWithoutUserInput
   analyticsEvents?: Prisma.AnalyticsEventCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
   requests?: Prisma.HelpRequestCreateNestedManyWithoutStudentInput
@@ -778,10 +823,12 @@ export type UserUncheckedCreateWithoutAcceptedRequestsInput = {
   image?: string | null
   role?: $Enums.UserRole
   onboarded?: boolean
+  isSuspended?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   helperSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutHelperInput
   studentSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutStudentInput
+  joinLogs?: Prisma.SessionJoinLogUncheckedCreateNestedManyWithoutUserInput
   analyticsEvents?: Prisma.AnalyticsEventUncheckedCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
   requests?: Prisma.HelpRequestUncheckedCreateNestedManyWithoutStudentInput
@@ -809,10 +856,12 @@ export type UserCreateWithoutRequestsInput = {
   image?: string | null
   role?: $Enums.UserRole
   onboarded?: boolean
+  isSuspended?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   helperSessions?: Prisma.AcademicSessionCreateNestedManyWithoutHelperInput
   studentSessions?: Prisma.AcademicSessionCreateNestedManyWithoutStudentInput
+  joinLogs?: Prisma.SessionJoinLogCreateNestedManyWithoutUserInput
   analyticsEvents?: Prisma.AnalyticsEventCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
   acceptedRequests?: Prisma.HelpRequestCreateNestedManyWithoutAcceptedByInput
@@ -835,10 +884,12 @@ export type UserUncheckedCreateWithoutRequestsInput = {
   image?: string | null
   role?: $Enums.UserRole
   onboarded?: boolean
+  isSuspended?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   helperSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutHelperInput
   studentSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutStudentInput
+  joinLogs?: Prisma.SessionJoinLogUncheckedCreateNestedManyWithoutUserInput
   analyticsEvents?: Prisma.AnalyticsEventUncheckedCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
   acceptedRequests?: Prisma.HelpRequestUncheckedCreateNestedManyWithoutAcceptedByInput
@@ -877,10 +928,12 @@ export type UserUpdateWithoutAcceptedRequestsInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSuspended?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   helperSessions?: Prisma.AcademicSessionUpdateManyWithoutHelperNestedInput
   studentSessions?: Prisma.AcademicSessionUpdateManyWithoutStudentNestedInput
+  joinLogs?: Prisma.SessionJoinLogUpdateManyWithoutUserNestedInput
   analyticsEvents?: Prisma.AnalyticsEventUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
   requests?: Prisma.HelpRequestUpdateManyWithoutStudentNestedInput
@@ -903,10 +956,12 @@ export type UserUncheckedUpdateWithoutAcceptedRequestsInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSuspended?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   helperSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutHelperNestedInput
   studentSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutStudentNestedInput
+  joinLogs?: Prisma.SessionJoinLogUncheckedUpdateManyWithoutUserNestedInput
   analyticsEvents?: Prisma.AnalyticsEventUncheckedUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
   requests?: Prisma.HelpRequestUncheckedUpdateManyWithoutStudentNestedInput
@@ -940,10 +995,12 @@ export type UserUpdateWithoutRequestsInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSuspended?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   helperSessions?: Prisma.AcademicSessionUpdateManyWithoutHelperNestedInput
   studentSessions?: Prisma.AcademicSessionUpdateManyWithoutStudentNestedInput
+  joinLogs?: Prisma.SessionJoinLogUpdateManyWithoutUserNestedInput
   analyticsEvents?: Prisma.AnalyticsEventUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
   acceptedRequests?: Prisma.HelpRequestUpdateManyWithoutAcceptedByNestedInput
@@ -966,10 +1023,12 @@ export type UserUncheckedUpdateWithoutRequestsInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSuspended?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   helperSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutHelperNestedInput
   studentSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutStudentNestedInput
+  joinLogs?: Prisma.SessionJoinLogUncheckedUpdateManyWithoutUserNestedInput
   analyticsEvents?: Prisma.AnalyticsEventUncheckedUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
   acceptedRequests?: Prisma.HelpRequestUncheckedUpdateManyWithoutAcceptedByNestedInput
@@ -992,9 +1051,11 @@ export type UserCreateWithoutHelperSessionsInput = {
   image?: string | null
   role?: $Enums.UserRole
   onboarded?: boolean
+  isSuspended?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   studentSessions?: Prisma.AcademicSessionCreateNestedManyWithoutStudentInput
+  joinLogs?: Prisma.SessionJoinLogCreateNestedManyWithoutUserInput
   analyticsEvents?: Prisma.AnalyticsEventCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
   acceptedRequests?: Prisma.HelpRequestCreateNestedManyWithoutAcceptedByInput
@@ -1018,9 +1079,11 @@ export type UserUncheckedCreateWithoutHelperSessionsInput = {
   image?: string | null
   role?: $Enums.UserRole
   onboarded?: boolean
+  isSuspended?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   studentSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutStudentInput
+  joinLogs?: Prisma.SessionJoinLogUncheckedCreateNestedManyWithoutUserInput
   analyticsEvents?: Prisma.AnalyticsEventUncheckedCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
   acceptedRequests?: Prisma.HelpRequestUncheckedCreateNestedManyWithoutAcceptedByInput
@@ -1049,9 +1112,11 @@ export type UserCreateWithoutStudentSessionsInput = {
   image?: string | null
   role?: $Enums.UserRole
   onboarded?: boolean
+  isSuspended?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   helperSessions?: Prisma.AcademicSessionCreateNestedManyWithoutHelperInput
+  joinLogs?: Prisma.SessionJoinLogCreateNestedManyWithoutUserInput
   analyticsEvents?: Prisma.AnalyticsEventCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
   acceptedRequests?: Prisma.HelpRequestCreateNestedManyWithoutAcceptedByInput
@@ -1075,9 +1140,11 @@ export type UserUncheckedCreateWithoutStudentSessionsInput = {
   image?: string | null
   role?: $Enums.UserRole
   onboarded?: boolean
+  isSuspended?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   helperSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutHelperInput
+  joinLogs?: Prisma.SessionJoinLogUncheckedCreateNestedManyWithoutUserInput
   analyticsEvents?: Prisma.AnalyticsEventUncheckedCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
   acceptedRequests?: Prisma.HelpRequestUncheckedCreateNestedManyWithoutAcceptedByInput
@@ -1117,9 +1184,11 @@ export type UserUpdateWithoutHelperSessionsInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSuspended?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   studentSessions?: Prisma.AcademicSessionUpdateManyWithoutStudentNestedInput
+  joinLogs?: Prisma.SessionJoinLogUpdateManyWithoutUserNestedInput
   analyticsEvents?: Prisma.AnalyticsEventUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
   acceptedRequests?: Prisma.HelpRequestUpdateManyWithoutAcceptedByNestedInput
@@ -1143,9 +1212,11 @@ export type UserUncheckedUpdateWithoutHelperSessionsInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSuspended?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   studentSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutStudentNestedInput
+  joinLogs?: Prisma.SessionJoinLogUncheckedUpdateManyWithoutUserNestedInput
   analyticsEvents?: Prisma.AnalyticsEventUncheckedUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
   acceptedRequests?: Prisma.HelpRequestUncheckedUpdateManyWithoutAcceptedByNestedInput
@@ -1180,9 +1251,11 @@ export type UserUpdateWithoutStudentSessionsInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSuspended?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   helperSessions?: Prisma.AcademicSessionUpdateManyWithoutHelperNestedInput
+  joinLogs?: Prisma.SessionJoinLogUpdateManyWithoutUserNestedInput
   analyticsEvents?: Prisma.AnalyticsEventUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
   acceptedRequests?: Prisma.HelpRequestUpdateManyWithoutAcceptedByNestedInput
@@ -1206,9 +1279,11 @@ export type UserUncheckedUpdateWithoutStudentSessionsInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSuspended?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   helperSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutHelperNestedInput
+  joinLogs?: Prisma.SessionJoinLogUncheckedUpdateManyWithoutUserNestedInput
   analyticsEvents?: Prisma.AnalyticsEventUncheckedUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
   acceptedRequests?: Prisma.HelpRequestUncheckedUpdateManyWithoutAcceptedByNestedInput
@@ -1232,10 +1307,12 @@ export type UserCreateWithoutHelperProfileInput = {
   image?: string | null
   role?: $Enums.UserRole
   onboarded?: boolean
+  isSuspended?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   helperSessions?: Prisma.AcademicSessionCreateNestedManyWithoutHelperInput
   studentSessions?: Prisma.AcademicSessionCreateNestedManyWithoutStudentInput
+  joinLogs?: Prisma.SessionJoinLogCreateNestedManyWithoutUserInput
   analyticsEvents?: Prisma.AnalyticsEventCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
   acceptedRequests?: Prisma.HelpRequestCreateNestedManyWithoutAcceptedByInput
@@ -1258,10 +1335,12 @@ export type UserUncheckedCreateWithoutHelperProfileInput = {
   image?: string | null
   role?: $Enums.UserRole
   onboarded?: boolean
+  isSuspended?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   helperSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutHelperInput
   studentSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutStudentInput
+  joinLogs?: Prisma.SessionJoinLogUncheckedCreateNestedManyWithoutUserInput
   analyticsEvents?: Prisma.AnalyticsEventUncheckedCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
   acceptedRequests?: Prisma.HelpRequestUncheckedCreateNestedManyWithoutAcceptedByInput
@@ -1300,10 +1379,12 @@ export type UserUpdateWithoutHelperProfileInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSuspended?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   helperSessions?: Prisma.AcademicSessionUpdateManyWithoutHelperNestedInput
   studentSessions?: Prisma.AcademicSessionUpdateManyWithoutStudentNestedInput
+  joinLogs?: Prisma.SessionJoinLogUpdateManyWithoutUserNestedInput
   analyticsEvents?: Prisma.AnalyticsEventUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
   acceptedRequests?: Prisma.HelpRequestUpdateManyWithoutAcceptedByNestedInput
@@ -1326,10 +1407,12 @@ export type UserUncheckedUpdateWithoutHelperProfileInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSuspended?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   helperSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutHelperNestedInput
   studentSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutStudentNestedInput
+  joinLogs?: Prisma.SessionJoinLogUncheckedUpdateManyWithoutUserNestedInput
   analyticsEvents?: Prisma.AnalyticsEventUncheckedUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
   acceptedRequests?: Prisma.HelpRequestUncheckedUpdateManyWithoutAcceptedByNestedInput
@@ -1352,10 +1435,12 @@ export type UserCreateWithoutAnalyticsEventsInput = {
   image?: string | null
   role?: $Enums.UserRole
   onboarded?: boolean
+  isSuspended?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   helperSessions?: Prisma.AcademicSessionCreateNestedManyWithoutHelperInput
   studentSessions?: Prisma.AcademicSessionCreateNestedManyWithoutStudentInput
+  joinLogs?: Prisma.SessionJoinLogCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
   acceptedRequests?: Prisma.HelpRequestCreateNestedManyWithoutAcceptedByInput
   requests?: Prisma.HelpRequestCreateNestedManyWithoutStudentInput
@@ -1378,10 +1463,12 @@ export type UserUncheckedCreateWithoutAnalyticsEventsInput = {
   image?: string | null
   role?: $Enums.UserRole
   onboarded?: boolean
+  isSuspended?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   helperSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutHelperInput
   studentSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutStudentInput
+  joinLogs?: Prisma.SessionJoinLogUncheckedCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
   acceptedRequests?: Prisma.HelpRequestUncheckedCreateNestedManyWithoutAcceptedByInput
   requests?: Prisma.HelpRequestUncheckedCreateNestedManyWithoutStudentInput
@@ -1420,10 +1507,12 @@ export type UserUpdateWithoutAnalyticsEventsInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSuspended?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   helperSessions?: Prisma.AcademicSessionUpdateManyWithoutHelperNestedInput
   studentSessions?: Prisma.AcademicSessionUpdateManyWithoutStudentNestedInput
+  joinLogs?: Prisma.SessionJoinLogUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
   acceptedRequests?: Prisma.HelpRequestUpdateManyWithoutAcceptedByNestedInput
   requests?: Prisma.HelpRequestUpdateManyWithoutStudentNestedInput
@@ -1446,10 +1535,12 @@ export type UserUncheckedUpdateWithoutAnalyticsEventsInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSuspended?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   helperSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutHelperNestedInput
   studentSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutStudentNestedInput
+  joinLogs?: Prisma.SessionJoinLogUncheckedUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
   acceptedRequests?: Prisma.HelpRequestUncheckedUpdateManyWithoutAcceptedByNestedInput
   requests?: Prisma.HelpRequestUncheckedUpdateManyWithoutStudentNestedInput
@@ -1472,10 +1563,12 @@ export type UserCreateWithoutVerificationReqsInput = {
   image?: string | null
   role?: $Enums.UserRole
   onboarded?: boolean
+  isSuspended?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   helperSessions?: Prisma.AcademicSessionCreateNestedManyWithoutHelperInput
   studentSessions?: Prisma.AcademicSessionCreateNestedManyWithoutStudentInput
+  joinLogs?: Prisma.SessionJoinLogCreateNestedManyWithoutUserInput
   analyticsEvents?: Prisma.AnalyticsEventCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
   acceptedRequests?: Prisma.HelpRequestCreateNestedManyWithoutAcceptedByInput
@@ -1498,10 +1591,12 @@ export type UserUncheckedCreateWithoutVerificationReqsInput = {
   image?: string | null
   role?: $Enums.UserRole
   onboarded?: boolean
+  isSuspended?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   helperSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutHelperInput
   studentSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutStudentInput
+  joinLogs?: Prisma.SessionJoinLogUncheckedCreateNestedManyWithoutUserInput
   analyticsEvents?: Prisma.AnalyticsEventUncheckedCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
   acceptedRequests?: Prisma.HelpRequestUncheckedCreateNestedManyWithoutAcceptedByInput
@@ -1540,10 +1635,12 @@ export type UserUpdateWithoutVerificationReqsInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSuspended?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   helperSessions?: Prisma.AcademicSessionUpdateManyWithoutHelperNestedInput
   studentSessions?: Prisma.AcademicSessionUpdateManyWithoutStudentNestedInput
+  joinLogs?: Prisma.SessionJoinLogUpdateManyWithoutUserNestedInput
   analyticsEvents?: Prisma.AnalyticsEventUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
   acceptedRequests?: Prisma.HelpRequestUpdateManyWithoutAcceptedByNestedInput
@@ -1566,10 +1663,12 @@ export type UserUncheckedUpdateWithoutVerificationReqsInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSuspended?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   helperSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutHelperNestedInput
   studentSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutStudentNestedInput
+  joinLogs?: Prisma.SessionJoinLogUncheckedUpdateManyWithoutUserNestedInput
   analyticsEvents?: Prisma.AnalyticsEventUncheckedUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
   acceptedRequests?: Prisma.HelpRequestUncheckedUpdateManyWithoutAcceptedByNestedInput
@@ -1592,10 +1691,12 @@ export type UserCreateWithoutReportsAboutInput = {
   image?: string | null
   role?: $Enums.UserRole
   onboarded?: boolean
+  isSuspended?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   helperSessions?: Prisma.AcademicSessionCreateNestedManyWithoutHelperInput
   studentSessions?: Prisma.AcademicSessionCreateNestedManyWithoutStudentInput
+  joinLogs?: Prisma.SessionJoinLogCreateNestedManyWithoutUserInput
   analyticsEvents?: Prisma.AnalyticsEventCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
   acceptedRequests?: Prisma.HelpRequestCreateNestedManyWithoutAcceptedByInput
@@ -1618,10 +1719,12 @@ export type UserUncheckedCreateWithoutReportsAboutInput = {
   image?: string | null
   role?: $Enums.UserRole
   onboarded?: boolean
+  isSuspended?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   helperSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutHelperInput
   studentSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutStudentInput
+  joinLogs?: Prisma.SessionJoinLogUncheckedCreateNestedManyWithoutUserInput
   analyticsEvents?: Prisma.AnalyticsEventUncheckedCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
   acceptedRequests?: Prisma.HelpRequestUncheckedCreateNestedManyWithoutAcceptedByInput
@@ -1649,10 +1752,12 @@ export type UserCreateWithoutReportsCreatedInput = {
   image?: string | null
   role?: $Enums.UserRole
   onboarded?: boolean
+  isSuspended?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   helperSessions?: Prisma.AcademicSessionCreateNestedManyWithoutHelperInput
   studentSessions?: Prisma.AcademicSessionCreateNestedManyWithoutStudentInput
+  joinLogs?: Prisma.SessionJoinLogCreateNestedManyWithoutUserInput
   analyticsEvents?: Prisma.AnalyticsEventCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
   acceptedRequests?: Prisma.HelpRequestCreateNestedManyWithoutAcceptedByInput
@@ -1675,10 +1780,12 @@ export type UserUncheckedCreateWithoutReportsCreatedInput = {
   image?: string | null
   role?: $Enums.UserRole
   onboarded?: boolean
+  isSuspended?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   helperSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutHelperInput
   studentSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutStudentInput
+  joinLogs?: Prisma.SessionJoinLogUncheckedCreateNestedManyWithoutUserInput
   analyticsEvents?: Prisma.AnalyticsEventUncheckedCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
   acceptedRequests?: Prisma.HelpRequestUncheckedCreateNestedManyWithoutAcceptedByInput
@@ -1717,10 +1824,12 @@ export type UserUpdateWithoutReportsAboutInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSuspended?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   helperSessions?: Prisma.AcademicSessionUpdateManyWithoutHelperNestedInput
   studentSessions?: Prisma.AcademicSessionUpdateManyWithoutStudentNestedInput
+  joinLogs?: Prisma.SessionJoinLogUpdateManyWithoutUserNestedInput
   analyticsEvents?: Prisma.AnalyticsEventUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
   acceptedRequests?: Prisma.HelpRequestUpdateManyWithoutAcceptedByNestedInput
@@ -1743,10 +1852,12 @@ export type UserUncheckedUpdateWithoutReportsAboutInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSuspended?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   helperSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutHelperNestedInput
   studentSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutStudentNestedInput
+  joinLogs?: Prisma.SessionJoinLogUncheckedUpdateManyWithoutUserNestedInput
   analyticsEvents?: Prisma.AnalyticsEventUncheckedUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
   acceptedRequests?: Prisma.HelpRequestUncheckedUpdateManyWithoutAcceptedByNestedInput
@@ -1780,10 +1891,12 @@ export type UserUpdateWithoutReportsCreatedInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSuspended?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   helperSessions?: Prisma.AcademicSessionUpdateManyWithoutHelperNestedInput
   studentSessions?: Prisma.AcademicSessionUpdateManyWithoutStudentNestedInput
+  joinLogs?: Prisma.SessionJoinLogUpdateManyWithoutUserNestedInput
   analyticsEvents?: Prisma.AnalyticsEventUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
   acceptedRequests?: Prisma.HelpRequestUpdateManyWithoutAcceptedByNestedInput
@@ -1806,10 +1919,12 @@ export type UserUncheckedUpdateWithoutReportsCreatedInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSuspended?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   helperSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutHelperNestedInput
   studentSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutStudentNestedInput
+  joinLogs?: Prisma.SessionJoinLogUncheckedUpdateManyWithoutUserNestedInput
   analyticsEvents?: Prisma.AnalyticsEventUncheckedUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
   acceptedRequests?: Prisma.HelpRequestUncheckedUpdateManyWithoutAcceptedByNestedInput
@@ -1832,10 +1947,12 @@ export type UserCreateWithoutAuditLogsInput = {
   image?: string | null
   role?: $Enums.UserRole
   onboarded?: boolean
+  isSuspended?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   helperSessions?: Prisma.AcademicSessionCreateNestedManyWithoutHelperInput
   studentSessions?: Prisma.AcademicSessionCreateNestedManyWithoutStudentInput
+  joinLogs?: Prisma.SessionJoinLogCreateNestedManyWithoutUserInput
   analyticsEvents?: Prisma.AnalyticsEventCreateNestedManyWithoutUserInput
   acceptedRequests?: Prisma.HelpRequestCreateNestedManyWithoutAcceptedByInput
   requests?: Prisma.HelpRequestCreateNestedManyWithoutStudentInput
@@ -1858,10 +1975,12 @@ export type UserUncheckedCreateWithoutAuditLogsInput = {
   image?: string | null
   role?: $Enums.UserRole
   onboarded?: boolean
+  isSuspended?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   helperSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutHelperInput
   studentSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutStudentInput
+  joinLogs?: Prisma.SessionJoinLogUncheckedCreateNestedManyWithoutUserInput
   analyticsEvents?: Prisma.AnalyticsEventUncheckedCreateNestedManyWithoutUserInput
   acceptedRequests?: Prisma.HelpRequestUncheckedCreateNestedManyWithoutAcceptedByInput
   requests?: Prisma.HelpRequestUncheckedCreateNestedManyWithoutStudentInput
@@ -1900,10 +2019,12 @@ export type UserUpdateWithoutAuditLogsInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSuspended?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   helperSessions?: Prisma.AcademicSessionUpdateManyWithoutHelperNestedInput
   studentSessions?: Prisma.AcademicSessionUpdateManyWithoutStudentNestedInput
+  joinLogs?: Prisma.SessionJoinLogUpdateManyWithoutUserNestedInput
   analyticsEvents?: Prisma.AnalyticsEventUpdateManyWithoutUserNestedInput
   acceptedRequests?: Prisma.HelpRequestUpdateManyWithoutAcceptedByNestedInput
   requests?: Prisma.HelpRequestUpdateManyWithoutStudentNestedInput
@@ -1926,10 +2047,12 @@ export type UserUncheckedUpdateWithoutAuditLogsInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSuspended?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   helperSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutHelperNestedInput
   studentSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutStudentNestedInput
+  joinLogs?: Prisma.SessionJoinLogUncheckedUpdateManyWithoutUserNestedInput
   analyticsEvents?: Prisma.AnalyticsEventUncheckedUpdateManyWithoutUserNestedInput
   acceptedRequests?: Prisma.HelpRequestUncheckedUpdateManyWithoutAcceptedByNestedInput
   requests?: Prisma.HelpRequestUncheckedUpdateManyWithoutStudentNestedInput
@@ -1952,10 +2075,12 @@ export type UserCreateWithoutReceivedMessagesInput = {
   image?: string | null
   role?: $Enums.UserRole
   onboarded?: boolean
+  isSuspended?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   helperSessions?: Prisma.AcademicSessionCreateNestedManyWithoutHelperInput
   studentSessions?: Prisma.AcademicSessionCreateNestedManyWithoutStudentInput
+  joinLogs?: Prisma.SessionJoinLogCreateNestedManyWithoutUserInput
   analyticsEvents?: Prisma.AnalyticsEventCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
   acceptedRequests?: Prisma.HelpRequestCreateNestedManyWithoutAcceptedByInput
@@ -1978,10 +2103,12 @@ export type UserUncheckedCreateWithoutReceivedMessagesInput = {
   image?: string | null
   role?: $Enums.UserRole
   onboarded?: boolean
+  isSuspended?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   helperSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutHelperInput
   studentSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutStudentInput
+  joinLogs?: Prisma.SessionJoinLogUncheckedCreateNestedManyWithoutUserInput
   analyticsEvents?: Prisma.AnalyticsEventUncheckedCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
   acceptedRequests?: Prisma.HelpRequestUncheckedCreateNestedManyWithoutAcceptedByInput
@@ -2009,10 +2136,12 @@ export type UserCreateWithoutSentMessagesInput = {
   image?: string | null
   role?: $Enums.UserRole
   onboarded?: boolean
+  isSuspended?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   helperSessions?: Prisma.AcademicSessionCreateNestedManyWithoutHelperInput
   studentSessions?: Prisma.AcademicSessionCreateNestedManyWithoutStudentInput
+  joinLogs?: Prisma.SessionJoinLogCreateNestedManyWithoutUserInput
   analyticsEvents?: Prisma.AnalyticsEventCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
   acceptedRequests?: Prisma.HelpRequestCreateNestedManyWithoutAcceptedByInput
@@ -2035,10 +2164,12 @@ export type UserUncheckedCreateWithoutSentMessagesInput = {
   image?: string | null
   role?: $Enums.UserRole
   onboarded?: boolean
+  isSuspended?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   helperSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutHelperInput
   studentSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutStudentInput
+  joinLogs?: Prisma.SessionJoinLogUncheckedCreateNestedManyWithoutUserInput
   analyticsEvents?: Prisma.AnalyticsEventUncheckedCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
   acceptedRequests?: Prisma.HelpRequestUncheckedCreateNestedManyWithoutAcceptedByInput
@@ -2077,10 +2208,12 @@ export type UserUpdateWithoutReceivedMessagesInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSuspended?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   helperSessions?: Prisma.AcademicSessionUpdateManyWithoutHelperNestedInput
   studentSessions?: Prisma.AcademicSessionUpdateManyWithoutStudentNestedInput
+  joinLogs?: Prisma.SessionJoinLogUpdateManyWithoutUserNestedInput
   analyticsEvents?: Prisma.AnalyticsEventUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
   acceptedRequests?: Prisma.HelpRequestUpdateManyWithoutAcceptedByNestedInput
@@ -2103,10 +2236,12 @@ export type UserUncheckedUpdateWithoutReceivedMessagesInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSuspended?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   helperSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutHelperNestedInput
   studentSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutStudentNestedInput
+  joinLogs?: Prisma.SessionJoinLogUncheckedUpdateManyWithoutUserNestedInput
   analyticsEvents?: Prisma.AnalyticsEventUncheckedUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
   acceptedRequests?: Prisma.HelpRequestUncheckedUpdateManyWithoutAcceptedByNestedInput
@@ -2140,10 +2275,12 @@ export type UserUpdateWithoutSentMessagesInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSuspended?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   helperSessions?: Prisma.AcademicSessionUpdateManyWithoutHelperNestedInput
   studentSessions?: Prisma.AcademicSessionUpdateManyWithoutStudentNestedInput
+  joinLogs?: Prisma.SessionJoinLogUpdateManyWithoutUserNestedInput
   analyticsEvents?: Prisma.AnalyticsEventUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
   acceptedRequests?: Prisma.HelpRequestUpdateManyWithoutAcceptedByNestedInput
@@ -2166,10 +2303,12 @@ export type UserUncheckedUpdateWithoutSentMessagesInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSuspended?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   helperSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutHelperNestedInput
   studentSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutStudentNestedInput
+  joinLogs?: Prisma.SessionJoinLogUncheckedUpdateManyWithoutUserNestedInput
   analyticsEvents?: Prisma.AnalyticsEventUncheckedUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
   acceptedRequests?: Prisma.HelpRequestUncheckedUpdateManyWithoutAcceptedByNestedInput
@@ -2192,10 +2331,12 @@ export type UserCreateWithoutNotificationsInput = {
   image?: string | null
   role?: $Enums.UserRole
   onboarded?: boolean
+  isSuspended?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   helperSessions?: Prisma.AcademicSessionCreateNestedManyWithoutHelperInput
   studentSessions?: Prisma.AcademicSessionCreateNestedManyWithoutStudentInput
+  joinLogs?: Prisma.SessionJoinLogCreateNestedManyWithoutUserInput
   analyticsEvents?: Prisma.AnalyticsEventCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
   acceptedRequests?: Prisma.HelpRequestCreateNestedManyWithoutAcceptedByInput
@@ -2218,10 +2359,12 @@ export type UserUncheckedCreateWithoutNotificationsInput = {
   image?: string | null
   role?: $Enums.UserRole
   onboarded?: boolean
+  isSuspended?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   helperSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutHelperInput
   studentSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutStudentInput
+  joinLogs?: Prisma.SessionJoinLogUncheckedCreateNestedManyWithoutUserInput
   analyticsEvents?: Prisma.AnalyticsEventUncheckedCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
   acceptedRequests?: Prisma.HelpRequestUncheckedCreateNestedManyWithoutAcceptedByInput
@@ -2260,10 +2403,12 @@ export type UserUpdateWithoutNotificationsInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSuspended?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   helperSessions?: Prisma.AcademicSessionUpdateManyWithoutHelperNestedInput
   studentSessions?: Prisma.AcademicSessionUpdateManyWithoutStudentNestedInput
+  joinLogs?: Prisma.SessionJoinLogUpdateManyWithoutUserNestedInput
   analyticsEvents?: Prisma.AnalyticsEventUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
   acceptedRequests?: Prisma.HelpRequestUpdateManyWithoutAcceptedByNestedInput
@@ -2286,10 +2431,12 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSuspended?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   helperSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutHelperNestedInput
   studentSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutStudentNestedInput
+  joinLogs?: Prisma.SessionJoinLogUncheckedUpdateManyWithoutUserNestedInput
   analyticsEvents?: Prisma.AnalyticsEventUncheckedUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
   acceptedRequests?: Prisma.HelpRequestUncheckedUpdateManyWithoutAcceptedByNestedInput
@@ -2312,10 +2459,12 @@ export type UserCreateWithoutSessionsInput = {
   image?: string | null
   role?: $Enums.UserRole
   onboarded?: boolean
+  isSuspended?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   helperSessions?: Prisma.AcademicSessionCreateNestedManyWithoutHelperInput
   studentSessions?: Prisma.AcademicSessionCreateNestedManyWithoutStudentInput
+  joinLogs?: Prisma.SessionJoinLogCreateNestedManyWithoutUserInput
   analyticsEvents?: Prisma.AnalyticsEventCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
   acceptedRequests?: Prisma.HelpRequestCreateNestedManyWithoutAcceptedByInput
@@ -2338,10 +2487,12 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   image?: string | null
   role?: $Enums.UserRole
   onboarded?: boolean
+  isSuspended?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   helperSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutHelperInput
   studentSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutStudentInput
+  joinLogs?: Prisma.SessionJoinLogUncheckedCreateNestedManyWithoutUserInput
   analyticsEvents?: Prisma.AnalyticsEventUncheckedCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
   acceptedRequests?: Prisma.HelpRequestUncheckedCreateNestedManyWithoutAcceptedByInput
@@ -2380,10 +2531,12 @@ export type UserUpdateWithoutSessionsInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSuspended?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   helperSessions?: Prisma.AcademicSessionUpdateManyWithoutHelperNestedInput
   studentSessions?: Prisma.AcademicSessionUpdateManyWithoutStudentNestedInput
+  joinLogs?: Prisma.SessionJoinLogUpdateManyWithoutUserNestedInput
   analyticsEvents?: Prisma.AnalyticsEventUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
   acceptedRequests?: Prisma.HelpRequestUpdateManyWithoutAcceptedByNestedInput
@@ -2406,10 +2559,12 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSuspended?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   helperSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutHelperNestedInput
   studentSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutStudentNestedInput
+  joinLogs?: Prisma.SessionJoinLogUncheckedUpdateManyWithoutUserNestedInput
   analyticsEvents?: Prisma.AnalyticsEventUncheckedUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
   acceptedRequests?: Prisma.HelpRequestUncheckedUpdateManyWithoutAcceptedByNestedInput
@@ -2432,10 +2587,12 @@ export type UserCreateWithoutAccountsInput = {
   image?: string | null
   role?: $Enums.UserRole
   onboarded?: boolean
+  isSuspended?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   helperSessions?: Prisma.AcademicSessionCreateNestedManyWithoutHelperInput
   studentSessions?: Prisma.AcademicSessionCreateNestedManyWithoutStudentInput
+  joinLogs?: Prisma.SessionJoinLogCreateNestedManyWithoutUserInput
   analyticsEvents?: Prisma.AnalyticsEventCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
   acceptedRequests?: Prisma.HelpRequestCreateNestedManyWithoutAcceptedByInput
@@ -2458,10 +2615,12 @@ export type UserUncheckedCreateWithoutAccountsInput = {
   image?: string | null
   role?: $Enums.UserRole
   onboarded?: boolean
+  isSuspended?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   helperSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutHelperInput
   studentSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutStudentInput
+  joinLogs?: Prisma.SessionJoinLogUncheckedCreateNestedManyWithoutUserInput
   analyticsEvents?: Prisma.AnalyticsEventUncheckedCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
   acceptedRequests?: Prisma.HelpRequestUncheckedCreateNestedManyWithoutAcceptedByInput
@@ -2500,10 +2659,12 @@ export type UserUpdateWithoutAccountsInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSuspended?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   helperSessions?: Prisma.AcademicSessionUpdateManyWithoutHelperNestedInput
   studentSessions?: Prisma.AcademicSessionUpdateManyWithoutStudentNestedInput
+  joinLogs?: Prisma.SessionJoinLogUpdateManyWithoutUserNestedInput
   analyticsEvents?: Prisma.AnalyticsEventUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
   acceptedRequests?: Prisma.HelpRequestUpdateManyWithoutAcceptedByNestedInput
@@ -2526,6 +2687,135 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSuspended?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  helperSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutHelperNestedInput
+  studentSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutStudentNestedInput
+  joinLogs?: Prisma.SessionJoinLogUncheckedUpdateManyWithoutUserNestedInput
+  analyticsEvents?: Prisma.AnalyticsEventUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
+  acceptedRequests?: Prisma.HelpRequestUncheckedUpdateManyWithoutAcceptedByNestedInput
+  requests?: Prisma.HelpRequestUncheckedUpdateManyWithoutStudentNestedInput
+  helperProfile?: Prisma.HelperProfileUncheckedUpdateOneWithoutUserNestedInput
+  receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutRecipientNestedInput
+  sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  reportsAbout?: Prisma.ReportUncheckedUpdateManyWithoutReportedUserNestedInput
+  reportsCreated?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
+  verificationReqs?: Prisma.VerificationRequestUncheckedUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutJoinLogsInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  role?: $Enums.UserRole
+  onboarded?: boolean
+  isSuspended?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  helperSessions?: Prisma.AcademicSessionCreateNestedManyWithoutHelperInput
+  studentSessions?: Prisma.AcademicSessionCreateNestedManyWithoutStudentInput
+  analyticsEvents?: Prisma.AnalyticsEventCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
+  acceptedRequests?: Prisma.HelpRequestCreateNestedManyWithoutAcceptedByInput
+  requests?: Prisma.HelpRequestCreateNestedManyWithoutStudentInput
+  helperProfile?: Prisma.HelperProfileCreateNestedOneWithoutUserInput
+  receivedMessages?: Prisma.MessageCreateNestedManyWithoutRecipientInput
+  sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  reportsAbout?: Prisma.ReportCreateNestedManyWithoutReportedUserInput
+  reportsCreated?: Prisma.ReportCreateNestedManyWithoutReporterInput
+  verificationReqs?: Prisma.VerificationRequestCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutJoinLogsInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  role?: $Enums.UserRole
+  onboarded?: boolean
+  isSuspended?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  helperSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutHelperInput
+  studentSessions?: Prisma.AcademicSessionUncheckedCreateNestedManyWithoutStudentInput
+  analyticsEvents?: Prisma.AnalyticsEventUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
+  acceptedRequests?: Prisma.HelpRequestUncheckedCreateNestedManyWithoutAcceptedByInput
+  requests?: Prisma.HelpRequestUncheckedCreateNestedManyWithoutStudentInput
+  helperProfile?: Prisma.HelperProfileUncheckedCreateNestedOneWithoutUserInput
+  receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutRecipientInput
+  sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  reportsAbout?: Prisma.ReportUncheckedCreateNestedManyWithoutReportedUserInput
+  reportsCreated?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
+  verificationReqs?: Prisma.VerificationRequestUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutJoinLogsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutJoinLogsInput, Prisma.UserUncheckedCreateWithoutJoinLogsInput>
+}
+
+export type UserUpsertWithoutJoinLogsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutJoinLogsInput, Prisma.UserUncheckedUpdateWithoutJoinLogsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutJoinLogsInput, Prisma.UserUncheckedCreateWithoutJoinLogsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutJoinLogsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutJoinLogsInput, Prisma.UserUncheckedUpdateWithoutJoinLogsInput>
+}
+
+export type UserUpdateWithoutJoinLogsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSuspended?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  helperSessions?: Prisma.AcademicSessionUpdateManyWithoutHelperNestedInput
+  studentSessions?: Prisma.AcademicSessionUpdateManyWithoutStudentNestedInput
+  analyticsEvents?: Prisma.AnalyticsEventUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
+  acceptedRequests?: Prisma.HelpRequestUpdateManyWithoutAcceptedByNestedInput
+  requests?: Prisma.HelpRequestUpdateManyWithoutStudentNestedInput
+  helperProfile?: Prisma.HelperProfileUpdateOneWithoutUserNestedInput
+  receivedMessages?: Prisma.MessageUpdateManyWithoutRecipientNestedInput
+  sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  reportsAbout?: Prisma.ReportUpdateManyWithoutReportedUserNestedInput
+  reportsCreated?: Prisma.ReportUpdateManyWithoutReporterNestedInput
+  verificationReqs?: Prisma.VerificationRequestUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutJoinLogsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSuspended?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   helperSessions?: Prisma.AcademicSessionUncheckedUpdateManyWithoutHelperNestedInput
@@ -2541,6 +2831,7 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
   reportsAbout?: Prisma.ReportUncheckedUpdateManyWithoutReportedUserNestedInput
   reportsCreated?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
   verificationReqs?: Prisma.VerificationRequestUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
 }
 
@@ -2552,6 +2843,7 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
 export type UserCountOutputType = {
   helperSessions: number
   studentSessions: number
+  joinLogs: number
   analyticsEvents: number
   auditLogs: number
   acceptedRequests: number
@@ -2569,6 +2861,7 @@ export type UserCountOutputType = {
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   helperSessions?: boolean | UserCountOutputTypeCountHelperSessionsArgs
   studentSessions?: boolean | UserCountOutputTypeCountStudentSessionsArgs
+  joinLogs?: boolean | UserCountOutputTypeCountJoinLogsArgs
   analyticsEvents?: boolean | UserCountOutputTypeCountAnalyticsEventsArgs
   auditLogs?: boolean | UserCountOutputTypeCountAuditLogsArgs
   acceptedRequests?: boolean | UserCountOutputTypeCountAcceptedRequestsArgs
@@ -2605,6 +2898,13 @@ export type UserCountOutputTypeCountHelperSessionsArgs<ExtArgs extends runtime.T
  */
 export type UserCountOutputTypeCountStudentSessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.AcademicSessionWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountJoinLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SessionJoinLogWhereInput
 }
 
 /**
@@ -2700,10 +3000,12 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   image?: boolean
   role?: boolean
   onboarded?: boolean
+  isSuspended?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   helperSessions?: boolean | Prisma.User$helperSessionsArgs<ExtArgs>
   studentSessions?: boolean | Prisma.User$studentSessionsArgs<ExtArgs>
+  joinLogs?: boolean | Prisma.User$joinLogsArgs<ExtArgs>
   analyticsEvents?: boolean | Prisma.User$analyticsEventsArgs<ExtArgs>
   auditLogs?: boolean | Prisma.User$auditLogsArgs<ExtArgs>
   acceptedRequests?: boolean | Prisma.User$acceptedRequestsArgs<ExtArgs>
@@ -2728,6 +3030,7 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   image?: boolean
   role?: boolean
   onboarded?: boolean
+  isSuspended?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["user"]>
@@ -2740,6 +3043,7 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   image?: boolean
   role?: boolean
   onboarded?: boolean
+  isSuspended?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["user"]>
@@ -2752,14 +3056,16 @@ export type UserSelectScalar = {
   image?: boolean
   role?: boolean
   onboarded?: boolean
+  isSuspended?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "emailVerified" | "image" | "role" | "onboarded" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "emailVerified" | "image" | "role" | "onboarded" | "isSuspended" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   helperSessions?: boolean | Prisma.User$helperSessionsArgs<ExtArgs>
   studentSessions?: boolean | Prisma.User$studentSessionsArgs<ExtArgs>
+  joinLogs?: boolean | Prisma.User$joinLogsArgs<ExtArgs>
   analyticsEvents?: boolean | Prisma.User$analyticsEventsArgs<ExtArgs>
   auditLogs?: boolean | Prisma.User$auditLogsArgs<ExtArgs>
   acceptedRequests?: boolean | Prisma.User$acceptedRequestsArgs<ExtArgs>
@@ -2783,6 +3089,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   objects: {
     helperSessions: Prisma.$AcademicSessionPayload<ExtArgs>[]
     studentSessions: Prisma.$AcademicSessionPayload<ExtArgs>[]
+    joinLogs: Prisma.$SessionJoinLogPayload<ExtArgs>[]
     analyticsEvents: Prisma.$AnalyticsEventPayload<ExtArgs>[]
     auditLogs: Prisma.$AuditLogPayload<ExtArgs>[]
     acceptedRequests: Prisma.$HelpRequestPayload<ExtArgs>[]
@@ -2805,6 +3112,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     image: string | null
     role: $Enums.UserRole
     onboarded: boolean
+    isSuspended: boolean
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["user"]>
@@ -3203,6 +3511,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   readonly [Symbol.toStringTag]: "PrismaPromise"
   helperSessions<T extends Prisma.User$helperSessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$helperSessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AcademicSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   studentSessions<T extends Prisma.User$studentSessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$studentSessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AcademicSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  joinLogs<T extends Prisma.User$joinLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$joinLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SessionJoinLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   analyticsEvents<T extends Prisma.User$analyticsEventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$analyticsEventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AnalyticsEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   auditLogs<T extends Prisma.User$auditLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$auditLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AuditLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   acceptedRequests<T extends Prisma.User$acceptedRequestsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$acceptedRequestsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$HelpRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -3252,6 +3561,7 @@ export interface UserFieldRefs {
   readonly image: Prisma.FieldRef<"User", 'String'>
   readonly role: Prisma.FieldRef<"User", 'UserRole'>
   readonly onboarded: Prisma.FieldRef<"User", 'Boolean'>
+  readonly isSuspended: Prisma.FieldRef<"User", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>
 }
@@ -3687,6 +3997,30 @@ export type User$studentSessionsArgs<ExtArgs extends runtime.Types.Extensions.In
   take?: number
   skip?: number
   distinct?: Prisma.AcademicSessionScalarFieldEnum | Prisma.AcademicSessionScalarFieldEnum[]
+}
+
+/**
+ * User.joinLogs
+ */
+export type User$joinLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the SessionJoinLog
+   */
+  select?: Prisma.SessionJoinLogSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the SessionJoinLog
+   */
+  omit?: Prisma.SessionJoinLogOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SessionJoinLogInclude<ExtArgs> | null
+  where?: Prisma.SessionJoinLogWhereInput
+  orderBy?: Prisma.SessionJoinLogOrderByWithRelationInput | Prisma.SessionJoinLogOrderByWithRelationInput[]
+  cursor?: Prisma.SessionJoinLogWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.SessionJoinLogScalarFieldEnum | Prisma.SessionJoinLogScalarFieldEnum[]
 }
 
 /**

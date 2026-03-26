@@ -71,7 +71,8 @@ export const ModelName = {
   Payment: 'Payment',
   Session: 'Session',
   Account: 'Account',
-  Verification: 'Verification'
+  Verification: 'Verification',
+  SessionJoinLog: 'SessionJoinLog'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -98,6 +99,7 @@ export const UserScalarFieldEnum = {
   image: 'image',
   role: 'role',
   onboarded: 'onboarded',
+  isSuspended: 'isSuspended',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -158,6 +160,9 @@ export const AcademicSessionScalarFieldEnum = {
   startTime: 'startTime',
   endTime: 'endTime',
   status: 'status',
+  payoutStatus: 'payoutStatus',
+  isDisputed: 'isDisputed',
+  adminReviewNote: 'adminReviewNote',
   meetingLink: 'meetingLink',
   notes: 'notes',
   createdAt: 'createdAt',
@@ -187,7 +192,8 @@ export const HelperProfileScalarFieldEnum = {
   completedProfile: 'completedProfile',
   rating: 'rating',
   verificationStatus: 'verificationStatus',
-  rejectionReason: 'rejectionReason'
+  rejectionReason: 'rejectionReason',
+  balance: 'balance'
 } as const
 
 export type HelperProfileScalarFieldEnum = (typeof HelperProfileScalarFieldEnum)[keyof typeof HelperProfileScalarFieldEnum]
@@ -379,6 +385,16 @@ export const VerificationScalarFieldEnum = {
 } as const
 
 export type VerificationScalarFieldEnum = (typeof VerificationScalarFieldEnum)[keyof typeof VerificationScalarFieldEnum]
+
+
+export const SessionJoinLogScalarFieldEnum = {
+  id: 'id',
+  sessionId: 'sessionId',
+  userId: 'userId',
+  timestamp: 'timestamp'
+} as const
+
+export type SessionJoinLogScalarFieldEnum = (typeof SessionJoinLogScalarFieldEnum)[keyof typeof SessionJoinLogScalarFieldEnum]
 
 
 export const SortOrder = {

@@ -321,19 +321,102 @@
 }
 
 @media (max-width: 768px) {
+    .login-section {
+        padding: 16px;
+    }
+
     .login-container {
         grid-template-columns: 1fr;
-        gap: 36px;
+        gap: 0;
+        max-width: 480px;
     }
 
     .login-form-panel {
-        padding: 32px 26px 36px;
-        max-width: 460px;
-        margin: 0 auto;
+        padding: 40px 24px;
         width: 100%;
     }
 
+    .login-illustration {
+        padding: 0 24px 40px;
+    }
+
     .login-illustration img {
-        max-height: 300px;
+        max-height: 240px;
+    }
+
+    .login-title {
+        font-size: 1.5rem;
+        text-align: center;
+    }
+
+    .login-welcome {
+        text-align: center;
+        margin-bottom: 8px;
+    }
+    
+    .login-btn {
+        padding: 14px 32px;
+        font-size: 1rem;
+    }
+    
+    .social-btn {
+        padding: 12px 16px;
+        font-size: 0.85rem;
     }
 }
+
+/* ── Dark Mode Overrides ── */
+.dark {
+    --color-primary: #80ced7;
+    --color-primary-light: #9ad1d4;
+    --color-primary-dark: #ccdbdc;
+    --color-dark: #e2eaeb;
+    --color-dark-navy: #f0f4f5;
+    --color-text: #dce8ea;
+    --color-text-light: #94a3b8;
+    --color-bg: #001a26;
+    --color-bg-hero: #002536;
+    --color-white: #002a3a;
+    --color-border: #004d6e;
+    --color-btn-bg: #007ea7;
+    --color-btn-text: #ffffff;
+    --color-btn-hover: #009dc0;
+    --glass-bg: rgba(0, 50, 73, 0.55);
+    --glass-border: rgba(0, 77, 110, 0.5);
+}
+
+.dark .login-section {
+    background: var(--color-bg);
+}
+
+.dark .login-container {
+    background: rgba(0, 40, 60, 0.7);
+    border-color: rgba(0, 77, 110, 0.5);
+}
+
+.dark .form-input {
+    background: #002030;
+    color: #dce8ea;
+    border-color: #004d6e;
+}
+
+.dark .form-input::placeholder {
+    color: #64849a;
+}
+
+.dark .form-input:focus {
+    border-color: #007ea7;
+    box-shadow: 0 0 0 3px rgba(0, 126, 167, 0.2);
+}
+
+.dark .social-btn {
+    background: #002a3a;
+    border-color: #004d6e;
+    color: #dce8ea;
+}
+
+.dark .social-btn:hover {
+    background: #003249;
+    border-color: #007ea7;
+}
+

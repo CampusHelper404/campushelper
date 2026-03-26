@@ -16,7 +16,7 @@ export function SignupForm() {
     const handleSignup = async (e: React.FormEvent) => {
         e.preventDefault()
         setIsLoading(true)
-        const { error } = await authClient.signUp.email({
+        const { data, error } = await authClient.signUp.email({
             email,
             password,
             name,
@@ -26,6 +26,11 @@ export function SignupForm() {
 
         if (error) {
             toast.error(error.message || "Failed to sign up")
+        } else {
+            toast.success("Account created! Please check your terminal/email to verify your account.")
+            setName("")
+            setEmail("")
+            setPassword("")
         }
     }
 

@@ -99,7 +99,7 @@ export default function BecomeHelperPage() {
         return (
             <div className="dash-wrapper" style={{ background: 'var(--bg-color)', minHeight: '100vh' }}>
                 <StudentNavbar />
-                <main style={{ maxWidth: '600px', margin: '6rem auto', padding: '0 1.5rem', fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                <main style={{ maxWidth: '600px', margin: '6rem auto', padding: '0 1.5rem', fontFamily: 'var(--font-plus-jakarta-sans), sans-serif' }}>
                     <div style={{ 
                         background: 'var(--card-bg)', 
                         padding: '4rem 3rem', 
@@ -118,7 +118,7 @@ export default function BecomeHelperPage() {
                         </p>
                         <button 
                             onClick={() => router.push('/student-dashboard')}
-                            style={{ background: 'var(--primary)', color: '#fff', width: '100%', padding: '1.25rem', borderRadius: 'var(--radius-pill)', fontWeight: 800, border: 'none', cursor: 'pointer', boxShadow: 'var(--shadow-glow)', transition: 'var(--transition)' }}
+                            style={{ background: 'var(--primary)', color: 'var(--card)', width: '100%', padding: '1.25rem', borderRadius: 'var(--radius-pill)', fontWeight: 800, border: 'none', cursor: 'pointer', boxShadow: 'var(--shadow-glow)', transition: 'var(--transition)' }}
                         >
                             Return to Student Hub
                         </button>
@@ -129,43 +129,43 @@ export default function BecomeHelperPage() {
     }
 
     return (
-        <div className="dash-wrapper" style={{ background: 'var(--bg-color)', minHeight: '100vh', fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+        <div className="dash-wrapper" style={{ background: 'var(--bg-color)', minHeight: '100vh', fontFamily: 'var(--font-plus-jakarta-sans), sans-serif' }}>
             <StudentNavbar />
             
-            <main className="dash-main" style={{ maxWidth: '1000px', margin: '0 auto', padding: '4rem 1.5rem' }}>
+            <main className="dash-main ch-page-main" style={{ maxWidth: '1000px', margin: '0 auto' }}>
                 <div style={{ animation: 'fadeInUp 0.5s ease-out' }}>
                     
                     {/* Header Block */}
-                    <div style={{ marginBottom: '3.5rem' }}>
+                    <div style={{ marginBottom: '2.5rem' }}>
                         <button 
                             onClick={() => router.back()}
-                            style={{ background: 'rgba(0,126,167,0.05)', border: 'none', display: 'inline-flex', alignItems: 'center', gap: '8px', color: 'var(--primary)', fontWeight: 700, cursor: 'pointer', marginBottom: '1.5rem', padding: '10px 18px', borderRadius: 'var(--radius-pill)', fontSize: '0.85rem', transition: 'var(--transition)' }}
-                            onMouseEnter={e => e.currentTarget.style.background = 'rgba(0,126,167,0.1)'}
-                            onMouseLeave={e => e.currentTarget.style.background = 'rgba(0,126,167,0.05)'}
+                            style={{ background: 'color-mix(in srgb, var(--primary) 5%, transparent)', border: 'none', display: 'inline-flex', alignItems: 'center', gap: '8px', color: 'var(--primary)', fontWeight: 700, cursor: 'pointer', marginBottom: '1.5rem', padding: '10px 18px', borderRadius: 'var(--radius-pill)', fontSize: '0.82rem', transition: 'var(--transition)' }}
+                            onMouseEnter={e => e.currentTarget.style.background = 'color-mix(in srgb, var(--primary) 10%, transparent)'}
+                            onMouseLeave={e => e.currentTarget.style.background = 'color-mix(in srgb, var(--primary) 5%, transparent)'}
                         >
                             <ArrowLeft size={16} /> Back
                         </button>
-                        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '2rem' }}>
-                            <div>
+                        <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'flex-start', justifyContent: 'space-between', gap: '1.5rem' }}>
+                            <div style={{ flex: 1, minWidth: '300px' }}>
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-                                    <span style={{ background: 'rgba(0, 126, 167, 0.1)', color: 'var(--primary)', padding: '4px 12px', borderRadius: 'var(--radius-pill)', fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                                    <span style={{ background: 'color-mix(in srgb, var(--primary) 10%, transparent)', color: 'var(--primary)', padding: '4px 12px', borderRadius: 'var(--radius-pill)', fontSize: '0.7rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                                         Verification Hub
                                     </span>
                                 </div>
-                                <h1 style={{ fontSize: '3rem', fontWeight: 800, color: 'var(--text-main)', marginBottom: '0.75rem', letterSpacing: '-0.04em', lineHeight: 1.1 }}>
+                                <h1 style={{ fontSize: '2.75rem', fontWeight: 800, color: 'var(--text-main)', marginBottom: '0.75rem', letterSpacing: '-0.04em', lineHeight: 1.1 }}>
                                     Become a <span style={{ color: 'var(--primary)' }}>Helper.</span>
                                 </h1>
-                                <p style={{ fontSize: '1.25rem', color: 'var(--text-muted)', fontWeight: 500, maxWidth: '600px', lineHeight: 1.5 }}>
+                                <p style={{ fontSize: '1.1rem', color: 'var(--text-muted)', fontWeight: 500, maxWidth: '600px', lineHeight: 1.5 }}>
                                     Help your peers excel in their studies while earning rewards and building a verified expert profile.
                                 </p>
                             </div>
-                            <div className="icon-badge" style={{ padding: '1rem', borderRadius: '24px' }}>
-                                <Image src="/verification-shield.png" alt="Verification" width={120} height={120} style={{ filter: 'drop-shadow(0 10px 20px rgba(0,0,0,0.1))' }} />
+                            <div className="icon-badge ch-mobile-hide" style={{ padding: '0.5rem', borderRadius: '24px' }}>
+                                <Image src="/verification-shield.png" alt="Verification" width={100} height={100} style={{ filter: 'drop-shadow(0 10px 20px rgba(0,0,0,0.1))' }} />
                             </div>
                         </div>
                     </div>
 
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 380px', gap: '2.5rem', alignItems: 'start' }}>
+                    <div className="ch-bento-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '2.5rem', alignItems: 'start' }}>
                         
                         {/* Left: Upload Form */}
                         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.75rem' }}>
@@ -187,34 +187,32 @@ export default function BecomeHelperPage() {
                             }}>
                                 <div style={{ marginBottom: '1.5rem' }}>
                                     <h3 style={{ margin: 0, fontWeight: 800, fontSize: '1.25rem', color: 'var(--text-main)', display: 'flex', alignItems: 'center', gap: '10px' }}>
-                                        <div style={{ padding: '8px', background: 'rgba(0,126,167,0.1)', borderRadius: '10px', color: 'var(--primary)' }}>
+                                        <div style={{ padding: '8px', background: 'color-mix(in srgb, var(--primary) 10%, transparent)', borderRadius: '10px', color: 'var(--primary)' }}>
                                             <ImageIcon size={20} />
                                         </div>
-                                        Student Identification
+                                        Student ID
                                     </h3>
-                                    <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', marginTop: '8px', fontWeight: 500 }}>Upload a clear photo of your student ID card (front side).</p>
+                                    <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', marginTop: '8px', fontWeight: 500 }}>Upload a clear photo of your student ID card.</p>
                                 </div>
                                 
                                 <input type="file" ref={idInputRef} style={{ display: 'none' }} onChange={(e) => setIdFile(e.target.files?.[0] || null)} accept="image/*,.pdf" />
 
                                 {idFile ? (
-                                    <div style={{ background: '#f8fafc', border: '1px solid var(--border-color)', padding: '1.25rem', borderRadius: '14px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                                            <div style={{ background: 'var(--primary)', color: 'white', padding: '8px', borderRadius: '8px' }}><ImageIcon size={20} /></div>
-                                            <span style={{ fontWeight: 700, fontSize: '0.95rem', color: 'var(--text-main)' }}>{idFile.name}</span>
+                                    <div style={{ background: 'var(--sidebar)', border: '1px solid var(--border-color)', padding: '1.25rem', borderRadius: '14px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', minWidth: 0 }}>
+                                            <div style={{ background: 'var(--primary)', color: 'white', padding: '8px', borderRadius: '8px', flexShrink: 0 }}><ImageIcon size={20} /></div>
+                                            <span style={{ fontWeight: 700, fontSize: '0.85rem', color: 'var(--text-main)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{idFile.name}</span>
                                         </div>
-                                        <button type="button" onClick={() => setIdFile(null)} style={{ background: 'none', border: 'none', color: '#94a3b8', cursor: 'pointer' }}><X size={20} /></button>
+                                        <button type="button" onClick={() => setIdFile(null)} style={{ background: 'none', border: 'none', color: 'var(--muted-foreground)', cursor: 'pointer', padding: '4px' }}><X size={20} /></button>
                                     </div>
                                 ) : (
                                     <div 
                                         onClick={() => idInputRef.current?.click()}
-                                        style={{ border: '2px dashed #cbd5e1', borderRadius: '18px', padding: '3rem 2rem', textAlign: 'center', cursor: 'pointer', transition: 'all 0.2s', background: 'rgba(248, 250, 252, 0.5)' }}
-                                        onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--primary)'; e.currentTarget.style.background = '#f1f5f9' }}
-                                        onMouseLeave={e => { e.currentTarget.style.borderColor = '#cbd5e1'; e.currentTarget.style.background = 'rgba(248, 250, 252, 0.5)' }}
+                                        style={{ border: '2px dashed var(--border-color)', borderRadius: '18px', padding: '2.5rem 1rem', textAlign: 'center', cursor: 'pointer', transition: 'all 0.2s', background: 'rgba(248, 250, 252, 0.03)' }}
                                     >
-                                        <Upload size={32} color="#94a3b8" style={{ marginBottom: '1rem' }} />
-                                        <div style={{ fontWeight: 800, color: 'var(--text-main)' }}>Drop your ID here</div>
-                                        <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '4px', fontWeight: 500 }}>JPEG, PNG, or PDF up to 5MB</div>
+                                        <Upload size={32} color="var(--muted-foreground)" style={{ marginBottom: '1rem' }} />
+                                        <div style={{ fontWeight: 800, color: 'var(--text-main)', fontSize: '0.9rem' }}>Upload ID Card</div>
+                                        <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '4px', fontWeight: 500 }}>JPEG, PNG, or PDF up to 5MB</div>
                                     </div>
                                 )}
                             </div>
@@ -229,34 +227,32 @@ export default function BecomeHelperPage() {
                             }}>
                                 <div style={{ marginBottom: '1.5rem' }}>
                                     <h3 style={{ margin: 0, fontWeight: 800, fontSize: '1.25rem', color: 'var(--text-main)', display: 'flex', alignItems: 'center', gap: '10px' }}>
-                                        <div style={{ padding: '8px', background: 'rgba(0,126,167,0.1)', borderRadius: '10px', color: 'var(--primary)' }}>
+                                        <div style={{ padding: '8px', background: 'color-mix(in srgb, var(--primary) 10%, transparent)', borderRadius: '10px', color: 'var(--primary)' }}>
                                             <FileText size={20} />
                                         </div>
-                                        Academic Transcript
+                                        Transcript
                                     </h3>
-                                    <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', marginTop: '8px', fontWeight: 500 }}>Provide a recent transcript to verify your expertise in selected courses.</p>
+                                    <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', marginTop: '8px', fontWeight: 500 }}>Provide a recent transcript to verify your expertise.</p>
                                 </div>
                                 
                                 <input type="file" ref={transcriptInputRef} style={{ display: 'none' }} onChange={(e) => setTranscriptFile(e.target.files?.[0] || null)} accept="image/*,.pdf" />
 
                                 {transcriptFile ? (
-                                    <div style={{ background: '#f8fafc', border: '1px solid var(--border-color)', padding: '1.25rem', borderRadius: '14px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                                            <div style={{ background: 'var(--primary)', color: 'white', padding: '8px', borderRadius: '8px' }}><FileText size={20} /></div>
-                                            <span style={{ fontWeight: 700, fontSize: '0.95rem', color: 'var(--text-main)' }}>{transcriptFile.name}</span>
+                                    <div style={{ background: 'var(--sidebar)', border: '1px solid var(--border-color)', padding: '1.25rem', borderRadius: '14px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', minWidth: 0 }}>
+                                            <div style={{ background: 'var(--primary)', color: 'white', padding: '8px', borderRadius: '8px', flexShrink: 0 }}><FileText size={20} /></div>
+                                            <span style={{ fontWeight: 700, fontSize: '0.85rem', color: 'var(--text-main)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{transcriptFile.name}</span>
                                         </div>
-                                        <button type="button" onClick={() => setTranscriptFile(null)} style={{ background: 'none', border: 'none', color: '#94a3b8', cursor: 'pointer' }}><X size={20} /></button>
+                                        <button type="button" onClick={() => setTranscriptFile(null)} style={{ background: 'none', border: 'none', color: 'var(--muted-foreground)', cursor: 'pointer', padding: '4px' }}><X size={20} /></button>
                                     </div>
                                 ) : (
                                     <div 
                                         onClick={() => transcriptInputRef.current?.click()}
-                                        style={{ border: '2px dashed #cbd5e1', borderRadius: '18px', padding: '3rem 2rem', textAlign: 'center', cursor: 'pointer', transition: 'all 0.2s', background: 'rgba(248, 250, 252, 0.5)' }}
-                                        onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--primary)'; e.currentTarget.style.background = '#f1f5f9' }}
-                                        onMouseLeave={e => { e.currentTarget.style.borderColor = '#cbd5e1'; e.currentTarget.style.background = 'rgba(248, 250, 252, 0.5)' }}
+                                        style={{ border: '2px dashed var(--border-color)', borderRadius: '18px', padding: '2.5rem 1rem', textAlign: 'center', cursor: 'pointer', transition: 'all 0.2s', background: 'rgba(248, 250, 252, 0.03)' }}
                                     >
-                                        <Upload size={32} color="#94a3b8" style={{ marginBottom: '1rem' }} />
-                                        <div style={{ fontWeight: 800, color: 'var(--text-main)' }}>Drop your transcript here</div>
-                                        <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '4px', fontWeight: 500 }}>Highest resolution preferred</div>
+                                        <Upload size={32} color="var(--muted-foreground)" style={{ marginBottom: '1rem' }} />
+                                        <div style={{ fontWeight: 800, color: 'var(--text-main)', fontSize: '0.9rem' }}>Upload Transcript</div>
+                                        <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '4px', fontWeight: 500 }}>Highest resolution preferred</div>
                                     </div>
                                 )}
                             </div>
@@ -266,8 +262,8 @@ export default function BecomeHelperPage() {
                                 disabled={uploadingStage !== "IDLE" || !idFile || !transcriptFile}
                                 style={{ 
                                     width: '100%', 
-                                    background: uploadingStage !== "IDLE" || !idFile || !transcriptFile ? '#cbd5e1' : 'var(--primary)', 
-                                    color: '#fff', 
+                                    background: uploadingStage !== "IDLE" || !idFile || !transcriptFile ? 'var(--muted)' : 'var(--primary)', 
+                                    color: uploadingStage !== "IDLE" || !idFile || !transcriptFile ? 'var(--muted-foreground)' : 'var(--card)', 
                                     padding: '1.25rem', 
                                     borderRadius: 'var(--radius-pill)', 
                                     fontWeight: 800, 
@@ -283,50 +279,48 @@ export default function BecomeHelperPage() {
                                 }}
                             >
                                 {uploadingStage === "IDLE" ? (
-                                    <>Start My Helper Journey <CheckCircle2 size={24} /></>
+                                    <>Submit Application <CheckCircle2 size={24} /></>
                                 ) : (
                                     <>
                                         <Loader2 className="animate-spin" size={24} /> 
-                                        {uploadingStage === "UPLOADING" ? "Uploading..." : "Processing Application..."}
+                                        {uploadingStage === "UPLOADING" ? "Uploading..." : "Processing..."}
                                     </>
                                 )}
                             </button>
                         </form>
 
-                        {/* Right Column Bento Cards */}
+                        {/* Right Column: Guide */}
                         <aside style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                             <div style={{ 
                                 background: 'var(--card-bg)', 
-                                padding: '2rem', 
+                                padding: '2.5rem 2rem', 
                                 borderRadius: 'var(--radius-lg)', 
                                 border: '1px solid var(--border-color)',
-                                boxShadow: 'var(--shadow-md)',
-                                position: 'sticky',
-                                top: '100px'
+                                boxShadow: 'var(--shadow-md)'
                             }}>
-                                <h4 style={{ fontWeight: 800, color: 'var(--text-main)', marginBottom: '1.5rem', fontSize: '1.1rem' }}>Application Guide</h4>
+                                <h4 style={{ fontWeight: 800, color: 'var(--text-main)', marginBottom: '2rem', fontSize: '1.2rem', letterSpacing: '-0.02em' }}>Application Guide</h4>
                                 
-                                <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '1.75rem' }}>
                                     {[
-                                        { icon: <Clock size={20} />, title: "24-48h Review", desc: "Our admins review every application manually to ensure quality." },
-                                        { icon: <ShieldCheck size={20} />, title: "Privacy Guaranteed", desc: "Documents are encrypted and removed after verification." },
-                                        { icon: <UserCheck size={20} />, title: "Verified Badge", desc: "Get a verified checkmark on your profile and start helping." }
+                                        { icon: <Clock size={22} />, title: "24-48h Review", desc: "Our admins review every application manually to ensure quality." },
+                                        { icon: <ShieldCheck size={22} />, title: "Privacy Guaranteed", desc: "Documents are encrypted and removed after verification." },
+                                        { icon: <UserCheck size={22} />, title: "Verified Badge", desc: "Get a verified checkmark on your profile and start helping." }
                                     ].map((step, i) => (
-                                        <div key={i} style={{ display: 'flex', gap: '14px' }}>
-                                            <div style={{ color: 'var(--primary)', flexShrink: 0 }}>{step.icon}</div>
+                                        <div key={i} style={{ display: 'flex', gap: '16px' }}>
+                                            <div style={{ color: 'var(--primary)', flexShrink: 0, marginTop: '2px' }}>{step.icon}</div>
                                             <div>
-                                                <div style={{ fontWeight: 800, fontSize: '0.9rem', color: 'var(--text-main)', marginBottom: '3px' }}>{step.title}</div>
-                                                <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', lineHeight: 1.5, fontWeight: 500 }}>{step.desc}</div>
+                                                <div style={{ fontWeight: 800, fontSize: '0.95rem', color: 'var(--text-main)', marginBottom: '4px' }}>{step.title}</div>
+                                                <div style={{ fontSize: '0.82rem', color: 'var(--text-muted)', lineHeight: 1.5, fontWeight: 500 }}>{step.desc}</div>
                                             </div>
                                         </div>
                                     ))}
                                 </div>
 
-                                <div style={{ background: 'var(--header-bg)', padding: '1.5rem', borderRadius: '18px', marginTop: '2rem', color: 'white' }}>
-                                    <p style={{ fontSize: '0.85rem', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+                                <div style={{ background: 'var(--sidebar)', padding: '1.5rem', borderRadius: '20px', marginTop: '2.5rem', border: '1px solid var(--border-color)' }}>
+                                    <p style={{ fontSize: '0.85rem', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px', color: 'var(--primary)' }}>
                                         <AlertCircle size={18} /> Support Tip
                                     </p>
-                                    <p style={{ margin: 0, fontSize: '0.78rem', opacity: 0.9, lineHeight: 1.5, fontWeight: 500 }}> Make sure your name matches your ID exactly to avoid processing delays.</p>
+                                    <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--text-muted)', lineHeight: 1.5, fontWeight: 500 }}> Make sure your name matches your ID exactly to avoid processing delays.</p>
                                 </div>
                             </div>
                         </aside>

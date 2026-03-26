@@ -1,7 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { writeFile } from "fs/promises";
-import { join } from "path";
-import { mkdir } from "fs/promises";
+import { put } from "@vercel/blob";
 import { getSessionCookie } from "better-auth/cookies";
 
 export async function POST(request: NextRequest) {
@@ -30,24 +28,15 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ error: "File too large. Maximum size is 5MB." }, { status: 400 });
         }
 
-        const bytes = await file.arrayBuffer();
-        const buffer = Buffer.from(bytes);
-
-        // 4. Create Directory
-        const uploadDir = join(process.cwd(), "public/uploads/verification");
-        await mkdir(uploadDir, { recursive: true });
-
-        // 5. Unique Filename
-        const timestamp = Date.now();
-        const safeName = file.name.replace(/[^a-z0-9.]/gi, "_").toLowerCase();
-        const filename = `${timestamp}-${safeName}`;
-        const path = join(uploadDir, filename);
-
-        // 6. Write File
-        await writeFile(path, buffer);
+        // 4. Upload to Vercel Blob
+        const filename = `${Date.now()}-${file.name.replace(/[^a-z0-9.]/gi, "_").toLowerCase()}`;
         
-        const fileUrl = `/uploads/verification/${filename}`;
-        return NextResponse.json({ success: true, url: fileUrl });
+        const blob = await put(filename, file, {
+            access: 'public',
+            addRandomSuffix: true,
+        });
+
+        return NextResponse.json({ success: true, url: blob.url });
 
     } catch (error) {
         console.error("Upload error:", error);

@@ -122,3 +122,8 @@ export type Account = Prisma.AccountModel
  * 
  */
 export type Verification = Prisma.VerificationModel
+/**
+ * Model SessionJoinLog
+ * 
+ */
+export type SessionJoinLog = Prisma.SessionJoinLogModel

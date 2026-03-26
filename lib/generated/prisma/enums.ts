@@ -34,7 +34,8 @@ export const SessionStatus = {
   IN_PROGRESS: 'IN_PROGRESS',
   COMPLETED: 'COMPLETED',
   CANCELLED: 'CANCELLED',
-  NO_SHOW: 'NO_SHOW'
+  NO_SHOW: 'NO_SHOW',
+  AWAITING_CONFIRMATION: 'AWAITING_CONFIRMATION'
 } as const
 
 export type SessionStatus = (typeof SessionStatus)[keyof typeof SessionStatus]
