@@ -1,11 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { put } from "@vercel/blob";
-import { getSessionCookie } from "better-auth/cookies";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 
 export async function POST(request: NextRequest) {
     // 1. Auth Check
-    const sessionCookie = getSessionCookie(request);
-    if (!sessionCookie) {
+    const session = await auth.api.getSession({ headers: await headers() });
+    if (!session) {
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
@@ -27,9 +28,15 @@ export async function POST(request: NextRequest) {
         if (file.size > 5 * 1024 * 1024) {
             return NextResponse.json({ error: "File too large. Maximum size is 5MB." }, { status: 400 });
         }
+        
+        // 4. Check for Vercel Blob Token
+        if (!process.env.BLOB_READ_WRITE_TOKEN) {
+            return NextResponse.json({ error: "Vercel Blob token is missing. Please configure BLOB_READ_WRITE_TOKEN in Vercel." }, { status: 500 });
+        }
 
-        // 4. Upload to Vercel Blob
-        const filename = `${Date.now()}-${file.name.replace(/[^a-z0-9.]/gi, "_").toLowerCase()}`;
+        // 5. Upload to Vercel Blob
+        const safeName = file.name ? file.name : "upload.file";
+        const filename = `${Date.now()}-${safeName.replace(/[^a-z0-9.]/gi, "_").toLowerCase()}`;
         
         const blob = await put(filename, file, {
             access: 'public',
@@ -38,8 +45,11 @@ export async function POST(request: NextRequest) {
 
         return NextResponse.json({ success: true, url: blob.url });
 
-    } catch (error) {
+    } catch (error: any) {
         console.error("Upload error:", error);
-        return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+        return NextResponse.json({ 
+            error: error?.message || "Internal Server Error parsing or uploading file",
+            details: String(error)
+        }, { status: 500 });
     }
 }
