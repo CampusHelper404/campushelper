@@ -263,8 +263,8 @@
 }
 
 .ob-s2-header {
-    grid-column: 1 / -1;
     text-align: center;
+    margin-bottom: 2rem;
 }
 .ob-s2-title {
     font-size: clamp(1.3rem, 3.5vw, 1.65rem);

@@ -1,11 +1,10 @@
 "use client"
 
 import { useState } from "react"
-import Link from "next/link"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { trpc } from "@/trpc/client"
-import { Stars, ShieldCheck, CheckCircle } from "lucide-react"
+import { Stars, ShieldCheck, CheckCircle, ArrowRight } from "lucide-react"
 import "./onboarding.css"
 
 const TOTAL_STEPS = 3
@@ -30,139 +29,163 @@ export default function OnboardingPage() {
     const handleFinish = async () => {
         try {
             await setOnboarded.mutateAsync()
-            router.push("/student-dashboard")
+            router.push("/dashboard")
         } catch (error) {
             console.error("Failed to complete onboarding:", error)
-            router.push("/student-dashboard")
+            router.push("/dashboard")
         }
     }
 
     return (
-        <div className="ob-page" style={{ 
-            background: 'var(--bg-color)', 
-            minHeight: '100vh',
-            fontFamily: 'var(--font-plus-jakarta-sans), sans-serif',
-            color: 'var(--text-main)'
-        }}>
-            
-            <header className="ob-topbar" style={{ 
-                maxWidth: '1200px', 
-                margin: '0 auto', 
-                padding: '2rem 1.5rem',
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center'
-            }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                    <div style={{ width: '40px', height: '40px', background: 'var(--primary)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: 900, fontSize: '1.2rem' }}>C</div>
-                    <span style={{ fontWeight: 800, fontSize: '1.25rem', color: 'var(--text-main)', letterSpacing: '-0.03em' }}>CampusHelper</span>
+        <div className="ob-page">
+            <header className="ob-topbar">
+                <div className="ob-brand">
+                    <span className="campus">Campus</span>
+                    <span className="helper">Helper</span>
                 </div>
-                {step < 3 && (
-                    <button onClick={prevStep} style={{ background: 'none', border: 'none', color: 'var(--text-muted)', fontWeight: 700, fontSize: '0.9rem', cursor: 'pointer', opacity: step === 1 ? 0.3 : 1, pointerEvents: step === 1 ? 'none' : 'auto' }}>
-                        Go Back
-                    </button>
-                )}
+                
+                <div className="ob-progress">
+                    {[1, 2, 3].map((s) => (
+                        <div 
+                            key={s} 
+                            className={`ob-dot ${step === s ? 'active' : ''} ${step > s ? 'done' : ''}`} 
+                        />
+                    ))}
+                </div>
+
+                <button 
+                    onClick={prevStep} 
+                    className="ob-topbar-skip"
+                    style={{ opacity: step === 1 ? 0 : 1, pointerEvents: step === 1 ? 'none' : 'auto' }}
+                >
+                    Back
+                </button>
             </header>
 
-            <main className="ch-page-main" style={{ maxWidth: '1200px', margin: '0 auto' }}>
+            <main className="ob-content">
                 {step === 1 && (
-                    <div style={{ textAlign: 'center', maxWidth: '700px', margin: '0 auto', animation: 'fadeIn 0.6s ease-out' }}>
-                        <h1 className="ob-s1-title" style={{ fontSize: '3rem', fontWeight: 800, marginBottom: '1rem', letterSpacing: '-0.04em', lineHeight: 1.1 }}>
-                            Welcome to the <span style={{ color: 'var(--primary)' }}>Future</span> of Campus Help.
-                        </h1>
-                        <p style={{ fontSize: '1.1rem', color: 'var(--text-muted)', marginBottom: '3rem', fontWeight: 500, lineHeight: 1.6 }}>
-                            Tired of struggling alone? Join thousands of students getting instant help from subject experts in their own campus.
+                    <div className="ob-s1-header" style={{ animation: 'ob-fadeUp 0.6s ease-out' }}>
+                        <div className="ob-s1-badge">
+                            <div className="ob-s1-badge-dot" />
+                            Welcome to CampusHelper
+                        </div>
+                        <h1 className="ob-s1-title">The Future of Campus Support</h1>
+                        <p className="ob-s1-sub">
+                            Join a community of students helping students. Get the support you need or share your expertise to earn.
                         </p>
                         
-                        <div className="ob-cards" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem', marginBottom: '4rem' }}>
-                            {[
-                                { title: "Get Help", desc: "Connect with expert helpers for courses, assignments, and skills.", icon: Stars, img: "/ob-student.png" },
-                                { title: "Be a Helper", desc: "Share your knowledge, help others, and build your profile.", icon: ShieldCheck, img: "/ob-helper.png" }
-                            ].map((card, i) => (
-                                <div key={i} className="ob-card" style={{ 
-                                    background: 'var(--card-bg)', 
-                                    padding: '2.5rem 2rem', 
-                                    borderRadius: '24px', 
-                                    border: '1px solid var(--border-color)',
-                                    boxShadow: 'var(--shadow-md)',
-                                    transition: 'var(--transition)',
-                                    textAlign: 'left'
-                                }}>
-                                    <div className="ob-card-img" style={{ height: '180px', position: 'relative', marginBottom: '2rem', background: 'var(--sidebar)', borderRadius: '16px', overflow: 'hidden' }}>
-                                        <Image src={card.img} alt={card.title} fill style={{ objectFit: 'contain', padding: '1rem' }} />
-                                    </div>
-                                    <card.icon size={32} color="var(--primary)" style={{ marginBottom: '1rem' }} />
-                                    <h3 style={{ fontSize: '1.35rem', fontWeight: 800, marginBottom: '8px' }}>{card.title}</h3>
-                                    <p style={{ fontSize: '0.95rem', color: 'var(--text-muted)', fontWeight: 500, lineHeight: 1.5 }}>{card.desc}</p>
+                        <div className="ob-cards">
+                            <div className="ob-card">
+                                <div className="ob-card-num">1</div>
+                                <div className="ob-card-img">
+                                    <Image src="/academic support.svg" alt="Get Help" width={200} height={160} />
                                 </div>
-                            ))}
+                                <h3 className="ob-card-title">Get Expert Help</h3>
+                                <p className="ob-card-desc">Connect with verified student experts for any subject or skill.</p>
+                            </div>
+                            
+                            <div className="ob-card">
+                                <div className="ob-card-num">2</div>
+                                <div className="ob-card-img">
+                                    <Image src="/become a student helper.svg" alt="Be a Helper" width={200} height={160} />
+                                </div>
+                                <h3 className="ob-card-title">Become a Helper</h3>
+                                <p className="ob-card-desc">Monetize your knowledge and build a professional campus profile.</p>
+                            </div>
+
+                            <div className="ob-card">
+                                <div className="ob-card-num">3</div>
+                                <div className="ob-card-img">
+                                    <Stars size={64} color="var(--ob-primary-lt)" />
+                                </div>
+                                <h3 className="ob-card-title">Grow Together</h3>
+                                <p className="ob-card-desc">Build your reputation and contribute to your campus success.</p>
+                            </div>
                         </div>
 
-                        <button onClick={nextStep} className="ob-btn" style={{ background: 'var(--primary)', color: 'white', border: 'none', padding: '14px 52px', borderRadius: 'var(--radius-pill)', fontWeight: 800, fontSize: '1rem', cursor: 'pointer', boxShadow: 'var(--shadow-glow)', transition: 'var(--transition)' }}>
-                            Let's Get Started
-                        </button>
+                        <div className="ob-actions">
+                            <button onClick={nextStep} className="ob-btn">
+                                Let's Get Started <ArrowRight className="ob-btn-arrow" size={18} />
+                            </button>
+                        </div>
                     </div>
                 )}
                 
                 {step === 2 && (
-                    <div style={{ animation: 'fadeIn 0.6s ease-out' }}>
-                        <div className="ob-s2-wrap" style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '4rem', alignItems: 'center' }}>
-                            <div className="ob-s2-header">
-                                <h2 style={{ fontSize: '2.5rem', fontWeight: 800, marginBottom: '1.5rem', letterSpacing: '-0.03em' }}>Verify Your Campus Identity</h2>
-                                <p style={{ fontSize: '1.1rem', color: 'var(--text-muted)', marginBottom: '2.5rem', fontWeight: 500, lineHeight: 1.6 }}>
-                                    Security is our top priority. To keep CampusHelper a safe space, we require all users to verify their student status.
-                                </p>
-                                
-                                <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', marginBottom: '3rem' }}>
-                                    {[
-                                        { t: "Verified Experts", d: "Interact only with authenticated students and helpers." },
-                                        { t: "Secure Payments", d: "Handled through our campus-safe escrow system." },
-                                        { t: "Community Trust", d: "Built by students, for students, with full accountability." }
-                                    ].map((f, i) => (
-                                        <div key={i} style={{ display: 'flex', gap: '1.25rem' }}>
-                                            <div style={{ width: '24px', height: '24px', borderRadius: '50%', background: '#dcfce7', color: '#16a34a', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                                                <CheckCircle size={16} />
-                                            </div>
-                                            <div>
-                                                <h4 style={{ margin: 0, fontSize: '1rem', fontWeight: 800 }}>{f.t}</h4>
-                                                <p style={{ margin: '4px 0 0', fontSize: '0.9rem', color: 'var(--text-muted)', fontWeight: 500 }}>{f.d}</p>
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
+                    <div style={{ animation: 'ob-scaleIn 0.5s ease-out' }}>
+                        <div className="ob-s2-header">
+                            <h2 className="ob-s2-title">Trust & Security First</h2>
+                            <p className="ob-s2-sub">
+                                We've built a secure ecosystem so you can focus on learning and collaborating with peace of mind.
+                            </p>
+                        </div>
 
-                                <button onClick={nextStep} className="ob-btn" style={{ background: 'var(--primary)', color: 'white', border: 'none', padding: '14px 52px', borderRadius: 'var(--radius-pill)', fontWeight: 800, fontSize: '1rem', cursor: 'pointer', boxShadow: 'var(--shadow-glow)' }}>
-                                    Verify My Status
-                                </button>
+                        <div className="ob-s2-wrap">
+                            <div className="ob-s2-illustration">
+                                <Image src="/onboarding2.svg" alt="Security" width={400} height={340} />
                             </div>
-                            <div className="ob-s2-illustration" style={{ position: 'relative', height: '450px', background: 'var(--sidebar)', borderRadius: '32px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                <Image src="/ob-verify.png" alt="Verification" fill style={{ objectFit: 'contain', padding: '3rem' }} />
+                            
+                            <div className="ob-s2-panel">
+                                <div className="ob-s2-panel-head">
+                                    <div className="ob-s2-icon"><ShieldCheck color="var(--ob-primary)" /></div>
+                                    <div className="ob-s2-panel-title">Our Security Standards</div>
+                                </div>
+                                
+                                <div className="ob-s2-steps">
+                                    <div className="ob-s2-step">
+                                        <div className="ob-s2-step-num">1</div>
+                                        <div className="ob-s2-step-text">Verified Student Identities</div>
+                                    </div>
+                                    <div className="ob-s2-step">
+                                        <div className="ob-s2-step-num">2</div>
+                                        <div className="ob-s2-step-text">Secure Milestone Payments</div>
+                                    </div>
+                                    <div className="ob-s2-step">
+                                        <div className="ob-s2-step-num">3</div>
+                                        <div className="ob-s2-step-text">Campus-Only Community</div>
+                                    </div>
+                                </div>
                             </div>
+                        </div>
+
+                        <div className="ob-actions">
+                            <button onClick={nextStep} className="ob-btn">
+                                Continue <ArrowRight className="ob-btn-arrow" size={18} />
+                            </button>
                         </div>
                     </div>
                 )}
 
                 {step === 3 && (
-                    <div style={{ textAlign: 'center', maxWidth: '800px', margin: '0 auto', animation: 'fadeIn 0.6s ease-out' }}>
-                        <h2 style={{ fontSize: '2.5rem', fontWeight: 800, marginBottom: '1rem', letterSpacing: '-0.03em' }}>You're All Set!</h2>
-                        <p style={{ fontSize: '1.1rem', color: 'var(--text-muted)', marginBottom: '4rem', fontWeight: 500 }}>
-                            Welcome to the community. Your journey to academic excellence begins now.
+                    <div className="ob-s3-card" style={{ animation: 'ob-scaleIn 0.6s cubic-bezier(0.16,1,0.3,1)' }}>
+                        <div style={{ 
+                            width: '80px', 
+                            height: '80px', 
+                            background: 'var(--ob-primary-lt)', 
+                            borderRadius: '50%', 
+                            display: 'flex', 
+                            alignItems: 'center', 
+                            justifyContent: 'center',
+                            marginBottom: '1rem',
+                            opacity: 0.8
+                        }}>
+                            <CheckCircle size={40} color="white" />
+                        </div>
+                        <h2 className="ob-s3-title">You're Ready to Explore!</h2>
+                        <p className="ob-s3-sub">
+                            Your account is set up and ready. Dive into the community and find the help you need or start your journey as a helper.
                         </p>
 
-                        <div className="ob-s3-images" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.5rem', marginBottom: '4rem' }}>
-                            {[1, 2, 3].map(i => (
-                                <div key={i} className="ob-s3-card" style={{ padding: '2rem', background: 'var(--card-bg)', borderRadius: '24px', border: '1px solid var(--border-color)' }}>
-                                    <h4 style={{ margin: 0, fontWeight: 800, marginBottom: '1.5rem' }}>Step {i}</h4>
-                                    <div style={{ height: '120px', position: 'relative' }}>
-                                        <Image src={`/ob-final-${i}.png`} alt="Success" fill style={{ objectFit: 'contain' }} />
-                                    </div>
-                                </div>
-                            ))}
+                        <div className="ob-s3-images">
+                            <Image src="/connect with a helper.svg" alt="Connect" width={300} height={200} />
+                            <Image src="/student collaboration.svg" alt="Collaborate" width={300} height={200} />
                         </div>
 
-                        <button onClick={handleFinish} className="ob-btn" style={{ background: 'var(--primary)', color: 'white', border: 'none', padding: '14px 64px', borderRadius: 'var(--radius-pill)', fontWeight: 800, fontSize: '1.1rem', cursor: 'pointer', boxShadow: 'var(--shadow-glow)' }}>
-                            Go to Dashboard
-                        </button>
+                        <div className="ob-actions">
+                            <button onClick={handleFinish} className="ob-btn">
+                                Enter Dashboard <ArrowRight className="ob-btn-arrow" size={18} />
+                            </button>
+                        </div>
                     </div>
                 )}
             </main>
